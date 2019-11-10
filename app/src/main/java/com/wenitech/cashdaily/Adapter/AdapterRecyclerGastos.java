@@ -1,0 +1,71 @@
+package com.wenitech.cashdaily.Adapter;
+
+import android.content.Context;
+import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.wenitech.cashdaily.ClienteDetail.ClienteDetailActivity;
+import com.wenitech.cashdaily.GastoDetail.GastoDetailActivity;
+import com.wenitech.cashdaily.Model.Gasto;
+import com.wenitech.cashdaily.R;
+
+public class AdapterRecyclerGastos extends FirestoreRecyclerAdapter<Gasto,AdapterRecyclerGastos.mViewHolder> {
+
+    public AdapterRecyclerGastos(@NonNull FirestoreRecyclerOptions<Gasto> options) {
+        super(options);
+    }
+
+
+    @Override
+    protected void onBindViewHolder(@NonNull final mViewHolder holder, int position, @NonNull Gasto model) {
+
+        holder.valor.setText(model.getValor());
+        holder.descripcion.setText(model.getDescripcion());
+        holder.fecha.setText(model.getFecha());
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(holder.context, GastoDetailActivity.class);
+                holder.context.startActivity(intent);
+            }
+        });
+    }
+
+    @NonNull
+    @Override
+    public mViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gasto,parent,false);
+        return new mViewHolder(view);
+    }
+
+    public class mViewHolder extends RecyclerView.ViewHolder{
+
+        private CardView cardView;
+        private Context context;
+        private TextView valor;
+        private TextView descripcion;
+        private TextView fecha;
+
+        public mViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            cardView = itemView.findViewById(R.id.cardViewItemGastoId);
+            context = itemView.getContext();
+
+            valor = itemView.findViewById(R.id.tv_valor);
+            descripcion = itemView.findViewById(R.id.tv_descri);
+            fecha = itemView.findViewById(R.id.tv_fecha);
+
+
+        }
+    }
+}
