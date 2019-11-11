@@ -16,10 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.wenitech.cashdaily.ClienteDetail.ClienteDetailActivity;
 import com.wenitech.cashdaily.Model.Cliente;
 import com.wenitech.cashdaily.R;
@@ -48,10 +45,9 @@ public class RecyclerViewHomeAdapter extends FirestoreRecyclerAdapter<Cliente, R
         holder.tv_valorPrestamo.setText(String.valueOf(model.getValorPrestamo()));
         holder.tv_deudaPrestamo.setText(String.valueOf(model.getDeudaPrestamo()));
 
-        Date dateSever = model.getFechaCreacion().toDate();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-            holder.tv_fechaCreacion.setText(format.format(dateSever));
+        Date dateSever = model.getFechaCreacion().toDate();
+        holder.tv_fechaCreacion.setText(format.format(dateSever));
 
         holder.item_client.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +91,7 @@ public class RecyclerViewHomeAdapter extends FirestoreRecyclerAdapter<Cliente, R
             super(itemView);
 
             context = itemView.getContext();
-            imageView = itemView.findViewById(R.id.imageViewPerfil);
+            imageView = itemView.findViewById(R.id.toolbar_cliente_detail);
 
             item_client = itemView.findViewById(R.id.cardViewItemClienteId);
 

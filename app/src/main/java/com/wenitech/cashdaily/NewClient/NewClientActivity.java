@@ -14,11 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.Timestamp;
 import com.wenitech.cashdaily.R;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class NewClientActivity extends AppCompatActivity implements Interface.view {
 
@@ -62,7 +58,7 @@ public class NewClientActivity extends AppCompatActivity implements Interface.vi
     }
 
     private void AddToolbard() {
-        toolbar = findViewById(R.id.toolbarNewClient);
+        toolbar = findViewById(R.id.toolbarNewGasto);
         toolbar.setTitle("Nuevo Cliente");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

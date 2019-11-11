@@ -18,6 +18,9 @@ import com.wenitech.cashdaily.GastoDetail.GastoDetailActivity;
 import com.wenitech.cashdaily.Model.Gasto;
 import com.wenitech.cashdaily.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AdapterRecyclerGastos extends FirestoreRecyclerAdapter<Gasto,AdapterRecyclerGastos.mViewHolder> {
 
     public AdapterRecyclerGastos(@NonNull FirestoreRecyclerOptions<Gasto> options) {
@@ -28,9 +31,13 @@ public class AdapterRecyclerGastos extends FirestoreRecyclerAdapter<Gasto,Adapte
     @Override
     protected void onBindViewHolder(@NonNull final mViewHolder holder, int position, @NonNull Gasto model) {
 
-        holder.valor.setText(model.getValor());
+        holder.valor.setText(String.valueOf(model.getValor()));
         holder.descripcion.setText(model.getDescripcion());
-        holder.fecha.setText(model.getFecha());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
+        Date date = model.getFecha().toDate();
+        holder.fecha.setText(dateFormat.format(date));
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

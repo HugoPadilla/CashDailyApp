@@ -1,4 +1,8 @@
 package com.wenitech.cashdaily.GastoDetail;
 
-public class GastoDetailPresenter {
+import com.wenitech.cashdaily.NewGastoActivity.InterfaceNewGasto;
+
+public class GastoDetailPresenter  {
+
+
 }

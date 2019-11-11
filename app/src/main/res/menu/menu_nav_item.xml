@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_credito"
+        android:icon="@drawable/ic_trending_up_nav_24dp"
+        android:title="Credito" />
+    <item
+        android:id="@+id/nav_historial"
+        android:icon="@drawable/ic_history_nav_24dp"
+        android:title="Historial" />
+    <item
+        android:id="@+id/nav_perfil"
+        android:icon="@drawable/ic_person_outline_nav_24dp"
+        android:title="Perfil" />
+</menu>

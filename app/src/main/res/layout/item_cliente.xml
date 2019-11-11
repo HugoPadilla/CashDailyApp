@@ -23,7 +23,7 @@
             android:padding="15dp">
 
             <ImageView
-                android:id="@+id/imageViewPerfil"
+                android:id="@+id/toolbar_cliente_detail"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/bg_gradient"
@@ -39,10 +39,10 @@
                 android:textColor="#E6FFFFFF"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/imageViewPerfil"
-                app:layout_constraintEnd_toEndOf="@+id/imageViewPerfil"
-                app:layout_constraintStart_toStartOf="@+id/imageViewPerfil"
-                app:layout_constraintTop_toTopOf="@+id/imageViewPerfil" />
+                app:layout_constraintBottom_toBottomOf="@+id/toolbar_cliente_detail"
+                app:layout_constraintEnd_toEndOf="@+id/toolbar_cliente_detail"
+                app:layout_constraintStart_toStartOf="@+id/toolbar_cliente_detail"
+                app:layout_constraintTop_toTopOf="@+id/toolbar_cliente_detail" />
 
             <TextView
                 android:id="@+id/textViewName"
@@ -56,8 +56,8 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/textViewFechaCreacion"
-                app:layout_constraintStart_toEndOf="@+id/imageViewPerfil"
-                app:layout_constraintTop_toTopOf="@+id/imageViewPerfil" />
+                app:layout_constraintStart_toEndOf="@+id/toolbar_cliente_detail"
+                app:layout_constraintTop_toTopOf="@+id/toolbar_cliente_detail" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -66,8 +66,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:drawableLeft="@drawable/ic_attach_money_black_24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageViewPerfil"
-                app:layout_constraintStart_toEndOf="@+id/imageViewPerfil"
+                app:layout_constraintBottom_toBottomOf="@+id/toolbar_cliente_detail"
+                app:layout_constraintStart_toEndOf="@+id/toolbar_cliente_detail"
                 app:layout_constraintTop_toBottomOf="@+id/textViewName" />
 
             <TextView

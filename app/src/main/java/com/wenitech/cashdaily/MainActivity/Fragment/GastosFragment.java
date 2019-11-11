@@ -39,7 +39,7 @@ public class GastosFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gastos,container,false);
 
-        Query query = collectionReference.orderBy("valor",Query.Direction.ASCENDING);
+        Query query = collectionReference.orderBy("fecha",Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Gasto> options = new FirestoreRecyclerOptions.Builder<Gasto>()
                 .setQuery(query,Gasto.class).build();
 

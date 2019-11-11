@@ -1,25 +1,27 @@
 package com.wenitech.cashdaily.Model;
 
+import com.google.firebase.Timestamp;
+
 public class Gasto {
 
-    private String valor;
+    private int valor;
     private String descripcion;
-    private String fecha;
+    private Timestamp fecha;
 
     public Gasto() {
     }
 
-    public Gasto(String valor, String descripcion, String fecha) {
+    public Gasto(int valor, String descripcion, Timestamp fecha) {
         this.valor = valor;
         this.descripcion = descripcion;
         this.fecha = fecha;
     }
 
-    public String getValor() {
+    public int getValor() {
         return valor;
     }
 
-    public void setValor(String valor) {
+    public void setValor(int valor) {
         this.valor = valor;
     }
 
@@ -31,11 +33,11 @@ public class Gasto {
         this.descripcion = descripcion;
     }
 
-    public String getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 }
