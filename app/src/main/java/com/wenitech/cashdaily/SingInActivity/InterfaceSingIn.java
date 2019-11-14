@@ -10,7 +10,7 @@ public interface InterfaceSingIn {
         void ShowFormulario();
         void HidenFormulario();
 
-        void onSucess();
+        void onSucess(String emailSucess);
         void onExist();
         void onError();
     }
@@ -24,7 +24,7 @@ public interface InterfaceSingIn {
     }
 
     interface taskListener{
-        void onSucess();
+        void onSucess(String emailSucess);
         void onExist();
         void onError();
     }

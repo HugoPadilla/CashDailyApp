@@ -18,6 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:collapseContentDescription="@string/appbar_scrolling_view_behavior"
             android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
             app:menu="@menu/menu_main_toolbar"
             />

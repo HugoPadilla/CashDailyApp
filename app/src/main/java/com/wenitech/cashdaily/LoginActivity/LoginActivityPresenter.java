@@ -21,7 +21,6 @@ public class LoginActivityPresenter implements InterfaceLoginActivity.presenter,
     @Override
     public void LoginSuces() {
         if (view != null){
-            view.ShowFormLogin();
             view.updatesUi();
         }
     }

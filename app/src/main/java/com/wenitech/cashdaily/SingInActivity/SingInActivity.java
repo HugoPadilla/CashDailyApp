@@ -11,23 +11,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.wenitech.cashdaily.LoginActivity.LoginActivity;
+import com.wenitech.cashdaily.MainActivity.MainActivity;
 import com.wenitech.cashdaily.R;
 
 public class SingInActivity extends AppCompatActivity implements InterfaceSingIn.view {
 
     private InterfaceSingIn.presenter presenter;
     private Toolbar toolbar;
-
-    private LinearLayout formCrearCuenta;
-
+    private ScrollView formCrearCuenta;
+    private LinearLayout form_login;
     private TextInputEditText edt_userName, edt_correo, edt_password, edt_password_confirm;
-    private Button bt_login, bt_singin;
-
+    private Button bt_singin;
+    private TextView tv_Login;
     private TextView tv_creando_cuenta;
     private ProgressBar progressBar;
 
@@ -42,6 +45,7 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         formCrearCuenta = findViewById(R.id.form_sing);
+        form_login = findViewById(R.id.form_login);
 
         edt_userName = findViewById(R.id.edt_user_name);
         edt_correo = findViewById(R.id.edt_email_singin);
@@ -55,8 +59,8 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
                 crearCuenta();
             }
         });
-        bt_login = findViewById(R.id.bt_Login);
-        bt_login.setOnClickListener(new View.OnClickListener() {
+        tv_Login = findViewById(R.id.tv_Login);
+        tv_Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SingInActivity.this, LoginActivity.class);
@@ -116,26 +120,28 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
     @Override
     public void ShowFormulario() {
         formCrearCuenta.setVisibility(View.VISIBLE);
+        form_login.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         tv_creando_cuenta.setVisibility(View.GONE);
-        bt_singin.setEnabled(true);
-        bt_login.setEnabled(true);
-
     }
 
     @Override
     public void HidenFormulario() {
         formCrearCuenta.setVisibility(View.GONE);
+        form_login.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         tv_creando_cuenta.setVisibility(View.VISIBLE);
-        bt_singin.setEnabled(false);
-        bt_login.setEnabled(false);
     }
 
     @Override
-    public void onSucess() {
+    public void onSucess(String emailSucess) {
         Toast.makeText(this, "Su nueva Cuenta se creo con exito", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(SingInActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
+
 
     @Override
     public void onExist() {

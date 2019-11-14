@@ -3,13 +3,11 @@ package com.wenitech.cashdaily.Model;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.local.ReferenceSet;
-import com.google.firebase.firestore.model.value.ReferenceValue;
 
 public class Cliente {
 
     private Timestamp fechaCreacion;
-    private String documentReference;
+    private DocumentReference documentReference;
     private String identificacion;
     private String nombre;
     private String inicialNombre;
@@ -23,7 +21,7 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(Timestamp fechaCreacion, String documentReference, String identificacion, String nombre, String inicialNombre, String telefono, String ubicacion, int valorPrestamo, int deudaPrestamo, Boolean estado) {
+    public Cliente(Timestamp fechaCreacion, DocumentReference documentReference, String identificacion, String nombre, String inicialNombre, String telefono, String ubicacion, int valorPrestamo, int deudaPrestamo, Boolean estado) {
         this.fechaCreacion = fechaCreacion;
         this.documentReference = documentReference;
         this.identificacion = identificacion;
@@ -44,11 +42,11 @@ public class Cliente {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public String getDocumentReference() {
+    public DocumentReference getDocumentReference() {
         return documentReference;
     }
 
-    public void setDocumentReference(String documentReference) {
+    public void setDocumentReference(DocumentReference documentReference) {
         this.documentReference = documentReference;
     }
 

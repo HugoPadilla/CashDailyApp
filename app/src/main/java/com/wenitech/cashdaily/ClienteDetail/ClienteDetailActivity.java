@@ -5,14 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.wenitech.cashdaily.ClienteDetail.FragmentNavigation.CreditoNavFragment;
 import com.wenitech.cashdaily.ClienteDetail.FragmentNavigation.HistorialNavFragment;
 import com.wenitech.cashdaily.ClienteDetail.FragmentNavigation.PerfilNavFragment;
+import com.wenitech.cashdaily.NewCreditActivity.NewCreditActivity;
 import com.wenitech.cashdaily.R;
 
 public class ClienteDetailActivity extends AppCompatActivity implements ClienteDetailInterface.view {
@@ -36,8 +38,7 @@ public class ClienteDetailActivity extends AppCompatActivity implements ClienteD
 
         //obtener el putExtra referencia base de datos del cliente
         String documentrefrence = getIntent().getStringExtra("item_client");
-        TextView textView = findViewById(R.id.textView22);
-        textView.setText(documentrefrence);
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navItemSelectedListener =
@@ -60,6 +61,25 @@ public class ClienteDetailActivity extends AppCompatActivity implements ClienteD
                     return true;
                 }
             };
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_client_detail,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.menuItemNewCredit:
+                Intent intent = new Intent(ClienteDetailActivity.this, NewCreditActivity.class);
+                startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onBackPressed() {

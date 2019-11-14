@@ -38,10 +38,10 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/tv_total_efectivo"
                 android:layout_width="wrap_content"
                 android:layout_height="41dp"
-                android:text="$2.536.000"
+                android:text="0"
                 android:textColor="@color/colorAccent"
                 android:textSize="30sp"
                 android:textStyle="bold"
@@ -84,11 +84,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/tv_hoy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="$245.000"
+                android:text="0"
                 android:textColor="#E6FFFFFF"
                 android:textSize="30sp"
                 android:textStyle="bold"
@@ -132,11 +132,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/tv_este_mes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="$1.350.000"
+                android:text="0"
                 android:textColor="#E6FFFFFF"
                 android:textSize="30sp"
                 android:textStyle="bold"
@@ -206,7 +206,7 @@
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="79"
+                android:text="0"
                 android:textColor="#E6FFFFFF"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -243,7 +243,7 @@
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="08"
+                android:text="0"
                 android:textColor="#E6FFFFFF"
                 android:textSize="24sp"
                 android:textStyle="bold"

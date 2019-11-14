@@ -13,9 +13,16 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentId;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.wenitech.cashdaily.Model.Cliente;
+
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NewClientModel implements Interface.model {
 
@@ -23,7 +30,7 @@ public class NewClientModel implements Interface.model {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private FirebaseFirestore db;
-    private DocumentReference documentReference;
+    private CollectionReference collectionReference;
     private Cliente cliente;
 
     public NewClientModel(final Interface.taskListener taskListener) {
@@ -36,23 +43,24 @@ public class NewClientModel implements Interface.model {
 
 
     @Override
-    public void registrar(String identificacion, String nombre, String inicialNombre, String telefono,
+    public void registrar(final String identificacion, String nombre, String inicialNombre, String telefono,
                           String ubicacion, int valorPrestamo, int deudaPrestamo, boolean estado) {
 
         String inicial = nombre.substring(0,1).toUpperCase();
 
-        cliente = new Cliente(Timestamp.now(),"usuarios/"+mAuth.getUid()+"/clientes/"+identificacion,identificacion,nombre,inicial,telefono,ubicacion,0,0,true);
+        cliente = new Cliente(Timestamp.now(),null,identificacion,nombre,inicial,telefono,ubicacion,0,0,true);
 
-        documentReference = db.collection("usuarios").document(mAuth.getUid())
-                .collection("clientes").document(identificacion);
+        collectionReference = db.collection("usuarios").document(mAuth.getUid())
+                .collection("clientes");
 
-        documentReference.set(cliente).addOnCompleteListener(new OnCompleteListener<Void>() {
+        collectionReference.add(cliente).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
+            public void onComplete(@NonNull Task<DocumentReference> task) {
                 if (task.isSuccessful()){
+                    DocumentReference documentReference = task.getResult();
+                    documentReference.update("documentReference",documentReference);
                     taskListener.succes();
                 }else {
-
                     taskListener.error();
                 }
             }

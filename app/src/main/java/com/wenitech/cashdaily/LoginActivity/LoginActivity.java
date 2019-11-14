@@ -11,7 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.wenitech.cashdaily.MainActivity.MainActivity;
@@ -23,7 +25,7 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLoginAc
     InterfaceLoginActivity.presenter presenter;
 
     private Button bt_ingresar, bt_create_account;
-    private LinearLayout FormLogin;
+    private ScrollView FormLogin;
     private TextInputEditText edt_email, edt_password;
     private TextView tv_ingresando;
     private ProgressBar progressBarLogin;
@@ -55,6 +57,7 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLoginAc
                 BotonCrearCuentaPress();
             }
         });
+
     }
 
     @Override
@@ -71,8 +74,6 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLoginAc
         Intent intent = new Intent(LoginActivity.this, SingInActivity.class);
         startActivity(intent);
     }
-
-
 
     @Override
     public boolean FormValido() {
@@ -102,7 +103,6 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLoginAc
         FormLogin.setVisibility(View.VISIBLE);
         progressBarLogin.setVisibility(View.INVISIBLE);
         tv_ingresando.setVisibility(View.INVISIBLE);
-        bt_ingresar.setEnabled(true);
         bt_create_account.setEnabled(true);
     }
 
@@ -111,7 +111,6 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLoginAc
         FormLogin.setVisibility(View.GONE);
         progressBarLogin.setVisibility(View.VISIBLE);
         tv_ingresando.setVisibility(View.VISIBLE);
-        bt_ingresar.setEnabled(false);
         bt_create_account.setEnabled(false);
     }
 
@@ -125,8 +124,6 @@ public class LoginActivity extends AppCompatActivity implements InterfaceLoginAc
 
     @Override
     public void OnErro() {
-
+        Toast.makeText(this, "Correo o contraseña incorectos", Toast.LENGTH_SHORT).show();
     }
-
-
 }

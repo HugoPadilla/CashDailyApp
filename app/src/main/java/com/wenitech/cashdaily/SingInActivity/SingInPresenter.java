@@ -1,6 +1,7 @@
 package com.wenitech.cashdaily.SingInActivity;
 
 public class SingInPresenter implements InterfaceSingIn.presenter, InterfaceSingIn.taskListener {
+
     InterfaceSingIn.view view;
     InterfaceSingIn.model model;
 
@@ -18,10 +19,9 @@ public class SingInPresenter implements InterfaceSingIn.presenter, InterfaceSing
     }
 
     @Override
-    public void onSucess() {
+    public void onSucess(String emailSucess) {
         if (view != null){
-            view.ShowFormulario();
-            view.onSucess();
+            view.onSucess(emailSucess);
         }
     }
 

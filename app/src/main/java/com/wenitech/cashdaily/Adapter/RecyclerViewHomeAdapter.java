@@ -54,7 +54,7 @@ public class RecyclerViewHomeAdapter extends FirestoreRecyclerAdapter<Cliente, R
             public void onClick(View v) {
 
                 Intent intent = new Intent(holder.context, ClienteDetailActivity.class);
-                intent.putExtra("item_client",model.getDocumentReference());
+                intent.putExtra("item_client",model.getDocumentReference().getPath());
 
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) holder.context,
                         holder.item_client,"itemClienteToDetail");

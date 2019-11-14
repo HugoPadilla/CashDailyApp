@@ -11,12 +11,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.wenitech.cashdaily.Model.Usuairio;
 
 public class SingInModel implements InterfaceSingIn.model {
-    private InterfaceSingIn.taskListener taskListener;
 
+    private InterfaceSingIn.taskListener taskListener;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private Usuairio usuairio;
-
 
     public SingInModel(InterfaceSingIn.taskListener taskListener) {
         this.taskListener = taskListener;
@@ -26,13 +25,14 @@ public class SingInModel implements InterfaceSingIn.model {
 
     @Override
     public void CrearCuenta(final String userName, final String email, String password) {
+
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    usuairio = new Usuairio(userName);
+                    usuairio = new Usuairio(userName,0,0,0);
                     db.collection("usuarios").document(mAuth.getUid()).set(usuairio);
-                    taskListener.onSucess();
+                    taskListener.onSucess(email);
                 }else {
                     if (task.getException() instanceof FirebaseAuthUserCollisionException){
                         taskListener.onExist();
@@ -42,5 +42,6 @@ public class SingInModel implements InterfaceSingIn.model {
                 }
             }
         });
+
     }
 }
