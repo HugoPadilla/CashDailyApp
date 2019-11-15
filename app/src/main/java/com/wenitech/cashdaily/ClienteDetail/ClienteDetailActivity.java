@@ -20,6 +20,8 @@ import com.wenitech.cashdaily.R;
 public class ClienteDetailActivity extends AppCompatActivity implements ClienteDetailInterface.view {
 
     private ClienteDetailInterface.presenter presenter;
+    private  String string;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +35,19 @@ public class ClienteDetailActivity extends AppCompatActivity implements ClienteD
         //Iniciando Navigatio view
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavClienteDetail);
         bottomNavigationView.setOnNavigationItemSelectedListener(navItemSelectedListener);
-        //Pestana del Navigation view por depecto
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new CreditoNavFragment()).commit();
 
-        //obtener el putExtra referencia base de datos del cliente
-        String documentrefrence = getIntent().getStringExtra("item_client");
+        // se obtiene el string del la referencia del cliente
+        string = getIntent().getStringExtra("id_cliente_ref");
+
+        Bundle args = new Bundle();
+        args.putString("id_cliente_ref_credito", string);
+        CreditoNavFragment creditoNavFragment = new CreditoNavFragment();
+        creditoNavFragment.setArguments(args);
+
+        //Pestana del Navigation view por depecto
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,creditoNavFragment).commit();
+
+
 
     }
 
@@ -48,7 +58,10 @@ public class ClienteDetailActivity extends AppCompatActivity implements ClienteD
                     Fragment selectfragment = null;
                     switch (menuItem.getItemId()){
                         case R.id.nav_credito:
+                            Bundle args = new Bundle();
+                            args.putString("id_cliente_ref_credito", string);
                             selectfragment = new CreditoNavFragment();
+                            selectfragment.setArguments(args);
                             break;
                         case R.id.nav_historial:
                             selectfragment = new HistorialNavFragment();
