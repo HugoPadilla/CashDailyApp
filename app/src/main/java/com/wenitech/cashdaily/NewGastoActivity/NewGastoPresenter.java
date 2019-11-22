@@ -1,7 +1,5 @@
 package com.wenitech.cashdaily.NewGastoActivity;
 
-import com.wenitech.cashdaily.GastoDetail.GastoDetailModel;
-
 public class NewGastoPresenter implements InterfaceNewGasto.presenter, InterfaceNewGasto.taskListener {
 
     private InterfaceNewGasto.view view;

@@ -2,48 +2,59 @@ package com.wenitech.cashdaily.Model;
 
 public class Usuairio {
 
-    private String nombreUsuario;
-    private int totalEfectivo,cobradoHoy,esteMes;
+    private String aNombreUsuario;
+    private String bInicialNombre;
+    private int cTotalEfectivo, dCobradoHoy, eCobradoMes;
+
 
     public Usuairio() {
     }
 
-    public Usuairio(String nombreUsuario, int totalEfectivo, int cobradoHoy, int esteMes) {
-        this.nombreUsuario = nombreUsuario;
-        this.totalEfectivo = totalEfectivo;
-        this.cobradoHoy = cobradoHoy;
-        this.esteMes = esteMes;
+    public Usuairio(String aNombreUsuario, String bInicialNombre, int cTotalEfectivo, int dCobradoHoy, int eCobradoMes) {
+        this.aNombreUsuario = aNombreUsuario;
+        this.bInicialNombre = bInicialNombre;
+        this.cTotalEfectivo = cTotalEfectivo;
+        this.dCobradoHoy = dCobradoHoy;
+        this.eCobradoMes = eCobradoMes;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public String getaNombreUsuario() {
+        return aNombreUsuario;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setaNombreUsuario(String aNombreUsuario) {
+        this.aNombreUsuario = aNombreUsuario;
     }
 
-    public int getTotalEfectivo() {
-        return totalEfectivo;
+    public String getbInicialNombre() {
+        return bInicialNombre;
     }
 
-    public void setTotalEfectivo(int totalEfectivo) {
-        this.totalEfectivo = totalEfectivo;
+    public void setbInicialNombre(String bInicialNombre) {
+        this.bInicialNombre = bInicialNombre;
     }
 
-    public int getCobradoHoy() {
-        return cobradoHoy;
+    public int getcTotalEfectivo() {
+        return cTotalEfectivo;
     }
 
-    public void setCobradoHoy(int cobradoHoy) {
-        this.cobradoHoy = cobradoHoy;
+    public void setcTotalEfectivo(int cTotalEfectivo) {
+        this.cTotalEfectivo = cTotalEfectivo;
     }
 
-    public int getEsteMes() {
-        return esteMes;
+    public int getdCobradoHoy() {
+        return dCobradoHoy;
     }
 
-    public void setEsteMes(int esteMes) {
-        this.esteMes = esteMes;
+    public void setdCobradoHoy(int dCobradoHoy) {
+        this.dCobradoHoy = dCobradoHoy;
+    }
+
+    public int geteCobradoMes() {
+        return eCobradoMes;
+    }
+
+    public void seteCobradoMes(int eCobradoMes) {
+        this.eCobradoMes = eCobradoMes;
     }
 }

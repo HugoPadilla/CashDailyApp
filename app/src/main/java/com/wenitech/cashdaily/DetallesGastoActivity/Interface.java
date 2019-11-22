@@ -1,4 +1,4 @@
-package com.wenitech.cashdaily.GastoDetail;
+package com.wenitech.cashdaily.DetallesGastoActivity;
 
 public interface Interface {
 

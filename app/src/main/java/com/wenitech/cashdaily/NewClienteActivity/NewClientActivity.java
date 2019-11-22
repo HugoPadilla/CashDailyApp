@@ -1,4 +1,4 @@
-package com.wenitech.cashdaily.NewClient;
+package com.wenitech.cashdaily.NewClienteActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;

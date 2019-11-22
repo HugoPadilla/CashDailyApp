@@ -24,7 +24,7 @@ import com.wenitech.cashdaily.LoginActivity.LoginActivity;
 import com.wenitech.cashdaily.MainActivity.Fragment.ClientesFragment;
 import com.wenitech.cashdaily.MainActivity.Fragment.GastosFragment;
 import com.wenitech.cashdaily.MainActivity.Fragment.HomeFragment;
-import com.wenitech.cashdaily.NewClient.NewClientActivity;
+import com.wenitech.cashdaily.NewClienteActivity.NewClientActivity;
 import com.wenitech.cashdaily.NewGastoActivity.NewGastoActivity;
 import com.wenitech.cashdaily.R;
 

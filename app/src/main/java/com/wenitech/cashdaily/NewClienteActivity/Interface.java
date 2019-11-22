@@ -1,6 +1,4 @@
-package com.wenitech.cashdaily.NewClient;
-
-import com.google.firebase.Timestamp;
+package com.wenitech.cashdaily.NewClienteActivity;
 
 public interface Interface {
 

@@ -1,7 +1,6 @@
 package com.wenitech.cashdaily.MainActivity.Fragment;
 
 import android.os.Bundle;
-import android.transition.Explode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,36 +17,32 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.wenitech.cashdaily.Adapter.RecyclerViewHomeAdapter;
+import com.wenitech.cashdaily.Adapter.RecyclerViewClienteAdapter;
 import com.wenitech.cashdaily.Model.Cliente;
 import com.wenitech.cashdaily.R;
 
 public class ClientesFragment extends Fragment {
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private FirebaseUser user = mAuth.getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference ClientesRef = db.collection("usuarios")
-            .document(mAuth.getUid())
+    private CollectionReference ClientesRef = db.collection("usuarios").document(mAuth.getUid())
             .collection("clientes");
 
-    private RecyclerViewHomeAdapter mRecyclerViewHomeAdapter;
-    private RecyclerView mRecyclerView;
-
+    private RecyclerViewClienteAdapter mRecyclerviewClienteAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_clientes,container,false);
 
-        Query query = ClientesRef.orderBy("nombre", Query.Direction.ASCENDING);
+        Query query = ClientesRef.orderBy("dNombreCliente", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Cliente> options = new FirestoreRecyclerOptions.Builder<Cliente>()
                 .setQuery(query,Cliente.class).build();
 
-        mRecyclerView = view.findViewById(R.id.recyclerView);
-        mRecyclerViewHomeAdapter = new RecyclerViewHomeAdapter(options);
+        RecyclerView mRecyclerView = view.findViewById(R.id.recyclerView);
+        mRecyclerviewClienteAdapter = new RecyclerViewClienteAdapter(options);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(mRecyclerViewHomeAdapter);
+        mRecyclerView.setAdapter(mRecyclerviewClienteAdapter);
         return view;
     }
 
@@ -59,12 +54,12 @@ public class ClientesFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mRecyclerViewHomeAdapter.startListening();
+        mRecyclerviewClienteAdapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mRecyclerViewHomeAdapter.stopListening();
+        mRecyclerviewClienteAdapter.stopListening();
     }
 }

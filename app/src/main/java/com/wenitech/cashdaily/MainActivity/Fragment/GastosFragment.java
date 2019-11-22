@@ -17,15 +17,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.wenitech.cashdaily.Adapter.AdapterRecyclerGastos;
-import com.wenitech.cashdaily.Model.Cliente;
+import com.wenitech.cashdaily.Adapter.RecyclerViewGastoAdapter;
 import com.wenitech.cashdaily.Model.Gasto;
 import com.wenitech.cashdaily.R;
 
 public class GastosFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private AdapterRecyclerGastos mAdapter;
+    private RecyclerViewGastoAdapter mAdapter;
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseUser mUser = mAuth.getCurrentUser();
@@ -45,7 +44,7 @@ public class GastosFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerViewGastos);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new AdapterRecyclerGastos(options);
+        mAdapter = new RecyclerViewGastoAdapter(options);
         recyclerView.setAdapter(mAdapter);
         return view;
     }

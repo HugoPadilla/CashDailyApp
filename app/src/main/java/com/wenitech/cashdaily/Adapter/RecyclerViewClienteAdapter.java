@@ -17,36 +17,36 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
-import com.wenitech.cashdaily.ClienteDetail.ClienteDetailActivity;
+import com.wenitech.cashdaily.DetallesClienteActivity.ClienteDetailActivity;
 import com.wenitech.cashdaily.Model.Cliente;
 import com.wenitech.cashdaily.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class RecyclerViewHomeAdapter extends FirestoreRecyclerAdapter<Cliente, RecyclerViewHomeAdapter.MyViewHolder> {
+public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente, RecyclerViewClienteAdapter.MyViewHolder> {
 
 
-    public RecyclerViewHomeAdapter(@NonNull FirestoreRecyclerOptions<Cliente> options) {
+    public RecyclerViewClienteAdapter(@NonNull FirestoreRecyclerOptions<Cliente> options) {
         super(options);
     }
 
     @Override
     protected void onBindViewHolder(@NonNull final MyViewHolder holder, final int position, @NonNull final Cliente model) {
-        holder.tv_userName.setText(model.getNombre());
-        holder.tv_inicial.setText(model.getInicialNombre());
+        holder.tv_userName.setText(model.getdNombreCliente());
+        holder.tv_inicial.setText(model.geteInicialNombre());
 
-        if (model.getEstado()){
+        if (model.getjAtrasado()){
             holder.tv_estado.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
-        } else if (!model.getEstado()){
+        } else if (!model.getjAtrasado()){
             holder.tv_estado.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_error_outline_red_24dp,0,0,0);
         }
 
-        holder.tv_valorPrestamo.setText(String.valueOf(model.getValorPrestamo()));
-        holder.tv_deudaPrestamo.setText(String.valueOf(model.getDeudaPrestamo()));
+        holder.tv_valorPrestamo.setText(String.valueOf(model.gethValorPrestamo()));
+        holder.tv_deudaPrestamo.setText(String.valueOf(model.getiDeudaPrestamo()));
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateSever = model.getFechaCreacion().toDate();
+        Date dateSever = model.getaFechaCreacion().toDate();
         holder.tv_fechaCreacion.setText(format.format(dateSever));
 
         holder.item_client.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +54,7 @@ public class RecyclerViewHomeAdapter extends FirestoreRecyclerAdapter<Cliente, R
             public void onClick(View v) {
 
                 Intent intent = new Intent(holder.context, ClienteDetailActivity.class);
-                intent.putExtra("id_cliente_ref",model.getDocumentReference().getPath());
+                intent.putExtra("id_cliente_ref",model.getbDocReferencia().getPath());
 
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) holder.context,
                         holder.item_client,"itemClienteToDetail");

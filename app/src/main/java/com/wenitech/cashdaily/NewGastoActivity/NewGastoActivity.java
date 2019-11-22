@@ -17,12 +17,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.wenitech.cashdaily.Dialog.DatePickerFragment;
 import com.wenitech.cashdaily.Dialog.TimePickerFragment;
-import com.wenitech.cashdaily.GastoDetail.GastoDetailPresenter;
 import com.wenitech.cashdaily.R;
 
 public class NewGastoActivity extends AppCompatActivity implements InterfaceNewGasto.view{

@@ -9,12 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewCreditActivity.NewCreditActivity"></activity>
+        <activity android:name=".NewCreditoActivity.NewCreditActivity"></activity>
         <activity android:name=".SingInActivity.SingInActivity" />
         <activity android:name=".LoginActivity.LoginActivity" />
-        <activity android:name=".GastoDetail.GastoDetailActivity" />
-        <activity android:name=".NewClient.NewClientActivity" />
-        <activity android:name=".ClienteDetail.ClienteDetailActivity" />
+        <activity android:name=".DetallesGastoActivity.GastoDetailActivity" />
+        <activity android:name=".NewClienteActivity.NewClientActivity" />
+        <activity android:name=".DetallesClienteActivity.ClienteDetailActivity" />
         <activity android:name=".NewGastoActivity.NewGastoActivity" />
         <activity android:name=".MainActivity.MainActivity">
             <intent-filter>
@@ -22,13 +22,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".NewClientActivity.NewClientActivity"
-            android:parentActivityName=".MainActivity.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity.MainActivity" />
         </activity>
     </application>
 

@@ -13,17 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.wenitech.cashdaily.ClienteDetail.ClienteDetailActivity;
-import com.wenitech.cashdaily.GastoDetail.GastoDetailActivity;
+import com.wenitech.cashdaily.DetallesGastoActivity.GastoDetailActivity;
 import com.wenitech.cashdaily.Model.Gasto;
 import com.wenitech.cashdaily.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class AdapterRecyclerGastos extends FirestoreRecyclerAdapter<Gasto,AdapterRecyclerGastos.mViewHolder> {
+public class RecyclerViewGastoAdapter extends FirestoreRecyclerAdapter<Gasto, RecyclerViewGastoAdapter.mViewHolder> {
 
-    public AdapterRecyclerGastos(@NonNull FirestoreRecyclerOptions<Gasto> options) {
+    public RecyclerViewGastoAdapter(@NonNull FirestoreRecyclerOptions<Gasto> options) {
         super(options);
     }
 

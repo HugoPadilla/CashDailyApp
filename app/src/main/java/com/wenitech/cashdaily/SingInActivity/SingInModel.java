@@ -30,7 +30,10 @@ public class SingInModel implements InterfaceSingIn.model {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    usuairio = new Usuairio(userName,0,0,0);
+
+                    String IncialNombre = userName.substring(0,1).toUpperCase();
+                    usuairio = new Usuairio(userName,IncialNombre,0,0,0);
+
                     db.collection("usuarios").document(mAuth.getUid()).set(usuairio);
                     taskListener.onSucess(email);
                 }else {

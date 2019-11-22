@@ -1,4 +1,4 @@
-package com.wenitech.cashdaily.ClienteDetail;
+package com.wenitech.cashdaily.DetallesClienteActivity;
 
 public class ClienteDetailModel implements ClienteDetailInterface.model {
     private ClienteDetailInterface.taskListener taskListener;

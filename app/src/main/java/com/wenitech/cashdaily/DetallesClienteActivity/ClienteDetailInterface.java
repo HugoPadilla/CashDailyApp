@@ -1,4 +1,4 @@
-package com.wenitech.cashdaily.ClienteDetail;
+package com.wenitech.cashdaily.DetallesClienteActivity;
 
 public interface ClienteDetailInterface {
 

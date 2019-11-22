@@ -1,4 +1,4 @@
-package com.wenitech.cashdaily.NewCreditActivity;
+package com.wenitech.cashdaily.NewCreditoActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
