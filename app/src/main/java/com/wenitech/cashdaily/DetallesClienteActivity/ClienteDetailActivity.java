@@ -1,6 +1,7 @@
 package com.wenitech.cashdaily.DetallesClienteActivity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,60 +19,114 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.WriteBatch;
 import com.wenitech.cashdaily.Adapter.RecyclerViewCuotaAdapter;
+import com.wenitech.cashdaily.Model.Cliente;
+import com.wenitech.cashdaily.Model.Credito;
 import com.wenitech.cashdaily.Model.Cuota;
 import com.wenitech.cashdaily.NewCreditoActivity.NewCreditActivity;
 import com.wenitech.cashdaily.R;
 
-import java.util.Date;
 import java.util.Objects;
+
+import static java.lang.Integer.parseInt;
 
 public class ClienteDetailActivity extends AppCompatActivity implements ClienteDetailInterface.view, View.OnClickListener {
 
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    CollectionReference collectionReference;
+    private CollectionReference collectionRefCuotas;
+    DocumentReference documentRefCliente;
     private RecyclerViewCuotaAdapter recyclerViewCuotaAdapter;
-
     private String ID_CLIENTE_REFRENCIA;
-
+    private Toolbar toolbar;
     private Dialog mDialogo;
+
+
+    private Cliente cliente;
+
+    private TextView tv_identficacion_cliente, tv_ubicacion_cliente, tv_prestamo_actual, tv_deuda_prestamo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente_detail);
         ClienteDetailInterface.presenter presenter = new ClienteDetailPresenter(this);
+        ID_CLIENTE_REFRENCIA = getIntent().getStringExtra("id_cliente_ref");
 
         mDialogo = new Dialog(this);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_cliente_detail);
+        addToolbar();
+        addVies();
+        addRecyclerview();
+        addViewsListener();
+        addSnapListener();
+    }
+
+    private void addViewsListener() {
+        findViewById(R.id.btn_agregar_cuota).setOnClickListener(this);
+    }
+
+    private void addSnapListener() {
+        documentRefCliente = db.document(ID_CLIENTE_REFRENCIA);
+        documentRefCliente.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    return;
+                }
+                if (documentSnapshot != null && documentSnapshot.exists()) {
+                    cliente = documentSnapshot.toObject(Cliente.class);
+                    if (cliente != null) {
+                        tv_identficacion_cliente.setText(cliente.getcIdentificacion());
+                        tv_ubicacion_cliente.setText(cliente.getgUbicacion());
+                        tv_prestamo_actual.setText(String.valueOf(cliente.gethValorPrestamo()));
+                        tv_deuda_prestamo.setText(String.valueOf(cliente.getiDeudaPrestamo()));
+                    }
+                } else {
+                    //Document not Exist
+                }
+            }
+        });
+    }
+
+    private void addToolbar() {
+        toolbar = findViewById(R.id.toolbar_cliente_detail);
+        toolbar.setTitle(getIntent().getStringExtra("id_cliente_name"));
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+    }
 
-        // Agregar Listener
-        findViewById(R.id.btn_agregar_cuota).setOnClickListener(this);
+    private void addVies() {
+        tv_identficacion_cliente = findViewById(R.id.tv_identificacion_cliente);
+        tv_ubicacion_cliente = findViewById(R.id.tv_ubicacion_cliente);
+        tv_prestamo_actual = findViewById(R.id.tv_prestamo_actual);
+        tv_deuda_prestamo = findViewById(R.id.tv_deuda_pretamo);
+    }
 
-        // Se obtiene el string del la referencia del cliente
-        ID_CLIENTE_REFRENCIA = getIntent().getStringExtra("id_cliente_ref");
-
+    private void addRecyclerview() {
         assert ID_CLIENTE_REFRENCIA != null;
-        collectionReference = db.document(ID_CLIENTE_REFRENCIA)
+        collectionRefCuotas = db.document(ID_CLIENTE_REFRENCIA)
                 .collection("/creditos").document("credito").collection("cuotas");
 
         //Quety que para ordenar por fecha
-        Query query = collectionReference.orderBy("bFechaCreacion", Query.Direction.DESCENDING);
+        Query query = collectionRefCuotas.orderBy("bFechaCreacion", Query.Direction.DESCENDING);
 
         //Firebase option que se enviara a el adaptadro
         FirestoreRecyclerOptions<Cuota> options = new FirestoreRecyclerOptions.Builder<Cuota>()
@@ -150,26 +205,32 @@ public class ClienteDetailActivity extends AppCompatActivity implements ClienteD
                     edt_valor_cuota.setError("¿Deasea guardar?");
                 } else {
 
-                    final DocumentReference documentReference = db.document(ID_CLIENTE_REFRENCIA)
+                    final DocumentReference documentRefCredito = db.document(ID_CLIENTE_REFRENCIA)
                             .collection("/creditos").document("credito");
 
-                    documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    documentRefCredito.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if (documentSnapshot.exists()) {
-                                String valorCuota = edt_valor_cuota.getText().toString().trim();
-                                Cuota cuota = new Cuota(Timestamp.now(), Integer.parseInt(valorCuota));
-                                collectionReference.add(cuota);
+
+                            //Credito credito = documentSnapshot.toObject(Credito.class);
+                            final String valorCuota = edt_valor_cuota.getText().toString().trim();
+
+                            if (!documentSnapshot.exists()) {
+                                edt_valor_cuota.setError("Primero agrega un prestamo");
+
+                            } else if (cliente.getiDeudaPrestamo() == 0) {
+                                edt_valor_cuota.setError("El prestamo ya ha finalizado");
+
+                            } else if (parseInt(valorCuota) > cliente.getiDeudaPrestamo()) {
+                                edt_valor_cuota.setError("Cuota mayor a la deuda");
+
+                            } else {
+                                writheBart(valorCuota);
                                 mDialogo.dismiss();
-                            }else {
-                                edt_valor_cuota.setError("No existe un prestamo");
                             }
                         }
-
                     });
-
                 }
-
             }
         });
 
@@ -181,5 +242,28 @@ public class ClienteDetailActivity extends AppCompatActivity implements ClienteD
         });
         Objects.requireNonNull(mDialogo.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mDialogo.show();
+    }
+
+    private void writheBart(String valorCuota) {
+        WriteBatch batch = db.batch();
+
+        //objet cuota by timestap and count
+        Cuota cuota = new Cuota(Timestamp.now(), Integer.parseInt(valorCuota));
+
+        // add new cuot
+        batch.set(collectionRefCuotas.document(),cuota);
+        // add decrement deuda
+        batch.update(documentRefCliente, "iDeudaPrestamo", FieldValue.increment(-(parseInt(valorCuota))));
+
+        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    mDialogo.dismiss();
+                }else if (task.getException() != null ){
+                    Toast.makeText(ClienteDetailActivity.this, "Escritura en lote no realizada", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

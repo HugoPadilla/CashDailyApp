@@ -55,6 +55,7 @@ public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente
 
                 Intent intent = new Intent(holder.context, ClienteDetailActivity.class);
                 intent.putExtra("id_cliente_ref",model.getbDocReferencia().getPath());
+                intent.putExtra("id_cliente_name",model.getdNombreCliente());
 
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) holder.context,
                         holder.item_client,"itemClienteToDetail");

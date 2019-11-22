@@ -12,6 +12,9 @@ public class Credito {
     private int fDeudaPrestamo;
     private boolean gActivo;
 
+    public Credito() {
+    }
+
     public Credito(Timestamp aFechaCreacion, String bModalida, int cNumeroCuotas,
                    int dValorCuotas, int eValorPrestamo, int fDeudaPrestamo, boolean gActivo) {
         this.aFechaCreacion = aFechaCreacion;
