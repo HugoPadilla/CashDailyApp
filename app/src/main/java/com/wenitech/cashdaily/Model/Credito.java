@@ -5,25 +5,36 @@ import com.google.firebase.Timestamp;
 public class Credito {
 
     private Timestamp aFechaCreacion;
-    private String bModalida;
-    private int cNumeroCuotas;
-    private int dValorCuotas;
-    private int eValorPrestamo;
-    private int fDeudaPrestamo;
-    private boolean gActivo;
+    private double bValorPrestamo;
+    private int cPorcentaje;
+    private double dTotalPrestamo;
+    private String eModalida;
+    private String fDiaSemanaCobrar;
+    private int gDiaQuincenaInicial;
+    private int hDiaQuincenaFinal;
+    private int iDiaMensual;
+    private int jNumeroCuotas;
+    private double kValorCuotas;
+    private boolean lActivo;
 
     public Credito() {
     }
 
-    public Credito(Timestamp aFechaCreacion, String bModalida, int cNumeroCuotas,
-                   int dValorCuotas, int eValorPrestamo, int fDeudaPrestamo, boolean gActivo) {
+    public Credito(Timestamp aFechaCreacion, double bValorPrestamo, int cPorcentaje, double dTotalPrestamo,
+                   String eModalida, String fDiaSemanaCobrar, int gDiaQuincenaInicial, int hDiaQuincenaFinal,
+                   int iDiaMensual, int jNumeroCuotas, double kValorCuotas, boolean lActivo) {
         this.aFechaCreacion = aFechaCreacion;
-        this.bModalida = bModalida;
-        this.cNumeroCuotas = cNumeroCuotas;
-        this.dValorCuotas = dValorCuotas;
-        this.eValorPrestamo = eValorPrestamo;
-        this.fDeudaPrestamo = fDeudaPrestamo;
-        this.gActivo = gActivo;
+        this.bValorPrestamo = bValorPrestamo;
+        this.cPorcentaje = cPorcentaje;
+        this.dTotalPrestamo = dTotalPrestamo;
+        this.eModalida = eModalida;
+        this.fDiaSemanaCobrar = fDiaSemanaCobrar;
+        this.gDiaQuincenaInicial = gDiaQuincenaInicial;
+        this.hDiaQuincenaFinal = hDiaQuincenaFinal;
+        this.iDiaMensual = iDiaMensual;
+        this.jNumeroCuotas = jNumeroCuotas;
+        this.kValorCuotas = kValorCuotas;
+        this.lActivo = lActivo;
     }
 
     public Timestamp getaFechaCreacion() {
@@ -34,51 +45,91 @@ public class Credito {
         this.aFechaCreacion = aFechaCreacion;
     }
 
-    public String getbModalida() {
-        return bModalida;
+    public double getbValorPrestamo() {
+        return bValorPrestamo;
     }
 
-    public void setbModalida(String bModalida) {
-        this.bModalida = bModalida;
+    public void setbValorPrestamo(double bValorPrestamo) {
+        this.bValorPrestamo = bValorPrestamo;
     }
 
-    public int getcNumeroCuotas() {
-        return cNumeroCuotas;
+    public int getcPorcentaje() {
+        return cPorcentaje;
     }
 
-    public void setcNumeroCuotas(int cNumeroCuotas) {
-        this.cNumeroCuotas = cNumeroCuotas;
+    public void setcPorcentaje(int cPorcentaje) {
+        this.cPorcentaje = cPorcentaje;
     }
 
-    public int getdValorCuotas() {
-        return dValorCuotas;
+    public double getdTotalPrestamo() {
+        return dTotalPrestamo;
     }
 
-    public void setdValorCuotas(int dValorCuotas) {
-        this.dValorCuotas = dValorCuotas;
+    public void setdTotalPrestamo(double dTotalPrestamo) {
+        this.dTotalPrestamo = dTotalPrestamo;
     }
 
-    public int geteValorPrestamo() {
-        return eValorPrestamo;
+    public String geteModalida() {
+        return eModalida;
     }
 
-    public void seteValorPrestamo(int eValorPrestamo) {
-        this.eValorPrestamo = eValorPrestamo;
+    public void seteModalida(String eModalida) {
+        this.eModalida = eModalida;
     }
 
-    public int getfDeudaPrestamo() {
-        return fDeudaPrestamo;
+    public String getfDiaSemanaCobrar() {
+        return fDiaSemanaCobrar;
     }
 
-    public void setfDeudaPrestamo(int fDeudaPrestamo) {
-        this.fDeudaPrestamo = fDeudaPrestamo;
+    public void setfDiaSemanaCobrar(String fDiaSemanaCobrar) {
+        this.fDiaSemanaCobrar = fDiaSemanaCobrar;
     }
 
-    public boolean isgActivo() {
-        return gActivo;
+    public int getgDiaQuincenaInicial() {
+        return gDiaQuincenaInicial;
     }
 
-    public void setgActivo(boolean gActivo) {
-        this.gActivo = gActivo;
+    public void setgDiaQuincenaInicial(int gDiaQuincenaInicial) {
+        this.gDiaQuincenaInicial = gDiaQuincenaInicial;
+    }
+
+    public int gethDiaQuincenaFinal() {
+        return hDiaQuincenaFinal;
+    }
+
+    public void sethDiaQuincenaFinal(int hDiaQuincenaFinal) {
+        this.hDiaQuincenaFinal = hDiaQuincenaFinal;
+    }
+
+    public int getiDiaMensual() {
+        return iDiaMensual;
+    }
+
+    public void setiDiaMensual(int iDiaMensual) {
+        this.iDiaMensual = iDiaMensual;
+    }
+
+    public int getjNumeroCuotas() {
+        return jNumeroCuotas;
+    }
+
+    public void setjNumeroCuotas(int jNumeroCuotas) {
+        this.jNumeroCuotas = jNumeroCuotas;
+    }
+
+    public double getkValorCuotas() {
+        return kValorCuotas;
+    }
+
+    public void setkValorCuotas(double kValorCuotas) {
+        this.kValorCuotas = kValorCuotas;
+    }
+
+    public boolean islActivo() {
+        return lActivo;
+    }
+
+    public void setlActivo(boolean lActivo) {
+        this.lActivo = lActivo;
     }
 }

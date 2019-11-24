@@ -10,8 +10,7 @@
         android:id="@+id/cardview_cuota"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foreground="?android:selectableItemBackground"
-        app:cardBackgroundColor="@color/colorPrimary">
+        android:foreground="?android:selectableItemBackground">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

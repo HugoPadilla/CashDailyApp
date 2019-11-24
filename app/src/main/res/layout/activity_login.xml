@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/primaryDarkColor"
     tools:context=".LoginActivity.LoginActivity">
 
     <TextView
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:backgroundTint="#FDFDFD"
-                android:textColorHint="@color/colorAccent">
+                android:textColorHint="@color/primaryTextColor">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_email"
@@ -78,7 +78,7 @@
                     android:hint="Correo electronico"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
-                    android:textColor="#E6FFFFFF"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="21sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textColorHint="@color/colorAccent">
+                android:textColorHint="@color/primaryTextColor">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_password"
@@ -97,7 +97,7 @@
                     android:hint="Contraseña"
                     android:inputType="textPassword"
                     android:singleLine="true"
-                    android:textColor="#E6FFFFFF"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -109,12 +109,12 @@
                 android:layout_marginTop="16dp"
                 android:clickable="true"
                 android:text="¿Olvidades tu contraseña?"
-                android:textColor="#E6FFFFFF" />
+                android:textColor="@color/primaryTextColor" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_ingresar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="42dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="16dp"
@@ -158,7 +158,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_create_account"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="42dp"
         android:layout_marginStart="42dp"
         android:layout_marginEnd="42dp"
         android:layout_marginBottom="16dp"

@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
     tools:context=".NewClienteActivity.NewClientActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarNewGasto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/primaryColor"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +25,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="42dp"
         android:text="Guardar"
-        android:textColor="#CC000000"
+        android:textColor="@color/primaryTextColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -65,7 +64,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:cardBackgroundColor="@color/colorPrimary"
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Datos personales"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorTituloText"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -92,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
-                android:textColorHint="#FFFFFF">
+                android:textColorHint="@color/colorSubtituloText">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_nombre_client"
@@ -100,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Nombre del Cliente "
                     android:inputType="textPersonName"
-                    android:textColor="#E6FFFFFF" />
+                    android:textColor="@color/colorSubtituloText" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -108,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
-                android:textColorHint="#FFFFFF">
+                android:textColorHint="@color/colorSubtituloText">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_numero_identificacion"
@@ -116,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Numero Indentificacion"
                     android:inputType="number"
-                    android:textColor="#E6FFFFFF"
+                    android:textColor="@color/colorSubtituloText"
                     android:textColorHint="@color/colorAccent" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -129,7 +127,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:cardBackgroundColor="@color/colorPrimary"
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -147,14 +144,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Datos de contacto"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorTituloText"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColorHint="#FFFFFF">
+                android:textColorHint="@color/colorSubtituloText">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_direccion"
@@ -162,13 +159,13 @@
                     android:layout_height="wrap_content"
                     android:hint="Direccion de residencia"
                     android:inputType="textPersonName"
-                    android:textColor="#E6FFFFFF" />
+                    android:textColor="@color/colorSubtituloText" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColorHint="#FFFFFF">
+                android:textColorHint="@color/colorSubtituloText">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_telefono"
@@ -176,7 +173,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Telefono"
                     android:inputType="phone"
-                    android:textColor="#E6FFFFFF" />
+                    android:textColor="@color/colorSubtituloText" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

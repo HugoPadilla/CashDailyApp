@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
     tools:context=".SingInActivity.SingInActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -39,8 +38,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColorHint="@color/colorAccent">
+                android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_user_name"
@@ -49,15 +47,14 @@
                     android:hint="Nombre de usuario"
                     android:inputType="textPersonName"
                     android:singleLine="true"
-                    android:textColor="#E6FFFFFF"
+                    android:textColor="@color/colorTituloText"
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
-                android:textColorHint="@color/colorAccent">
+                android:layout_marginTop="8dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_email_singin"
@@ -66,14 +63,13 @@
                     android:hint="Correo electronico"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
-                    android:textColor="#E6FFFFFF"
+                    android:textColor="@color/colorTituloText"
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColorHint="@color/colorAccent">
+                android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_password_singin"
@@ -82,15 +78,14 @@
                     android:hint="Contraseña"
                     android:inputType="textPassword"
                     android:singleLine="true"
-                    android:textColor="#E6FFFFFF"
+                    android:textColor="@color/colorTituloText"
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColorHint="@color/colorAccent">
+                android:layout_marginTop="8dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_confirn_password_singin"
@@ -99,14 +94,14 @@
                     android:hint="Confirmar Contraseña"
                     android:inputType="textPassword"
                     android:singleLine="true"
-                    android:textColor="#E6FFFFFF"
+                    android:textColor="@color/colorTituloText"
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/bt_sing_in"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="42dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="16dp"
@@ -157,7 +152,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="¿Ya tienes una cuenta?"
-            android:textColor="#E6FFFFFF"
+            android:textColor="@color/colorNormalText"
             android:textSize="17sp"
             android:textStyle="bold" />
 
@@ -168,7 +163,7 @@
             android:layout_marginLeft="8dp"
             android:linksClickable="true"
             android:text="Inicia sesion."
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/primaryDarkColor"
             android:textSize="17sp"
             android:textStyle="bold" />
     </LinearLayout>

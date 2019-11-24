@@ -18,22 +18,20 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:collapseContentDescription="@string/appbar_scrolling_view_behavior"
-            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
-            app:menu="@menu/menu_main_toolbar"
-            />
+            app:menu="@menu/menu_main_toolbar" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            app:tabIndicatorColor="#FFFFFF"
+            android:background="@color/primaryColor"
             android:scrollbarSize="2dp"
             app:tabGravity="fill"
             app:tabMode="fixed"
             app:tabSelectedTextColor="#FFFFFF"
-            app:tabTextColor="#B2FFFFFF"/>
+            app:tabTextColor="#99FFFFFF" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -52,7 +50,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:backgroundTint="#00BFA5"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_add_mas_24dp"
@@ -66,12 +63,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:backgroundTint="#00E676"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_attach_money_white_24dp"
-        android:visibility="invisible"
         android:transitionName="newGasto"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

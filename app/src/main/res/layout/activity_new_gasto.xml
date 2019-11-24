@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
     tools:context=".NewGastoActivity.NewGastoActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -21,14 +20,13 @@
             android:id="@+id/toolbarNewGasto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
             android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
             app:title="Agregar Gasto" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/textInputLayou"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
