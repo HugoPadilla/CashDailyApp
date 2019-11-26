@@ -39,7 +39,7 @@ public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente
         if (model.getjAtrasado()){
             holder.tv_estado.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
         } else if (!model.getjAtrasado()){
-            holder.tv_estado.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_error_outline_red_24dp,0,0,0);
+            holder.tv_estado.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_error_outline_rojo_24dp,0,0,0);
         }
 
         holder.tv_valorPrestamo.setText(String.valueOf(model.gethValorPrestamo()));

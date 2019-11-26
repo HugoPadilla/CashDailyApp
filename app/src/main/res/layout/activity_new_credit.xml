@@ -19,7 +19,7 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:contentScrim="?attr/colorPrimary"
 
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
 
@@ -59,8 +59,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_total_prestamo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="numberSigned" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -75,8 +77,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_valor_prestamo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="numberSigned" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -92,8 +96,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_porcentaje"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="numberSigned" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -130,8 +136,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView13">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_fecha"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="date" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -148,19 +156,69 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView13">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_hora"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="date" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <RadioGroup
+                android:id="@+id/radioGroup2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView16">
+
+                <RadioButton
+                    android:id="@+id/radiobutton_diario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dairio" />
+
+                <RadioButton
+                    android:id="@+id/radiobutton_semanal"
+                    style="@android:style/Widget.Material.Light.CompoundButton.RadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="Semanal" />
+
+                <RadioButton
+                    android:id="@+id/radiobutton_quincenal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:text="Quincenal" />
+
+                <RadioButton
+                    android:id="@+id/radiobutton_mensual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:text="Mensual" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/button_realizar_prestamo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="64dp"
+                android:drawableLeft="@drawable/ic_note_add_black_24dp"
+                android:text="Realizar Prestamo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@android:drawable/ic_input_add" />"
+    "
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

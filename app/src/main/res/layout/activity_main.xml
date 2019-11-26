@@ -52,7 +52,7 @@
         android:layout_margin="16dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_add_mas_24dp"
+        android:src="@drawable/ic_mas_blanco_24dp"
         android:transitionName="appBarNewCliente"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -65,7 +65,7 @@
         android:layout_margin="16dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_attach_money_white_24dp"
+        android:src="@drawable/ic_simbolo_dolar_blanco_24dp"
         android:transitionName="newGasto"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
