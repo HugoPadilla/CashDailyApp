@@ -4,25 +4,23 @@ import com.google.firebase.Timestamp;
 
 public class Credito {
 
-    private Timestamp aFechaCreacion;
+    private Timestamp aFechaCreacion;//
     private double bValorPrestamo;
-    private int cPorcentaje;
-    private double dTotalPrestamo;
-    private String eModalida;
+    private int cPorcentaje;//
+    private double dTotalPrestamo;//
+    private String eModalida;//
     private String fDiaSemanaCobrar;
     private int gDiaQuincenaInicial;
     private int hDiaQuincenaFinal;
     private int iDiaMensual;
-    private int jNumeroCuotas;
+    private double jNumeroCuotas;
     private double kValorCuotas;
     private boolean lActivo;
 
     public Credito() {
     }
 
-    public Credito(Timestamp aFechaCreacion, double bValorPrestamo, int cPorcentaje, double dTotalPrestamo,
-                   String eModalida, String fDiaSemanaCobrar, int gDiaQuincenaInicial, int hDiaQuincenaFinal,
-                   int iDiaMensual, int jNumeroCuotas, double kValorCuotas, boolean lActivo) {
+    public Credito(Timestamp aFechaCreacion, double bValorPrestamo, int cPorcentaje, double dTotalPrestamo, String eModalida, String fDiaSemanaCobrar, int gDiaQuincenaInicial, int hDiaQuincenaFinal, int iDiaMensual, double jNumeroCuotas, double kValorCuotas, boolean lActivo) {
         this.aFechaCreacion = aFechaCreacion;
         this.bValorPrestamo = bValorPrestamo;
         this.cPorcentaje = cPorcentaje;
@@ -109,11 +107,11 @@ public class Credito {
         this.iDiaMensual = iDiaMensual;
     }
 
-    public int getjNumeroCuotas() {
+    public double getjNumeroCuotas() {
         return jNumeroCuotas;
     }
 
-    public void setjNumeroCuotas(int jNumeroCuotas) {
+    public void setjNumeroCuotas(double jNumeroCuotas) {
         this.jNumeroCuotas = jNumeroCuotas;
     }
 

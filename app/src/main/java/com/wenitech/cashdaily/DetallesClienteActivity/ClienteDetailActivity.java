@@ -162,6 +162,7 @@ public class ClienteDetailActivity extends AppCompatActivity implements ClienteD
 
         if (item.getItemId() == R.id.menuItemNewCredit) {
             Intent intent = new Intent(ClienteDetailActivity.this, NewCreditActivity.class);
+            intent.putExtra("ID_CLIENTE_REFERENCIA",ID_CLIENTE_REFRENCIA);
             startActivity(intent);
         }
 
@@ -251,7 +252,7 @@ public class ClienteDetailActivity extends AppCompatActivity implements ClienteD
         Cuota cuota = new Cuota(Timestamp.now(), Integer.parseInt(valorCuota));
 
         // add new cuot
-        batch.set(collectionRefCuotas.document(),cuota);
+        batch.set(collectionRefCuotas.document(), cuota);
         // add decrement deuda
         batch.update(documentRefCliente, "iDeudaPrestamo", FieldValue.increment(-(parseInt(valorCuota))));
 
@@ -260,7 +261,7 @@ public class ClienteDetailActivity extends AppCompatActivity implements ClienteD
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     mDialogo.dismiss();
-                }else if (task.getException() != null ){
+                } else if (task.getException() != null) {
                     Toast.makeText(ClienteDetailActivity.this, "Escritura en lote no realizada", Toast.LENGTH_SHORT).show();
                 }
             }

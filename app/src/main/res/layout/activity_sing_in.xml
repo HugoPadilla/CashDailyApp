@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_amanecer"
     tools:context=".SingInActivity.SingInActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -21,6 +22,7 @@
         android:id="@+id/form_sing"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/form_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,16 +31,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
             android:orientation="vertical"
             android:paddingLeft="8dp"
             android:paddingRight="8dp">
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:textColorHint="@color/primaryTextColor"
+                app:boxBackgroundColor="#34000000">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_user_name"
@@ -47,14 +52,18 @@
                     android:hint="Nombre de usuario"
                     android:inputType="textPersonName"
                     android:singleLine="true"
-                    android:textColor="@color/colorTituloText"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:textColorHint="@color/primaryTextColor"
+                app:boxBackgroundColor="#34000000"
+                app:boxStrokeColor="#FFFFFF">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_email_singin"
@@ -63,13 +72,17 @@
                     android:hint="Correo electronico"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
-                    android:textColor="@color/colorTituloText"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:textColorHint="@color/primaryTextColor"
+                app:boxBackgroundColor="#34000000">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_password_singin"
@@ -78,14 +91,17 @@
                     android:hint="Contraseña"
                     android:inputType="textPassword"
                     android:singleLine="true"
-                    android:textColor="@color/colorTituloText"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:textColorHint="@color/primaryTextColor"
+                app:boxBackgroundColor="#34000000">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_confirn_password_singin"
@@ -94,18 +110,49 @@
                     android:hint="Confirmar Contraseña"
                     android:inputType="textPassword"
                     android:singleLine="true"
-                    android:textColor="@color/colorTituloText"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aceptar los "
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Terminos "
+                    android:textStyle="bold|italic"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp"
+                    android:text="y "/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primaryTextColor"
+                    android:textStyle="bold|italic"
+                    android:textSize="18sp"
+                    android:text="Condiciones."/>
+
+            </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/bt_sing_in"
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/botton_login"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/colorAccent"
                 android:text="Crear Cuenta"
                 android:textColor="#FFFFFF" />
 
@@ -114,9 +161,12 @@
 
     <ProgressBar
         android:id="@+id/progressBar_singin"
-        style="?android:attr/progressBarStyleHorizontal"
+        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
         android:layout_width="0dp"
-        android:layout_height="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="220dp"
         android:indeterminate="true"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -131,6 +181,7 @@
         android:layout_marginBottom="8dp"
         android:text="Creando cuenta..."
         android:textColor="#E6FFFFFF"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/progressBar_singin"
@@ -152,7 +203,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="¿Ya tienes una cuenta?"
-            android:textColor="@color/colorNormalText"
+            android:textColor="@color/primaryTextColor"
             android:textSize="17sp"
             android:textStyle="bold" />
 
@@ -163,7 +214,7 @@
             android:layout_marginLeft="8dp"
             android:linksClickable="true"
             android:text="Inicia sesion."
-            android:textColor="@color/primaryDarkColor"
+            android:textColor="@color/colorAccent"
             android:textSize="17sp"
             android:textStyle="bold" />
     </LinearLayout>

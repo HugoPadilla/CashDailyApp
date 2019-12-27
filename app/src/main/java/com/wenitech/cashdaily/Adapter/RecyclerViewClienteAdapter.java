@@ -18,6 +18,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
 import com.wenitech.cashdaily.DetallesClienteActivity.ClienteDetailActivity;
+import com.wenitech.cashdaily.HisotrialPrestamosActivity.HistorialPrestamosActivity;
 import com.wenitech.cashdaily.Model.Cliente;
 import com.wenitech.cashdaily.R;
 
@@ -45,7 +46,7 @@ public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente
         holder.tv_valorPrestamo.setText(String.valueOf(model.gethValorPrestamo()));
         holder.tv_deudaPrestamo.setText(String.valueOf(model.getiDeudaPrestamo()));
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy");
         Date dateSever = model.getaFechaCreacion().toDate();
         holder.tv_fechaCreacion.setText(format.format(dateSever));
 
@@ -53,7 +54,7 @@ public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(holder.context, ClienteDetailActivity.class);
+                Intent intent = new Intent(holder.context, HistorialPrestamosActivity.class);
                 intent.putExtra("id_cliente_ref",model.getbDocReferencia().getPath());
                 intent.putExtra("id_cliente_name",model.getdNombreCliente());
 

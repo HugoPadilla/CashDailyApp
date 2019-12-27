@@ -29,7 +29,7 @@ public class RecyclerViewCuotaAdapter extends FirestoreRecyclerAdapter<Cuota, Re
     @NonNull
     @Override
     public mViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_credito, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cuota, parent, false);
         return new mViewHolder(view);
     }
 

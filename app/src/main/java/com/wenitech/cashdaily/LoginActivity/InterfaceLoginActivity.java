@@ -2,8 +2,8 @@ package com.wenitech.cashdaily.LoginActivity;
 
 public interface InterfaceLoginActivity {
     interface view{
-        void BotonIngresarPress();
-        void BotonCrearCuentaPress();
+        void iniciarSesion();
+        void goActivityRegistrarse();
 
         boolean FormValido();
 

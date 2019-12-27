@@ -64,7 +64,7 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SingInActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 finish();
             }
@@ -77,10 +77,10 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
     @Override
     public void crearCuenta() {
 
-        if (!isFormValid()){
+        if (!isFormValid()) {
             return;
-        }else {
-            presenter.CrearCuenta(edt_userName.getText().toString().trim(),edt_correo.getText().toString().trim(),
+        } else {
+            presenter.CrearCuenta(edt_userName.getText().toString().trim(), edt_correo.getText().toString().trim(),
                     edt_password.getText().toString().trim());
         }
     }
@@ -93,22 +93,22 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
         String password = edt_password.getText().toString().trim();
         String passconfir = edt_password_confirm.getText().toString().trim();
 
-        if(TextUtils.isEmpty(userName)){
+        if (TextUtils.isEmpty(userName)) {
             edt_userName.setError("Ingresa un nombre de usuario");
             valid = false;
-        }else if (!Patterns.EMAIL_ADDRESS.matcher(correo).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
             edt_correo.setError("No es un correo valido");
             valid = false;
-        }else if(TextUtils.isEmpty(password)){
+        } else if (TextUtils.isEmpty(password)) {
             edt_password.setError("Ingresa una Contraseña");
             valid = false;
-        }else if (password.length() < 8){
+        } else if (password.length() < 8) {
             edt_password.setError("Debe contener minimo 8 caracteres");
             valid = false;
-        } else if(TextUtils.isEmpty(passconfir)){
+        } else if (TextUtils.isEmpty(passconfir)) {
             edt_password_confirm.setError("Confirma la Contraseña");
             valid = false;
-        }else if (!TextUtils.equals(password,passconfir)){
+        } else if (!TextUtils.equals(password, passconfir)) {
             edt_password.setError("Las contraseñas no coinciden");
             edt_password_confirm.setText("");
             valid = false;
@@ -137,11 +137,10 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
     public void onSucess(String emailSucess) {
         Toast.makeText(this, "Su nueva Cuenta se creo con exito", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(SingInActivity.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }
-
 
     @Override
     public void onExist() {

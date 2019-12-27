@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryDarkColor"
+    android:background="@drawable/login_fondo"
     tools:context=".LoginActivity.LoginActivity">
 
     <TextView
         android:id="@+id/textView20"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="42dp"
         android:layout_marginEnd="16dp"
-        android:text="Bienvenido"
+        android:text="Iniciar sesión"
         android:textColor="#E6FFFFFF"
-        android:textSize="36sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,12 +24,12 @@
 
     <TextView
         android:id="@+id/textView21"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text=" Inicia sesion para continuar."
+        android:text="¡Pongamonos a trabajar!"
         android:textColor="#CCFFFFFF"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,64 +64,65 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:backgroundTint="#FDFDFD"
                 android:textColorHint="@color/primaryTextColor">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_email"
+                    android:id="@+id/edit_text_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_person_green_24dp"
                     android:drawablePadding="10dp"
                     android:hint="Correo electronico"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:textColor="@color/primaryTextColor"
-                    android:textSize="21sp" />
+                    android:textSize="18sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textColorHint="@color/primaryTextColor">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_password"
+                    android:id="@+id/edit_text_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_lock_green_24dp"
                     android:drawablePadding="10dp"
                     android:hint="Contraseña"
                     android:inputType="textPassword"
                     android:singleLine="true"
                     android:textColor="@color/primaryTextColor"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/textview_reset_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="16dp"
                 android:clickable="true"
                 android:text="¿Olvidades tu contraseña?"
-                android:textColor="@color/primaryTextColor" />
+                android:textColor="@color/primaryTextColor"
+                android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button_ingresar"
+                android:id="@+id/boton_iniciar_sesion"
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:layout_marginStart="16dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="32dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="8dp"
-                android:background="@drawable/botton_login"
+                android:backgroundTint="#2979FF"
                 android:text="iniciar sesión"
-                android:textColor="#FFFFFF" />
+                android:textColor="@color/primaryTextColor" />
 
         </LinearLayout>
 
@@ -155,33 +156,30 @@
         app:layout_constraintEnd_toEndOf="@+id/progressBarLogin"
         app:layout_constraintStart_toStartOf="@+id/progressBarLogin" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_create_account"
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginEnd="42dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/botton_sing_up"
-        android:text="crea una cuenta"
-        android:textColor="#FFFFFF"
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="62dp"
+        android:layout_marginBottom="32dp"
+        android:text="¿No tienes cuenta?"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView12"
-        android:layout_width="0dp"
+        android:id="@+id/textview_registrarse"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:gravity="center"
-        android:text="o "
-        android:textColor="#E6FFFFFF"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button_create_account"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginStart="8dp"
+        android:text="Regístrate"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView12"
+        app:layout_constraintStart_toEndOf="@+id/textView12"
+        app:layout_constraintTop_toTopOf="@+id/textView12" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

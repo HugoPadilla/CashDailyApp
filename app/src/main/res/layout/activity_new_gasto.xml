@@ -31,7 +31,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:textColorHint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_hora_gasto">
@@ -42,10 +41,10 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_simbolo_dolar_blanco_24dp"
             android:drawablePadding="8dp"
-            android:hint="Valor nuevo gasto"
+            android:hint="Valor del gasto"
             android:inputType="numberSigned|number"
             android:singleLine="true"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/colorSubtituloText"
             android:textSize="24sp"
             android:textStyle="bold"
             android:typeface="monospace" />
@@ -57,7 +56,6 @@
         android:layout_height="140dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:textColorHint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayou">
@@ -72,7 +70,7 @@
             android:inputType="textAutoCorrect|textMultiLine"
             android:maxLength="120"
             android:singleLine="false"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/colorSubtituloText"
             android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,6 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:clickable="true"
         android:ems="10"
@@ -101,8 +100,7 @@
         android:hint="Fecha del evento"
         android:inputType="date"
         android:maxLines="1"
-        android:textColor="#E6FFFFFF"
-        android:textColorHint="#E6FFFFFF"
+        android:textColor="@color/colorSubtituloText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout3" />
@@ -120,8 +118,7 @@
         android:hint="Hora del evento"
         android:inputType="date"
         android:maxLines="1"
-        android:textColor="#E6FFFFFF"
-        android:textColorHint="#E6FFFFFF"
+        android:textColor="@color/colorSubtituloText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_fecha_gasto" />

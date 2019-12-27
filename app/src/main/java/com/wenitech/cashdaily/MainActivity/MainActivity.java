@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-
     private FloatingActionButton fabNewClient, fabNewGasto;
 
     final FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -43,22 +42,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         // Add Toolbar
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Cash Daily App");
         setSupportActionBar(toolbar);
+
         //Add Tanlayou and View Pager
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(new mAdacter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
+
         //Configurar el selector de tab para cambiar el Fab
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
