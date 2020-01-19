@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Cash Daily</string>
+    <string name="open_drawer">abrir</string>
+    <string name="close_drawer">cerrar</string>
 </resources>

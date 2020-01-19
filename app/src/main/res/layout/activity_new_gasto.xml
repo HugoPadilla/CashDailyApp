@@ -39,7 +39,7 @@
             android:id="@+id/edt_valor_gasto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_simbolo_dolar_blanco_24dp"
+            android:drawableLeft="@drawable/ic_asset_dolar_blanco"
             android:drawablePadding="8dp"
             android:hint="Valor del gasto"
             android:inputType="numberSigned|number"

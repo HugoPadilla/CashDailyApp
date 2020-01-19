@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
@@ -39,7 +38,6 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.WriteBatch;
 import com.wenitech.cashdaily.Adapter.RecyclerViewCuotaAdapter;
 import com.wenitech.cashdaily.Model.Cliente;
-import com.wenitech.cashdaily.Model.Credito;
 import com.wenitech.cashdaily.Model.Cuota;
 import com.wenitech.cashdaily.NewCreditoActivity.NewCreditActivity;
 import com.wenitech.cashdaily.R;
@@ -48,7 +46,7 @@ import java.util.Objects;
 
 import static java.lang.Integer.parseInt;
 
-public class ClienteDetailActivity extends AppCompatActivity implements ClienteDetailInterface.view, View.OnClickListener {
+public class ClienteDetailActivity extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference collectionRefCuotas;
@@ -58,7 +56,6 @@ public class ClienteDetailActivity extends AppCompatActivity implements ClienteD
     private Toolbar toolbar;
     private Dialog mDialogo;
 
-
     private Cliente cliente;
 
     private TextView tv_identficacion_cliente, tv_ubicacion_cliente, tv_prestamo_actual, tv_deuda_prestamo;
@@ -67,23 +64,23 @@ public class ClienteDetailActivity extends AppCompatActivity implements ClienteD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente_detail);
+
         ClienteDetailInterface.presenter presenter = new ClienteDetailPresenter(this);
-        ID_CLIENTE_REFRENCIA = getIntent().getStringExtra("id_cliente_ref");
+        /*ID_CLIENTE_REFRENCIA = getIntent().getStringExtra("id_cliente_ref");*/
 
         mDialogo = new Dialog(this);
 
-        addToolbar();
-        addVies();
-        addRecyclerview();
+        /*addToolbar();
+        addVies();*/
+        /*addRecyclerview();
         addViewsListener();
-        addSnapListener();
+        addSnapListener();*/
     }
 
     private void addViewsListener() {
-        findViewById(R.id.btn_agregar_cuota).setOnClickListener(this);
     }
 
-    private void addSnapListener() {
+    /*private void addSnapListener() {
         documentRefCliente = db.document(ID_CLIENTE_REFRENCIA);
         documentRefCliente.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -104,21 +101,21 @@ public class ClienteDetailActivity extends AppCompatActivity implements ClienteD
                 }
             }
         });
-    }
+    }*/
 
-    private void addToolbar() {
+    /*private void addToolbar() {
         toolbar = findViewById(R.id.toolbar_cliente_detail);
         toolbar.setTitle(getIntent().getStringExtra("id_cliente_name"));
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-    }
+    }*/
 
-    private void addVies() {
+    /*private void addVies() {
         tv_identficacion_cliente = findViewById(R.id.tv_identificacion_cliente);
         tv_ubicacion_cliente = findViewById(R.id.tv_ubicacion_cliente);
         tv_prestamo_actual = findViewById(R.id.tv_prestamo_actual);
         tv_deuda_prestamo = findViewById(R.id.tv_deuda_pretamo);
-    }
+    }*/
 
     private void addRecyclerview() {
         assert ID_CLIENTE_REFRENCIA != null;
@@ -132,32 +129,32 @@ public class ClienteDetailActivity extends AppCompatActivity implements ClienteD
         FirestoreRecyclerOptions<Cuota> options = new FirestoreRecyclerOptions.Builder<Cuota>()
                 .setQuery(query, Cuota.class).build();
 
-        RecyclerView recyclerViewCuotas = findViewById(R.id.recyclerviewCredito);
+        /*RecyclerView recyclerViewCuotas = findViewById(R.id.recyclerviewCredito);
         recyclerViewCuotaAdapter = new RecyclerViewCuotaAdapter(options);
         recyclerViewCuotas.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewCuotas.setNestedScrollingEnabled(true);
-        recyclerViewCuotas.setAdapter(recyclerViewCuotaAdapter);
+        recyclerViewCuotas.setAdapter(recyclerViewCuotaAdapter);*/
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        recyclerViewCuotaAdapter.startListening();
+        //recyclerViewCuotaAdapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        recyclerViewCuotaAdapter.stopListening();
+        //recyclerViewCuotaAdapter.stopListening();
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_client_detail, menu);
+        getMenuInflater().inflate(R.menu.menu_botton_app_client_detail, menu);
         return true;
-    }
+    }*/
 
-    @Override
+   /* @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.menuItemNewCredit) {
@@ -168,19 +165,19 @@ public class ClienteDetailActivity extends AppCompatActivity implements ClienteD
 
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
+*/
+   /* @Override
     public void onBackPressed() {
         super.onBackPressed();
         finishAfterTransition();
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_agregar_cuota) {
             ShowDialogo();
         }
-    }
+    }*/
 
     private void ShowDialogo() {
 

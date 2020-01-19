@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
+import com.wenitech.cashdaily.ActivityMainListaClientes.ListaClientesActivity;
 import com.wenitech.cashdaily.DetallesClienteActivity.ClienteDetailActivity;
 import com.wenitech.cashdaily.HisotrialPrestamosActivity.HistorialPrestamosActivity;
 import com.wenitech.cashdaily.Model.Cliente;
@@ -40,7 +41,7 @@ public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente
         if (model.getjAtrasado()){
             holder.tv_estado.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
         } else if (!model.getjAtrasado()){
-            holder.tv_estado.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_error_outline_rojo_24dp,0,0,0);
+            holder.tv_estado.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_systema_error_outline_rojo,0,0,0);
         }
 
         holder.tv_valorPrestamo.setText(String.valueOf(model.gethValorPrestamo()));
@@ -54,7 +55,7 @@ public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(holder.context, HistorialPrestamosActivity.class);
+                Intent intent = new Intent(holder.context, ClienteDetailActivity.class);
                 intent.putExtra("id_cliente_ref",model.getbDocReferencia().getPath());
                 intent.putExtra("id_cliente_name",model.getdNombreCliente());
 

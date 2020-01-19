@@ -215,7 +215,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="64dp"
                 android:layout_marginBottom="32dp"
-                android:drawableLeft="@drawable/ic_note_add_black_24dp"
                 android:text="Realizar Prestamo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

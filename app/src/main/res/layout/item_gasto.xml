@@ -23,7 +23,7 @@
                 android:id="@+id/imageViewPerfil2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/bg_gradient"
+                android:src="@drawable/ic_baground_iten_perfil"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

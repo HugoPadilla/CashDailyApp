@@ -4,18 +4,17 @@
     >
 
     <item
-        android:id="@+id/app_bar_search"
-        android:icon="@drawable/ic_search_black_24dp"
+        android:id="@+id/menu_iten_clound"
+        android:icon="@drawable/ic_cloud_done"
         android:title="Buscar"
-        app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always" />
     <item
-        android:id="@+id/menuItenPerfil"
-        android:title="My Perfil" />
+        android:id="@+id/menu_iten_sincronizacion"
+        android:title="Sincronización" />
     <item
-        android:id="@+id/menuItemAbout"
-        android:title="Acerca de la App" />
+        android:id="@+id/menu_iten_tema"
+        android:title="Temas" />
     <item
-        android:id="@+id/menuItenSingOut"
-        android:title="Cerrar Sesion" />
+        android:id="@+id/menu_iten_salir"
+        android:title="Salir" />
 </menu>

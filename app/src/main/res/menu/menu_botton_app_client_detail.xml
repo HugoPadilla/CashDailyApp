@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuItemNewCredit"
+        android:icon="@drawable/ic_systema_note_add_blanco"
+        android:title="Nuevo"
+        app:showAsAction="always" />
+    <item
+        android:icon="@drawable/ic_systema_persona_outline_blanco"
+        android:title="Informacion"
+        app:showAsAction="always" />
+    <item
+        android:icon="@drawable/ic_systema_historial_blanco"
+        android:title="Historial"
+        app:showAsAction="always"
+        />
+    <item
+        android:icon="@drawable/ic_systema_eliminar_blanco"
+        android:title="Eliminar"/>
+</menu>

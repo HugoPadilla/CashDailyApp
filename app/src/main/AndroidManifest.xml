@@ -9,16 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivityResetPassword.ResetPasswordActivity"></activity>
+        <activity android:name=".ActivityMainListaClientes.ListaClientesActivity"></activity>
+        <activity android:name=".ActivityLoginResetPassword.ResetPasswordActivity" />
         <activity android:name=".HisotrialPrestamosActivity.HistorialPrestamosActivity" />
         <activity android:name=".NewCreditoActivity.NewCreditActivity" />
-        <activity android:name=".SingInActivity.SingInActivity" />
-        <activity android:name=".LoginActivity.LoginActivity" />
+        <activity android:name=".ActivityLoginSingIn.SingInActivity" />
+        <activity android:name=".ActivityLogin.LoginActivity" />
         <activity android:name=".DetallesGastoActivity.GastoDetailActivity" />
         <activity android:name=".NewClienteActivity.NewClientActivity" />
         <activity android:name=".DetallesClienteActivity.ClienteDetailActivity" />
         <activity android:name=".NewGastoActivity.NewGastoActivity" />
-        <activity android:name=".MainActivity.MainActivity">
+        <activity android:name=".ActivityMain.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
