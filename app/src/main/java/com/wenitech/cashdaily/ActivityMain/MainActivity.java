@@ -8,42 +8,78 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.wenitech.cashdaily.ActivityLogin.LoginActivity;
-import com.wenitech.cashdaily.ActivityMainListaClientes.ListaClientesActivity;
-import com.wenitech.cashdaily.DetallesClienteActivity.ClienteDetailActivity;
+import com.wenitech.cashdaily.ActivityLogin.ActivityIniciarSesion.LoginActivity;
+import com.wenitech.cashdaily.ActivityClientes.ListaClientesActivity;
+import com.wenitech.cashdaily.PerfilUsuarioActivity;
 import com.wenitech.cashdaily.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
 
     private Toolbar toolbar;
-    private ConstraintLayout mConstraintLayout;
 
-    final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    // Todo: declara navigation drwer
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
+
+    // Todo: declara view navigation header
+    private TextView textViewDrawerNombre;
+    private TextView textViewDrawerInicialNombre;
+    private TextView textViewDrawerCorreo;
+
+    // Todo: declar view activitydad principal
+    private ConstraintLayout mConstraintLayout;
+    private CardView cardViewClientes;
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+
+    public MainActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAuth = FirebaseAuth.getInstance();
         agregarToolbar();
         ConfigurarNavigationDrawer();
+        inicializarDatosNavigationDrawerHeader();
+
         mConstraintLayout = findViewById(R.id.constrain_layout_main_activity);
         castingCardView();
     }
 
+    private void inicializarDatosNavigationDrawerHeader() {
+        mUser = mAuth.getCurrentUser();
+        if (mUser != null){
+            String nombreUsuario = mUser.getDisplayName();
+            String correoUsuario = mUser.getEmail();
+            textViewDrawerNombre.setText(nombreUsuario);
+            textViewDrawerCorreo.setText(correoUsuario);
+            if (nombreUsuario.length()>= 1){
+                textViewDrawerInicialNombre.setText(nombreUsuario.substring(0,1).toUpperCase());
+            }
+
+
+        }
+    }
+
     private void castingCardView() {
-        ConstraintLayout card_view_clientes = findViewById(R.id.card_view_clientes);
-        card_view_clientes.setOnClickListener(this);
+        ConstraintLayout constraintLayoutClientes = findViewById(R.id.constrain_layout_clientes);
+        cardViewClientes = findViewById(R.id.card_view_clientes);
+        constraintLayoutClientes.setOnClickListener(this);
     }
 
     private void agregarToolbar() {
@@ -53,39 +89,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
     }
     private void ConfigurarNavigationDrawer() {
-        DrawerLayout mDrawerLayout = findViewById(R.id.drawer_layout_main_activity);
+        // Todo: casting navigation drawer
+        mDrawerLayout = findViewById(R.id.drawer_layout_main_activity);
+        mNavigationView = findViewById(R.id.navigation_view_main_activity);
+
+        // Casting view navigation header
+        View drawerHeader = mNavigationView.getHeaderView(0);
+        textViewDrawerNombre = drawerHeader.findViewById(R.id.text_view_drawer_name);
+        textViewDrawerInicialNombre = drawerHeader.findViewById(R.id.text_view_drawer_inicial);
+        textViewDrawerCorreo = drawerHeader.findViewById(R.id.text_view_drawer_email);
+
+        // Configurar abrir y cerrar navigation drawer
         ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer);
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
         mActionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         mActionBarDrawerToggle.syncState();
 
         // Navigatio view Listener
-        NavigationView mNavigationView = findViewById(R.id.navigation_view_main_activity);
         mNavigationView.setNavigationItemSelectedListener(this);
     }
 
-   // Inflar opciones de menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflar opciones de menu
         getMenuInflater().inflate(R.menu.menu_main_toolbar,menu);
         return true;
     }
-    // chekear que elemento del menu se ha presionado
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // verificar item del menu del toolbar
         switch (item.getItemId()){
             case R.id.menu_iten_clound:
-                Intent intent = new Intent(MainActivity.this, ClienteDetailActivity.class);
-                startActivity(intent);
+                Toast.makeText(this, "clound", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_iten_sincronizacion:
-                Toast.makeText(this, "Sincronizacion clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Sincronización", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_iten_tema:
-                Toast.makeText(this, "tema clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "thema", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_iten_salir:
-                Toast.makeText(this, "Salir clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Salir", Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -93,24 +138,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        // Verificar elemento selecionado item naigation drawer
         switch (menuItem.getItemId()){
             case R.id.menu_iten_drawer_perfil:
-                Toast.makeText(this, "navigation item perfil", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, PerfilUsuarioActivity.class);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
             break;
-            case R.id.menu_iten_drawer_configuracion:
-                Toast.makeText(this, "navigation item configuracion", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.menu_iten_drawer_suscripcion:
                 Toast.makeText(this, "navigation item suscripcion", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_iten_drawer_configuracion:
+                Toast.makeText(this, "navigation item configuracion", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_iten_drawer_compartir:
                 Toast.makeText(this, "navigation item compartir", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_iten_drawer_calificar_app:
                 Toast.makeText(this, "navigation item calificar", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.menu_iten_drawer_cerrar_sesion:
-                Toast.makeText(this, "navigation item cerrar sesion", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_iten_drawer_ayuda:
                 Toast.makeText(this, "navigation item ayuda", Toast.LENGTH_SHORT).show();
@@ -121,28 +165,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.menu_iten_drawer_acerca_de:
                 Toast.makeText(this, "navigation item acerda de la app", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.menu_iten_drawer_cerrar_sesion:
+                mAuth.signOut();
+                UpdateUi(mAuth.getCurrentUser());
+                break;
         }
         return true;
     }
 
     @Override
     public void onClick(View v) {
+        // Click listener
         switch (v.getId()){
-            case R.id.card_view_clientes:
+            case R.id.constrain_layout_clientes:
                 Intent intent = new Intent(MainActivity.this, ListaClientesActivity.class);
-                startActivity(intent);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
         }
-
-         /*if (i == R.id.fabNewGasto){
-           Intent intent = new Intent(MainActivity.this, NewGastoActivity.class);
-           Bundle options = ActivityOptions.makeSceneTransitionAnimation( MainActivity.this,
-                    fabNewGasto,"newGasto").toBundle();
-            startActivity(intent,options);
-        }
-        */
     }
-
 
     @Override
     protected void onStart() {

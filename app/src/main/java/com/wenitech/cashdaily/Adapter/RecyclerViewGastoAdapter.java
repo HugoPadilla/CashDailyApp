@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.wenitech.cashdaily.DetallesGastoActivity.GastoDetailActivity;
 import com.wenitech.cashdaily.Model.Gasto;
 import com.wenitech.cashdaily.R;
 
@@ -40,8 +39,7 @@ public class RecyclerViewGastoAdapter extends FirestoreRecyclerAdapter<Gasto, Re
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(holder.context, GastoDetailActivity.class);
-                holder.context.startActivity(intent);
+
             }
         });
     }

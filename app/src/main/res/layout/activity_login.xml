@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_login"
-    tools:context=".ActivityLogin.LoginActivity">
+    tools:context=".ActivityLogin.ActivityIniciarSesion.LoginActivity">
 
     <ImageView
         android:id="@+id/image_view_logo"
@@ -82,7 +82,6 @@
             android:id="@+id/edit_text_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#E6FFFFFF"
             android:drawablePadding="10dp"
             android:hint="Contraseña"
             android:inputType="textPassword"
@@ -105,7 +104,7 @@
         app:layout_constraintEnd_toEndOf="@+id/text_input_layout_password"
         app:layout_constraintTop_toBottomOf="@+id/text_input_layout_password" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_iniciar_sesion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -192,9 +191,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:foreground="?android:selectableItemBackground"
         android:text="Registrarte"
         android:textColor="#DE000000"
-        app:backgroundTint="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

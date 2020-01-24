@@ -2,117 +2,93 @@ package com.wenitech.cashdaily.Model;
 
 
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
 
 public class Cliente {
 
-    private Timestamp aFechaCreacion;//
-    private DocumentReference bDocReferencia;
-    private String cIdentificacion;//
-    private String dNombreCliente;//
-    private String eInicialNombre;
-    private String fTelefono;
-    private String gUbicacion;//
-    private int hValorPrestamo;
-    private int iDeudaPrestamo;
-    private Boolean jAtrasado;
-
+    private Timestamp fechaCreacion;//
+    private String nombreCliente;//
+    private String identificacion;
+    private String inicialNombre;
+    private String genero;
+    private String telefono;
+    private String ciudad;
+    private String direccion;
 
     public Cliente() {
     }
 
-    public Cliente(Timestamp aFechaCreacion, DocumentReference bDocReferencia, String cIdentificacion,
-                   String dNombreCliente, String eInicialNombre, String fTelefono, String gUbicacion,
-                   int hValorPrestamo, int iDeudaPrestamo, Boolean jAtrasado) {
-        this.aFechaCreacion = aFechaCreacion;
-        this.bDocReferencia = bDocReferencia;
-        this.cIdentificacion = cIdentificacion;
-        this.dNombreCliente = dNombreCliente;
-        this.eInicialNombre = eInicialNombre;
-        this.fTelefono = fTelefono;
-        this.gUbicacion = gUbicacion;
-        this.hValorPrestamo = hValorPrestamo;
-        this.iDeudaPrestamo = iDeudaPrestamo;
-        this.jAtrasado = jAtrasado;
+    public Cliente(Timestamp fechaCreacion, String nombreCliente, String identificacion, String inicialNombre, String genero, String telefono, String ciudad, String direccion) {
+        this.fechaCreacion = fechaCreacion;
+        this.nombreCliente = nombreCliente;
+        this.identificacion = identificacion;
+        this.inicialNombre = inicialNombre;
+        this.genero = genero;
+        this.telefono = telefono;
+        this.ciudad = ciudad;
+        this.direccion = direccion;
     }
 
-    public Timestamp getaFechaCreacion() {
-        return aFechaCreacion;
+    public Timestamp getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setaFechaCreacion(Timestamp aFechaCreacion) {
-        this.aFechaCreacion = aFechaCreacion;
+    public void setFechaCreacion(Timestamp fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
-    public DocumentReference getbDocReferencia() {
-        return bDocReferencia;
+    public String getNombreCliente() {
+        return nombreCliente;
     }
 
-    public void setbDocReferencia(DocumentReference bDocReferencia) {
-        this.bDocReferencia = bDocReferencia;
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
     }
 
-    public String getcIdentificacion() {
-        return cIdentificacion;
+    public String getIdentificacion() {
+        return identificacion;
     }
 
-    public void setcIdentificacion(String cIdentificacion) {
-        this.cIdentificacion = cIdentificacion;
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
     }
 
-    public String getdNombreCliente() {
-        return dNombreCliente;
+    public String getInicialNombre() {
+        return inicialNombre;
     }
 
-    public void setdNombreCliente(String dNombreCliente) {
-        this.dNombreCliente = dNombreCliente;
+    public void setInicialNombre(String inicialNombre) {
+        this.inicialNombre = inicialNombre;
     }
 
-    public String geteInicialNombre() {
-        return eInicialNombre;
+    public String getGenero() {
+        return genero;
     }
 
-    public void seteInicialNombre(String eInicialNombre) {
-        this.eInicialNombre = eInicialNombre;
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
-    public String getfTelefono() {
-        return fTelefono;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setfTelefono(String fTelefono) {
-        this.fTelefono = fTelefono;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
-    public String getgUbicacion() {
-        return gUbicacion;
+    public String getCiudad() {
+        return ciudad;
     }
 
-    public void setgUbicacion(String gUbicacion) {
-        this.gUbicacion = gUbicacion;
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
 
-    public int gethValorPrestamo() {
-        return hValorPrestamo;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void sethValorPrestamo(int hValorPrestamo) {
-        this.hValorPrestamo = hValorPrestamo;
-    }
-
-    public int getiDeudaPrestamo() {
-        return iDeudaPrestamo;
-    }
-
-    public void setiDeudaPrestamo(int iDeudaPrestamo) {
-        this.iDeudaPrestamo = iDeudaPrestamo;
-    }
-
-    public Boolean getjAtrasado() {
-        return jAtrasado;
-    }
-
-    public void setjAtrasado(Boolean jAtrasado) {
-        this.jAtrasado = jAtrasado;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 }

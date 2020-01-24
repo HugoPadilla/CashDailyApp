@@ -7,6 +7,15 @@
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- Estados Entrada-Salida  -->
+        <item name="android:windowEnterTransition">@transition/explode_transition</item>
+        <item name="android:windowExitTransition">@transition/fade_transition</item>
+        <!-- Estados Reingreso-Retorno  -->
+        <item name="android:windowReenterTransition">@transition/fade_transition</item>
+        <item name="android:windowReturnTransition">@transition/explode_transition</item>
     </style>
+
+
 
 </resources>

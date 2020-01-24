@@ -1,7 +1,5 @@
 package com.wenitech.cashdaily.Adapter;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -16,18 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.CollectionReference;
-import com.wenitech.cashdaily.ActivityMainListaClientes.ListaClientesActivity;
-import com.wenitech.cashdaily.DetallesClienteActivity.ClienteDetailActivity;
-import com.wenitech.cashdaily.HisotrialPrestamosActivity.HistorialPrestamosActivity;
+import com.wenitech.cashdaily.ActivityClientes.ActivityDetallesCliente.ClienteDetailActivity;
 import com.wenitech.cashdaily.Model.Cliente;
 import com.wenitech.cashdaily.R;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente, RecyclerViewClienteAdapter.MyViewHolder> {
-
 
     public RecyclerViewClienteAdapter(@NonNull FirestoreRecyclerOptions<Cliente> options) {
         super(options);
@@ -35,34 +25,14 @@ public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente
 
     @Override
     protected void onBindViewHolder(@NonNull final MyViewHolder holder, final int position, @NonNull final Cliente model) {
-        holder.tv_userName.setText(model.getdNombreCliente());
-        holder.tv_inicial.setText(model.geteInicialNombre());
-
-        if (model.getjAtrasado()){
-            holder.tv_estado.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
-        } else if (!model.getjAtrasado()){
-            holder.tv_estado.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_systema_error_outline_rojo,0,0,0);
-        }
-
-        holder.tv_valorPrestamo.setText(String.valueOf(model.gethValorPrestamo()));
-        holder.tv_deudaPrestamo.setText(String.valueOf(model.getiDeudaPrestamo()));
-
-        SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy");
-        Date dateSever = model.getaFechaCreacion().toDate();
-        holder.tv_fechaCreacion.setText(format.format(dateSever));
-
-        holder.item_client.setOnClickListener(new View.OnClickListener() {
+        holder.textViewNombreCliente.setText(model.getNombreCliente());
+        holder.textViewInicialNombre.setText(model.getInicialNombre());
+        holder.textViewDireccionCliente.setText(model.getCiudad()+ ", " + model.getDireccion());
+        holder.itemClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(holder.context, ClienteDetailActivity.class);
-                intent.putExtra("id_cliente_ref",model.getbDocReferencia().getPath());
-                intent.putExtra("id_cliente_name",model.getdNombreCliente());
-
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) holder.context,
-                        holder.item_client,"itemClienteToDetail");
-
-                holder.context.startActivity(intent,options.toBundle());
+                holder.context.startActivity(intent);
             }
         });
     }
@@ -70,40 +40,27 @@ public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cliente,parent,false);
-
         return new MyViewHolder(v);
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    static class MyViewHolder extends RecyclerView.ViewHolder{
 
-
-        CollectionReference collectionReference;
         private Context context;
-        private CardView item_client;
+        private CardView itemClient;
         private ImageView imageView;
-        private TextView tv_userName;
-        private TextView tv_inicial;
-        private TextView tv_fechaCreacion;
-        private TextView tv_valorPrestamo;
-        private TextView tv_deudaPrestamo;
-        private TextView tv_estado;
+        private TextView textViewInicialNombre;
+        private TextView textViewNombreCliente;
+        private TextView textViewDireccionCliente;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
             context = itemView.getContext();
-            imageView = itemView.findViewById(R.id.toolbar_cliente_detail);
-
-            item_client = itemView.findViewById(R.id.cardViewItemClienteId);
-
-            tv_userName = itemView.findViewById(R.id.textViewName);
-            tv_inicial = itemView.findViewById(R.id.textViewInicial);
-            tv_fechaCreacion = itemView.findViewById(R.id.textViewFechaCreacion);
-            tv_valorPrestamo = itemView.findViewById(R.id.textViewValorPrestamo);
-            tv_deudaPrestamo = itemView.findViewById(R.id.textViewDeudaPrestamo);
-            tv_estado = itemView.findViewById(R.id.textViewEstado);
+            itemClient = itemView.findViewById(R.id.item_cliente);
+            imageView = itemView.findViewById(R.id.imagen_view_item_cliente);
+            textViewInicialNombre = itemView.findViewById(R.id.text_view_inicial_cliente);
+            textViewNombreCliente = itemView.findViewById(R.id.text_view_nombre_cliente);
+            textViewDireccionCliente = itemView.findViewById(R.id.text_view_direccion_cliente);
         }
     }
 }

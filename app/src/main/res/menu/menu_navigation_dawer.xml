@@ -6,45 +6,46 @@
     <group>
         <item
             android:id="@+id/menu_iten_drawer_perfil"
-            android:icon="@drawable/ic_systema_persona_blanco"
+            android:icon="@drawable/ic_systema_persona_negro"
             android:title="Perfil" />
-        <item
-            android:id="@+id/menu_iten_drawer_configuracion"
-            android:icon="@drawable/ic_systema_configuracion_negro"
-            android:title="Configuración" />
         <item
             android:id="@+id/menu_iten_drawer_suscripcion"
             android:icon="@drawable/ic_asset_estrella_negro"
             android:title="Susscripción Pro" />
-    </group>
+        <item
+            android:id="@+id/menu_iten_drawer_configuracion"
+            android:icon="@drawable/ic_systema_configuracion_negro"
+            android:title="Configuración" />
 
-    <group>
-        <item
-            android:id="@+id/menu_iten_drawer_compartir"
-            android:icon="@drawable/ic_systema_share_negro"
-            android:title="Compartir App" />
-        <item
-            android:id="@+id/menu_iten_drawer_calificar_app"
-            android:icon="@drawable/ic_systema_ok_negro"
-            android:title="Calificar App" />
+        <item android:title="Opciones">
+            <menu >
+                <item
+                    android:id="@+id/menu_iten_drawer_compartir"
+                    android:icon="@drawable/ic_systema_share_negro"
+                    android:title="Compartir App" />
+                <item
+                    android:id="@+id/menu_iten_drawer_calificar_app"
+                    android:icon="@drawable/ic_systema_ok_negro"
+                    android:title="Calificar App" />
+                <item
+                    android:id="@+id/menu_iten_drawer_cerrar_sesion"
+                    android:icon="@drawable/ic_systema_power_negro"
+                    android:title="Cerrar Sesión" />
+            </menu>
+        </item>
+
+        <item android:title="Otros" >
+            <menu >
+                <item
+                    android:id="@+id/menu_iten_drawer_ayuda"
+                    android:title="Ayuda" />
+                <item
+                    android:id="@+id/menu_iten_drawer_terminos"
+                    android:title="Términos y condiciones" />
+                <item
+                    android:id="@+id/menu_iten_drawer_acerca_de"
+                    android:title="Acerca de Cash Daily App" />
+            </menu>
+        </item>
     </group>
-    <group>
-        <item
-            android:id="@+id/menu_iten_drawer_cerrar_sesion"
-            android:icon="@drawable/ic_systema_power_negro"
-            android:title="Cerrar Sesión" />
-    </group>
-    <item android:title="Otros" >
-        <menu >
-            <item
-                android:id="@+id/menu_iten_drawer_ayuda"
-                android:title="Ayuda" />
-            <item
-                android:id="@+id/menu_iten_drawer_terminos"
-                android:title="Términos y condiciones" />
-            <item
-                android:id="@+id/menu_iten_drawer_acerca_de"
-                android:title="Acerca de Cash Daily App" />
-        </menu>
-    </item>
 </menu>

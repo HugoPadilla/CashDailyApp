@@ -1,60 +1,63 @@
 package com.wenitech.cashdaily.Model;
 
+import com.google.firebase.Timestamp;
+
 public class Usuairio {
 
-    private String aNombreUsuario;
-    private String bInicialNombre;
-    private int cTotalEfectivo, dCobradoHoy, eCobradoMes;
-
+    private Timestamp fechaCreacion;
+    private String nombreUsuario;
+    private String inicialNombre;
+    private String tipoCuenta;
+    private String suscripcion;
 
     public Usuairio() {
     }
 
-    public Usuairio(String aNombreUsuario, String bInicialNombre, int cTotalEfectivo, int dCobradoHoy, int eCobradoMes) {
-        this.aNombreUsuario = aNombreUsuario;
-        this.bInicialNombre = bInicialNombre;
-        this.cTotalEfectivo = cTotalEfectivo;
-        this.dCobradoHoy = dCobradoHoy;
-        this.eCobradoMes = eCobradoMes;
+    public Usuairio(Timestamp fechaCreacion, String nombreUsuario, String inicialNombre, String tipoCuenta, String suscripcion) {
+        this.fechaCreacion = fechaCreacion;
+        this.nombreUsuario = nombreUsuario;
+        this.inicialNombre = inicialNombre;
+        this.tipoCuenta = tipoCuenta;
+        this.suscripcion = suscripcion;
     }
 
-    public String getaNombreUsuario() {
-        return aNombreUsuario;
+    public Timestamp getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setaNombreUsuario(String aNombreUsuario) {
-        this.aNombreUsuario = aNombreUsuario;
+    public void setFechaCreacion(Timestamp fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
-    public String getbInicialNombre() {
-        return bInicialNombre;
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
-    public void setbInicialNombre(String bInicialNombre) {
-        this.bInicialNombre = bInicialNombre;
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
-    public int getcTotalEfectivo() {
-        return cTotalEfectivo;
+    public String getInicialNombre() {
+        return inicialNombre;
     }
 
-    public void setcTotalEfectivo(int cTotalEfectivo) {
-        this.cTotalEfectivo = cTotalEfectivo;
+    public void setInicialNombre(String inicialNombre) {
+        this.inicialNombre = inicialNombre;
     }
 
-    public int getdCobradoHoy() {
-        return dCobradoHoy;
+    public String getTipoCuenta() {
+        return tipoCuenta;
     }
 
-    public void setdCobradoHoy(int dCobradoHoy) {
-        this.dCobradoHoy = dCobradoHoy;
+    public void setTipoCuenta(String tipoCuenta) {
+        this.tipoCuenta = tipoCuenta;
     }
 
-    public int geteCobradoMes() {
-        return eCobradoMes;
+    public String getSuscripcion() {
+        return suscripcion;
     }
 
-    public void seteCobradoMes(int eCobradoMes) {
-        this.eCobradoMes = eCobradoMes;
+    public void setSuscripcion(String suscripcion) {
+        this.suscripcion = suscripcion;
     }
 }

@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:transitionName="itemClienteToDetail">
+    android:transitionName="COMPARTIR_VIEW_ITEM_CLIENTE_TO_CLIENTE_DETAIL">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:transitionName=""
         android:layout_marginBottom="?attr/actionBarSize">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar3"
+            android:id="@+id/toolbar_cliente_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
@@ -30,7 +31,7 @@
             app:cardBackgroundColor="@color/primaryColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar3">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_cliente_detail">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -41,7 +42,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginEnd="16dp"
-                    android:src="#424242"
+                    android:src="@drawable/ic_baground_iten_perfil"
                     app:layout_constraintBottom_toBottomOf="@+id/textView11"
                     app:layout_constraintEnd_toStartOf="@+id/textView8"
                     app:layout_constraintTop_toTopOf="@+id/textView8" />
@@ -55,6 +56,7 @@
                     android:text="Hugo Javier Padilla."
                     android:textColor="@color/primaryTextColor"
                     android:textSize="16sp"
+                    android:transitionName="nombre_cliente"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -97,6 +99,7 @@
             android:id="@+id/cardView3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/primaryColor"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
@@ -116,6 +119,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:text="Modalidad: Diario"
+                    android:textColor="@color/secondaryTextColor"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -125,7 +129,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:drawableRight="@drawable/ic_systema_flecha_adelante_blanco"
+                    android:gravity="center"
                     android:text="Ver detalle"
+                    android:textColor="@color/secondaryTextColor"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -138,6 +146,7 @@
                     android:text="$ 1.150.000"
                     android:textSize="24sp"
                     android:textStyle="bold"
+                    android:textColor="@color/primaryTextColor"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
@@ -147,6 +156,7 @@
                     android:layout_height="wrap_content"
                     android:text="30"
                     android:textStyle="bold"
+                    android:textColor="@color/primaryTextColor"
                     app:layout_constraintEnd_toStartOf="@+id/textView34"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/textView26" />
@@ -158,6 +168,7 @@
                     android:layout_marginTop="24dp"
                     android:text="$ 3.000"
                     android:textStyle="bold"
+                    android:textColor="@color/primaryTextColor"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
                     app:layout_constraintTop_toBottomOf="@+id/textView18" />
@@ -166,8 +177,9 @@
                     android:id="@+id/textView35"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$ 3.000"
+                    android:text="$ 1.150.000"
                     android:textStyle="bold"
+                    android:textColor="@color/primaryTextColor"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView34"
                     app:layout_constraintTop_toTopOf="@+id/textView26" />
@@ -178,6 +190,7 @@
                     android:layout_height="wrap_content"
                     android:text="Num. Cuotas"
                     android:textSize="12sp"
+                    android:textColor="@color/secondaryTextColor"
                     app:layout_constraintEnd_toEndOf="@+id/textView20"
                     app:layout_constraintStart_toStartOf="@+id/textView20"
                     app:layout_constraintTop_toBottomOf="@+id/textView20" />
@@ -189,6 +202,7 @@
                     android:layout_marginBottom="16dp"
                     android:text="Valor Cuotas"
                     android:textSize="12sp"
+                    android:textColor="@color/secondaryTextColor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/textView26"
                     app:layout_constraintStart_toStartOf="@+id/textView26"
@@ -198,8 +212,9 @@
                     android:id="@+id/textView36"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Valor Cuotas"
+                    android:text="Deuda"
                     android:textSize="12sp"
+                    android:textColor="@color/secondaryTextColor"
                     app:layout_constraintEnd_toEndOf="@+id/textView35"
                     app:layout_constraintStart_toStartOf="@+id/textView35"
                     app:layout_constraintTop_toBottomOf="@+id/textView35" />
@@ -236,6 +251,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView37" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_lista_cuotas"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -244,22 +260,24 @@
             app:layout_constraintTop_toBottomOf="@+id/divider4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_app_bar"
+        style="@style/Widget.MaterialComponents.BottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu="@menu/menu_botton_app_client_detail"
-        style="@style/Widget.MaterialComponents.BottomAppBar"
-        android:backgroundTint="?attr/colorPrimary"
         android:layout_gravity="bottom"
+        android:backgroundTint="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
         app:fabAlignmentMode="end"
-        />
+        app:menu="@menu/menu_botton_app_client_detail" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_button_nueva_cuota"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_systema_mas_blanco"
-        app:layout_anchor="@id/bottom_app_bar"/>
+        android:src="@drawable/ic_systema_candado_blanco"
+        app:layout_anchor="@id/bottom_app_bar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

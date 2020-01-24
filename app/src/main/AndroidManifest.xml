@@ -9,22 +9,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivityMainListaClientes.ListaClientesActivity"></activity>
-        <activity android:name=".ActivityLoginResetPassword.ResetPasswordActivity" />
-        <activity android:name=".HisotrialPrestamosActivity.HistorialPrestamosActivity" />
-        <activity android:name=".NewCreditoActivity.NewCreditActivity" />
-        <activity android:name=".ActivityLoginSingIn.SingInActivity" />
-        <activity android:name=".ActivityLogin.LoginActivity" />
-        <activity android:name=".DetallesGastoActivity.GastoDetailActivity" />
-        <activity android:name=".NewClienteActivity.NewClientActivity" />
-        <activity android:name=".DetallesClienteActivity.ClienteDetailActivity" />
-        <activity android:name=".NewGastoActivity.NewGastoActivity" />
+        <activity android:name=".ActivityLogin.ActivityInicioSesion.InicioSesionActivity"></activity>
+        <activity
+            android:name=".PerfilUsuarioActivity"
+            android:parentActivityName=".ActivityMain.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ActivityMain.MainActivity" />
+        </activity>
+        <activity android:name=".ActivityLogin.ActivityRecuperaContraseña.ResetPasswordActivity" />
+        <activity android:name=".ActivityNuevoCredito.NewCreditActivity" />
+        <activity android:name=".ActivityLogin.ActivityRegistrarse.SingInActivity" />
+        <activity android:name=".ActivityLogin.ActivityIniciarSesion.LoginActivity" />
+        <activity android:name=".ActivityClientes.ActivityNuevoCliente.NewClientActivity" />
+        <activity android:name=".ActivityClientes.ActivityDetallesCliente.ClienteDetailActivity" />
         <activity android:name=".ActivityMain.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ActivityClientes.ListaClientesActivity"
+            android:parentActivityName=".ActivityMain.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ActivityMain.MainActivity" />
         </activity>
     </application>
 

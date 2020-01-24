@@ -3,20 +3,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menuItemNewCredit"
-        android:icon="@drawable/ic_systema_note_add_blanco"
+        android:id="@+id/menu_item_bottom_app_bar_perfil"
+        android:icon="@drawable/ic_systema_persona_blanco"
         android:title="Nuevo"
         app:showAsAction="always" />
     <item
-        android:icon="@drawable/ic_systema_persona_outline_blanco"
+        android:id="@+id/menu_item_bottom_app_bar_telefono"
+        android:icon="@drawable/ic_systema_telefono_blanco"
         android:title="Informacion"
         app:showAsAction="always" />
     <item
+        android:id="@+id/menu_item_bottom_app_bar_historial"
         android:icon="@drawable/ic_systema_historial_blanco"
         android:title="Historial"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always" />
     <item
+        android:id="@+id/menu_item_bottom_app_bar_eliminar"
         android:icon="@drawable/ic_systema_eliminar_blanco"
-        android:title="Eliminar"/>
+        android:title="Eliminar credito" />
 </menu>
