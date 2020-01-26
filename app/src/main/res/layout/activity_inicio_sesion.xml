@@ -11,61 +11,83 @@
         android:id="@+id/text_view_inicio_sesion_titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:textColor="@color/primaryTextColor"
+        android:layout_marginTop="8dp"
         android:text="Empezar"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/primaryTextColor"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guideline8" />
 
     <TextView
         android:id="@+id/text_view_inicio_sesion_subtitulo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/primaryTextColor"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:text="Comience por registrarse o iniciar sesion."
+        android:layout_marginEnd="32dp"
+        android:text="Comience por registrarse o iniciar sesion y administre sus cobranza de forma sencilla y sin complicaciones."
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_inicio_sesion_titulo" />
 
-    <ImageView
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_inicio_sesion_subtitulo"
-        app:srcCompat="@drawable/logo_modey_transparent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="pago_seguros_login_screen.json"
+        app:lottie_imageAssetsFolder="assets"
+        app:lottie_loop="false" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_inicio_sesion_registrarse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/colorAccent"
         android:paddingLeft="54dp"
         android:paddingRight="54dp"
-        android:text="Registrate"
+        android:text="Crear una cuenta"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_inicio_sesion_subtitulo"
+        app:layout_constraintVertical_bias="0.35" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_inicio_sesion_iniciar_sesion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:backgroundTint="#FFFFFF"
         android:text="Inicia sesion"
         android:textColor="#000000"
+        app:backgroundTint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/button_inicio_sesion_registrarse"
         app:layout_constraintStart_toStartOf="@+id/button_inicio_sesion_registrarse"
         app:layout_constraintTop_toBottomOf="@+id/button_inicio_sesion_registrarse"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.20" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.40" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

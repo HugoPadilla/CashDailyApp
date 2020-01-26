@@ -33,6 +33,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.material:material:1.2.0-alpha03'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation 'com.airbnb.android:lottie:3.3.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

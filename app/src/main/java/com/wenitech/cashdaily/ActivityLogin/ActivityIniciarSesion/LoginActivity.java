@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.wenitech.cashdaily.ActivityLogin.ActivityInicioSesion.InicioSesionActivity;
 import com.wenitech.cashdaily.ActivityMain.MainActivity;
 import com.wenitech.cashdaily.R;
 import com.wenitech.cashdaily.ActivityLogin.ActivityRecuperaContraseña.ResetPasswordActivity;
@@ -26,12 +28,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     InterfaceLoginActivity.presenter presenter;
 
     private ImageView imageViewLogo;
-    private TextView textViewLogo, textViewResetPassword, textViewO, textViewIngresando;
+    private TextView textViewLogo, textViewResetPassword, textViewIngresando;
     private TextInputLayout textInputLayoutEmail, textInputLayoutPassword;
     private TextInputEditText editTextEmail, editTextPassword;
     private AppCompatButton buttonIniciarSesion;
-    private MaterialButton materialButtonRegister;
-    private View viewDivisorIzquierdo, viewDivisorDerecho;
+    private TextView textViewRegistrarse;
+    private LinearLayout formRegistrarse;
     private ProgressBar progressBarLogin;
 
     @Override
@@ -47,24 +49,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void settingOnClick() {
         textViewResetPassword.setOnClickListener(this);
         buttonIniciarSesion.setOnClickListener(this);
-        materialButtonRegister.setOnClickListener(this);
+        textViewRegistrarse.setOnClickListener(this);
     }
 
     private void castingCompnent() {
         imageViewLogo = findViewById(R.id.image_view_logo);
         textViewLogo = findViewById(R.id.text_view_logo);
         textViewResetPassword = findViewById(R.id.textview_reset_password);
-        textViewO = findViewById(R.id.text_view_o);
         textViewIngresando = findViewById(R.id.text_view_ingresando);
         textInputLayoutEmail = findViewById(R.id.text_input_layout_email);
         textInputLayoutPassword = findViewById(R.id.text_input_layout_password);
         editTextEmail = findViewById(R.id.edit_text_email);
         editTextPassword = findViewById(R.id.edit_text_password);
         buttonIniciarSesion = findViewById(R.id.button_iniciar_sesion);
-        materialButtonRegister = findViewById(R.id.material_button_register);
-        viewDivisorIzquierdo = findViewById(R.id.view_divider_izquierdo);
-        viewDivisorDerecho = findViewById(R.id.view_divider_derecho);
+        textViewRegistrarse = findViewById(R.id.text_view_iniciar_sesion_registrarse);
         progressBarLogin = findViewById(R.id.progress_bar_Login);
+        formRegistrarse = findViewById(R.id.form_registrarse);
 
     }
 
@@ -80,7 +80,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void irActivityResetPassword() {
         Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
-        // Configurar Transision
         startActivity(intent);
     }
 
@@ -118,16 +117,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         imageViewLogo.setVisibility(View.VISIBLE);
         textViewLogo.setVisibility(View.VISIBLE);
         textViewResetPassword.setVisibility(View.VISIBLE);
-        textViewO.setVisibility(View.VISIBLE);
         textViewIngresando.setVisibility(View.GONE);
         textInputLayoutEmail.setVisibility(View.VISIBLE);
         textInputLayoutPassword.setVisibility(View.VISIBLE);
         editTextEmail.setVisibility(View.VISIBLE);
         editTextPassword.setVisibility(View.VISIBLE);
         buttonIniciarSesion.setVisibility(View.VISIBLE);
-        materialButtonRegister.setVisibility(View.VISIBLE);
-        viewDivisorIzquierdo.setVisibility(View.VISIBLE);
-        viewDivisorDerecho.setVisibility(View.VISIBLE);
+        textViewRegistrarse.setVisibility(View.VISIBLE);
+        formRegistrarse.setVisibility(View.VISIBLE);
         progressBarLogin.setVisibility(View.GONE);
     }
 
@@ -136,23 +133,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         imageViewLogo.setVisibility(View.GONE);
         textViewLogo.setVisibility(View.GONE);
         textViewResetPassword.setVisibility(View.GONE);
-        textViewO.setVisibility(View.GONE);
         textViewIngresando.setVisibility(View.VISIBLE);
         textInputLayoutEmail.setVisibility(View.GONE);
         textInputLayoutPassword.setVisibility(View.GONE);
         editTextEmail.setVisibility(View.GONE);
         editTextPassword.setVisibility(View.GONE);
         buttonIniciarSesion.setVisibility(View.GONE);
-        materialButtonRegister.setVisibility(View.GONE);
-        viewDivisorIzquierdo.setVisibility(View.GONE);
-        viewDivisorDerecho.setVisibility(View.GONE);
+        textViewRegistrarse.setVisibility(View.GONE);
+        formRegistrarse.setVisibility(View.GONE);
         progressBarLogin.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void updatesUi() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }
@@ -171,7 +166,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.button_iniciar_sesion:
                 iniciarSesion();
                 break;
-            case R.id.material_button_register:
+            case R.id.text_view_iniciar_sesion_registrarse:
                 goActivityRegistrarse();
                 break;
         }

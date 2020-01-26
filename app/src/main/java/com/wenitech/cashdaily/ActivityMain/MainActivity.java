@@ -21,8 +21,19 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.wenitech.cashdaily.ActivityLogin.ActivityIniciarSesion.LoginActivity;
-import com.wenitech.cashdaily.ActivityClientes.ListaClientesActivity;
-import com.wenitech.cashdaily.PerfilUsuarioActivity;
+import com.wenitech.cashdaily.ActivityMain.ActivityCaja.CajaActivity;
+import com.wenitech.cashdaily.ActivityMain.ActivityClientes.ListaClientesActivity;
+import com.wenitech.cashdaily.ActivityLogin.ActivityInicioSesion.InicioSesionActivity;
+import com.wenitech.cashdaily.ActivityMain.ActivityCobradores.CobradorActivity;
+import com.wenitech.cashdaily.ActivityMain.ActivityEstadisticas.EstadisticasActivity;
+import com.wenitech.cashdaily.ActivityMain.ActivityGastos.GastosActivity;
+import com.wenitech.cashdaily.ActivityMain.ActivityProductosYServicios.ProductosActivity;
+import com.wenitech.cashdaily.ActivityMain.ActivitySincronizacion.SincronizacionActivity;
+import com.wenitech.cashdaily.ActivitysNavigationDrawer.ActivityAcercaDe.AcercaActivity;
+import com.wenitech.cashdaily.ActivitysNavigationDrawer.ActivityAyuda.AyudaActivity;
+import com.wenitech.cashdaily.ActivitysNavigationDrawer.ActivityPerfilUsuario.PerfilUsuarioActivity;
+import com.wenitech.cashdaily.ActivitysNavigationDrawer.ActivitySuscripcion.SuscripcionActivity;
+import com.wenitech.cashdaily.ActivitysNavigationDrawer.ActivityTerminos.TerminosActivity;
 import com.wenitech.cashdaily.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
@@ -38,10 +49,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView textViewDrawerInicialNombre;
     private TextView textViewDrawerCorreo;
 
-    // Todo: declar view activitydad principal
-    private ConstraintLayout mConstraintLayout;
+    // Todo: declarar cardview main activity
     private CardView cardViewClientes;
+    private CardView cardViewEstaditicas;
+    private CardView cardViewCaja;
+    private CardView cardViewGastos;
+    private CardView cardViewProductos;
+    private CardView cardViewCobradores;
 
+    // Todo: Obejos Firebase
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
 
@@ -53,23 +69,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
         agregarToolbar();
         ConfigurarNavigationDrawer();
-        inicializarDatosNavigationDrawerHeader();
-
-        mConstraintLayout = findViewById(R.id.constrain_layout_main_activity);
         castingCardView();
     }
 
     private void inicializarDatosNavigationDrawerHeader() {
-        mUser = mAuth.getCurrentUser();
         if (mUser != null){
             String nombreUsuario = mUser.getDisplayName();
             String correoUsuario = mUser.getEmail();
             textViewDrawerNombre.setText(nombreUsuario);
             textViewDrawerCorreo.setText(correoUsuario);
-            if (nombreUsuario.length()>= 1){
-                textViewDrawerInicialNombre.setText(nombreUsuario.substring(0,1).toUpperCase());
+            if (nombreUsuario != null && !nombreUsuario.isEmpty()) {
+                textViewDrawerInicialNombre.setText(nombreUsuario.substring(0, 1).toUpperCase());
             }
 
 
@@ -77,9 +90,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void castingCardView() {
-        ConstraintLayout constraintLayoutClientes = findViewById(R.id.constrain_layout_clientes);
         cardViewClientes = findViewById(R.id.card_view_clientes);
-        constraintLayoutClientes.setOnClickListener(this);
+        cardViewClientes.setOnClickListener(this);
+        cardViewEstaditicas = findViewById(R.id.card_view_estadisticas);
+        cardViewEstaditicas.setOnClickListener(this);
+        cardViewCaja = findViewById(R.id.card_view_caja);
+        cardViewCaja.setOnClickListener(this);
+        cardViewGastos = findViewById(R.id.card_view_gastos);
+        cardViewGastos.setOnClickListener(this);
+        cardViewProductos = findViewById(R.id.card_view_productos);
+        cardViewProductos.setOnClickListener(this);
+        cardViewCobradores = findViewById(R.id.card_view_cobradores);
+        cardViewCobradores.setOnClickListener(this);
     }
 
     private void agregarToolbar() {
@@ -124,7 +146,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "clound", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_iten_sincronizacion:
-                Toast.makeText(this, "Sincronización", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, SincronizacionActivity.class);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             case R.id.menu_iten_tema:
                 Toast.makeText(this, "thema", Toast.LENGTH_SHORT).show();
@@ -141,11 +164,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Verificar elemento selecionado item naigation drawer
         switch (menuItem.getItemId()){
             case R.id.menu_iten_drawer_perfil:
-                Intent intent = new Intent(MainActivity.this, PerfilUsuarioActivity.class);
-                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                Intent intentPerfil = new Intent(MainActivity.this, PerfilUsuarioActivity.class);
+                startActivity(intentPerfil, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
             break;
             case R.id.menu_iten_drawer_suscripcion:
-                Toast.makeText(this, "navigation item suscripcion", Toast.LENGTH_SHORT).show();
+                Intent intentSuscripcio = new Intent(MainActivity.this, SuscripcionActivity.class);
+                startActivity(intentSuscripcio, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             case R.id.menu_iten_drawer_configuracion:
                 Toast.makeText(this, "navigation item configuracion", Toast.LENGTH_SHORT).show();
@@ -157,13 +181,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "navigation item calificar", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_iten_drawer_ayuda:
-                Toast.makeText(this, "navigation item ayuda", Toast.LENGTH_SHORT).show();
+                Intent intentAyuda = new Intent(MainActivity.this, AyudaActivity.class);
+                startActivity(intentAyuda, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             case R.id.menu_iten_drawer_terminos:
-                Toast.makeText(this, "navigation item terminos", Toast.LENGTH_SHORT).show();
+                Intent intentTerminos = new Intent(MainActivity.this, TerminosActivity.class);
+                startActivity(intentTerminos, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             case R.id.menu_iten_drawer_acerca_de:
-                Toast.makeText(this, "navigation item acerda de la app", Toast.LENGTH_SHORT).show();
+                Intent intentAcerca = new Intent(MainActivity.this, AcercaActivity.class);
+                startActivity(intentAcerca, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             case R.id.menu_iten_drawer_cerrar_sesion:
                 mAuth.signOut();
@@ -177,9 +204,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         // Click listener
         switch (v.getId()){
-            case R.id.constrain_layout_clientes:
-                Intent intent = new Intent(MainActivity.this, ListaClientesActivity.class);
-                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            case R.id.card_view_clientes:
+                Intent intentClientes = new Intent(MainActivity.this, ListaClientesActivity.class);
+                startActivity(intentClientes, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                break;
+            case R.id.card_view_estadisticas:
+                Intent intentEstadisticas = new Intent(MainActivity.this, EstadisticasActivity.class);
+                startActivity(intentEstadisticas, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                break;
+            case R.id.card_view_caja:
+                Intent intentCaja = new Intent(MainActivity.this, CajaActivity.class);
+                startActivity(intentCaja, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                break;
+            case R.id.card_view_gastos:
+                Intent intentGastos = new Intent(MainActivity.this, GastosActivity.class);
+                startActivity(intentGastos, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                break;
+            case R.id.card_view_productos:
+                Intent intentProductos = new Intent(MainActivity.this, ProductosActivity.class);
+                startActivity(intentProductos, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                break;
+            case R.id.card_view_cobradores:
+                Intent intentCobradores = new Intent(MainActivity.this, CobradorActivity.class);
+                startActivity(intentCobradores, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
         }
     }
@@ -188,11 +235,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onStart() {
         super.onStart();
         UpdateUi(mAuth.getCurrentUser());
+        inicializarDatosNavigationDrawerHeader();
     }
 
     private void UpdateUi(FirebaseUser user){
         if (user == null){
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            Intent intent = new Intent(MainActivity.this, InicioSesionActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();

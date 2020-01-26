@@ -2,4 +2,5 @@
     <string name="app_name">Cash Daily</string>
     <string name="open_drawer">abrir</string>
     <string name="close_drawer">cerrar</string>
+    <string name="activity_crear_cuenta_subtitulo">Crear una cuenta es super facil. Solo llena este formulario pero asegurate de escribir un correo al cual tengas acceso, te enviaremos un mensaje de confirmacion.</string>
 </resources>

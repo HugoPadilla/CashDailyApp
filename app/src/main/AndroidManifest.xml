@@ -9,33 +9,60 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivityLogin.ActivityInicioSesion.InicioSesionActivity"></activity>
+        <activity android:name=".ActivityMain.ActivityProductosYServicios.ProductosActivity"></activity>
+        <activity android:name=".ActivityMain.ActivityGastos.GastosActivity" />
+        <activity android:name=".ActivityMain.ActivityEstadisticas.EstadisticasActivity" />
+        <activity android:name=".ActivityMain.ActivityCobradores.CobradorActivity" />
+        <activity android:name=".ActivityMain.ActivityCaja.CajaActivity" />
+        <activity android:name=".ActivityMain.ActivitySincronizacion.SincronizacionActivity" />
+        <activity android:name=".ActivitysNavigationDrawer.ActivityAcercaDe.AcercaActivity" />
+        <activity android:name=".ActivitysNavigationDrawer.ActivityTerminos.TerminosActivity" />
+        <activity android:name=".ActivitysNavigationDrawer.ActivityAyuda.AyudaActivity" />
+        <activity android:name=".ActivitysNavigationDrawer.ActivitySuscripcion.SuscripcionActivity" />
+
         <activity
-            android:name=".PerfilUsuarioActivity"
+            android:name=".ActivitysNavigationDrawer.ActivityPerfilUsuario.PerfilUsuarioActivity"
             android:parentActivityName=".ActivityMain.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ActivityMain.MainActivity" />
         </activity>
         <activity android:name=".ActivityLogin.ActivityRecuperaContraseña.ResetPasswordActivity" />
-        <activity android:name=".ActivityNuevoCredito.NewCreditActivity" />
-        <activity android:name=".ActivityLogin.ActivityRegistrarse.SingInActivity" />
-        <activity android:name=".ActivityLogin.ActivityIniciarSesion.LoginActivity" />
-        <activity android:name=".ActivityClientes.ActivityNuevoCliente.NewClientActivity" />
-        <activity android:name=".ActivityClientes.ActivityDetallesCliente.ClienteDetailActivity" />
-        <activity android:name=".ActivityMain.MainActivity">
+        <activity android:name=".ActivityMain.ActivityClientes.ActivityNuevoCredito.NewCreditActivity" />
+
+
+        <activity android:name=".ActivityMain.ActivityClientes.ActivityNuevoCliente.NewClientActivity" />
+        <activity android:name=".ActivityMain.ActivityClientes.ActivityCreditoCliente.CreditoClienteActivity" />
+
+        <activity
+            android:name=".ActivityMain.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".ActivityClientes.ListaClientesActivity"
+            android:name=".ActivityMain.ActivityClientes.ListaClientesActivity"
             android:parentActivityName=".ActivityMain.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ActivityMain.MainActivity" />
+        </activity>
+
+
+        <activity
+            android:name=".ActivityLogin.ActivityInicioSesion.InicioSesionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ActivityLogin.ActivityIniciarSesion.LoginActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ActivityLogin.ActivityRegistrarse.SingInActivity"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

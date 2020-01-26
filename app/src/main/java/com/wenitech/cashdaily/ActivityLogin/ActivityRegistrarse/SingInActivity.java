@@ -1,5 +1,6 @@
 package com.wenitech.cashdaily.ActivityLogin.ActivityRegistrarse;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -7,10 +8,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +24,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.wenitech.cashdaily.ActivityLogin.ActivityIniciarSesion.LoginActivity;
+import com.wenitech.cashdaily.ActivityMain.MainActivity;
 import com.wenitech.cashdaily.R;
 
 public class SingInActivity extends AppCompatActivity implements InterfaceSingIn.view, View.OnClickListener {
@@ -30,6 +36,9 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
     private AutoCompleteTextView editTextTipo;
     private MaterialButton buttonCrearCuenta;
     private CheckBox checkBoxTerminos;
+    private TextView textViewTitulo;
+    private TextView textViewSubtitulo;
+    private LinearLayout formLogin;
     private TextView textViewIniciarSesion;
     private TextView textViewCreandoCuenta;
     private TextView textViewTerminos;
@@ -45,6 +54,20 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
         configurarAutoComple();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_crear_cuenta_toolbar_ayuda,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_item_crear_cuenta_ayuda){
+            Toast.makeText(this, "Activity ayuda", Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void configurarAutoComple() {
         String [] opciones = new String[]{"Administrador", "Cobrador"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.item_dropdown,opciones);
@@ -52,7 +75,6 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
     }
 
     private void configurarCasting() {
-
         // Todo: casting of input layout
         textInputLayoutNombre = findViewById(R.id.text_input_layout_crear_cuenta_nombre);
         textInputLayoutTipo = findViewById(R.id.text_input_layout_crear_cuenta_tipo);
@@ -71,6 +93,9 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
         buttonCrearCuenta = findViewById(R.id.button_crear_cuenta_crear_cuenta);
         textViewTerminos = findViewById(R.id.text_view_crear_cuenta_terminos);
         textViewIniciarSesion = findViewById(R.id.text_view_crear_cuenta_iniciar_sesion);
+        textViewTitulo = findViewById(R.id.text_view_crear_cuenta_titulo);
+        textViewSubtitulo = findViewById(R.id.text_view_crear_cuenta_subtitulo);
+        formLogin = findViewById(R.id.form_login);
 
         // Todo: configurar clic listener
         buttonCrearCuenta.setOnClickListener(this);
@@ -114,31 +139,33 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
         String contraseña = editTextContraseña.getText().toString().trim();
 
         if (TextUtils.isEmpty(nombreUsuario)) {
-            editTextNombre.setError("Ingresa un nombre de usuario");
+            textInputLayoutNombre.setError("Escribe tu nombre");
             valid = false;
         } if (TextUtils.isEmpty(tipoCuenta)){
-            textInputLayoutTipo.setHelperText("Elige una opción");
+            textInputLayoutTipo.setError("Elige una opción");
             valid = false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
-            editTextEmail.setError("No es un correo valido");
+            textInputLayoutCorreo.setError("Escribe un correo valido");
             valid = false;
         } else if (TextUtils.isEmpty(confirmarCorreo)) {
-            editTextConfirmarEmail.setError("Confirma tu correo");
+            textInputLayoutConfirmarCorreo.setError("Confirma tu correo");
             valid = false;
         } else if (!TextUtils.equals(correo, confirmarCorreo)) {
-            editTextEmail.setError("Los correo no coinciden");
+            textInputLayoutCorreo.setError("Los correo no coinciden");
+            textInputLayoutConfirmarCorreo.setError("Confirma tu correo");
             editTextConfirmarEmail.setText("");
             valid = false;
         } else if (TextUtils.isEmpty(contraseña)) {
-            editTextContraseña.setError("Ingresa una Contraseña");
+            textInputLayoutContraseña.setError("Ingresa una Contraseña");
             valid = false;
         } else if (contraseña.length() < 8) {
-            editTextContraseña.setError("Debe contener minimo 8 caracteres");
+            textInputLayoutContraseña.setError("Debe contener minimo 8 caracteres");
             valid = false;
         } else if (!checkBoxTerminos.isChecked()){
             Toast.makeText(this, "Acepta los terminos y condiciones", Toast.LENGTH_SHORT).show();
             valid = false;
         }
+
         return valid;
     }
 
@@ -157,6 +184,10 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
         buttonCrearCuenta.setVisibility(View.VISIBLE);
         textViewTerminos.setVisibility(View.VISIBLE);
         textViewIniciarSesion.setVisibility(View.VISIBLE);
+
+        textViewTitulo.setVisibility(View.VISIBLE);
+        textViewSubtitulo.setVisibility(View.VISIBLE);
+        formLogin.setVisibility(View.VISIBLE);
 
         // Todo: ocultar progresbar
         textViewCreandoCuenta.setVisibility(View.GONE);
@@ -179,6 +210,10 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
         textViewTerminos.setVisibility(View.GONE);
         textViewIniciarSesion.setVisibility(View.GONE);
 
+        textViewTitulo.setVisibility(View.GONE);
+        textViewSubtitulo.setVisibility(View.GONE);
+        formLogin.setVisibility(View.GONE);
+
         // Todo: ocultar progresbar
         textViewCreandoCuenta.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.VISIBLE);
@@ -187,8 +222,8 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
     @Override
     public void onSucess(String emailSucess) {
         Toast.makeText(this, "Su nueva Cuenta se creo con exito", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(SingInActivity.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Intent intent = new Intent(SingInActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }

@@ -117,6 +117,8 @@
                         android:layout_marginRight="8dp"
                         android:layout_marginBottom="8dp"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:foreground="?android:selectableItemBackground"
                         android:transitionName="view_pager_lista_clientes"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="4dp">
@@ -125,8 +127,7 @@
                             android:id="@+id/constrain_layout_clientes"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:clickable="true"
-                            android:foreground="?android:selectableItemBackground"
+                            android:clickable="false"
                             android:orientation="vertical">
 
                             <ImageView
@@ -156,6 +157,7 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/card_view_estadisticas"
                         android:layout_width="match_parent"
                         android:layout_height="140dp"
                         android:layout_marginLeft="8dp"
@@ -163,14 +165,14 @@
                         android:layout_marginBottom="8dp"
                         android:layout_weight="1"
                         android:clickable="true"
+                        android:foreground="?android:selectableItemBackground"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="4dp">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:clickable="true"
-                            android:foreground="?android:selectableItemBackground"
+                            android:clickable="false"
                             android:orientation="vertical">
 
                             <ImageView
@@ -206,12 +208,15 @@
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/card_view_caja"
                         android:layout_width="100dp"
                         android:layout_height="140dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginBottom="8dp"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:foreground="?android:selectableItemBackground"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="4dp">
 
@@ -249,12 +254,15 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/card_view_gastos"
                         android:layout_width="100dp"
                         android:layout_height="140dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="8dp"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:foreground="?android:selectableItemBackground"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="4dp">
 
@@ -300,12 +308,15 @@
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/card_view_productos"
                         android:layout_width="100dp"
                         android:layout_height="140dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginBottom="8dp"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:foreground="?android:selectableItemBackground"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="4dp">
 
@@ -343,12 +354,15 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/card_view_cobradores"
                         android:layout_width="100dp"
                         android:layout_height="140dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="8dp"
                         android:layout_weight="1"
+                        android:clickable="true"
+                        android:foreground="?android:selectableItemBackground"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="4dp">
 

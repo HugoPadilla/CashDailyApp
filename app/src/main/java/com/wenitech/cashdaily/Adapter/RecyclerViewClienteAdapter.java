@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.wenitech.cashdaily.ActivityClientes.ActivityDetallesCliente.ClienteDetailActivity;
+import com.wenitech.cashdaily.ActivityMain.ActivityClientes.ActivityCreditoCliente.CreditoClienteActivity;
 import com.wenitech.cashdaily.Model.Cliente;
 import com.wenitech.cashdaily.R;
 public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente, RecyclerViewClienteAdapter.MyViewHolder> {
@@ -31,7 +31,7 @@ public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente
         holder.itemClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(holder.context, ClienteDetailActivity.class);
+                Intent intent = new Intent(holder.context, CreditoClienteActivity.class);
                 holder.context.startActivity(intent);
             }
         });

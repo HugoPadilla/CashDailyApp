@@ -43,6 +43,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:textColorHint="@color/primaryTextColor"
+        app:boxStrokeColor="@android:color/white"
+        app:hintTextColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/text_input_layout_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -70,6 +72,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:textColorHint="@color/primaryTextColor"
+        app:boxStrokeColor="@android:color/white"
+        app:hintTextColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -106,18 +110,21 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_iniciar_sesion"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
-        android:backgroundTint="#2979FF"
+        android:backgroundTint="@android:color/white"
+        android:paddingLeft="54dp"
+        android:paddingRight="54dp"
         android:text="iniciar sesión"
-        android:textColor="@color/primaryTextColor"
-        app:layout_constraintBottom_toTopOf="@+id/text_view_o"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_reset_password"
+        app:layout_constraintVertical_bias="0.22000003" />
 
     <TextView
         android:id="@+id/text_view_ingresando"
@@ -147,57 +154,40 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.41000003" />
 
-    <View
-        android:id="@+id/view_divider_izquierdo"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="#29FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/material_button_register"
-        app:layout_constraintEnd_toStartOf="@+id/text_view_o"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/text_view_o"
+    <LinearLayout
+        android:id="@+id/form_registrarse"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="O"
-        android:textColor="@color/primaryTextColor"
-        app:layout_constraintBottom_toBottomOf="@+id/view_divider_izquierdo"
-        app:layout_constraintEnd_toStartOf="@+id/view_divider_derecho"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/view_divider_izquierdo"
-        app:layout_constraintTop_toTopOf="@+id/view_divider_izquierdo" />
-
-    <View
-        android:id="@+id/view_divider_derecho"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="#29FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/text_view_o"
+        android:layout_height="23dp"
+        android:layout_marginBottom="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/text_view_o"
-        app:layout_constraintTop_toTopOf="@+id/text_view_o" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
+        app:layout_constraintVertical_bias="0.3">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/material_button_register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:foreground="?android:selectableItemBackground"
-        android:text="Registrarte"
-        android:textColor="#DE000000"
-        android:backgroundTint="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¿No tienes una cuenta?"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/text_view_iniciar_sesion_registrarse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:linksClickable="true"
+            android:text="Registrate."
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorAccent"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -211,7 +201,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.87" />
+        app:layout_constraintGuide_percent="0.81" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
