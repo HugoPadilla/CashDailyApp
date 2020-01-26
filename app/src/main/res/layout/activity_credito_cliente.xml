@@ -96,7 +96,7 @@
                     android:id="@+id/text_view_credito_cliente_numero_cuotas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="30"
+                    android:text="02 - 30"
                     android:textColor="@color/primaryTextColor"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@+id/textView34"

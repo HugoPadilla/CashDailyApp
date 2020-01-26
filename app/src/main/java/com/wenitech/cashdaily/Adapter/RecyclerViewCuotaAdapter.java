@@ -3,6 +3,7 @@ package com.wenitech.cashdaily.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,34 +37,50 @@ public class RecyclerViewCuotaAdapter extends FirestoreRecyclerAdapter<Cuota, Re
     @Override
     protected void onBindViewHolder(@NonNull mViewHolder holder, int position, @NonNull Cuota model) {
 
-        holder.tv_numero_orden.setText("");
-
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateSever = model.getbFechaCreacion().toDate();
-        holder.tv_fecha.setText(format.format(dateSever));
+        Date dateSever = model.getFechaCreacion().toDate();
+        holder.textViewFecha.setText(format.format(dateSever));
 
         DecimalFormatSymbols simbolo = new DecimalFormatSymbols();
         simbolo.setDecimalSeparator(',');
         simbolo.setGroupingSeparator('.');
         DecimalFormat decimalFormat = new DecimalFormat("###,###.##", simbolo);
+        String valorCuota = "$" + decimalFormat.format(model.getValorCuota());
+        holder.textViewValorCuota.setText(valorCuota);
 
-        holder.tv_cuota_credito.setText("$ " + decimalFormat.format(model.getcValorCuota()));
+        holder.textViewNombreCreacion.setText(model.getNombreCreacion());
+        holder.textViewEditado.setText(model.getEstadoEditado());
+
+        if (model.getEstadoEditado().isEmpty() || model.getEstadoEditado().equals("Normal")){
+            // Todo: estado normal
+            holder.imageViewTrading.setImageResource(R.drawable.ic_asset_trending_up_blanco);
+        }else if (model.getEstadoEditado().equals("Editado")){
+            // Todo: editado
+            holder.imageViewTrading.setImageResource(R.drawable.ic_asset_trending_up_blanco);
+        }else if (model.getEstadoEditado().equals("Eliminado")){
+            // Todo: eliminado
+            holder.imageViewTrading.setImageResource(R.drawable.ic_asset_trending_up_blanco);
+        }
     }
 
     public class mViewHolder extends RecyclerView.ViewHolder {
 
-        private CardView cardView;
-        private TextView tv_numero_orden;
-        private TextView tv_fecha;
-        private TextView tv_cuota_credito;
+        private CardView cardViewItemCuota;
+        private ImageView imageViewTrading;
+        private TextView textViewValorCuota;
+        private TextView textViewEditado;
+        private TextView textViewNombreCreacion;
+        private TextView textViewFecha;
 
         public mViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            cardView = itemView.findViewById(R.id.cardview_cuota);
-            tv_numero_orden = itemView.findViewById(R.id.tv_numero_orden);
-            tv_fecha = itemView.findViewById(R.id.tv_fecha_cuota);
-            tv_cuota_credito = itemView.findViewById(R.id.tv_cuota_credito);
+            cardViewItemCuota = itemView.findViewById(R.id.cardview_item_cuota);
+            imageViewTrading = itemView.findViewById(R.id.image_view_item_cuota_trading);
+            textViewValorCuota = itemView.findViewById(R.id.text_view_item_cuota_valor_cuota);
+            textViewEditado = itemView.findViewById(R.id.text_view_item_cuota_editar);
+            textViewNombreCreacion = itemView.findViewById(R.id.text_view_item_cuota_nombre);
+            textViewFecha = itemView.findViewById(R.id.text_view_item_cuota_fecha);
         }
     }
 

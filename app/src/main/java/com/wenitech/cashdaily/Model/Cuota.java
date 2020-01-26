@@ -3,30 +3,51 @@ package com.wenitech.cashdaily.Model;
 import com.google.firebase.Timestamp;
 
 public class Cuota {
-    private Timestamp bFechaCreacion;
-    private int cValorCuota;
+
+    private Timestamp fechaCreacion;
+    private String nombreCreacion;
+    private String estadoEditado;
+    private double valorCuota;
 
     public Cuota() {
     }
 
-    public Cuota(Timestamp bFechaCreacion, int cValorCuota) {
-        this.bFechaCreacion = bFechaCreacion;
-        this.cValorCuota = cValorCuota;
+    public Cuota(Timestamp fechaCreacion, String nombreCreacion, String estadoEditado, double valorCuota) {
+        this.fechaCreacion = fechaCreacion;
+        this.nombreCreacion = nombreCreacion;
+        this.estadoEditado = estadoEditado;
+        this.valorCuota = valorCuota;
     }
 
-    public Timestamp getbFechaCreacion() {
-        return bFechaCreacion;
+    public Timestamp getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setbFechaCreacion(Timestamp bFechaCreacion) {
-        this.bFechaCreacion = bFechaCreacion;
+    public void setFechaCreacion(Timestamp fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
-    public int getcValorCuota() {
-        return cValorCuota;
+    public String getNombreCreacion() {
+        return nombreCreacion;
     }
 
-    public void setcValorCuota(int cValorCuota) {
-        this.cValorCuota = cValorCuota;
+    public void setNombreCreacion(String nombreCreacion) {
+        this.nombreCreacion = nombreCreacion;
+    }
+
+    public String getEstadoEditado() {
+        return estadoEditado;
+    }
+
+    public void setEstadoEditado(String estadoEditado) {
+        this.estadoEditado = estadoEditado;
+    }
+
+    public double getValorCuota() {
+        return valorCuota;
+    }
+
+    public void setValorCuota(double valorCuota) {
+        this.valorCuota = valorCuota;
     }
 }
