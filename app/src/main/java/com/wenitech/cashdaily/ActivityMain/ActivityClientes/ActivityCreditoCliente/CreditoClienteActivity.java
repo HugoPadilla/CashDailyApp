@@ -3,6 +3,8 @@ package com.wenitech.cashdaily.ActivityMain.ActivityClientes.ActivityCreditoClie
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,15 +13,31 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.wenitech.cashdaily.Adapter.RecyclerViewCuotaAdapter;
+import com.wenitech.cashdaily.Model.Cuota;
 import com.wenitech.cashdaily.R;
 
 import java.util.Objects;
 
 
 public class CreditoClienteActivity extends AppCompatActivity implements View.OnClickListener{
+
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private FirebaseUser mUser;
+
+    private DocumentReference docRefCliente;
+    private CollectionReference colRefCuotas;
+
 
     private TextView
             textViewDetallesPrestamo,
@@ -30,14 +48,19 @@ public class CreditoClienteActivity extends AppCompatActivity implements View.On
             textViewDeudaCredito;
 
     private RecyclerViewCuotaAdapter recyclerViewCuotaAdapter;
+    private RecyclerView recyclerViewCuotas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_credito_cliente);
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        mUser = mAuth.getCurrentUser();
         configurarToolbar();
         configurarBottomAppBar();
         configurarCastingViewClickListener();
+        configurarRecyclerview();
     }
 
     private void configurarCastingViewClickListener() {
@@ -55,13 +78,13 @@ public class CreditoClienteActivity extends AppCompatActivity implements View.On
     @Override
     public void onStart() {
         super.onStart();
-        //recyclerViewCuotaAdapter.startListening();
+        recyclerViewCuotaAdapter.startListening();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        //recyclerViewCuotaAdapter.stopListening();
+        recyclerViewCuotaAdapter.stopListening();
     }
 
     @Override
@@ -107,22 +130,19 @@ public class CreditoClienteActivity extends AppCompatActivity implements View.On
         return super.onOptionsItemSelected(item);
     }
 
-    private void addRecyclerview() {
-        /*collectionRefCuotas = db.document(ID_CLIENTE_REFRENCIA)
-                .collection("/creditos").document("credito").collection("cuotas");*/
+    private void configurarRecyclerview() {
+        String ref_cliente = getIntent().getStringExtra("REFERENCIA_CLIENTE");
+        colRefCuotas = db.document(ref_cliente).collection("cuotas");
 
-        //Quety que para ordenar por fecha
-        //Query query = collectionRefCuotas.orderBy("bFechaCreacion", Query.Direction.DESCENDING);
+        Query query = colRefCuotas.orderBy("fechaCreacion", Query.Direction.DESCENDING);
 
-        //Firebase option que se enviara a el adaptadro
-        //FirestoreRecyclerOptions<Cuota> options = new FirestoreRecyclerOptions.Builder<Cuota>()
-                //.setQuery(query, Cuota.class).build();
+        FirestoreRecyclerOptions<Cuota> options = new FirestoreRecyclerOptions.Builder<Cuota>()
+                .setQuery(query, Cuota.class).build();
 
-        /*RecyclerView recyclerViewCuotas = findViewById(R.id.recyclerviewCredito);
+        RecyclerView recyclerViewCuotas = findViewById(R.id.recycler_view_credito_cliente_lista_cuotas);
         recyclerViewCuotaAdapter = new RecyclerViewCuotaAdapter(options);
         recyclerViewCuotas.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewCuotas.setNestedScrollingEnabled(true);
-        recyclerViewCuotas.setAdapter(recyclerViewCuotaAdapter);*/
+        recyclerViewCuotas.setAdapter(recyclerViewCuotaAdapter);
     }
 
     @Override

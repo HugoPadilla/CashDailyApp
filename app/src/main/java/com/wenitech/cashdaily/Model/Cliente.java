@@ -2,10 +2,13 @@ package com.wenitech.cashdaily.Model;
 
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 
 public class Cliente {
 
-    private Timestamp fechaCreacion;//
+    private Timestamp fechaCreacion;
+    private DocumentReference referenceCliente;
+    private boolean creditoActivo;
     private String nombreCliente;//
     private String identificacion;
     private String inicialNombre;
@@ -17,8 +20,10 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(Timestamp fechaCreacion, String nombreCliente, String identificacion, String inicialNombre, String genero, String telefono, String ciudad, String direccion) {
+    public Cliente(Timestamp fechaCreacion, DocumentReference referenceCliente, boolean creditoActivo, String nombreCliente, String identificacion, String inicialNombre, String genero, String telefono, String ciudad, String direccion) {
         this.fechaCreacion = fechaCreacion;
+        this.referenceCliente = referenceCliente;
+        this.creditoActivo = creditoActivo;
         this.nombreCliente = nombreCliente;
         this.identificacion = identificacion;
         this.inicialNombre = inicialNombre;
@@ -34,6 +39,22 @@ public class Cliente {
 
     public void setFechaCreacion(Timestamp fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public DocumentReference getReferenceCliente() {
+        return referenceCliente;
+    }
+
+    public void setReferenceCliente(DocumentReference referenceCliente) {
+        this.referenceCliente = referenceCliente;
+    }
+
+    public boolean isCreditoActivo() {
+        return creditoActivo;
+    }
+
+    public void setCreditoActivo(boolean creditoActivo) {
+        this.creditoActivo = creditoActivo;
     }
 
     public String getNombreCliente() {

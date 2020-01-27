@@ -190,18 +190,6 @@ public class NewCreditActivity extends AppCompatActivity implements View.OnClick
         documentReferenceCredito = db.document(ID_CLIENTE_REFERENCIA).collection("/creditos").document("credito");
 
         Credito credito = new Credito();
-        credito.setaFechaCreacion(Timestamp.now());
-        credito.setbValorPrestamo(bValorPrestamo);
-        credito.setcPorcentaje(cPorcentaje);
-        credito.setdTotalPrestamo(dTotalPrestamo);
-        credito.seteModalida(eModalida);
-        credito.setfDiaSemanaCobrar(fDiaSemanaCobrar);
-        credito.setgDiaQuincenaInicial(gDiaQuincenaInicial);
-        credito.sethDiaQuincenaFinal(hDiaQuincenaFinal);
-        credito.setiDiaMensual(iDiaMensual);
-        credito.setjNumeroCuotas(jNumeroCuotas);
-        credito.setkValorCuotas(kValorCuotas);
-        credito.setlActivo(true);
 
         documentReferenceCredito.set(credito).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

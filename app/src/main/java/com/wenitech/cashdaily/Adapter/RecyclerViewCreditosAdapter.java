@@ -29,7 +29,7 @@ public class RecyclerViewCreditosAdapter extends FirestoreRecyclerAdapter<Credit
     protected void onBindViewHolder(@NonNull mViewHolder holder, int position, @NonNull Credito model) {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM dd, yyyy");
-        Date fechaCredito = model.getaFechaCreacion().toDate();
+        Date fechaCredito = model.getFechaPretamo().toDate();
         holder.tvFecha.setText(simpleDateFormat.format(fechaCredito));
 
     }
