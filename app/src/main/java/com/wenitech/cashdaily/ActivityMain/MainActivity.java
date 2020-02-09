@@ -9,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.ActivityOptions;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,7 +38,7 @@ import com.wenitech.cashdaily.ActivitysNavigationDrawer.ActivitySuscripcion.Susc
 import com.wenitech.cashdaily.ActivitysNavigationDrawer.ActivityTerminos.TerminosActivity;
 import com.wenitech.cashdaily.R;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
 
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void inicializarDatosNavigationDrawerHeader() {
-        if (mUser != null){
+        if (mUser != null) {
             String nombreUsuario = mUser.getDisplayName();
             String correoUsuario = mUser.getEmail();
             textViewDrawerNombre.setText(nombreUsuario);
@@ -84,8 +86,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (nombreUsuario != null && !nombreUsuario.isEmpty()) {
                 textViewDrawerInicialNombre.setText(nombreUsuario.substring(0, 1).toUpperCase());
             }
-
-
         }
     }
 
@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toolbar.setTitle("Cash Daily App");
         setSupportActionBar(toolbar);
     }
+
     private void ConfigurarNavigationDrawer() {
         // Todo: casting navigation drawer
         mDrawerLayout = findViewById(R.id.drawer_layout_main_activity);
@@ -134,14 +135,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflar opciones de menu
-        getMenuInflater().inflate(R.menu.menu_main_toolbar,menu);
+        getMenuInflater().inflate(R.menu.menu_main_toolbar, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         // verificar item del menu del toolbar
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_iten_clound:
                 Toast.makeText(this, "clound", Toast.LENGTH_SHORT).show();
                 break;
@@ -162,11 +163,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         // Verificar elemento selecionado item naigation drawer
-        switch (menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.menu_iten_drawer_perfil:
                 Intent intentPerfil = new Intent(MainActivity.this, PerfilUsuarioActivity.class);
                 startActivity(intentPerfil, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-            break;
+                break;
             case R.id.menu_iten_drawer_suscripcion:
                 Intent intentSuscripcio = new Intent(MainActivity.this, SuscripcionActivity.class);
                 startActivity(intentSuscripcio, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
@@ -193,17 +194,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intentAcerca, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 break;
             case R.id.menu_iten_drawer_cerrar_sesion:
-                mAuth.signOut();
-                UpdateUi(mAuth.getCurrentUser());
+                abrirCuadroDialogoCerrarSesion();
                 break;
         }
         return true;
     }
 
+    private void abrirCuadroDialogoCerrarSesion() {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Cerrar sesion")
+                .setMessage("Estas a punto de salir de tu cuenta y es posible que exista alguna informacion sin guardar en la nube. Asegurate de haber sincronizado todo antes de salir.")
+                .setPositiveButton("Cerrar sesion", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mAuth.signOut();
+                        UpdateUi(mAuth.getCurrentUser());
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
+    }
+
     @Override
     public void onClick(View v) {
         // Click listener
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.card_view_clientes:
                 Intent intentClientes = new Intent(MainActivity.this, ListaClientesActivity.class);
                 startActivity(intentClientes, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
@@ -238,10 +258,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         inicializarDatosNavigationDrawerHeader();
     }
 
-    private void UpdateUi(FirebaseUser user){
-        if (user == null){
+    private void UpdateUi(FirebaseUser user) {
+        if (user == null) {
             Intent intent = new Intent(MainActivity.this, InicioSesionActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         }

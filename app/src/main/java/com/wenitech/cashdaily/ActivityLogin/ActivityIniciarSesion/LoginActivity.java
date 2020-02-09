@@ -8,16 +8,15 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.wenitech.cashdaily.ActivityLogin.ActivityInicioSesion.InicioSesionActivity;
 import com.wenitech.cashdaily.ActivityMain.MainActivity;
 import com.wenitech.cashdaily.R;
 import com.wenitech.cashdaily.ActivityLogin.ActivityRecuperaContraseña.ResetPasswordActivity;
@@ -28,10 +27,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     InterfaceLoginActivity.presenter presenter;
 
     private ImageView imageViewLogo;
-    private TextView textViewLogo, textViewResetPassword, textViewIngresando;
+    private TextView  textViewResetPassword, textViewIngresando;
     private TextInputLayout textInputLayoutEmail, textInputLayoutPassword;
     private TextInputEditText editTextEmail, editTextPassword;
-    private AppCompatButton buttonIniciarSesion;
+    private Button buttonIniciarSesion;
     private TextView textViewRegistrarse;
     private LinearLayout formRegistrarse;
     private ProgressBar progressBarLogin;
@@ -54,7 +53,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void castingCompnent() {
         imageViewLogo = findViewById(R.id.image_view_logo);
-        textViewLogo = findViewById(R.id.text_view_logo);
         textViewResetPassword = findViewById(R.id.textview_reset_password);
         textViewIngresando = findViewById(R.id.text_view_ingresando);
         textInputLayoutEmail = findViewById(R.id.text_input_layout_email);
@@ -71,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void iniciarSesion() {
-        if (!FormValido()) {
+        if (!isFormularioValido()) {
             return;
         } else {
             presenter.IniciarSesion(editTextEmail.getText().toString().trim(), editTextPassword.getText().toString().trim());
@@ -90,22 +88,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public boolean FormValido() {
+    public boolean isFormularioValido() {
         boolean valid = true;
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(email)) {
-            editTextEmail.setError("Ingresa un Correo");
+            textInputLayoutEmail.setError("Escribe tu correo electronico");
             valid = false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editTextEmail.setError("No es un correo valido");
+            textInputLayoutEmail.setError("Este no es un correo valido");
             valid = false;
         } else if (TextUtils.isEmpty(password)) {
-            editTextPassword.setError("Ingresa una Contraseña");
-            valid = false;
-        } else if (password.length() < 8) {
-            editTextPassword.setError("Minimo 8 caracteres");
+            textInputLayoutPassword.setError("Ingresa una Contraseña");
             valid = false;
         }
 
@@ -115,7 +110,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void ShowFormLogin() {
         imageViewLogo.setVisibility(View.VISIBLE);
-        textViewLogo.setVisibility(View.VISIBLE);
         textViewResetPassword.setVisibility(View.VISIBLE);
         textViewIngresando.setVisibility(View.GONE);
         textInputLayoutEmail.setVisibility(View.VISIBLE);
@@ -131,7 +125,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void HidenFormLogin() {
         imageViewLogo.setVisibility(View.GONE);
-        textViewLogo.setVisibility(View.GONE);
         textViewResetPassword.setVisibility(View.GONE);
         textViewIngresando.setVisibility(View.VISIBLE);
         textInputLayoutEmail.setVisibility(View.GONE);

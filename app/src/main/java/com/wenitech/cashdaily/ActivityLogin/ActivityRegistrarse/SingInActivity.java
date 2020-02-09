@@ -9,11 +9,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -31,10 +31,10 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
 
     private InterfaceSingIn.presenter presenter;
     private Toolbar toolbar;
-    private TextInputLayout textInputLayoutNombre, textInputLayoutTipo, textInputLayoutCorreo, textInputLayoutConfirmarCorreo,textInputLayoutContraseña;
-    private TextInputEditText editTextNombre, editTextEmail, editTextConfirmarEmail, editTextContraseña;
+    private TextInputLayout textInputLayoutTipo, textInputLayoutCorreo, textInputLayoutContraseña, textInputLayoutConfirmarConstraseña;
+    private TextInputEditText editTextEmail, editTextContraseña, editTextConfirmarContraseña;
     private AutoCompleteTextView editTextTipo;
-    private MaterialButton buttonCrearCuenta;
+    private Button buttonCrearCuenta;
     private CheckBox checkBoxTerminos;
     private TextView textViewTitulo;
     private TextView textViewSubtitulo;
@@ -47,7 +47,7 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sing_in);
+        setContentView(R.layout.activity_crear_cuenta);
         presenter = new SingInPresenter(this);
         configurarToolbar();
         configurarCasting();
@@ -76,18 +76,16 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
 
     private void configurarCasting() {
         // Todo: casting of input layout
-        textInputLayoutNombre = findViewById(R.id.text_input_layout_crear_cuenta_nombre);
         textInputLayoutTipo = findViewById(R.id.text_input_layout_crear_cuenta_tipo);
         textInputLayoutCorreo = findViewById(R.id.text_input_layout_crear_cuenta_correo);
-        textInputLayoutConfirmarCorreo = findViewById(R.id.text_input_layout_confirmar_correo);
-        textInputLayoutContraseña = findViewById(R.id.text_input_layout_crear_cuenta_contraseña);
+        textInputLayoutContraseña= findViewById(R.id.text_input_layout_crear_cuenta_contraseña);
+        textInputLayoutConfirmarConstraseña = findViewById(R.id.text_input_layout_crear_cuenta_confirmar_contraseña);
 
         // Todo casting of edit text
-        editTextNombre = findViewById(R.id.edit_text_crear_cuenta_nombre);
         editTextTipo = findViewById(R.id.auto_complete_text_crear_cuenta_tipo);
         editTextEmail = findViewById(R.id.edit_text_crear_cuenta_correo);
-        editTextConfirmarEmail = findViewById(R.id.edit_text_crear_cuenta_confirmar_correo);
         editTextContraseña = findViewById(R.id.edit_text_crear_cuenta_contraseña);
+        editTextConfirmarContraseña = findViewById(R.id.edit_text_crear_cuenta_confirmar_contraseña);
 
         // Todo: casting of buttom and text view buttom
         buttonCrearCuenta = findViewById(R.id.button_crear_cuenta_crear_cuenta);
@@ -112,6 +110,7 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
     private void configurarToolbar() {
         toolbar = findViewById(R.id.toolbar_crear_cuenta);
         toolbar.setTitle("Crear una cuenta");
+        toolbar.setNavigationIcon(R.drawable.ic_system_flecha_atras_blanco);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -121,7 +120,7 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
         if (!isFormValid()) {
             return;
         } else {
-            String nombreUsuario = editTextNombre.getText().toString().trim();
+            String nombreUsuario = "Mi negocio";
             String tipoCuenta = editTextTipo.getText().toString().trim();
             String correo = editTextEmail.getText().toString().trim();
             String contraseña = editTextContraseña.getText().toString().trim();
@@ -132,33 +131,28 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
     @Override
     public boolean isFormValid() {
         boolean valid = true;
-        String nombreUsuario = editTextNombre.getText().toString().trim();
         String tipoCuenta = editTextTipo.getText().toString().trim();
         String correo = editTextEmail.getText().toString().trim();
-        String confirmarCorreo = editTextConfirmarEmail.getText().toString().trim();
         String contraseña = editTextContraseña.getText().toString().trim();
+        String confirmarContraseña = editTextConfirmarContraseña.getText().toString().trim();
 
-        if (TextUtils.isEmpty(nombreUsuario)) {
-            textInputLayoutNombre.setError("Escribe tu nombre");
-            valid = false;
-        } if (TextUtils.isEmpty(tipoCuenta)){
+        if (TextUtils.isEmpty(tipoCuenta)){
             textInputLayoutTipo.setError("Elige una opción");
             valid = false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(correo).matches()) {
             textInputLayoutCorreo.setError("Escribe un correo valido");
             valid = false;
-        } else if (TextUtils.isEmpty(confirmarCorreo)) {
-            textInputLayoutConfirmarCorreo.setError("Confirma tu correo");
-            valid = false;
-        } else if (!TextUtils.equals(correo, confirmarCorreo)) {
-            textInputLayoutCorreo.setError("Los correo no coinciden");
-            textInputLayoutConfirmarCorreo.setError("Confirma tu correo");
-            editTextConfirmarEmail.setText("");
-            valid = false;
         } else if (TextUtils.isEmpty(contraseña)) {
             textInputLayoutContraseña.setError("Ingresa una Contraseña");
             valid = false;
-        } else if (contraseña.length() < 8) {
+        }else if (TextUtils.isEmpty(confirmarContraseña)) {
+            textInputLayoutConfirmarConstraseña.setError("Confirma tu contraseña");
+            valid = false;
+        } else if (!TextUtils.equals(contraseña, confirmarContraseña)) {
+            textInputLayoutConfirmarConstraseña.setError("No coinciden tu contraseña");
+            editTextConfirmarContraseña.setText("");
+            valid = false;
+        }  else if (contraseña.length() < 8) {
             textInputLayoutContraseña.setError("Debe contener minimo 8 caracteres");
             valid = false;
         } else if (!checkBoxTerminos.isChecked()){
@@ -173,10 +167,9 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
     public void ShowFormulario() {
 
         // Todo: mostrar formulario
-        textInputLayoutNombre.setVisibility(View.VISIBLE);
         textInputLayoutTipo.setVisibility(View.VISIBLE);
         textInputLayoutCorreo.setVisibility(View.VISIBLE);
-        textInputLayoutConfirmarCorreo.setVisibility(View.VISIBLE);
+        textInputLayoutConfirmarConstraseña.setVisibility(View.VISIBLE);
         textInputLayoutContraseña.setVisibility(View.VISIBLE);
 
         checkBoxTerminos.setVisibility(View.VISIBLE);
@@ -198,10 +191,9 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
     @Override
     public void HidenFormulario() {
         // Todo: mostrar formulario
-        textInputLayoutNombre.setVisibility(View.GONE);
         textInputLayoutTipo.setVisibility(View.GONE);
         textInputLayoutCorreo.setVisibility(View.GONE);
-        textInputLayoutConfirmarCorreo.setVisibility(View.GONE);
+        textInputLayoutConfirmarConstraseña.setVisibility(View.GONE);
         textInputLayoutContraseña.setVisibility(View.GONE);
 
         checkBoxTerminos.setVisibility(View.GONE);
@@ -236,6 +228,12 @@ public class SingInActivity extends AppCompatActivity implements InterfaceSingIn
     @Override
     public void onError() {
         Toast.makeText(this, "No se pudo crear tu cuenta, intenta nuevamente", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finishAfterTransition();
+        return false;
     }
 
     @Override

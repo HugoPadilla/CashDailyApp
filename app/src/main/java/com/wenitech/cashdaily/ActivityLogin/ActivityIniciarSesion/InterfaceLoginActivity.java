@@ -5,7 +5,7 @@ public interface InterfaceLoginActivity {
         void iniciarSesion();
         void goActivityRegistrarse();
 
-        boolean FormValido();
+        boolean isFormularioValido();
 
         void ShowFormLogin();
         void HidenFormLogin();

@@ -1,243 +1,347 @@
 package com.wenitech.cashdaily.ActivityMain.ActivityClientes.ActivityNuevoCredito;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.wenitech.cashdaily.Dialog.DialogoFormaCobroDiario;
-import com.wenitech.cashdaily.Dialog.DialogoFormaCobroMensual;
-import com.wenitech.cashdaily.Dialog.DialogoFormaCobroQuincenal;
-import com.wenitech.cashdaily.Dialog.DialogoFormaCobroSemanal;
 import com.wenitech.cashdaily.Model.Credito;
 import com.wenitech.cashdaily.R;
 
-public class NewCreditActivity extends AppCompatActivity implements View.OnClickListener, DialogoFormaCobroDiario.DialogoFormaCobroDiarioListener,
-        DialogoFormaCobroSemanal.DialogoFormaCobroDiarioListener, DialogoFormaCobroQuincenal.DialogoFormaCobroDiarioListener, DialogoFormaCobroMensual.DialogoFormaCobroDiarioListener {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+public class NewCreditActivity extends AppCompatActivity implements View.OnClickListener, NewCreditoInterface.view {
+    private NewCreditoInterface.presente presente;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentReference documentReferenceCredito;
 
-    private String ID_CLIENTE_REFERENCIA;
-
+    private String REFERENCIA_DOCUMENTO_CLIENTE;
     private Toolbar toolbar;
+
+    // Todo: views Formulario informacion pretamo
     private TextInputEditText editTextFecha;
     private TextInputEditText editTextHora;
     private TextInputEditText editTextValorPrestamo;
-    private TextInputEditText editTextPorcentaje;
-    private TextInputEditText editTextTotalPrestamo;
+    private AutoCompleteTextView autoCompleteTextViewPorcentaje;
+    private TextInputEditText editTextTotalCredito;
 
-    private RadioGroup radioGroupFormaCobro;
+    private TextInputLayout
+            textInputLayoutFecha,
+            textInputLayoutHora,
+            textInputLayoutValorPrestamo,
+            textInputLayoutPorcentaje,
+            textInputLayoutTotalCredito;
 
-    private Button buttonRealizarPrestamo;
+    // Todo: formulario forma de cobro
+    private RadioGroup radioGroupModalidad;
+    private TextInputLayout
+            textInputLayoutPlazo,
+            textInputLayoutValorCuota;
+    private TextInputEditText
+            editTextPlazo,
+            editTextValorCuota;
+    private TextView textViewNoCobrar;
+    private Switch
+            aSwitchSabado,
+            aSwitchDomingo;
 
-    private Timestamp aFechaCreacion;
-    private double bValorPrestamo;
-    private int cPorcentaje;
-    private double dTotalPrestamo;
-    private String eModalida;
-    private String fDiaSemanaCobrar;
-    private int gDiaQuincenaInicial;
-    private int hDiaQuincenaFinal;
-    private int iDiaMensual;
-    private double jNumeroCuotas;
-    private double kValorCuotas;
-    private boolean lActivo;
+    private ConstraintLayout constraintLayoutFormulario;
+
+    private ProgressBar progressBar;
+
+    private FloatingActionButton floatingActionButtonGuardar;
+
+    private Credito mCredito;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        presente = new NewCreditoPresenter(this);
         setContentView(R.layout.activity_new_credit);
+        configurarToolbar();
+        castingView();
+        addListenerView();
+        configurarInicioEdittext();
+        configurarAutocompletPorcentaje();
+        REFERENCIA_DOCUMENTO_CLIENTE = getIntent().getStringExtra("REFERENCIA_CLIENTE");
+    }
+
+    private void configurarAutocompletPorcentaje() {
+        String [] opciones = new String[]{"03","05","10","15","20","30"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.item_dropdown,opciones);
+        autoCompleteTextViewPorcentaje.setAdapter(adapter);
+    }
+
+    private void configurarToolbar() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        ID_CLIENTE_REFERENCIA = getIntent().getStringExtra("ID_CLIENTE_REFERENCIA");
-
-        castingView();
-        addListenerView();
-    }
-
-    private void addListenerView() {
-        buttonRealizarPrestamo.setOnClickListener(this);
     }
 
     private void castingView() {
-        editTextFecha = findViewById(R.id.edit_fecha);
-        editTextHora = findViewById(R.id.edit_hora);
-        editTextValorPrestamo = findViewById(R.id.edit_valor_prestamo);
-        editTextPorcentaje = findViewById(R.id.edit_porcentaje);
-        editTextTotalPrestamo = findViewById(R.id.edit_total_prestamo);
-        radioGroupFormaCobro = findViewById(R.id.radio_group_forma_cobro);
-        buttonRealizarPrestamo = findViewById(R.id.button_realizar_prestamo);
+        // casting view informacion de prestamo
+        textInputLayoutFecha = findViewById(R.id.text_input_layout_nuevo_credito_fecha);
+        textInputLayoutHora = findViewById(R.id.text_input_layout_nuevo_credito_hora);
+        textInputLayoutValorPrestamo = findViewById(R.id.text_input_layout_nuevo_credito_valor_prestamo);
+        textInputLayoutPorcentaje = findViewById(R.id.text_input_layout_nuevo_credito_porcentaje);
+        textInputLayoutTotalCredito = findViewById(R.id.text_input_layout_nuevo_credito_total_credito);
+
+        editTextFecha = findViewById(R.id.edit_text_nuevo_credito_fecha);
+        editTextHora = findViewById(R.id.edit_text_nuevo_credito_hora);
+        editTextValorPrestamo = findViewById(R.id.edit_text_nuevo_credito_valor_prestamo);
+        autoCompleteTextViewPorcentaje = findViewById(R.id.auto_complete_text_nuevo_credito_porcentaje);
+        editTextTotalCredito = findViewById(R.id.edit_text_nuevo_credito_total_credito);
+
+        // casting forma de cobro
+        radioGroupModalidad = findViewById(R.id.radio_group_nuevo_credito_modalidad);
+        textInputLayoutPlazo = findViewById(R.id.text_input_layout_nuevo_credito_plazo);
+        textInputLayoutValorCuota = findViewById(R.id.text_input_layout_nuevo_credito_valor_cuota);
+
+        editTextPlazo = findViewById(R.id.edit_text_nuevo_credito_plazo);
+        editTextValorCuota = findViewById(R.id.edit_text_nuevo_credito_valor_cuota);
+        textViewNoCobrar = findViewById(R.id.text_view_no_cobrar_dias);
+        aSwitchSabado = findViewById(R.id.switch_nuevo_credito_sabados);
+        aSwitchDomingo = findViewById(R.id.switch_nuevo_credito_domingo);
+
+        constraintLayoutFormulario = findViewById(R.id.constrain_layout_formulario);
+        progressBar = findViewById(R.id.progress_bar_nuevo_credito);
+
+        floatingActionButtonGuardar = findViewById(R.id.fab_button_nuevo_credito_guardar);
     }
 
-    public void checkRadioButtomOnPresset(View view) {
-        int radioButtonid = radioGroupFormaCobro.getCheckedRadioButtonId();
-        if (radioButtonid == R.id.radiobutton_diario) {
-            if (!validFormulario()){
-                return;
-            }else {
-                opemDialogCobrodiario();
-                Toast.makeText(this, "Abrir dialog de pretamo diario", Toast.LENGTH_SHORT).show();
-            }
-        } else if (radioButtonid == R.id.radiobutton_semanal) {
-            if (!validFormulario()){
-                return;
-            }else {
-                openDialogoCobroSemanal();
-                Toast.makeText(this, "Abrir dialog de pretamo semanal", Toast.LENGTH_SHORT).show();
-            }
-        } else if (radioButtonid == R.id.radiobutton_quincenal) {
-            if (!validFormulario()){
-                return;
-            }else {
-                openDialogoCobroQuincenal();
-                Toast.makeText(this, "Abrir dialog de pretamo quincenal", Toast.LENGTH_SHORT).show();
-            }
-        } else if (radioButtonid == R.id.radiobutton_mensual) {
-            if (!validFormulario()){
-                return;
-            }else {
-                opemDialogCobroMensual();
-                Toast.makeText(this, "Abrir dialog de pretamo messual", Toast.LENGTH_SHORT).show();
+    private void addListenerView() {
+        radioGroupModalidad.setOnCheckedChangeListener(onCheckedChangeListener);
+        floatingActionButtonGuardar.setOnClickListener(this);
+    }
+
+    private void configurarInicioEdittext() {
+        Date date = new Date();
+        SimpleDateFormat formatFecha = new SimpleDateFormat("dd/mm/yyy");
+        SimpleDateFormat formatHora = new SimpleDateFormat("hh:mm a");
+        String fecha = formatFecha.format(date);
+        String hora = formatHora.format(date);
+        editTextFecha.setText(fecha);
+        editTextHora.setText(hora);
+    }
+
+    RadioGroup.OnCheckedChangeListener onCheckedChangeListener = new RadioGroup.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            switch (checkedId) {
+                case R.id.radio_button_nuevo_credito_diario:
+                    if (isFormularioCreditoValido()) {
+                        textInputLayoutPlazo.setVisibility(View.VISIBLE);
+                        textInputLayoutValorCuota.setVisibility(View.VISIBLE);
+                        textInputLayoutPlazo.setHint("Dias de plazo");
+                        textViewNoCobrar.setVisibility(View.VISIBLE);
+                        aSwitchSabado.setVisibility(View.VISIBLE);
+                        aSwitchDomingo.setVisibility(View.VISIBLE);
+                    } else {
+                        radioGroupModalidad.clearCheck();
+                        return;
+                    }
+                    break;
+                case R.id.radio_button_nuevo_credito_semanal:
+                    if (isFormularioCreditoValido()) {
+                        textInputLayoutPlazo.setVisibility(View.VISIBLE);
+                        textInputLayoutValorCuota.setVisibility(View.VISIBLE);
+                        textInputLayoutPlazo.setHint("Semanas de plazo");
+                        textViewNoCobrar.setVisibility(View.GONE);
+                        aSwitchSabado.setVisibility(View.GONE);
+                        aSwitchDomingo.setVisibility(View.GONE);
+                    } else {
+                        radioGroupModalidad.clearCheck();
+                        return;
+                    }
+                    break;
+                case R.id.radio_button_nuevo_credito_quincenal:
+                    if (isFormularioCreditoValido()) {
+                        textInputLayoutPlazo.setVisibility(View.VISIBLE);
+                        textInputLayoutValorCuota.setVisibility(View.VISIBLE);
+                        textInputLayoutPlazo.setHint("Quincenas de plazo");
+                        textViewNoCobrar.setVisibility(View.GONE);
+                        aSwitchSabado.setVisibility(View.GONE);
+                        aSwitchDomingo.setVisibility(View.GONE);
+                    } else {
+                        radioGroupModalidad.clearCheck();
+                        return;
+                    }
+                    break;
+                case R.id.radio_button_nuevo_credito_mensual:
+                    if (isFormularioCreditoValido()) {
+                        textInputLayoutPlazo.setVisibility(View.VISIBLE);
+                        textInputLayoutValorCuota.setVisibility(View.VISIBLE);
+                        textInputLayoutPlazo.setHint("meses de plazo");
+                        textViewNoCobrar.setVisibility(View.GONE);
+                        aSwitchSabado.setVisibility(View.GONE);
+                        aSwitchDomingo.setVisibility(View.GONE);
+                    } else {
+                        radioGroupModalidad.clearCheck();
+                        return;
+                    }
+                    break;
             }
         }
-    }
-
-    private void opemDialogCobroMensual() {
-        DialogoFormaCobroMensual dialogoFormaCobroMensual = new DialogoFormaCobroMensual(Integer.parseInt(editTextTotalPrestamo.getText().toString()));
-        dialogoFormaCobroMensual.show(getSupportFragmentManager(), "Dialogo cobro mensual");
-    }
-
-    private void openDialogoCobroQuincenal() {
-        DialogoFormaCobroQuincenal dialogoFormaCobroQuincenal = new DialogoFormaCobroQuincenal(Integer.parseInt(editTextTotalPrestamo.getText().toString()));
-        dialogoFormaCobroQuincenal.show(getSupportFragmentManager(), "Dialogo cobro quincenal");
-    }
-
-    private void openDialogoCobroSemanal() {
-        DialogoFormaCobroSemanal dialogoFormaCobroSemanal = new DialogoFormaCobroSemanal(Integer.parseInt(editTextTotalPrestamo.getText().toString()));
-        dialogoFormaCobroSemanal.show(getSupportFragmentManager(), "Dialogo cobro semanal");
-    }
-
-    private void opemDialogCobrodiario() {
-        DialogoFormaCobroDiario dialogoFormaCobroDiario =
-                new DialogoFormaCobroDiario(Integer.parseInt(editTextTotalPrestamo.getText().toString()));
-        dialogoFormaCobroDiario.show(getSupportFragmentManager(), "Dialogo cobro diario");
-    }
-
+    };
 
     @Override
-    public void onClick(View v) {
-        int id = v.getId();
-
-        if (id == R.id.button_realizar_prestamo) {
-            if (!validFormulario()) {
-                return;
-            }else {
-
-                // Timestamp aqui
-                bValorPrestamo = Integer.parseInt(editTextValorPrestamo.getText().toString());
-                cPorcentaje = Integer.parseInt(editTextPorcentaje.getText().toString());
-                dTotalPrestamo = Integer.parseInt(editTextTotalPrestamo.getText().toString());
-
-
-                nuevoCredito();
-            }
-
-        }
+    public void ocultarView() {
+        constraintLayoutFormulario.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
-    public boolean validFormulario() {
-        boolean valido = true;
+    @Override
+    public void mostrarView() {
+        constraintLayoutFormulario.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
+    }
 
-        if (TextUtils.isEmpty(editTextFecha.getText().toString())){
-            editTextFecha.setError("Estable una fecha");
+    @Override
+    public boolean isFormularioCreditoValido() {
+        boolean valido = true;
+        if (TextUtils.isEmpty(editTextFecha.getText().toString())) {
+            textInputLayoutFecha.setError("Seleciona una fecha");
             valido = false;
-        } else if (TextUtils.isEmpty(editTextHora.getText().toString())){
+        } else if (TextUtils.isEmpty(editTextHora.getText().toString())) {
+            textInputLayoutHora.setError("Establece una hora");
             valido = false;
-            editTextHora.setError("Estable la hora");
-        }else if (TextUtils.isEmpty(editTextValorPrestamo.getText().toString())){
-            editTextValorPrestamo.setError("Valor del prestamo invalido");
+        } else if (TextUtils.isEmpty(editTextValorPrestamo.getText().toString())) {
+            textInputLayoutValorPrestamo.setError("Escribe un valor");
             valido = false;
-        }else if (TextUtils.isEmpty(editTextPorcentaje.getText().toString())){
-            editTextPorcentaje.setError("Establece un porcentaje");
+        } else if (TextUtils.isEmpty(autoCompleteTextViewPorcentaje.getText().toString())) {
+            textInputLayoutPorcentaje.setError("Establece un porcentaje");
             valido = false;
-        } else if (TextUtils.isEmpty(editTextTotalPrestamo.getText().toString())){
-            editTextTotalPrestamo.setError("Total de pretamo");
+        } else if (TextUtils.isEmpty(editTextTotalCredito.getText().toString())) {
+            textInputLayoutTotalCredito.setError("Total de credito");
             valido = false;
         }
-
         return valido;
     }
 
-    private void nuevoCredito() {
+    @Override
+    public boolean isFormularioModalidadValido() {
+        boolean isValid = true;
+        if (TextUtils.isEmpty(editTextPlazo.getText().toString())) {
+            textInputLayoutPlazo.setError("Estable una plazo");
+            isValid = false;
+        } else if (TextUtils.isEmpty(editTextValorCuota.getText().toString())) {
+            textInputLayoutValorCuota.setError("Valor cuota");
+            isValid = false;
+        }
+        return isValid;
+    }
 
-        documentReferenceCredito = db.document(ID_CLIENTE_REFERENCIA).collection("/creditos").document("credito");
+    @Override
+    public void onSucces() {
+        Toast.makeText(this, "Credito agregado", Toast.LENGTH_SHORT).show();
+    }
 
-        Credito credito = new Credito();
+    @Override
+    public void onError() {
+        Toast.makeText(this, "No es posible agregar el credito", Toast.LENGTH_SHORT).show();
+    }
 
-        documentReferenceCredito.set(credito).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(NewCreditActivity.this, "Se agrego un nuevo credito", Toast.LENGTH_SHORT).show();
+    @Override
+    public void registrarCredito() {
+        if (isFormularioCreditoValido() && isFormularioModalidadValido()) {
+            mCredito = new Credito();
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/mm/yyy hh:mm a");
+            String stringFecha = editTextFecha.getText().toString() + " " + editTextHora.getText().toString();
+            Date dateFecha = null;
+            Timestamp fecha = Timestamp.now();
+            try {
+                dateFecha = formatoFecha.parse(stringFecha);
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(NewCreditActivity.this, "No pudimo guardar este credito", Toast.LENGTH_SHORT).show();
+            if (dateFecha != null) {
+                fecha = new Timestamp(dateFecha);
+                mCredito.setFechaPretamo(fecha);
             }
-        });
 
+            String valorPrestamo = editTextValorPrestamo.getText().toString();
+            String porcentaje = autoCompleteTextViewPorcentaje.getText().toString();
+            String totalCredito = editTextTotalCredito.getText().toString();
+
+            mCredito.setValorPrestamo(Double.parseDouble(valorPrestamo));
+            mCredito.setPorcentaje(Double.parseDouble(porcentaje));
+            mCredito.setTotalPrestamo(Double.parseDouble(totalCredito));
+
+            switch (radioGroupModalidad.getCheckedRadioButtonId()) {
+                case R.id.radio_button_nuevo_credito_diario:
+                    mCredito.setModalida("Diario");
+
+                    String plazoDias = editTextPlazo.getText().toString().trim();
+                    mCredito.setNumeroCuotas(Double.parseDouble(plazoDias));
+
+                    mCredito.setNoCobrarSabados(aSwitchSabado.isChecked());
+                    mCredito.setNoCobrarDomingos(aSwitchDomingo.isChecked());
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(dateFecha);
+                    calendar.add(Calendar.DAY_OF_YEAR,1);
+
+                    mCredito.setFechaProximaCuota(new Timestamp(calendar.getTime()));
+
+                    break;
+                case R.id.radio_button_nuevo_credito_semanal:
+                    mCredito.setModalida("Semanal");
+                    String plazoSemanas = editTextPlazo.getText().toString().trim();
+                    mCredito.setNumeroCuotas(Double.parseDouble(plazoSemanas));
+
+                    mCredito.setNoCobrarSabados(false);
+                    mCredito.setNoCobrarDomingos(false);
+                    break;
+                case R.id.radio_button_nuevo_credito_quincenal:
+                    mCredito.setModalida("Quincenal");
+                    String plazoQuicena = editTextPlazo.getText().toString().trim();
+                    mCredito.setNumeroCuotas(Double.parseDouble(plazoQuicena));
+
+                    mCredito.setNoCobrarSabados(false);
+                    mCredito.setNoCobrarDomingos(false);
+                    break;
+                case R.id.radio_button_nuevo_credito_mensual:
+                    mCredito.setModalida("Mensual");
+                    String plazoMensual = editTextPlazo.getText().toString().trim();
+                    mCredito.setNumeroCuotas(Double.parseDouble(plazoMensual));
+
+                    mCredito.setNoCobrarSabados(false);
+                    mCredito.setNoCobrarDomingos(false);
+                    break;
+            }
+
+            presente.registrarCredito(mCredito, REFERENCIA_DOCUMENTO_CLIENTE);
+        }
     }
 
     @Override
-    public void aplicarModalidaDiario(double DiasDePlazo, double valorCuota) {
-        //Datos del modalida diara
-        eModalida = "Diario";
-        jNumeroCuotas = DiasDePlazo;
-        kValorCuotas = valorCuota;
-    }
-
-    @Override
-    public void aplicarModalidaSemanal(String diasSemanaCobrar, double SemanasDePlazo, double valorCuota) {
-        // Datos de Modalida Semanal
-        eModalida = "Semanal";
-        fDiaSemanaCobrar = diasSemanaCobrar;
-        jNumeroCuotas = SemanasDePlazo;
-        kValorCuotas = valorCuota;
-    }
-
-    @Override
-    public void aplicarModalidaQuincenal(int diaQuincenaInicial, int diaQuincenFinal, double SemanasDePlazo, double valorCuota) {
-        // Datos de modalida quincenal
-        eModalida = "Quincenal";
-        gDiaQuincenaInicial = diaQuincenaInicial;
-        hDiaQuincenaFinal = diaQuincenFinal;
-        jNumeroCuotas = SemanasDePlazo;
-        kValorCuotas = valorCuota;
-    }
-
-    @Override
-    public void aplicarModalidaMensual(int diasMesCobrar, double mesDePlazo, double valorCuota) {
-        //Datos de modalidad mensual
-        eModalida = "Mensual";
-        iDiaMensual = diasMesCobrar;
-        jNumeroCuotas = mesDePlazo;
-        kValorCuotas = valorCuota;
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fab_button_nuevo_credito_guardar:
+                registrarCredito();
+                break;
+        }
     }
 }

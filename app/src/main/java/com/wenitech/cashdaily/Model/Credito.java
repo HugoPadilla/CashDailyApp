@@ -4,21 +4,23 @@ import com.google.firebase.Timestamp;
 
 public class Credito {
 
-    private Timestamp fechaPretamo;
-    private String modalida;
-    private double valorPrestamo;
-    private double porcentaje;
-    private double totalPrestamo;
-    private double deudaPrestamo;
-    private double numeroCuotas;
-    private boolean noCobrarSabados;
-    private boolean noCobrarDomingos;
+    private Timestamp fechaPretamo; // 26
+    private Timestamp fechaProximaCuota; // 27
+    private String modalida; // diario
+    private double valorPrestamo;  // 100
+    private double porcentaje; // 20
+    private double totalPrestamo; //120
+    private double deudaPrestamo; //120
+    private double numeroCuotas; // 30
+    private boolean noCobrarSabados; // false
+    private boolean noCobrarDomingos; // false
 
     public Credito() {
     }
 
-    public Credito(Timestamp fechaPretamo, String modalida, double valorPrestamo, double porcentaje, double totalPrestamo, double deudaPrestamo, double numeroCuotas, boolean noCobrarSabados, boolean noCobrarDomingos) {
+    public Credito(Timestamp fechaPretamo, Timestamp fechaProximaCuota, String modalida, double valorPrestamo, double porcentaje, double totalPrestamo, double deudaPrestamo, double numeroCuotas, boolean noCobrarSabados, boolean noCobrarDomingos) {
         this.fechaPretamo = fechaPretamo;
+        this.fechaProximaCuota = fechaProximaCuota;
         this.modalida = modalida;
         this.valorPrestamo = valorPrestamo;
         this.porcentaje = porcentaje;
@@ -35,6 +37,14 @@ public class Credito {
 
     public void setFechaPretamo(Timestamp fechaPretamo) {
         this.fechaPretamo = fechaPretamo;
+    }
+
+    public Timestamp getFechaProximaCuota() {
+        return fechaProximaCuota;
+    }
+
+    public void setFechaProximaCuota(Timestamp fechaProximaCuota) {
+        this.fechaProximaCuota = fechaProximaCuota;
     }
 
     public String getModalida() {

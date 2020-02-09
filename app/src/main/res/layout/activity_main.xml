@@ -89,8 +89,8 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="32dp"
                     android:gravity="center_horizontal"
-                    android:text="Cuenta:"
-                    android:textColor="@color/colorSubtituloText" />
+                    android:text="Cuenta de:"
+                    android:textColor="@color/primaryTextColor" />
 
                 <TextView
                     android:id="@+id/text_view_main_tipo_cuenta"
@@ -172,7 +172,6 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:clickable="false"
                             android:orientation="vertical">
 
                             <ImageView
@@ -223,8 +222,6 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:clickable="true"
-                            android:foreground="?android:selectableItemBackground"
                             android:orientation="vertical">
 
                             <ImageView
@@ -269,8 +266,6 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:clickable="true"
-                            android:foreground="?android:selectableItemBackground"
                             android:orientation="vertical">
 
                             <ImageView
@@ -323,8 +318,6 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:clickable="true"
-                            android:foreground="?android:selectableItemBackground"
                             android:orientation="vertical">
 
                             <ImageView
@@ -369,8 +362,6 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:clickable="true"
-                            android:foreground="?android:selectableItemBackground"
                             android:orientation="vertical">
 
                             <ImageView
