@@ -1,4 +1,4 @@
-package com.wenitech.cashdaily.Model;
+package com.wenitech.cashdaily.common.pojo;
 
 
 import com.google.firebase.Timestamp;
@@ -9,6 +9,7 @@ public class Cliente {
     private Timestamp fechaCreacion;
     private DocumentReference referenceCliente;
     private boolean creditoActivo;
+    private DocumentReference referenceCreditoActivo;
     private String nombreCliente;//
     private String identificacion;
     private String inicialNombre;
@@ -20,10 +21,11 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(Timestamp fechaCreacion, DocumentReference referenceCliente, boolean creditoActivo, String nombreCliente, String identificacion, String inicialNombre, String genero, String telefono, String ciudad, String direccion) {
+    public Cliente(Timestamp fechaCreacion, DocumentReference referenceCliente, boolean creditoActivo, DocumentReference referenceCreditoActivo, String nombreCliente, String identificacion, String inicialNombre, String genero, String telefono, String ciudad, String direccion) {
         this.fechaCreacion = fechaCreacion;
         this.referenceCliente = referenceCliente;
         this.creditoActivo = creditoActivo;
+        this.referenceCreditoActivo = referenceCreditoActivo;
         this.nombreCliente = nombreCliente;
         this.identificacion = identificacion;
         this.inicialNombre = inicialNombre;
@@ -55,6 +57,14 @@ public class Cliente {
 
     public void setCreditoActivo(boolean creditoActivo) {
         this.creditoActivo = creditoActivo;
+    }
+
+    public DocumentReference getReferenceCreditoActivo() {
+        return referenceCreditoActivo;
+    }
+
+    public void setReferenceCreditoActivo(DocumentReference referenceCreditoActivo) {
+        this.referenceCreditoActivo = referenceCreditoActivo;
     }
 
     public String getNombreCliente() {

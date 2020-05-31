@@ -185,7 +185,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="32dp"
-                android:background="@drawable/button_solido_radio_gris"
+                android:background="@drawable/button_gris_solido_radius"
                 android:paddingLeft="54dp"
                 android:paddingRight="54dp"
                 android:text="Crear Cuenta"

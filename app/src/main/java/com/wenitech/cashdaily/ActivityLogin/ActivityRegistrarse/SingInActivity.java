@@ -20,11 +20,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.wenitech.cashdaily.ActivityLogin.ActivityIniciarSesion.LoginActivity;
-import com.wenitech.cashdaily.ActivityMain.MainActivity;
+import com.wenitech.cashdaily.ui.LoginActivity;
+import com.wenitech.cashdaily.ui.MainActivity;
 import com.wenitech.cashdaily.R;
 
 public class SingInActivity extends AppCompatActivity implements InterfaceSingIn.view, View.OnClickListener {

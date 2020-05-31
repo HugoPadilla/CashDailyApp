@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,14 +16,14 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.wenitech.cashdaily.Model.Credito;
+import com.wenitech.cashdaily.common.pojo.Credito;
 import com.wenitech.cashdaily.R;
 
 import java.text.ParseException;
@@ -71,7 +72,7 @@ public class NewCreditActivity extends AppCompatActivity implements View.OnClick
 
     private ProgressBar progressBar;
 
-    private FloatingActionButton floatingActionButtonGuardar;
+    private ExtendedFloatingActionButton floatingActionButtonGuardar;
 
     private Credito mCredito;
 
@@ -89,13 +90,13 @@ public class NewCreditActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void configurarAutocompletPorcentaje() {
-        String [] opciones = new String[]{"03","05","10","15","20","30"};
+        String [] opciones = new String[]{"00","03","05","10","15","20","30"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.item_dropdown,opciones);
         autoCompleteTextViewPorcentaje.setAdapter(adapter);
     }
 
     private void configurarToolbar() {
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar_credito_vacio);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -256,12 +257,17 @@ public class NewCreditActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onSucces() {
         Toast.makeText(this, "Credito agregado", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent();
+        intent.putExtra("MENSAJE",true);
+        setResult(0,intent);
+        finish();
     }
 
     @Override
     public void onError() {
         Toast.makeText(this, "No es posible agregar el credito", Toast.LENGTH_SHORT).show();
     }
+
 
     @Override
     public void registrarCredito() {
@@ -288,6 +294,7 @@ public class NewCreditActivity extends AppCompatActivity implements View.OnClick
             mCredito.setValorPrestamo(Double.parseDouble(valorPrestamo));
             mCredito.setPorcentaje(Double.parseDouble(porcentaje));
             mCredito.setTotalPrestamo(Double.parseDouble(totalCredito));
+            mCredito.setDeudaPrestamo(Double.parseDouble(totalCredito));
 
             switch (radioGroupModalidad.getCheckedRadioButtonId()) {
                 case R.id.radio_button_nuevo_credito_diario:
@@ -295,6 +302,8 @@ public class NewCreditActivity extends AppCompatActivity implements View.OnClick
 
                     String plazoDias = editTextPlazo.getText().toString().trim();
                     mCredito.setNumeroCuotas(Double.parseDouble(plazoDias));
+                    String valorCuota = editTextValorCuota.getText().toString().trim();
+                    mCredito.setValorCuota(Double.parseDouble(valorCuota));
 
                     mCredito.setNoCobrarSabados(aSwitchSabado.isChecked());
                     mCredito.setNoCobrarDomingos(aSwitchDomingo.isChecked());

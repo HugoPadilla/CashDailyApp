@@ -17,7 +17,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.wenitech.cashdaily.Adapter.RecyclerViewClienteAdapter;
-import com.wenitech.cashdaily.Model.Cliente;
+import com.wenitech.cashdaily.common.pojo.Cliente;
 import com.wenitech.cashdaily.R;
 
 public class TodosFragment extends Fragment {

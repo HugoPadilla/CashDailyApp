@@ -4,7 +4,7 @@
     <color name="primaryColor">#027CD2</color>
     <color name="primaryLightColor">#028BEB</color>
     <color name="primaryDarkColor">#0765A8</color>
-    <color name="colorAccent">#00BCD4</color>
+    <color name="colorAccent">#00B8D4</color>
 
     <color name="secundaryColor">#1463FB</color>
     <color name="secundaryDarkColor">#3877DE</color>
@@ -16,7 +16,7 @@
     <color name="colorSubtituloText">#000000</color>
     <color name="colorNormalText">#000000</color>
 
-    <color name="colorImagenPerfil">#30536F</color>
+    <color name="colorImagenPerfil">#E630536F</color>
     <color name="colorTradingUp">#009688</color>
     <color name="colorTradingStop">#550096</color>
     <color name="colorTradingDown">#960000</color>

@@ -8,6 +8,13 @@
             <size android:height="36dp"/>
         </shape>
     </item>
+    <item android:state_enabled="false" >
+        <shape android:shape="rectangle" >
+            <solid android:color="#6396BD"/>
+            <corners android:radius="50dp"/>
+            <size android:height="36dp"/>
+        </shape>
+    </item>
     <item >
         <shape android:shape="rectangle" >
             <solid android:color="@color/colorImagenPerfil"/>

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +20,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.wenitech.cashdaily.Adapter.RecyclerViewClienteAdapter;
-import com.wenitech.cashdaily.Model.Cliente;
+import com.wenitech.cashdaily.common.pojo.Cliente;
 import com.wenitech.cashdaily.R;
 
 import java.util.Date;
@@ -46,6 +48,9 @@ public class CobrarHoyFragment extends Fragment {
 
         RecyclerView recyclerViewCobrarHoy = view.findViewById(R.id.recycler_view_cobrar_hoy);
         recyclerViewClienteAdapter = new RecyclerViewClienteAdapter(options);
+        int resId = R.anim.layout_animation_from_bottom;
+        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), resId);
+        recyclerViewCobrarHoy.setLayoutAnimation(animation);
         recyclerViewCobrarHoy.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewCobrarHoy.setAdapter(recyclerViewClienteAdapter);
 

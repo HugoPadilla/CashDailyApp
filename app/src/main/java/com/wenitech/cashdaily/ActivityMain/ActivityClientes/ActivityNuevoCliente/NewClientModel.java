@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.wenitech.cashdaily.Model.Cliente;
+import com.wenitech.cashdaily.common.pojo.Cliente;
 
 public class NewClientModel implements Interface.model {
     private Interface.taskListener taskListener;
@@ -34,7 +34,7 @@ public class NewClientModel implements Interface.model {
            // Establecer inicial del nombre del ciente
         String inicialNombre = nombreCliente.substring(0, 1).toUpperCase();
         REF_DOCUMENTO_CLIENTES = db.collection("usuarios").document(mAuth.getUid()).collection("clientes").document();
-        mCliente = new Cliente(Timestamp.now(),REF_DOCUMENTO_CLIENTES,false,nombreCliente,identificacion,inicialNombre,genero,telefono,ciudad,direccion);
+        mCliente = new Cliente(Timestamp.now(),REF_DOCUMENTO_CLIENTES,false,REF_DOCUMENTO_CLIENTES,nombreCliente,identificacion,inicialNombre,genero,telefono,ciudad,direccion);
 
         String id = REF_DOCUMENTO_CLIENTES.getPath();
         Log.d("ID_DOCUMENTO", "Id docuemtno" + id);

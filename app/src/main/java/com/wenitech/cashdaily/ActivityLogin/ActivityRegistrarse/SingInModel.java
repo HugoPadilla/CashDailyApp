@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.wenitech.cashdaily.Model.Usuairio;
+import com.wenitech.cashdaily.common.pojo.Usuairio;
 
 import java.util.Objects;
 

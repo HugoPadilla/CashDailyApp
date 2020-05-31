@@ -1,4 +1,4 @@
-package com.wenitech.cashdaily.Model;
+package com.wenitech.cashdaily.common.pojo;
 
 import com.google.firebase.Timestamp;
 

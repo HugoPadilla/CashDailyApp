@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.wenitech.cashdaily.Model.Cuota;
+import com.wenitech.cashdaily.common.pojo.Cuota;
 import com.wenitech.cashdaily.R;
 
 import java.text.DecimalFormat;
@@ -49,17 +49,18 @@ public class RecyclerViewCuotaAdapter extends FirestoreRecyclerAdapter<Cuota, Re
         holder.textViewValorCuota.setText(valorCuota);
 
         holder.textViewNombreCreacion.setText(model.getNombreCreacion());
-        holder.textViewEditado.setText(model.getEstadoEditado());
 
         if (model.getEstadoEditado().isEmpty() || model.getEstadoEditado().equals("Normal")){
             // Todo: estado normal
-            holder.imageViewTrading.setImageResource(R.drawable.ic_asset_trending_up_blanco);
+            holder.imageViewTrading.setImageResource(R.drawable.ic_asset_trending_up_verde);
         }else if (model.getEstadoEditado().equals("Editado")){
             // Todo: editado
-            holder.imageViewTrading.setImageResource(R.drawable.ic_asset_trending_up_blanco);
+            holder.textViewEditado.setText(" - " + model.getEstadoEditado());
+            holder.imageViewTrading.setImageResource(R.drawable.ic_asset_trending_down_azul);
         }else if (model.getEstadoEditado().equals("Eliminado")){
             // Todo: eliminado
-            holder.imageViewTrading.setImageResource(R.drawable.ic_asset_trending_up_blanco);
+            holder.textViewEditado.setText(" - " + model.getEstadoEditado());
+            holder.imageViewTrading.setImageResource(R.drawable.ic_asset_trending_down_rojo);
         }
     }
 

@@ -1,11 +1,10 @@
-package com.wenitech.cashdaily.ActivityMain;
+package com.wenitech.cashdaily.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.ActivityOptions;
@@ -22,7 +21,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.wenitech.cashdaily.ActivityLogin.ActivityIniciarSesion.LoginActivity;
 import com.wenitech.cashdaily.ActivityMain.ActivityCaja.CajaActivity;
 import com.wenitech.cashdaily.ActivityMain.ActivityClientes.ListaClientesActivity;
 import com.wenitech.cashdaily.ActivityLogin.ActivityInicioSesion.InicioSesionActivity;
@@ -90,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void castingCardView() {
-        cardViewClientes = findViewById(R.id.card_view_clientes);
+        /*cardViewClientes = findViewById(R.id.card_view_clientes);
         cardViewClientes.setOnClickListener(this);
         cardViewEstaditicas = findViewById(R.id.card_view_estadisticas);
         cardViewEstaditicas.setOnClickListener(this);
@@ -101,12 +99,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cardViewProductos = findViewById(R.id.card_view_productos);
         cardViewProductos.setOnClickListener(this);
         cardViewCobradores = findViewById(R.id.card_view_cobradores);
-        cardViewCobradores.setOnClickListener(this);
+        cardViewCobradores.setOnClickListener(this);*/
     }
 
     private void agregarToolbar() {
         // Agregar  Toolbar
-        toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar_credito_vacio);
         toolbar.setTitle("Cash Daily App");
         setSupportActionBar(toolbar);
     }
@@ -223,32 +221,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         // Click listener
-        switch (v.getId()) {
-            case R.id.card_view_clientes:
-                Intent intentClientes = new Intent(MainActivity.this, ListaClientesActivity.class);
-                startActivity(intentClientes, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-                break;
-            case R.id.card_view_estadisticas:
-                Intent intentEstadisticas = new Intent(MainActivity.this, EstadisticasActivity.class);
-                startActivity(intentEstadisticas, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-                break;
-            case R.id.card_view_caja:
-                Intent intentCaja = new Intent(MainActivity.this, CajaActivity.class);
-                startActivity(intentCaja, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-                break;
-            case R.id.card_view_gastos:
-                Intent intentGastos = new Intent(MainActivity.this, GastosActivity.class);
-                startActivity(intentGastos, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-                break;
-            case R.id.card_view_productos:
-                Intent intentProductos = new Intent(MainActivity.this, ProductosActivity.class);
-                startActivity(intentProductos, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-                break;
-            case R.id.card_view_cobradores:
-                Intent intentCobradores = new Intent(MainActivity.this, CobradorActivity.class);
-                startActivity(intentCobradores, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-                break;
-        }
+//        switch (v.getId()) {
+//            case R.id.card_view_clientes:
+//                Intent intentClientes = new Intent(MainActivity.this, ListaClientesActivity.class);
+//                startActivity(intentClientes, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+//                break;
+//            case R.id.card_view_estadisticas:
+//                Intent intentEstadisticas = new Intent(MainActivity.this, EstadisticasActivity.class);
+//                startActivity(intentEstadisticas, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+//                break;
+//            case R.id.card_view_caja:
+//                Intent intentCaja = new Intent(MainActivity.this, CajaActivity.class);
+//                startActivity(intentCaja, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+//                break;
+//            case R.id.card_view_gastos:
+//                Intent intentGastos = new Intent(MainActivity.this, GastosActivity.class);
+//                startActivity(intentGastos, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+//                break;
+//            case R.id.card_view_productos:
+//                Intent intentProductos = new Intent(MainActivity.this, ProductosActivity.class);
+//                startActivity(intentProductos, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+//                break;
+//            case R.id.card_view_cobradores:
+//                Intent intentCobradores = new Intent(MainActivity.this, CobradorActivity.class);
+//                startActivity(intentCobradores, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+//                break;
+//        }
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.wenitech.cashdaily.ActivityMain.ActivityClientes.ActivityNuevoCredito;
 
-import com.wenitech.cashdaily.Model.Credito;
+import com.wenitech.cashdaily.common.pojo.Credito;
 
 public class NewCreditoPresenter implements NewCreditoInterface.presente, NewCreditoInterface.taskListener {
     private NewCreditoModel model;

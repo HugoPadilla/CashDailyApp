@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_cliente"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="0dp"
-    android:transitionName="COMPARTIR_VIEW_ITEM_CLIENTE_TO_CLIENTE_DETAIL"
-    android:foreground="?android:selectableItemBackground"
     android:clickable="true"
-    android:orientation="vertical">
+    android:foreground="?android:selectableItemBackground"
+    android:transitionName="COMPARTIR_VIEW_ITEM_CLIENTE_TO_CLIENTE_DETAIL"
+    app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imagen_view_item_cliente"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
@@ -33,9 +32,9 @@
             android:layout_height="0dp"
             android:gravity="center_horizontal|center_vertical"
             android:text="N"
-            android:textColor="#E6FFFFFF"
+            android:textColor="#DFFFFFFF"
             android:textSize="20sp"
-            android:textStyle="bold"
+            android:typeface="monospace"
             app:layout_constraintBottom_toBottomOf="@+id/imagen_view_item_cliente"
             app:layout_constraintEnd_toEndOf="@+id/imagen_view_item_cliente"
             app:layout_constraintStart_toStartOf="@+id/imagen_view_item_cliente"
@@ -46,37 +45,64 @@
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="2dp"
             android:layout_marginEnd="32dp"
             android:singleLine="true"
             android:text="Nombre del Cliente"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textSize="16sp"
-            android:textStyle="bold"
             android:transitionName="nombre_cliente"
+            app:layout_constraintBottom_toTopOf="@+id/guideline17"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imagen_view_item_cliente"
-            app:layout_constraintTop_toTopOf="@+id/imagen_view_item_cliente" />
+            app:layout_constraintStart_toEndOf="@+id/imagen_view_item_cliente" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="32dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="35.5dp" />
 
         <TextView
             android:id="@+id/text_view_direccion_cliente"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
             android:layout_marginEnd="32dp"
             android:text="Monteria, Calle 3 #4"
+            app:layout_constraintBottom_toTopOf="@+id/guideline19"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imagen_view_item_cliente"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_nombre_cliente" />
+            app:layout_constraintStart_toEndOf="@+id/imagen_view_item_cliente" />
 
         <View
             android:id="@+id/divider"
             android:layout_width="0dp"
-            android:layout_height="0.5dp"
+            android:layout_height="0.4dp"
             android:layout_gravity="bottom"
             android:background="?android:attr/listDivider"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="52dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="56.7dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

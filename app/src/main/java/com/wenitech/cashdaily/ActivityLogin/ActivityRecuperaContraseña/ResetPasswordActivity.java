@@ -56,7 +56,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements Interfac
     }
 
     private void iniciarToolbar() {
-        Toolbar toolbarActivity = findViewById(R.id.toolbar);
+        Toolbar toolbarActivity = findViewById(R.id.toolbar_credito_vacio);
         toolbarActivity.setTitle("Recuperar cuenta");
         toolbarActivity.setNavigationIcon(R.drawable.ic_system_flecha_atras_blanco);
         setSupportActionBar(toolbarActivity);

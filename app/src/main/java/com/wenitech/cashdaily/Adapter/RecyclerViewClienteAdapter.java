@@ -1,14 +1,12 @@
 package com.wenitech.cashdaily.Adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -16,10 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.wenitech.cashdaily.ActivityMain.ActivityClientes.ActivityCreditoCliente.CreditoClienteActivity;
-import com.wenitech.cashdaily.ActivityMain.ActivityClientes.ActivityNuevoCredito.NewCreditActivity;
-import com.wenitech.cashdaily.Model.Cliente;
+import com.wenitech.cashdaily.CreditoVacioActivity;
+import com.wenitech.cashdaily.common.pojo.Cliente;
 import com.wenitech.cashdaily.R;
 public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente, RecyclerViewClienteAdapter.MyViewHolder> {
 
@@ -38,24 +35,22 @@ public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente
                 if (model.isCreditoActivo()){
                     Intent intent = new Intent(holder.context, CreditoClienteActivity.class);
                     intent.putExtra("REFERENCIA_CLIENTE",model.getReferenceCliente().getPath());
+                    intent.putExtra("REFERENCIA_CREDITO_ACTIVO",model.getReferenceCreditoActivo().getPath());
+                    intent.putExtra("CREDITO_ACTIVO_CLIENTE",model.isCreditoActivo());
+                    intent.putExtra("CLIENTE_INTENT_NOMBRE",model.getNombreCliente());
+
                     holder.context.startActivity(intent);
-                }else {
-                    new MaterialAlertDialogBuilder(holder.context)
-                            .setTitle("Realizar un nuevo credito?")
-                            .setMessage(model.getNombreCliente() + ", " + "no tiene un credito activo pero puedes agregar uno nuevo")
-                            .setNegativeButton("Cancelar",null)
-                            .setPositiveButton("Nuevo Credito", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(holder.context, NewCreditActivity.class);
-                                    intent.putExtra("REFERENCIA_CLIENTE",model.getReferenceCliente().getPath());
-                                    holder.context.startActivity(intent);
-                                }
-                            }).show();
+                } else {
+                    Intent intent = new Intent(holder.context, CreditoVacioActivity.class);
+                    intent.putExtra("REFERENCIA_CLIENTE",model.getReferenceCliente().getPath());
+                    intent.putExtra("CLIENTE_INTENT_NOMBRE",model.getNombreCliente());
+
+                    holder.context.startActivity(intent);
                 }
 
             }
         });
+
     }
 
 

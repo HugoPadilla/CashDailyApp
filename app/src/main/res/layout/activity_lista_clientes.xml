@@ -31,7 +31,7 @@
             app:tabIndicatorColor="@color/primaryTextColor"
             app:tabIndicatorHeight="3dp"
             app:tabSelectedTextColor="@color/primaryTextColor"
-            app:tabTextColor="@color/colorSubtituloText">
+            app:tabTextColor="#CCFFFFFF">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -69,8 +69,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        app:tint="#fff"
         android:src="@drawable/ic_systema_mas_blanco"
+        app:backgroundTint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="#fff" />
 </androidx.constraintlayout.widget.ConstraintLayout>

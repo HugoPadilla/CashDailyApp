@@ -11,12 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.wenitech.cashdaily.Model.Credito;
+import com.wenitech.cashdaily.common.pojo.Credito;
 import com.wenitech.cashdaily.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.zip.Inflater;
 
 public class RecyclerViewCreditosAdapter extends FirestoreRecyclerAdapter<Credito, RecyclerViewCreditosAdapter.mViewHolder> {
 

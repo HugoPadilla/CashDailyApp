@@ -8,27 +8,17 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="192dp">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:toolbarId="@+id/toolbar">
-
+        android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/toolbar_credito_vacio"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_collapseMode="pin"
-                app:title="Formulario de prestamo">
+                app:title="Formulario nuevo prestamo">
 
             </androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -221,6 +211,7 @@
                 <TextView
                     android:id="@+id/text_view_no_cobrar_dias"
                     android:layout_width="wrap_content"
+                    android:visibility="gone"
                     android:layout_height="19dp"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="16dp"
@@ -233,6 +224,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toStartOf="@+id/guideline13"
@@ -259,6 +251,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -278,6 +271,7 @@
                     android:id="@+id/switch_nuevo_credito_sabados"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
@@ -293,6 +287,7 @@
                     android:id="@+id/switch_nuevo_credito_domingo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:paddingTop="8dp"
@@ -329,15 +324,17 @@
 
     </androidx.core.widget.ContentLoadingProgressBar>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_button_nuevo_credito_guardar"
+        style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_systema_check_blanco"
-        android:theme="@style/Widget.AppCompat.Light.ActionButton.Overflow"
-        app:tint="@color/primaryTextColor" />
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="24dp"
+        android:text="guardar"
+        android:textColor="@android:color/white"
+        app:backgroundTint="@color/colorAccent"
+        app:icon="@drawable/ic_systema_check_blanco"
+        app:iconTint="@android:color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
