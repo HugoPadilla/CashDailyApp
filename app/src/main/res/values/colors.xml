@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="primaryDarkColor">#0082B7</color>
+    <color name="primaryColor">#0095D1</color>
+    <color name="primaryLightColor">#02B7FD</color>
+    <color name="colorAccent">#00A9EC</color>
+    <color name="primaryTextColor">#FFFFFF</color>
 
-    <color name="primaryColor">#027CD2</color>
-    <color name="primaryLightColor">#028BEB</color>
-    <color name="primaryDarkColor">#0765A8</color>
-    <color name="colorAccent">#00B8D4</color>
-
-    <color name="secundaryColor">#1463FB</color>
-    <color name="secundaryDarkColor">#3877DE</color>
-
-    <color name="primaryTextColor">#ffffff</color>
-    <color name="secondaryTextColor">#DEFFFFFF</color>
-
-    <color name="colorTituloText">#000000</color>
-    <color name="colorSubtituloText">#000000</color>
-    <color name="colorNormalText">#000000</color>
-
-    <color name="colorImagenPerfil">#E630536F</color>
+    <color name="colorImagenPerfil">#30536F</color>
     <color name="colorTradingUp">#009688</color>
     <color name="colorTradingStop">#550096</color>
     <color name="colorTradingDown">#960000</color>

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.Main.ActivityCaja.CajaActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -20,7 +21,7 @@
             android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
             app:navigationIcon="@drawable/ic_system_flecha_atras_blanco"
             app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
-            app:title="Mi Caja"></androidx.appcompat.widget.Toolbar>
+            app:title="Mi Caja"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <ImageView
@@ -112,7 +113,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/button_blanco_delineado_azul"
+                android:background="@drawable/bg_button_blanco_delineado_azul"
                 android:text="Retirar"
                 app:layout_constraintEnd_toStartOf="@+id/button_caja_agregar"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -126,7 +127,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
                 android:textColor="@color/primaryTextColor"
-                android:background="@drawable/button_azul_solido_radiun"
+                android:background="@drawable/bg_button_azul_solido_radiun"
                 android:text="Agregar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"

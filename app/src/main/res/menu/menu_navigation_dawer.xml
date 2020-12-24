@@ -5,13 +5,13 @@
 
     <group>
         <item
-            android:id="@+id/menu_iten_drawer_perfil"
+            android:id="@+id/perfilFragment"
             android:icon="@drawable/ic_systema_persona_negro"
             android:title="Perfil" />
         <item
             android:id="@+id/menu_iten_drawer_suscripcion"
             android:icon="@drawable/ic_asset_estrella_negro"
-            android:title="Susscripción Pro" />
+            android:title="Plan" />
         <item
             android:id="@+id/menu_iten_drawer_compartir"
             android:icon="@drawable/ic_systema_share_negro"
@@ -21,24 +21,24 @@
             android:icon="@drawable/ic_systema_ok_negro"
             android:title="Calificar App" />
         <item
-            android:id="@+id/menu_iten_drawer_configuracion"
+            android:id="@+id/ajustesFragment"
             android:icon="@drawable/ic_systema_configuracion_negro"
-            android:title="Configuración" />
+            android:title="Ajustes" />
         <item
             android:id="@+id/menu_iten_drawer_cerrar_sesion"
-            android:icon="@drawable/ic_systema_power_negro"
+            android:icon="@drawable/ic_power_negro"
             android:title="Cerrar Sesión" />
 
         <item android:title="Otros">
             <menu>
                 <item
-                    android:id="@+id/menu_iten_drawer_ayuda"
+                    android:id="@+id/ayudaFragment"
                     android:title="Ayuda" />
                 <item
-                    android:id="@+id/menu_iten_drawer_terminos"
+                    android:id="@+id/terminosFragment"
                     android:title="Términos y condiciones" />
                 <item
-                    android:id="@+id/menu_iten_drawer_acerca_de"
+                    android:id="@+id/acercadeFragment"
                     android:title="Acerca de Cash Daily App" />
             </menu>
         </item>

@@ -3,15 +3,10 @@ package com.wenitech.cashdaily.ActivitysNavigationDrawer.ActivityPerfilUsuario;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,12 +16,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.wenitech.cashdaily.CambiarPasswordActivity;
 import com.wenitech.cashdaily.R;
 
-import java.util.zip.Inflater;
-
-public class PerfilUsuarioActivity extends AppCompatActivity implements View.OnClickListener {
+public class PerfilUsuarioActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     FirebaseUser mUser;
@@ -39,20 +31,11 @@ public class PerfilUsuarioActivity extends AppCompatActivity implements View.OnC
     private TextView textViewSuscripcion;
     private TextView textViewCorreo;
 
-    // cardview listener
-    private CardView cardViewActualizarNombre;
-    private CardView cardViewSubscripcion;
-    private CardView cardViewActualizarCorreo;
-    private CardView cardViewActualizarContraseña;
-    private CardView cardViewEliminarCuenta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
-        setContentView(R.layout.activity_perfil_usuario);
-        configurarToolbar();
-        castingView();
         configurarDatosUserenTextview();
     }
 
@@ -66,61 +49,6 @@ public class PerfilUsuarioActivity extends AppCompatActivity implements View.OnC
         textViewCorreo.setText(correoUsuario);
         if (nombreUsuario.length() >= 1){
             textViewInicialNombre.setText(nombreUsuario.substring(0,1).toUpperCase());
-        }
-    }
-
-    private void castingView() {
-        textViewTituloNombrePerfil = findViewById(R.id.text_view_perfil_usuario_titulo_nombre_perfil);
-        textViewInicialNombre = findViewById(R.id.text_view_perfil_usuario_inicial_nombre);
-        textViewTituloTipoCuenta = findViewById(R.id.text_view_perfil_usuario_titulo_tipo_cuenta);
-        textViewNombrePerfil = findViewById(R.id.text_view_perfil_usuario_nombre);
-        textViewSuscripcion = findViewById(R.id.text_view_perfil_usuario_subscripcion);
-        textViewCorreo = findViewById(R.id.text_view_perfil_usuario_correo);
-
-        // casting card view and Listener
-        cardViewActualizarNombre = findViewById(R.id.card_view_perfil_usuario_nombre);
-        cardViewActualizarNombre.setOnClickListener(this);
-        cardViewSubscripcion = findViewById(R.id.card_view_perfil_usuario_suscripcion);
-        cardViewSubscripcion.setOnClickListener(this);
-        cardViewActualizarCorreo = findViewById(R.id.card_view_perfil_usuario_correo);
-        cardViewActualizarCorreo.setOnClickListener(this);
-        cardViewActualizarContraseña = findViewById(R.id.card_view_perfil_usuario_contraseña);
-        cardViewActualizarContraseña.setOnClickListener(this);
-        cardViewEliminarCuenta = findViewById(R.id.card_view_perfil_usuario_eliminar);
-        cardViewEliminarCuenta.setOnClickListener(this);
-    }
-
-    private void configurarToolbar() {
-        // Todo: configurar toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar_perfil_usuario);
-        toolbar.setNavigationIcon(R.drawable.ic_system_flecha_atras_blanco);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        // Todo: evento click botot atras
-        finishAfterTransition();
-        return false;
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.card_view_perfil_usuario_nombre:
-                abrirDialogoCambiarNombre();
-                break;
-            case R.id.card_view_perfil_usuario_suscripcion:
-                break;
-            case R.id.card_view_perfil_usuario_correo:
-                break;
-            case R.id.card_view_perfil_usuario_contraseña:
-                Intent intent = new Intent(PerfilUsuarioActivity.this, CambiarPasswordActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.card_view_perfil_usuario_eliminar:
-                break;
         }
     }
 

@@ -5,230 +5,224 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
+  <com.google.android.material.appbar.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_credito_cliente"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:subtitle="Hugo Javier Padilla Cavadia"
+        app:title="Informacion de cliente" />
+  </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_credito_cliente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:subtitle="Hugo Javier Padilla Cavadia"
-            app:title="Informacion de cliente" />
-    </com.google.android.material.appbar.AppBarLayout>
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginBottom="?attr/actionBarSize"
+      app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="?attr/actionBarSize"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_credito_cliente_credito"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/primaryColor"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_view_credito_cliente_credito"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:backgroundTint="@color/primaryColor"
-            app:cardCornerRadius="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/text_view_credito_cliente_modalidad"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Modalidad: Diario"
-                    android:textColor="@color/secondaryTextColor"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/text_view_credito_cliente_ver_detalles_prestamo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:clickable="true"
-                    android:drawableRight="@drawable/ic_systema_flecha_adelante_blanco"
-                    android:gravity="center_vertical"
-                    android:text="Detalle"
-                    android:textColor="@color/secondaryTextColor"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <TextView
-                    android:id="@+id/text_view_credito_cliente_prestamo_total"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="$1.150.000"
-                    android:textColor="@color/primaryTextColor"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView34"
-                    app:layout_constraintTop_toTopOf="@+id/text_view_credito_cliente_valor_cuota" />
-
-                <TextView
-                    android:id="@+id/text_view_credito_cliente_porcentaje"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="- 20%"
-                    android:textColor="@color/secondaryTextColor"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_view_credito_cliente_modalidad"
-                    app:layout_constraintStart_toEndOf="@+id/text_view_credito_cliente_modalidad"
-                    app:layout_constraintTop_toTopOf="@+id/text_view_credito_cliente_modalidad"
-                    app:layout_constraintVertical_bias="0.8" />
-
-                <TextView
-                    android:id="@+id/text_view_credito_cliente_numero_cuotas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="02 - 30"
-                    android:textColor="@color/primaryTextColor"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/textView34"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/text_view_credito_cliente_valor_cuota" />
-
-                <TextView
-                    android:id="@+id/text_view_credito_cliente_valor_cuota"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="$3.000"
-                    android:textColor="@color/primaryTextColor"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline"
-                    app:layout_constraintStart_toStartOf="@+id/guideline"
-                    app:layout_constraintTop_toBottomOf="@+id/text_view_credito_cliente_deuta_credito" />
-
-                <TextView
-                    android:id="@+id/text_view_credito_cliente_deuta_credito"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="16dp"
-                    android:text="$1.000.000 "
-                    android:textColor="@color/primaryTextColor"
-                    android:textSize="24dp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_view_credito_cliente_porcentaje" />
-
-                <TextView
-                    android:id="@+id/textView21"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Num. Cuotas"
-                    android:textColor="@color/secondaryTextColor"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="@+id/text_view_credito_cliente_numero_cuotas"
-                    app:layout_constraintStart_toStartOf="@+id/text_view_credito_cliente_numero_cuotas"
-                    app:layout_constraintTop_toBottomOf="@+id/text_view_credito_cliente_numero_cuotas" />
-
-                <TextView
-                    android:id="@+id/textView34"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:text="Valor Cuotas"
-                    android:textColor="@color/secondaryTextColor"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/text_view_credito_cliente_valor_cuota"
-                    app:layout_constraintStart_toStartOf="@+id/text_view_credito_cliente_valor_cuota"
-                    app:layout_constraintTop_toBottomOf="@+id/text_view_credito_cliente_valor_cuota" />
-
-                <TextView
-                    android:id="@+id/textView36"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Total"
-                    android:textColor="@color/secondaryTextColor"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="@+id/text_view_credito_cliente_prestamo_total"
-                    app:layout_constraintStart_toStartOf="@+id/text_view_credito_cliente_prestamo_total"
-                    app:layout_constraintTop_toBottomOf="@+id/text_view_credito_cliente_prestamo_total" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintGuide_percent="0.5" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/text_view_credito_cliente_movimientos"
+            android:id="@+id/text_view_credito_cliente_modalidad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Movimientos Recientes"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_view_credito_cliente_credito" />
-
-        <View
-            android:id="@+id/divider_credito_cliente_movimientos"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
             android:layout_marginTop="8dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Modalidad: Diario"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_credito_cliente_movimientos" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_credito_cliente_lista_cuotas"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layoutAnimation="@anim/layout_animation_from_bottom"
+        <TextView
+            android:id="@+id/text_view_credito_cliente_ver_detalles_prestamo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            android:drawableRight="@drawable/ic_systema_flecha_adelante_blanco"
+            android:gravity="center_vertical"
+            android:text="Detalle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/text_view_credito_cliente_prestamo_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$1.150.000"
+            android:textColor="@color/primaryTextColor"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView34"
+            app:layout_constraintTop_toTopOf="@+id/text_view_credito_cliente_valor_cuota" />
+
+        <TextView
+            android:id="@+id/text_view_credito_cliente_porcentaje"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="- 20%"
+            app:layout_constraintBottom_toBottomOf="@+id/text_view_credito_cliente_modalidad"
+            app:layout_constraintStart_toEndOf="@+id/text_view_credito_cliente_modalidad"
+            app:layout_constraintTop_toTopOf="@+id/text_view_credito_cliente_modalidad"
+            app:layout_constraintVertical_bias="0.8" />
+
+        <TextView
+            android:id="@+id/text_view_credito_cliente_numero_cuotas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="02 - 30"
+            android:textColor="@color/primaryTextColor"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/textView34"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_view_credito_cliente_valor_cuota" />
+
+        <TextView
+            android:id="@+id/text_view_credito_cliente_valor_cuota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="$3.000"
+            android:textColor="@color/primaryTextColor"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_credito_cliente_deuta_credito" />
+
+        <TextView
+            android:id="@+id/text_view_credito_cliente_deuta_credito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="$1.000.000 "
+            android:textColor="@color/primaryTextColor"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_credito_cliente_porcentaje" />
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Num. Cuotas"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/text_view_credito_cliente_numero_cuotas"
+            app:layout_constraintStart_toStartOf="@+id/text_view_credito_cliente_numero_cuotas"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_credito_cliente_numero_cuotas" />
+
+        <TextView
+            android:id="@+id/textView34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Valor Cuotas"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/text_view_credito_cliente_valor_cuota"
+            app:layout_constraintStart_toStartOf="@+id/text_view_credito_cliente_valor_cuota"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_credito_cliente_valor_cuota" />
+
+        <TextView
+            android:id="@+id/textView36"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/text_view_credito_cliente_prestamo_total"
+            app:layout_constraintStart_toStartOf="@+id/text_view_credito_cliente_prestamo_total"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_credito_cliente_prestamo_total" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider_credito_cliente_movimientos" />
+            app:layout_constraintGuide_percent="0.5" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+      </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottom_app_bar"
-        style="@style/Widget.MaterialComponents.BottomAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:backgroundTint="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:fabAlignmentMode="end"
-        app:menu="@menu/menu_botton_app_client_detail"
-        app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_button_credito_cliente_nueva_cuota"
+    <TextView
+        android:id="@+id/text_view_credito_cliente_movimientos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="agregar cuota"
-        android:src="@drawable/ic_systema_mas_blanco"
-        app:backgroundTint="@color/colorAccent"
-        app:layout_anchor="@id/bottom_app_bar"
-        app:tint="@android:color/white" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Movimientos Recientes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_view_credito_cliente_credito" />
+
+    <View
+        android:id="@+id/divider_credito_cliente_movimientos"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_credito_cliente_movimientos" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_credito_cliente_lista_cuotas"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layoutAnimation="@anim/layout_animation_from_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_credito_cliente_movimientos" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <com.google.android.material.bottomappbar.BottomAppBar
+      android:id="@+id/bottom_app_bar"
+      style="@style/Widget.MaterialComponents.BottomAppBar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom"
+      android:backgroundTint="?attr/colorPrimary"
+      android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+      app:fabAlignmentMode="end"
+      app:menu="@menu/menu_botton_app_client_detail"
+      app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/fab_button_credito_cliente_nueva_cuota"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:contentDescription="agregar cuota"
+      android:src="@drawable/ic_systema_mas_blanco"
+      app:backgroundTint="@color/colorAccent"
+      app:layout_anchor="@id/bottom_app_bar"
+      app:tint="@android:color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

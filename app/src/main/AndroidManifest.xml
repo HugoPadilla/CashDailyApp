@@ -9,32 +9,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PerfilClienteActivity"></activity>
-        <activity android:name=".CreditoVacioActivity" />
-        <activity android:name=".CambiarPasswordActivity" />
-        <activity android:name=".ActivityMain.ActivityProductosYServicios.ProductosActivity" />
-        <activity android:name=".ActivityMain.ActivityGastos.GastosActivity" />
-        <activity android:name=".ActivityMain.ActivityEstadisticas.EstadisticasActivity" />
-        <activity android:name=".ActivityMain.ActivityCobradores.CobradorActivity" />
-        <activity android:name=".ActivityMain.ActivityCaja.CajaActivity" />
-        <activity android:name=".ActivityMain.ActivitySincronizacion.SincronizacionActivity" />
-        <activity android:name=".ActivitysNavigationDrawer.ActivityAcercaDe.AcercaActivity" />
-        <activity android:name=".ActivitysNavigationDrawer.ActivityTerminos.TerminosActivity" />
-        <activity android:name=".ActivitysNavigationDrawer.ActivityAyuda.AyudaActivity" />
-        <activity android:name=".ActivitysNavigationDrawer.ActivitySuscripcion.SuscripcionActivity" />
+        <activity android:name=".ui.PerfilClienteActivity"/>
+        <activity android:name=".ui.CreditoVacioActivity" />
+        <activity android:name=".ui.Main.ActivityProductosYServicios.ProductosActivity" />
+        <activity android:name=".ui.Main.ActivityGastos.GastosActivity" />
+        <activity android:name=".ui.Main.ActivityEstadisticas.EstadisticasActivity" />
+        <activity android:name=".ui.Main.ActivityCobradores.CobradorActivity" />
+        <activity android:name=".ui.Main.ActivityCaja.CajaActivity" />
+        <activity android:name=".ui.Main.ActivitySincronizacion.SincronizacionActivity" />
         <activity
             android:name=".ActivitysNavigationDrawer.ActivityPerfilUsuario.PerfilUsuarioActivity"
-            android:parentActivityName=".ui.MainActivity">
+            android:parentActivityName=".ui.MainNavActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
+                android:value=".ui.MainNavActivity" />
         </activity>
-        <activity android:name=".ActivityLogin.ActivityRecuperaContraseña.ResetPasswordActivity" />
-        <activity android:name=".ActivityMain.ActivityClientes.ActivityNuevoCredito.NewCreditActivity" />
-        <activity android:name=".ActivityMain.ActivityClientes.ActivityNuevoCliente.NewClientActivity" />
-        <activity android:name=".ActivityMain.ActivityClientes.ActivityCreditoCliente.CreditoClienteActivity" />
+        <activity android:name=".ui.Main.ActivityClientes.ActivityNuevoCredito.NewCreditActivity" />
+        <activity android:name=".ui.Main.ActivityClientes.ActivityNuevoCliente.NewClientActivity" />
+        <activity android:name=".ui.Main.ActivityClientes.ActivityCreditoCliente.CreditoClienteActivity" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.MainNavActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -44,20 +38,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ActivityMain.ActivityClientes.ListaClientesActivity"
-            android:parentActivityName=".ui.MainActivity">
+            android:name=".ui.Main.ActivityClientes.ListaClientesActivity"
+            android:parentActivityName=".ui.MainNavActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
+                android:value=".ui.MainNavActivity" />
         </activity>
         <activity
-            android:name=".ActivityLogin.ActivityInicioSesion.InicioSesionActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.LoginActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ActivityLogin.ActivityRegistrarse.SingInActivity"
+            android:name=".ui.login.LoginNavActivity"
             android:screenOrientation="portrait" />
     </application>
 

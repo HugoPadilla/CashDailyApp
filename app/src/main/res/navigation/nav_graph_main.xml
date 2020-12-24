@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_main"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.wenitech.cashdaily.ui.MainFragment"
+        android:label="Dasboard"
+        tools:layout="@layout/main_fragment">
+        <action
+            android:id="@+id/action_mainFragment_to_inicioSesionActivity"
+            app:destination="@id/activityNavLogin"
+            app:popUpTo="@id/activityNavLogin"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_mainFragment_to_listaClientesActivity"
+            app:destination="@id/listaClientesActivity" />
+        <action
+            android:id="@+id/action_mainFragment_to_cajaActivity"
+            app:destination="@id/cajaActivity" />
+        <action
+            android:id="@+id/action_mainFragment_to_nav_graph_login"
+            app:destination="@id/nav_graph_login" />
+        <action
+            android:id="@+id/action_mainFragment_to_moneyFragment"
+            app:destination="@id/moneyFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/activityNavLogin"
+        android:name="com.wenitech.cashdaily.ui.login.LoginNavActivity"
+        android:label="activity_inicio_sesion"
+        tools:layout="@layout/activity_nav_login" />
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.wenitech.cashdaily.ui.navigationView.PerfilFragment"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_perfil" />
+    <fragment
+        android:id="@+id/ajustesFragment"
+        android:name="com.wenitech.cashdaily.ui.navigationView.ConfiguracionFragment"
+        android:label="Ajustes"
+        tools:layout="@layout/configuracion_fragment" />
+    <fragment
+        android:id="@+id/ayudaFragment"
+        android:name="com.wenitech.cashdaily.ui.navigationView.AyudaFragment"
+        android:label="Ayuda"
+        tools:layout="@layout/ayuda_fragment" />
+    <fragment
+        android:id="@+id/terminosFragment"
+        android:name="com.wenitech.cashdaily.ui.navigationView.TerminosFragment"
+        android:label="Terminos"
+        tools:layout="@layout/terminos_fragment" />
+    <fragment
+        android:id="@+id/acercadeFragment"
+        android:name="com.wenitech.cashdaily.ui.navigationView.AcercadeFragment"
+        android:label="Acerca de"
+        tools:layout="@layout/fragment_acercade" />
+    <activity
+        android:id="@+id/listaClientesActivity"
+        android:name="com.wenitech.cashdaily.ui.Main.ActivityClientes.ListaClientesActivity"
+        android:label="ListaClientesActivity" />
+    <activity
+        android:id="@+id/cajaActivity"
+        android:name="com.wenitech.cashdaily.ui.Main.ActivityCaja.CajaActivity"
+        android:label="CajaActivity" />
+    <include app:graph="@navigation/nav_graph_login" />
+    <fragment
+        android:id="@+id/moneyFragment"
+        android:name="com.wenitech.cashdaily.MoneyFragment"
+        android:label="money_fragment"
+        tools:layout="@layout/money_fragment" />
+
+</navigation>

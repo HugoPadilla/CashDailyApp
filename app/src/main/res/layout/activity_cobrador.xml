@@ -43,7 +43,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ActivityMain.ActivityCobradores.CobradorActivity">
+            tools:context=".ui.Main.ActivityCobradores.CobradorActivity">
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

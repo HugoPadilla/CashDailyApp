@@ -4,11 +4,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class FirebaseAuthAPI {
 
-    private FirebaseAuth mAuthIntance;
     private static FirebaseAuthAPI INSTANCE = null;
+    private static FirebaseAuth mAuthInstance;
 
-    private FirebaseAuthAPI(){
-        mAuthIntance = FirebaseAuth.getInstance();
+    private  FirebaseAuthAPI(){
+        mAuthInstance = FirebaseAuth.getInstance();
     }
 
     public static FirebaseAuthAPI getInstance(){
@@ -18,8 +18,8 @@ public class FirebaseAuthAPI {
         return INSTANCE;
     }
 
-    public FirebaseAuth getAuthIntance(){
-        return mAuthIntance;
+    public FirebaseAuth getAuthInstance(){
+        return mAuthInstance;
     }
 
 }

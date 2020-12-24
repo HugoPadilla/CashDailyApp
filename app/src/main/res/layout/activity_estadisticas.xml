@@ -49,7 +49,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ActivityMain.ActivityEstadisticas.EstadisticasActivity">
+            tools:context=".ui.Main.ActivityEstadisticas.EstadisticasActivity">
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

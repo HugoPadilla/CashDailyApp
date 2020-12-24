@@ -1,0 +1,5 @@
+package com.wenitech.cashdaily.Util;
+
+public enum StarteResetPassword {
+    RESET_PASSWORD_INIT, RESET_PASSWORD_PROCESS, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILED, RESET_PASSWORD_CANCEL
+}
