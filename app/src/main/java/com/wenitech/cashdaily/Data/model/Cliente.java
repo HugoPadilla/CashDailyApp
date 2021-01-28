@@ -2,124 +2,117 @@ package com.wenitech.cashdaily.Data.model;
 
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentId;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.ServerTimestamp;
 
 public class Cliente {
+    @DocumentId()
+    private String id;
+    @ServerTimestamp
+    private Timestamp creationDate;
+    private boolean creditActive;
+    private DocumentReference documentReferenceCreditActive;
 
-    private Timestamp fechaCreacion;
-    private DocumentReference referenceCliente;
-    private boolean creditoActivo;
-    private DocumentReference referenceCreditoActivo;
-    private String nombreCliente;//
-    private String identificacion;
-    private String inicialNombre;
-    private String genero;
-    private String telefono;
-    private String ciudad;
-    private String direccion;
+    private String fullName;
+    private String identificationClient;
+    private String gender;
+    private String phoneNumber;
+    private String city;
+    private String direction;
 
     public Cliente() {
     }
 
-    public Cliente(Timestamp fechaCreacion, DocumentReference referenceCliente, boolean creditoActivo, DocumentReference referenceCreditoActivo, String nombreCliente, String identificacion, String inicialNombre, String genero, String telefono, String ciudad, String direccion) {
-        this.fechaCreacion = fechaCreacion;
-        this.referenceCliente = referenceCliente;
-        this.creditoActivo = creditoActivo;
-        this.referenceCreditoActivo = referenceCreditoActivo;
-        this.nombreCliente = nombreCliente;
-        this.identificacion = identificacion;
-        this.inicialNombre = inicialNombre;
-        this.genero = genero;
-        this.telefono = telefono;
-        this.ciudad = ciudad;
-        this.direccion = direccion;
+    public Cliente(boolean creditActive, DocumentReference documentReferenceCreditActive,
+                   String fullName, String identificationClient,
+                   String gender, String phoneNumber,
+                   String city, String direction) {
+
+
+        this.creditActive = creditActive;
+        this.documentReferenceCreditActive = documentReferenceCreditActive;
+        this.fullName = fullName;
+        this.identificationClient = identificationClient;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+        this.city = city;
+        this.direction = direction;
     }
 
-    public Timestamp getFechaCreacion() {
-        return fechaCreacion;
+    public String getId() {
+        return id;
     }
 
-    public void setFechaCreacion(Timestamp fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+    public Timestamp getCreationDate() {
+        return creationDate;
     }
 
-    public DocumentReference getReferenceCliente() {
-        return referenceCliente;
+    public boolean isCreditActive() {
+        return creditActive;
     }
 
-    public void setReferenceCliente(DocumentReference referenceCliente) {
-        this.referenceCliente = referenceCliente;
+    public DocumentReference getDocumentReferenceCreditActive() {
+        return documentReferenceCreditActive;
     }
 
-    public boolean isCreditoActivo() {
-        return creditoActivo;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setCreditoActivo(boolean creditoActivo) {
-        this.creditoActivo = creditoActivo;
+    public String getIdentificationClient() {
+        return identificationClient;
     }
 
-    public DocumentReference getReferenceCreditoActivo() {
-        return referenceCreditoActivo;
+    public String getGender() {
+        return gender;
     }
 
-    public void setReferenceCreditoActivo(DocumentReference referenceCreditoActivo) {
-        this.referenceCreditoActivo = referenceCreditoActivo;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public String getNombreCliente() {
-        return nombreCliente;
+    public String getCity() {
+        return city;
     }
 
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
+    public String getDirection() {
+        return direction;
     }
 
-    public String getIdentificacion() {
-        return identificacion;
+    public void setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
     }
 
-    public void setIdentificacion(String identificacion) {
-        this.identificacion = identificacion;
+    public void setCreditActive(boolean creditActive) {
+        this.creditActive = creditActive;
     }
 
-    public String getInicialNombre() {
-        return inicialNombre;
+    public void setDocumentReferenceCreditActive(DocumentReference documentReferenceCreditActive) {
+        this.documentReferenceCreditActive = documentReferenceCreditActive;
     }
 
-    public void setInicialNombre(String inicialNombre) {
-        this.inicialNombre = inicialNombre;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getGenero() {
-        return genero;
+    public void setIdentificationClient(String identificationClient) {
+        this.identificationClient = identificationClient;
     }
 
-    public void setGenero(String genero) {
-        this.genero = genero;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
 }

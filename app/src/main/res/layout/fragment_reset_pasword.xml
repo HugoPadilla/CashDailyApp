@@ -20,7 +20,7 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:title="Cambiar contraseña"
-            app:titleTextColor="@color/primaryTextColor"
+            app:titleTextColor="@color/onPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

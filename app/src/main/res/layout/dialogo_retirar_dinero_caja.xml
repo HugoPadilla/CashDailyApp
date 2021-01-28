@@ -71,7 +71,7 @@
         android:layout_marginBottom="32dp"
         android:background="@drawable/bg_button_dialogo_rojo_solido_radiun"
         android:text="Agregar"
-        android:textColor="@color/primaryTextColor"
+        android:textColor="@color/onPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,15 +1,18 @@
 package com.wenitech.cashdaily.ui;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.navigation.NavDestination;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,18 +20,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.wenitech.cashdaily.R;
 import com.wenitech.cashdaily.databinding.ActivityNavMainBinding;
 
-import java.util.Objects;
-
 public class MainNavActivity extends AppCompatActivity {
 
     private ActivityNavMainBinding binding;
     private NavController navController;
+    private AppBarConfiguration appBarConfiguration;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -36,33 +37,47 @@ public class MainNavActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Setting dataBinding
         binding = ActivityNavMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Firebase auth listener
+        // Todo: aplication
         mAuth = FirebaseAuth.getInstance();
-        authStateListener = new FirebaseAuth.AuthStateListener() {
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+        navController = navHostFragment.getNavController();
+
+        setupFirebaseAuthListener();
+        setupWithNavController(navController);
+        setupOnDestinationListenerNavController();
+    }
+
+    private void setupOnDestinationListenerNavController() {
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() == null) {
-                    updateUi();
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                if (destination.getId() == R.id.customerCreditFragment){
+                    binding.bottomNavigationView.setVisibility(View.GONE);
+                } else {
+                    binding.bottomNavigationView.setVisibility(View.VISIBLE);
                 }
             }
-        };
+        });
+    }
 
-        // instance of nav controller
-        navController = Navigation.findNavController(this, R.id.fragment);
-        //appbar configuration of drawer
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration
-                .Builder(navController.getGraph())
-                .setDrawerLayout(binding.drawerLayoutMainActivity)
-                .build();
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 
-        NavigationUI.setupWithNavController(binding.toolbarMain, navController, appBarConfiguration); //setting Toolbar
-        NavigationUI.setupWithNavController(binding.navigationViewMainActivity, navController); //setting navigation view
+    @Override
+    public boolean onSupportNavigateUp() {
+        return NavigationUI.navigateUp(navController, appBarConfiguration);
+    }
 
-        inicializarDatosNavigationDrawerHeader();
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
     }
 
     @Override
@@ -76,14 +91,47 @@ public class MainNavActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(authStateListener);
+    }
+
+    private void updateUi() {
+        navController.navigate(R.id.activityNavLogin);
+        finish();
+    }
+
+    private void setupFirebaseAuthListener() {
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() == null) {
+                    updateUi();
+                }
+            }
+        };
+    }
+
+    private void setupWithNavController(NavController navController){
+        appBarConfiguration = new AppBarConfiguration
+                .Builder(R.id.homeFragment, R.id.clientFragment, R.id.cajaFragment, R.id.informeFragment)
+                .setDrawerLayout(binding.drawerLayoutMainActivity)
+                .build();
+
+        NavigationUI.setupWithNavController(binding.toolbarMain, navController,appBarConfiguration); //setting Toolbar
+        NavigationUI.setupWithNavController(binding.navigationViewMainActivity, navController); //setting navigation view
+        NavigationUI.setupWithNavController(binding.bottomNavigationView,navController);
+
+        inicializarDatosNavigationDrawerHeader();
+    }
+
     private void inicializarDatosNavigationDrawerHeader() {
         View navHeader = binding.navigationViewMainActivity.getHeaderView(0);  //instance of header drawer
 
         ImageView imageView = navHeader.findViewById(R.id.image_view_drawer_perfil);
         TextView textViewDrawerNombre = navHeader.findViewById(R.id.text_view_drawer_name);
         TextView textViewDrawerCorreo = navHeader.findViewById(R.id.text_view_drawer_email);
-
-
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,16 +165,5 @@ public class MainNavActivity extends AppCompatActivity {
                     }
                 })
                 .show();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mAuth.removeAuthStateListener(authStateListener);
-    }
-
-    private void updateUi() {
-        navController.navigate(R.id.activityNavLogin);
-        finish();
     }
 }

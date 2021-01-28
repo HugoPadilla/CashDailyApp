@@ -3,6 +3,8 @@ package com.wenitech.cashdaily.Data.model;
 public class Caja {
 
     private Double totalCaja;
+    private Double Gastos;
+    
 
     public Caja() {
     }

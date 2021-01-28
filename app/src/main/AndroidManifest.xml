@@ -10,15 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.PerfilClienteActivity"/>
-        <activity android:name=".ui.CreditoVacioActivity" />
+        <activity android:name=".ui.Main.ActivityClientes.CreditoVacioActivity" />
         <activity android:name=".ui.Main.ActivityProductosYServicios.ProductosActivity" />
         <activity android:name=".ui.Main.ActivityGastos.GastosActivity" />
         <activity android:name=".ui.Main.ActivityEstadisticas.EstadisticasActivity" />
         <activity android:name=".ui.Main.ActivityCobradores.CobradorActivity" />
-        <activity android:name=".ui.Main.ActivityCaja.CajaActivity" />
         <activity android:name=".ui.Main.ActivitySincronizacion.SincronizacionActivity" />
         <activity
-            android:name=".ActivitysNavigationDrawer.ActivityPerfilUsuario.PerfilUsuarioActivity"
+            android:name=".ActivitysNavigationDrawer.ClassForUtilCode.PerfilUsuarioActivity"
             android:parentActivityName=".ui.MainNavActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -38,14 +37,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.Main.ActivityClientes.ListaClientesActivity"
-            android:parentActivityName=".ui.MainNavActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainNavActivity" />
-        </activity>
-        <activity
-            android:name=".ui.login.LoginNavActivity"
+            android:name=".ui.login.LoginActivity"
             android:screenOrientation="portrait" />
     </application>
 

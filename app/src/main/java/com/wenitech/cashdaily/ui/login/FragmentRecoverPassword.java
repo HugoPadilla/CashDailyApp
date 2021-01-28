@@ -29,6 +29,10 @@ public class FragmentRecoverPassword extends Fragment {
 
     FragmentRecoverPasswordBinding binding;
 
+    /**
+     * Recuper contraseña cuando la has olvidado
+     * Envia un correo de recuperacion de contraseña
+     */
     public FragmentRecoverPassword() {
         // Required empty public constructor
     }

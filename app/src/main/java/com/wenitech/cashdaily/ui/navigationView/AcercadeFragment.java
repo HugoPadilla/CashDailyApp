@@ -16,8 +16,6 @@ import com.wenitech.cashdaily.R;
 
 public class AcercadeFragment extends Fragment {
 
-    private AcercadeViewModel mViewModel;
-
     public static AcercadeFragment newInstance() {
         return new AcercadeFragment();
     }
@@ -31,7 +29,7 @@ public class AcercadeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(AcercadeViewModel.class);
+
         // TODO: Use the ViewModel
     }
 

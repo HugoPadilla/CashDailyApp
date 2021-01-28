@@ -1,182 +1,149 @@
 package com.wenitech.cashdaily.ui.Main.ActivityClientes.ActivityNuevoCliente;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.FieldValue;
+import com.wenitech.cashdaily.Data.model.Cliente;
 import com.wenitech.cashdaily.R;
+import com.wenitech.cashdaily.Util.StartedAddNewClient;
+import com.wenitech.cashdaily.databinding.FragmentNewClientBinding;
+import com.wenitech.cashdaily.viewModel.NewClientViewModel;
 
-public class NewClientActivity extends AppCompatActivity implements Interface.view, View.OnClickListener {
-    private Interface.presenter presenter;
+public class NewClientActivity extends Fragment {
 
-    private MaterialButton buttonGuardarCliente;
-    private ProgressBar progressBar;
-    private TextView textViewAgregando, textViewInformacionPersonal, textViewInformacionConcacto;
-    private Toolbar toolbarNuevoCliente;
-    private TextInputEditText editTextNombreCliente, editTextIdentificacion, editTextTelefono, editTextCiudad, editTextDireccion;
-    private AutoCompleteTextView autoCompleteTextViewGenero;
+    private FragmentNewClientBinding binding;
+    private NewClientViewModel viewModel = new NewClientViewModel();
 
-    private TextInputLayout textInputLayoutNombre,textInputLayoutIdentificacion, textInputLayoutGenero ,textInputLayoutTelefono,textInputLayoutCiudad,textInputLayoutDireccion;
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_client);
-        presenter = new NewClientPresenter(this);
-
-        configurarToolbar();
-        castingViewAndClikListener();
-    }
-
-    private void castingViewAndClikListener() {
-        buttonGuardarCliente = findViewById(R.id.button_guardar_cliente);
-        buttonGuardarCliente.setOnClickListener(this);
-        progressBar = findViewById(R.id.progressBar);
-        textViewAgregando = findViewById(R.id.text_view_agregando);
-        textViewInformacionPersonal = findViewById(R.id.text_view_new_cliente_info_personal);
-        textViewInformacionConcacto = findViewById(R.id.text_view_nuevo_cliente_detalles_contacto);
-
-        textInputLayoutNombre = findViewById(R.id.textInputLayout3);
-        textInputLayoutIdentificacion = findViewById(R.id.textInputLayout8);
-        textInputLayoutGenero = findViewById(R.id.textInputLayout9);
-        textInputLayoutTelefono = findViewById(R.id.textInputLayout10);
-        textInputLayoutCiudad = findViewById(R.id.textInputLayout11);
-        textInputLayoutDireccion = findViewById(R.id.textInputLayout12);
-
-        editTextNombreCliente = findViewById(R.id.edit_text_nombre_nuevo_cliente);
-        editTextIdentificacion = findViewById(R.id.edit_text_nuevo_cliente_identificacion);
-        autoCompleteTextViewGenero = findViewById(R.id.edit_text_nuevo_cliente_genero);
-        configurarAdapterAutoCompleEditText();
-        editTextTelefono = findViewById(R.id.edit_text_nuevo_cliente_telefono);
-        editTextCiudad = findViewById(R.id.edit_text_nuevo_cliente_ciudad);
-        editTextDireccion = findViewById(R.id.edit_text_nuevo_cliente_direccion);
-    }
-
-    private void configurarAdapterAutoCompleEditText() {
-        String [] opcionesGenero = new String[]{"Mujer","Hombre","No espesificar","Otro"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.item_dropdown,opcionesGenero);
-        autoCompleteTextViewGenero.setAdapter(adapter);
-    }
-
-    private void configurarToolbar() {
-        toolbarNuevoCliente = findViewById(R.id.toolbard_nuevo_cliente);
-        toolbarNuevoCliente.setTitle("Nuevo Cliente");
-        setSupportActionBar(toolbarNuevoCliente);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentNewClientBinding.inflate(LayoutInflater.from(inflater.getContext()), container, false);
+        return binding.getRoot();
     }
 
     @Override
-    public void hidenForm() {
-        buttonGuardarCliente.setVisibility(View.GONE);
-        textViewInformacionPersonal.setVisibility(View.GONE);
-        textViewInformacionConcacto.setVisibility(View.GONE);
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(NewClientViewModel.class);
+        setupAdapterAutoCompleteTextViewGender();
 
-        textInputLayoutNombre.setVisibility(View.GONE);
-        textInputLayoutIdentificacion.setVisibility(View.GONE);
-        textInputLayoutGenero.setVisibility(View.GONE);
-        textInputLayoutTelefono.setVisibility(View.GONE);
-        textInputLayoutCiudad.setVisibility(View.GONE);
-        textInputLayoutDireccion.setVisibility(View.GONE);
+        binding.buttonSaveClient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initRegisterNewClient();
+            }
+        });
 
+        viewModel.getMessenge().observe(getViewLifecycleOwner(), new Observer<StartedAddNewClient>() {
+            @Override
+            public void onChanged(StartedAddNewClient startedAddNewClient) {
+                switch (startedAddNewClient.getStatedAddNewClient()){
+                    case StartedAddNewClient.STATED_ADD_NEW_CLIENT_INIT:
+
+                        break;
+                    case StartedAddNewClient.STATED_ADD_NEW_CLIENT_PROCESS:
+                        showProgressBar(true);
+                        break;
+                    case StartedAddNewClient.STATED_ADD_NEW_CLIENT_SUCCESS:
+                        //Navigation.findNavController(view).navigateUp();
+                        showProgressBar(false);
+                        onSucces();
+                        break;
+                    case StartedAddNewClient.STATED_ADD_NEW_CLIENT_FAILED:
+                        showProgressBar(false);
+                        onError();
+                        break;
+                    case StartedAddNewClient.STATED_ADD_NEW_CLIENT_CANCEL:
+                        showProgressBar(false);
+                        break;
+                }
+            }
+        });
     }
 
-    @Override
-    public void showForm() {
-        buttonGuardarCliente.setVisibility(View.VISIBLE);
-        textViewInformacionPersonal.setVisibility(View.VISIBLE);
-        textViewInformacionConcacto.setVisibility(View.VISIBLE);
-
-        textInputLayoutNombre.setVisibility(View.VISIBLE);
-        textInputLayoutIdentificacion.setVisibility(View.VISIBLE);
-        textInputLayoutGenero.setVisibility(View.VISIBLE);
-        textInputLayoutTelefono.setVisibility(View.VISIBLE);
-        textInputLayoutCiudad.setVisibility(View.VISIBLE);
-        textInputLayoutDireccion.setVisibility(View.VISIBLE);
+    private void setupAdapterAutoCompleteTextViewGender() {
+        String[] opcionesGenero = new String[]{"Mujer", "Hombre", "No espesificar", "Otro"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.item_dropdown, opcionesGenero);
+        binding.autoCompleteTextViewGender.setAdapter(adapter);
     }
 
-    @Override
-    public void showProgres() {
-        progressBar.setVisibility(View.VISIBLE);
-        textViewAgregando.setVisibility(View.VISIBLE);
-        buttonGuardarCliente.setEnabled(false);
-    }
 
-    @Override
-    public void hidenProgres() {
-        progressBar.setVisibility(View.GONE);
-        textViewAgregando.setVisibility(View.GONE);
-        buttonGuardarCliente.setEnabled(true);
-    }
+    public void initRegisterNewClient() {
+        if (isFormValid()) {
+            String fullName = binding.editTextFullName.getText().toString().trim();
+            String idClient = binding.editTextId.getText().toString().trim();
+            String gender = binding.autoCompleteTextViewGender.getText().toString().trim();
+            String phoneNumber = binding.editTextPhoneNumber.getText().toString().trim();
+            String city = binding.editTextCity.getText().toString().trim();
+            String direction = binding.editTextDirection.getText().toString().trim();
 
-    @Override
-    public void iniciarRegistro() {
-        if (!isFormularioValid()){
-            return;
-        }else {
-            String nombre = editTextNombreCliente.getText().toString().trim();
-            String identificacion = editTextIdentificacion.getText().toString().trim();
-            String genero = autoCompleteTextViewGenero.getText().toString().trim();
-            String telefono = editTextTelefono.getText().toString().trim();
-            String ciudad = editTextCiudad.getText().toString().trim();
-            String direcion = editTextDireccion.getText().toString();
-
-            presenter.presentarRegistro(nombre,identificacion,genero,telefono,ciudad,direcion);
+            // Todo:Enviar Objeto Cliente al viewModel
+            viewModel.addNewClient(fullName,idClient,gender,phoneNumber,city,direction);
         }
-
     }
 
-    @Override
-    public boolean isFormularioValid() {
+    /**
+     * Check if each editText is filled correctly
+     * if not insert an error message.
+     *
+     * @return true if ok or false if not
+     */
+    private boolean isFormValid() {
         boolean valid = true;
-        if (TextUtils.isEmpty(editTextNombreCliente.getText())){
-            editTextNombreCliente.setError("Escribe un nombre");
+
+        if (TextUtils.isEmpty(binding.editTextFullName.getText())) {
+            binding.editTextFullName.setError("Escribe un nombre");
             valid = false;
-        }else if (TextUtils.isEmpty(editTextIdentificacion.getText())){
-            editTextIdentificacion.setError("Identificacion del cliente");
+        } else if (TextUtils.isEmpty(binding.editTextId.getText())) {
+            binding.editTextId.setError("Identificacion del cliente");
             valid = false;
-        }else if (TextUtils.isEmpty(autoCompleteTextViewGenero.getText())){
-            autoCompleteTextViewGenero.setError("Elige una opcion");
+        } else if (TextUtils.isEmpty(binding.autoCompleteTextViewGender.getText())) {
+            binding.autoCompleteTextViewGender.setError("Elige una opcion");
             valid = false;
-        }else if (TextUtils.isEmpty(editTextTelefono.getText())){
-            editTextTelefono.setError("Escribe un numero de contacto");
+        } else if (TextUtils.isEmpty(binding.editTextPhoneNumber.getText())) {
+            binding.editTextPhoneNumber.setError("Escribe un numero de contacto");
             valid = false;
-        }else if (TextUtils.isEmpty(editTextCiudad.getText())){
-            editTextCiudad.setError("Agrega un ciudad");
+        } else if (TextUtils.isEmpty(binding.editTextCity.getText())) {
+            binding.editTextCity.setError("Agrega un ciudad");
             valid = false;
-        }else if (TextUtils.isEmpty(editTextDireccion.getText())){
-            editTextDireccion.setError("Direcion de residencia");
+        } else if (TextUtils.isEmpty(binding.editTextDirection.getText())) {
+            binding.editTextDirection.setError("Direcion de residencia");
             valid = false;
         }
         return valid;
     }
 
-    @Override
-    public void onSucces() {
-        Toast.makeText(this, "Cliente Agregado", Toast.LENGTH_SHORT).show();
-        finishAfterTransition();
-    }
-
-    @Override
-    public void onError() {
-        Toast.makeText(this, "No se pudo guardar los datos", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.button_guardar_cliente){
-            iniciarRegistro();
+    private void showProgressBar(Boolean showProgress) {
+        if (showProgress) {
+            binding.groupContent.setVisibility(View.INVISIBLE);
+            binding.groupProgresbar.setVisibility(View.VISIBLE);
+        } else {
+            binding.groupContent.setVisibility(View.VISIBLE);
+            binding.groupProgresbar.setVisibility(View.INVISIBLE);
         }
     }
 
+    private void onSucces() {
+        Snackbar.make(binding.getRoot(),"Cliente agregado", BaseTransientBottomBar.LENGTH_SHORT).show();
+    }
+
+    private void onError() {
+        Snackbar.make(binding.getRoot(),"Ocurio un error", BaseTransientBottomBar.LENGTH_SHORT).show();
+    }
 }

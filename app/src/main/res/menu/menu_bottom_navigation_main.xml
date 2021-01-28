@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@id/homeFragment"
+        android:icon="@drawable/ic_inicio"
+        android:title="Inicio" />
+    <item
+        android:id="@id/clientFragment"
+        android:icon="@drawable/ic_clientes"
+        android:title="Clientes" />
+    <item
+        android:id="@id/cajaFragment"
+        android:icon="@drawable/ic_caja"
+        android:title="Caja" />
+    <item
+        android:id="@id/informeFragment"
+        android:icon="@drawable/ic_informe"
+        android:title="Infromes" />
+</menu>

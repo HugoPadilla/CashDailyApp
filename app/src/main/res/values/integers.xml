@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="reply_motion_motion_duration_lotge">300</integer>
+</resources>

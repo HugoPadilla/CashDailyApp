@@ -24,7 +24,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar2"
                 style="@style/Widget.MaterialComponents.Toolbar.Primary"
-                app:titleTextColor="@color/primaryTextColor"
+                app:titleTextColor="@color/onPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="Crear Cuenta"

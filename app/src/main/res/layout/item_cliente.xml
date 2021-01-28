@@ -7,8 +7,9 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:foreground="?android:selectableItemBackground"
-    android:transitionName="COMPARTIR_VIEW_ITEM_CLIENTE_TO_CLIENTE_DETAIL"
-    app:cardElevation="0dp">
+    android:transitionName="@string/email_card_detail_transition_name"
+    app:cardElevation="0dp"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -48,7 +49,7 @@
             android:layout_marginEnd="32dp"
             android:singleLine="true"
             android:text="Nombre del Cliente"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:textSize="16sp"
             android:transitionName="nombre_cliente"
             app:layout_constraintBottom_toTopOf="@+id/guideline17"
@@ -75,10 +76,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="32dp"
+            android:maxLines="1"
             android:text="Monteria, Calle 3 #4"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             app:layout_constraintBottom_toTopOf="@+id/guideline19"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imagen_view_item_cliente" />
+            app:layout_constraintStart_toEndOf="@+id/imagen_view_item_cliente"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_nombre_cliente"
+            app:layout_constraintVertical_bias="1.0" />
 
         <View
             android:id="@+id/divider"

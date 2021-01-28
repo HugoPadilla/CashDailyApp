@@ -14,71 +14,60 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.wenitech.cashdaily.ui.Main.ActivityClientes.ActivityCreditoCliente.CreditoClienteActivity;
-import com.wenitech.cashdaily.ui.CreditoVacioActivity;
+import com.wenitech.cashdaily.databinding.ItemClienteBinding;
+import com.wenitech.cashdaily.ui.Main.ActivityClientes.CreditoVacioActivity;
 import com.wenitech.cashdaily.Data.model.Cliente;
 import com.wenitech.cashdaily.R;
+
 public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente, RecyclerViewClienteAdapter.MyViewHolder> {
 
-    public RecyclerViewClienteAdapter(@NonNull FirestoreRecyclerOptions<Cliente> options) {
+    ReciclerViewClienteInteface listener;
+
+    public RecyclerViewClienteAdapter(@NonNull FirestoreRecyclerOptions<Cliente> options, ReciclerViewClienteInteface listener) {
         super(options);
+        this.listener = listener;
+    }
+
+    public interface ReciclerViewClienteInteface {
+        void onClientClicked(View cardView, Cliente cliente);
     }
 
     @Override
     protected void onBindViewHolder(@NonNull final MyViewHolder holder, final int position, @NonNull final Cliente model) {
-        holder.textViewNombreCliente.setText(model.getNombreCliente());
-        holder.textViewInicialNombre.setText(model.getInicialNombre());
-        holder.textViewDireccionCliente.setText(model.getCiudad()+ ", " + model.getDireccion());
-        holder.itemClient.setOnClickListener(new View.OnClickListener() {
+        holder.binding.textViewNombreCliente.setText(model.getFullName());
+        holder.binding.textViewInicialCliente.setText("A");
+        holder.binding.textViewDireccionCliente.setText(model.getCity() + ", " + model.getDirection());
+        holder.binding.itemCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (model.isCreditoActivo()){
-                    Intent intent = new Intent(holder.context, CreditoClienteActivity.class);
-                    intent.putExtra("REFERENCIA_CLIENTE",model.getReferenceCliente().getPath());
-                    intent.putExtra("REFERENCIA_CREDITO_ACTIVO",model.getReferenceCreditoActivo().getPath());
-                    intent.putExtra("CREDITO_ACTIVO_CLIENTE",model.isCreditoActivo());
-                    intent.putExtra("CLIENTE_INTENT_NOMBRE",model.getNombreCliente());
+                if (model.isCreditActive()) {
 
-                    holder.context.startActivity(intent);
+                    listener.onClientClicked(holder.binding.itemCliente, model);
+
                 } else {
-                    Intent intent = new Intent(holder.context, CreditoVacioActivity.class);
-                    intent.putExtra("REFERENCIA_CLIENTE",model.getReferenceCliente().getPath());
-                    intent.putExtra("CLIENTE_INTENT_NOMBRE",model.getNombreCliente());
 
-                    holder.context.startActivity(intent);
+                    Intent intent = new Intent(holder.binding.getRoot().getContext(), CreditoVacioActivity.class);
+                    holder.binding.getRoot().getContext().startActivity(intent);
+
                 }
-
             }
         });
-
     }
-
-
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cliente,parent,false);
-        return new MyViewHolder(v);
+        ItemClienteBinding viewBinding = ItemClienteBinding.inflate(LayoutInflater.from(parent.getContext()));
+        return new MyViewHolder(viewBinding);
     }
 
-    static class MyViewHolder extends RecyclerView.ViewHolder{
+    static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private Context context;
-        private CardView itemClient;
-        private ImageView imageView;
-        private TextView textViewInicialNombre;
-        private TextView textViewNombreCliente;
-        private TextView textViewDireccionCliente;
+        ItemClienteBinding binding;
 
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-            context = itemView.getContext();
-            itemClient = itemView.findViewById(R.id.item_cliente);
-            imageView = itemView.findViewById(R.id.imagen_view_item_cliente);
-            textViewInicialNombre = itemView.findViewById(R.id.text_view_inicial_cliente);
-            textViewNombreCliente = itemView.findViewById(R.id.text_view_nombre_cliente);
-            textViewDireccionCliente = itemView.findViewById(R.id.text_view_direccion_cliente);
+        public MyViewHolder(@NonNull ItemClienteBinding viewBinding) {
+            super(viewBinding.getRoot());
+            binding = viewBinding;
         }
     }
 }

@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:windowContentTransitions">true</item>
-        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/colorAccent</item>
 
@@ -17,7 +17,7 @@
     </style>
 
     <style name="TextLabelCustom" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>

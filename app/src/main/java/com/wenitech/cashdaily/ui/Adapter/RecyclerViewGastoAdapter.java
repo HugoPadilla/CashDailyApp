@@ -12,30 +12,37 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.wenitech.cashdaily.Data.model.Gasto;
+import com.wenitech.cashdaily.Data.model.MovimientoCaja;
 import com.wenitech.cashdaily.R;
+import com.wenitech.cashdaily.databinding.ItemMovimientoCajaBinding;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class RecyclerViewGastoAdapter extends FirestoreRecyclerAdapter<Gasto, RecyclerViewGastoAdapter.mViewHolder> {
+public class RecyclerViewGastoAdapter extends FirestoreRecyclerAdapter<MovimientoCaja, RecyclerViewGastoAdapter.mViewHolder> {
 
-    public RecyclerViewGastoAdapter(@NonNull FirestoreRecyclerOptions<Gasto> options) {
+    public RecyclerViewGastoAdapter(@NonNull FirestoreRecyclerOptions<MovimientoCaja> options) {
         super(options);
     }
 
-
     @Override
-    protected void onBindViewHolder(@NonNull final mViewHolder holder, int position, @NonNull Gasto model) {
+    protected void onBindViewHolder(@NonNull final mViewHolder holder, int position, @NonNull MovimientoCaja model) {
 
-        holder.valor.setText(String.valueOf(model.getValor()));
-        holder.descripcion.setText(model.getDescripcion());
+        String stringValor;
+        String stringDate;
+
+        NumberFormat numberFormatMoney = NumberFormat.getCurrencyInstance();
+        stringValor = numberFormatMoney.format(model.getValor());
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
         Date date = model.getFecha().toDate();
-        holder.fecha.setText(dateFormat.format(date));
+        stringDate = dateFormat.format(date);
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        holder.binding.tvValor.setText(stringValor);
+        holder.binding.tvDate.setText(stringDate);
+        // On Click Listener
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -46,29 +53,15 @@ public class RecyclerViewGastoAdapter extends FirestoreRecyclerAdapter<Gasto, Re
     @NonNull
     @Override
     public mViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gasto,parent,false);
-        return new mViewHolder(view);
+        ItemMovimientoCajaBinding viewBinding = ItemMovimientoCajaBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
+        return new mViewHolder(viewBinding);
     }
 
     public class mViewHolder extends RecyclerView.ViewHolder{
-
-        private CardView cardView;
-        private Context context;
-        private TextView valor;
-        private TextView descripcion;
-        private TextView fecha;
-
-        public mViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            cardView = itemView.findViewById(R.id.cardViewItemGastoId);
-            context = itemView.getContext();
-
-            valor = itemView.findViewById(R.id.tv_valor);
-            descripcion = itemView.findViewById(R.id.tv_descri);
-            fecha = itemView.findViewById(R.id.tv_fecha);
-
-
+        private ItemMovimientoCajaBinding binding;
+        public mViewHolder(@NonNull ItemMovimientoCajaBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }

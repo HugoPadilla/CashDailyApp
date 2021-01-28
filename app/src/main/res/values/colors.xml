@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryDarkColor">#0082B7</color>
-    <color name="primaryColor">#0095D1</color>
+    <!-- color primary on App-->
+    <color name="primary">#0095D1</color>
     <color name="primaryLightColor">#02B7FD</color>
-    <color name="colorAccent">#00A9EC</color>
-    <color name="primaryTextColor">#FFFFFF</color>
+    <color name="primaryDarkColor">#0082B7</color>
+
+    <!-- Color secondary in App -->
+    <color name="secondary">#00A9EC</color>
+    <color name="secondaryVariant">#0FD1FE</color>
+    <color name="background">#F5FCFF</color>
+    <color name="surface">#FFFFFF</color>
+
+    <color name="succes">#11C5A5</color>
+    <color name="error">#C51162</color>
+
+    <!-- Color of accent   -->
+    <color name="colorAccent">@color/secondary</color>
+
+    <!-- Color for text o icon in primary and secondary   -->
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="onSecondary">#FFFFFF</color>
+    <color name="onBackground">#262626</color>
+    <color name="onSurface">#262626</color>
+    <color name="onSurfaceMedium">#707070</color>
+    <color name="onSurfaceLigth">#F0FAFE</color>
+
+    <color name="onError">#FFFFFF</color>
+    <color name="onSucces">#FFFFFF</color>
 
     <color name="colorImagenPerfil">#30536F</color>
-    <color name="colorTradingUp">#009688</color>
     <color name="colorTradingStop">#550096</color>
-    <color name="colorTradingDown">#960000</color>
-
-
-
-
-
-
-
 </resources>
