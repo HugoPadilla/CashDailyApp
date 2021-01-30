@@ -1,15 +1,11 @@
 package com.wenitech.cashdaily.ui.Adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -17,7 +13,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.wenitech.cashdaily.databinding.ItemClienteBinding;
 import com.wenitech.cashdaily.ui.Main.ActivityClientes.CreditoVacioActivity;
 import com.wenitech.cashdaily.Data.model.Cliente;
-import com.wenitech.cashdaily.R;
 
 public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente, RecyclerViewClienteAdapter.MyViewHolder> {
 
@@ -57,7 +52,7 @@ public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemClienteBinding viewBinding = ItemClienteBinding.inflate(LayoutInflater.from(parent.getContext()));
+        ItemClienteBinding viewBinding = ItemClienteBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new MyViewHolder(viewBinding);
     }
 
