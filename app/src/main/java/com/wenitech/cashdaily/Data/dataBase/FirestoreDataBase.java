@@ -26,6 +26,8 @@ import java.util.Date;
 
 public class FirestoreDataBase {
 
+    private static FirestoreDataBase instance = null;
+
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private FirebaseFirestore db;
@@ -46,6 +48,17 @@ public class FirestoreDataBase {
 
         docReferenceUser = db.collection("usuarios").document(mAuth.getUid());
         docReferenceCaja = docReferenceUser.collection("caja").document("myCaja");
+    }
+
+    /**
+     * Singleton instance
+     * @return FirestoreDatabase
+     */
+    public static FirestoreDataBase getInstance(){
+        if (instance == null){
+            instance = new FirestoreDataBase();
+        }
+        return instance;
     }
 
     public LiveData<StartedAddNewClient> getStartedAddNewClient(){

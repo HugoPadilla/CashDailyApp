@@ -13,7 +13,7 @@ public class FirebaseRepository {
     public LiveData<StartedAddNewClient> startedAddNewClientLiveData;
 
     public FirebaseRepository() {
-        this.firestoreDataBaseModel = new FirestoreDataBase();
+        this.firestoreDataBaseModel = FirestoreDataBase.getInstance();
         startedAddNewClientLiveData = firestoreDataBaseModel.getStartedAddNewClient();
     }
 

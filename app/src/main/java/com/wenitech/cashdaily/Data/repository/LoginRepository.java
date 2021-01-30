@@ -9,6 +9,8 @@ import com.wenitech.cashdaily.Data.dataBase.LoginDataBaseModel;
 
 public class LoginRepository {
 
+    private static LoginRepository instance = null;
+
     LoginDataBaseModel loginDataBaseModel;
 
     MutableLiveData<StartedLogin> startedLoginMutableLiveData;
@@ -19,6 +21,17 @@ public class LoginRepository {
         loginDataBaseModel = new LoginDataBaseModel();
         startedLoginMutableLiveData = loginDataBaseModel.get_statedLogin();
         startedSignInMutableLiveData = loginDataBaseModel.get_startedSingIn();
+    }
+
+    /**
+     * get Instance of LogiREpository with singl
+     * @return
+     */
+    public static LoginRepository getInstance(){
+        if (instance == null){
+            instance = new LoginRepository();
+        }
+        return instance;
     }
 
     // Todo: Getters and Setters
