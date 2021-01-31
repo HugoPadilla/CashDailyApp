@@ -46,30 +46,5 @@ public class HomeFragment extends Fragment {
         mUser = mAuth.getCurrentUser();
         navController = Navigation.findNavController(requireView());
         viewModel = new ViewModelProvider(this).get(MainFragmentViewModel.class);
-
-        binding.cardView3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //navController.navigate(R.id.action_mainFragment_to_listaClientesActivity);
-            }
-        });
-
-        binding.cardView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //navController.navigate(R.id.action_mainFragment_to_cajaActivity);
-            }
-        });
-
-        binding.cardView11.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(R.id.action_mainFragment_to_nav_graph_login);
-            }
-        });
-
     }
-
-
-
 }
