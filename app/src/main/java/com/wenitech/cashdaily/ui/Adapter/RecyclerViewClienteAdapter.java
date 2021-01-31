@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.wenitech.cashdaily.databinding.ItemClienteBinding;
-import com.wenitech.cashdaily.ui.Main.ActivityClientes.CreditoVacioActivity;
 import com.wenitech.cashdaily.Data.model.Cliente;
 
 public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente, RecyclerViewClienteAdapter.MyViewHolder> {
@@ -35,16 +34,7 @@ public class RecyclerViewClienteAdapter extends FirestoreRecyclerAdapter<Cliente
         holder.binding.itemCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (model.isCreditActive()) {
-
-                    listener.onClientClicked(holder.binding.itemCliente, model);
-
-                } else {
-
-                    Intent intent = new Intent(holder.binding.getRoot().getContext(), CreditoVacioActivity.class);
-                    holder.binding.getRoot().getContext().startActivity(intent);
-
-                }
+                listener.onClientClicked(holder.binding.itemCliente, model);
             }
         });
     }

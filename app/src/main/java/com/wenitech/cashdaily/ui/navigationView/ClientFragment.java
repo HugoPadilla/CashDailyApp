@@ -20,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.wenitech.cashdaily.CustomerCreditFragmentDirections;
+import com.wenitech.cashdaily.NavGraphMainDirections;
 import com.wenitech.cashdaily.databinding.FragmentClientBinding;
 import com.wenitech.cashdaily.ui.Adapter.RecyclerViewClienteAdapter;
 import com.wenitech.cashdaily.Data.model.Cliente;
@@ -49,7 +51,7 @@ public class ClientFragment extends Fragment implements RecyclerViewClienteAdapt
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(requireView());
-
+        setupRecyclerView();
         setupClickListener();
     }
 
@@ -57,6 +59,10 @@ public class ClientFragment extends Fragment implements RecyclerViewClienteAdapt
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
+    }
+
+    private void setupRecyclerView() {
         Query query = collectionReference.orderBy("fullName", Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<Cliente> options = new FirestoreRecyclerOptions.Builder<Cliente>()
                 .setQuery(query,Cliente.class).build();
@@ -89,7 +95,8 @@ public class ClientFragment extends Fragment implements RecyclerViewClienteAdapt
 
     @Override
     public void onClientClicked(View cardView, Cliente cliente) {
-        Toast.makeText(getContext(), "Item On Clicked: "+ cliente.getId(), Toast.LENGTH_SHORT).show();
-        navController.navigate(R.id.action_global_customerCreditFragment);
+        NavGraphMainDirections.ActionGlobalCustomerCreditFragment action = NavGraphMainDirections.actionGlobalCustomerCreditFragment();
+        action.setIsCreditActive(cliente.isCreditActive());
+        navController.navigate(action);
     }
 }

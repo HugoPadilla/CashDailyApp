@@ -18,6 +18,12 @@
         <action
             android:id="@+id/action_mainFragment_to_nav_graph_login"
             app:destination="@id/nav_graph_login" />
+        <action
+            android:id="@+id/action_homeFragment_to_cobrarHoyFragment"
+            app:destination="@id/cobrarHoyFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_vencidosFragment"
+            app:destination="@id/vencidosFragment" />
     </fragment>
     <fragment
         android:id="@+id/clientFragment"
@@ -73,7 +79,12 @@
         android:id="@+id/customerCreditFragment"
         android:name="com.wenitech.cashdaily.CustomerCreditFragment"
         android:label="Credito cliente"
-        tools:layout="@layout/fragment_customer_credit" />
+        tools:layout="@layout/fragment_customer_credit" >
+        <argument
+            android:name="isCreditActive"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
     <action
         android:id="@+id/action_global_customerCreditFragment"
         app:destination="@id/customerCreditFragment" />
