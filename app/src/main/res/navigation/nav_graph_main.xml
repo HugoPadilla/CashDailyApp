@@ -41,7 +41,7 @@
         tools:layout="@layout/fragment_caja" />
     <fragment
         android:id="@+id/informeFragment"
-        android:name="com.wenitech.cashdaily.InformeFragment"
+        android:name="com.wenitech.cashdaily.ui.navigationView.InformeFragment"
         android:label="Informe"
         tools:layout="@layout/fragment_informe" />
     <activity
@@ -51,7 +51,7 @@
         tools:layout="@layout/activity_login" />
     <fragment
         android:id="@+id/perfilFragment"
-        android:name="com.wenitech.cashdaily.ui.navigationView.PerfilFragment"
+        android:name="com.wenitech.cashdaily.ui.navigationView.ProfileUserFragment"
         android:label="Perfil"
         tools:layout="@layout/fragment_perfil" />
     <fragment
@@ -77,13 +77,24 @@
     <include app:graph="@navigation/nav_graph_login" />
     <fragment
         android:id="@+id/customerCreditFragment"
-        android:name="com.wenitech.cashdaily.CustomerCreditFragment"
+        android:name="com.wenitech.cashdaily.ui.navigationView.CustomerCreditFragment"
         android:label="Credito cliente"
         tools:layout="@layout/fragment_customer_credit" >
         <argument
             android:name="isCreditActive"
             app:argType="boolean"
             android:defaultValue="false" />
+        <argument
+            android:name="referenceClient"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="referenceCredit"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_customerCreditFragment_to_newCreditFragment"
+            app:destination="@id/newCreditFragment" />
     </fragment>
     <action
         android:id="@+id/action_global_customerCreditFragment"
@@ -100,8 +111,17 @@
         tools:layout="@layout/fragment_vencidos"/>
     <fragment
         android:id="@+id/newClientActivity"
-        android:name="com.wenitech.cashdaily.ui.Main.ActivityClientes.ActivityNuevoCliente.NewClientActivity"
+        android:name="com.wenitech.cashdaily.ui.navigationView.NewClientFragment"
         android:label="Nuevo cliente"
         tools:layout="@layout/fragment_new_client" />
+    <fragment
+        android:id="@+id/newCreditFragment"
+        android:name="com.wenitech.cashdaily.ui.navigationView.NewCreditFragment"
+        android:label="NewCreditFragment"
+        tools:layout="@layout/fragment_new_credit">
+        <argument
+            android:name="IdClient"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

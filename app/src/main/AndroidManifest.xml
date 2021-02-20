@@ -23,9 +23,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainNavActivity" />
         </activity>
-        <activity android:name=".ui.Main.ActivityClientes.ActivityNuevoCredito.NewCreditActivity" />
-        <activity android:name=".ui.Main.ActivityClientes.ActivityNuevoCliente.NewClientActivity" />
-        <activity android:name=".ui.Main.ActivityClientes.ActivityCreditoCliente.CreditoClienteActivity" />
+        <activity android:name=".ui.navigationView.NewCreditFragment" />
+        <activity android:name=".ui.navigationView.NewClientFragment" />
         <activity
             android:name=".ui.MainNavActivity"
             android:screenOrientation="portrait">

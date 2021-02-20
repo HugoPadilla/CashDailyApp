@@ -11,16 +11,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.wenitech.cashdaily.CustomerCreditFragmentDirections;
 import com.wenitech.cashdaily.NavGraphMainDirections;
 import com.wenitech.cashdaily.databinding.FragmentClientBinding;
 import com.wenitech.cashdaily.ui.Adapter.RecyclerViewClienteAdapter;
@@ -95,7 +92,7 @@ public class ClientFragment extends Fragment implements RecyclerViewClienteAdapt
 
     @Override
     public void onClientClicked(View cardView, Cliente cliente) {
-        NavGraphMainDirections.ActionGlobalCustomerCreditFragment action = NavGraphMainDirections.actionGlobalCustomerCreditFragment();
+        NavGraphMainDirections.ActionGlobalCustomerCreditFragment action = NavGraphMainDirections.actionGlobalCustomerCreditFragment(cliente.getId(),cliente.getDocumentReferenceCreditActive().getPath());
         action.setIsCreditActive(cliente.isCreditActive());
         navController.navigate(action);
     }

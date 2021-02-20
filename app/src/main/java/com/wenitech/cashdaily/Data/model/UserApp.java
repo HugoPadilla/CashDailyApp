@@ -2,17 +2,43 @@ package com.wenitech.cashdaily.Data.model;
 
 public class UserApp {
 
+    private String FullName;
+    private String typeUserAccount;
+    private String typeSubscription;
     private Boolean fullProfile;
-    private String typeAccount;
-    private String subscription;
 
     public UserApp() {
     }
 
-    public UserApp(Boolean fullProfile, String typeAccount, String subscription) {
+    public UserApp(String fullName, String typeUserAccount, String typeSubscription, Boolean fullProfile) {
+        FullName = fullName;
+        this.typeUserAccount = typeUserAccount;
+        this.typeSubscription = typeSubscription;
         this.fullProfile = fullProfile;
-        this.typeAccount = typeAccount;
-        this.subscription = subscription;
+    }
+
+    public String getFullName() {
+        return FullName;
+    }
+
+    public void setFullName(String fullName) {
+        FullName = fullName;
+    }
+
+    public String getTypeUserAccount() {
+        return typeUserAccount;
+    }
+
+    public void setTypeUserAccount(String typeUserAccount) {
+        this.typeUserAccount = typeUserAccount;
+    }
+
+    public String getTypeSubscription() {
+        return typeSubscription;
+    }
+
+    public void setTypeSubscription(String typeSubscription) {
+        this.typeSubscription = typeSubscription;
     }
 
     public Boolean getFullProfile() {
@@ -21,21 +47,5 @@ public class UserApp {
 
     public void setFullProfile(Boolean fullProfile) {
         this.fullProfile = fullProfile;
-    }
-
-    public String getTypeAccount() {
-        return typeAccount;
-    }
-
-    public void setTypeAccount(String typeAccount) {
-        this.typeAccount = typeAccount;
-    }
-
-    public String getSubscription() {
-        return subscription;
-    }
-
-    public void setSubscription(String subscription) {
-        this.subscription = subscription;
     }
 }

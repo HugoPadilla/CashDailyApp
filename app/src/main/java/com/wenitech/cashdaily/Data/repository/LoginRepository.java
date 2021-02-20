@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.wenitech.cashdaily.Data.model.UserApp;
 import com.wenitech.cashdaily.Util.StartedLogin;
 import com.wenitech.cashdaily.Util.StartedSingIn;
-import com.wenitech.cashdaily.Data.dataBase.LoginDataBaseModel;
+import com.wenitech.cashdaily.Data.remoteDatabase.LoginDataBaseModel;
 
 public class LoginRepository {
 

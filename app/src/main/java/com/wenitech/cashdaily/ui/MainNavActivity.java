@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
@@ -17,17 +18,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.wenitech.cashdaily.R;
 import com.wenitech.cashdaily.databinding.ActivityNavMainBinding;
+import com.wenitech.cashdaily.viewModel.TodoViewModel;
 
 public class MainNavActivity extends AppCompatActivity {
 
     private ActivityNavMainBinding binding;
+    private TodoViewModel todoViewModel;
     private NavController navController;
     private AppBarConfiguration appBarConfiguration;
     private FirebaseAuth mAuth;
@@ -40,14 +42,25 @@ public class MainNavActivity extends AppCompatActivity {
         binding = ActivityNavMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Todo: aplication
-        mAuth = FirebaseAuth.getInstance();
+        initFirebaseAuth();
+        initNavController();
+        initTodoViewModel();
+        setupFirebaseAuthListener();
+        setupWithNavController();
+        setupOnDestinationListenerNavController();
+    }
+
+    private void initNavController() {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         navController = navHostFragment.getNavController();
+    }
 
-        setupFirebaseAuthListener();
-        setupWithNavController(navController);
-        setupOnDestinationListenerNavController();
+    private void initFirebaseAuth() {
+        mAuth = FirebaseAuth.getInstance();
+    }
+
+    private void initTodoViewModel() {
+        todoViewModel = new ViewModelProvider(this).get(TodoViewModel.class);
     }
 
     private void setupOnDestinationListenerNavController() {
@@ -55,7 +68,7 @@ public class MainNavActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if (destination.getId() == R.id.customerCreditFragment){
+                if (destination.getId() == R.id.customerCreditFragment) {
                     binding.bottomNavigationView.setVisibility(View.GONE);
                 } else {
                     binding.bottomNavigationView.setVisibility(View.VISIBLE);
@@ -113,15 +126,15 @@ public class MainNavActivity extends AppCompatActivity {
         };
     }
 
-    private void setupWithNavController(NavController navController){
+    private void setupWithNavController() {
         appBarConfiguration = new AppBarConfiguration
                 .Builder(R.id.homeFragment, R.id.clientFragment, R.id.cajaFragment, R.id.informeFragment)
                 .setDrawerLayout(binding.drawerLayoutMainActivity)
                 .build();
 
-        NavigationUI.setupWithNavController(binding.toolbarMain, navController,appBarConfiguration); //setting Toolbar
+        NavigationUI.setupWithNavController(binding.toolbarMain, navController, appBarConfiguration); //setting Toolbar
         NavigationUI.setupWithNavController(binding.navigationViewMainActivity, navController); //setting navigation view
-        NavigationUI.setupWithNavController(binding.bottomNavigationView,navController);
+        NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
 
         inicializarDatosNavigationDrawerHeader();
     }
@@ -155,7 +168,7 @@ public class MainNavActivity extends AppCompatActivity {
                 .setPositiveButton("Cerrar sesion", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mAuth.signOut();
+                        signOut();
                     }
                 })
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -165,5 +178,11 @@ public class MainNavActivity extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
+
+    private void signOut() {
+        //todoViewModel.cajaLiveData.removeObservers(this);
+        mAuth.signOut();
+        finish();
     }
 }

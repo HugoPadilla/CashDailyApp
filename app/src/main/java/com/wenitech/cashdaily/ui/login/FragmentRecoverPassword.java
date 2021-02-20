@@ -1,29 +1,14 @@
 package com.wenitech.cashdaily.ui.login;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseUser;
-import com.wenitech.cashdaily.R;
-import com.wenitech.cashdaily.common.ApiAccessSingleton.FirebaseAuthAPI;
 import com.wenitech.cashdaily.databinding.FragmentRecoverPasswordBinding;
-
-import java.util.Objects;
 
 public class FragmentRecoverPassword extends Fragment {
 

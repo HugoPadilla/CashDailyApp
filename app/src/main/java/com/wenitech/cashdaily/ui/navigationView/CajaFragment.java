@@ -28,7 +28,7 @@ import com.wenitech.cashdaily.Data.model.MovimientoCaja;
 import com.wenitech.cashdaily.R;
 import com.wenitech.cashdaily.databinding.FragmentCajaBinding;
 import com.wenitech.cashdaily.ui.Adapter.RecyclerViewGastoAdapter;
-import com.wenitech.cashdaily.viewModel.MainViewModel;
+import com.wenitech.cashdaily.viewModel.TodoViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -37,7 +37,7 @@ import java.text.NumberFormat;
 public class CajaFragment extends Fragment {
 
     private FragmentCajaBinding binding;
-    private MainViewModel viewModel = new MainViewModel();
+    private TodoViewModel todoViewModel = new TodoViewModel();
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private RecyclerViewGastoAdapter recyclerViewGastoAdapter;
@@ -67,10 +67,16 @@ public class CajaFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        observerViewModel();
+
+        initTodoViewModel();
+        getUserBox();
         onClickViewLinestener();
         setupRecyclerViewMovimientos();
+
+    }
+
+    private void initTodoViewModel() {
+        todoViewModel = new ViewModelProvider(this).get(TodoViewModel.class);
     }
 
     @Override
@@ -99,20 +105,21 @@ public class CajaFragment extends Fragment {
         binding.cardViewCajaAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogoAgregarDinero();
+                openDialogAddMoney();
             }
         });
 
         binding.cardViewCajaRetirar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogoRetirarDinero();
+                openDialogSubtractMoney();
             }
         });
     }
 
-    private void observerViewModel() {
-        viewModel.getCaja().observe(getViewLifecycleOwner(), new Observer<Caja>() {
+    private void getUserBox() {
+        todoViewModel.getCaja(auth.getCurrentUser());
+        todoViewModel.cajaLiveData.observe(getViewLifecycleOwner(), new Observer<Caja>() {
             @Override
             public void onChanged(Caja caja) {
                 NumberFormat formatMoney = NumberFormat.getCurrencyInstance();
@@ -127,8 +134,8 @@ public class CajaFragment extends Fragment {
         binding = null;
     }
 
-    public void dialogoAgregarDinero() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+    public void openDialogAddMoney() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View view = getLayoutInflater().inflate(R.layout.dialogo_agregar_dinero_caja, null);
         builder.setView(view);
         final AlertDialog dialog = builder.create();
@@ -154,15 +161,15 @@ public class CajaFragment extends Fragment {
                     buttonAgregar.setEnabled(false);
                     final double valorAgregar = Double.parseDouble(valor);
                     dialog.dismiss();
-                    viewModel.addMoneyOnBox(valorAgregar);
+                    todoViewModel.addMoneyOnBox(valorAgregar, auth.getCurrentUser());
                 }
             }
         });
         dialog.show();
     }
 
-    public void dialogoRetirarDinero() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+    public void openDialogSubtractMoney() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         View view = getLayoutInflater().inflate(R.layout.dialogo_retirar_dinero_caja, null);
         builder.setView(view);
 
@@ -188,7 +195,7 @@ public class CajaFragment extends Fragment {
                     buttonAgregar.setEnabled(false);
                     final double valorRetirar = Double.parseDouble(valor);
                     dialog.dismiss();
-                    viewModel.removeMoney(valorRetirar);
+                    todoViewModel.removeMoney(valorRetirar, auth.getCurrentUser());
                 }
             }
         });

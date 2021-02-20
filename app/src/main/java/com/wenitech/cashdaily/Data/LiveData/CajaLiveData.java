@@ -1,9 +1,10 @@
 package com.wenitech.cashdaily.Data.LiveData;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -16,20 +17,20 @@ import com.wenitech.cashdaily.Data.model.Caja;
 
 public class CajaLiveData extends LiveData<Caja> implements EventListener<DocumentSnapshot> {
 
-    private DocumentReference documentReference;
+    private final DocumentReference documentReference;
     private ListenerRegistration listener;
 
     /**
      * Recibe la referencia del documento para tener una referencia local
      * @param documentReference
      */
-    public CajaLiveData(DocumentReference documentReference){
+    public CajaLiveData(@NonNull DocumentReference documentReference) {
         this.documentReference = documentReference;
     }
 
     @Override
     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-        if (documentSnapshot.exists() && documentSnapshot != null) {
+        if (documentSnapshot != null && documentSnapshot.exists()) {
             Caja caja = documentSnapshot.toObject(Caja.class);
             setValue(caja);
         } else {

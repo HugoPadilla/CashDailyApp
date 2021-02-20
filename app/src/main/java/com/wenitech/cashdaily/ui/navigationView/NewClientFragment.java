@@ -1,4 +1,4 @@
-package com.wenitech.cashdaily.ui.Main.ActivityClientes.ActivityNuevoCliente;
+package com.wenitech.cashdaily.ui.navigationView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +25,7 @@ import com.wenitech.cashdaily.Util.StartedAddNewClient;
 import com.wenitech.cashdaily.databinding.FragmentNewClientBinding;
 import com.wenitech.cashdaily.viewModel.NewClientViewModel;
 
-public class NewClientActivity extends Fragment {
+public class NewClientFragment extends Fragment {
 
     private FragmentNewClientBinding binding;
     private NewClientViewModel viewModel = new NewClientViewModel();

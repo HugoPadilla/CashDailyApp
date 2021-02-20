@@ -30,7 +30,7 @@
             android:id="@+id/constrain_layout_formulario"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.Main.ActivityClientes.ActivityNuevoCredito.NewCreditActivity">
+            tools:context=".ui.navigationView.NewCreditFragment">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_input_layout_nuevo_credito_total_credito"

@@ -36,7 +36,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/text_view_main_tipo_cuenta"
+                    android:id="@+id/textViewFirstName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -59,7 +59,7 @@
                     app:cardCornerRadius="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_view_main_tipo_cuenta">
+                    app:layout_constraintTop_toBottomOf="@+id/textViewFirstName">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -70,7 +70,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:text="Balance"
+                            android:text="Disponible"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
                             android:textColor="@color/onPrimary"
                             android:textSize="14sp"
@@ -80,7 +80,7 @@
 
 
                         <TextView
-                            android:id="@+id/textView23"
+                            android:id="@+id/textViewCajaDisponible"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"

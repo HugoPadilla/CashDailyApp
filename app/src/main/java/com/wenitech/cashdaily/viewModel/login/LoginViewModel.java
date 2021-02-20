@@ -6,6 +6,7 @@ import android.util.Patterns;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.firebase.firestore.auth.User;
 import com.wenitech.cashdaily.Data.model.UserApp;
 import com.wenitech.cashdaily.Data.repository.LoginRepository;
 import com.wenitech.cashdaily.Util.StartedLogin;
@@ -115,7 +116,8 @@ public class LoginViewModel extends ViewModel {
 
         if (isValidEmail(email != null ? email.trim() : "") && isValidPassword(password != null ? password.trim() : "")
                 && isValidPasswordConfirm(password != null ? password.trim() : "", passwordConfirm != null ? passwordConfirm.trim() : "")) {
-            loginRepository.signInRepository(email, password, new UserApp(false, "MANAGER", "FREE"));
+            UserApp userApp = new UserApp(email,"MANAGER","FREE",false);
+            loginRepository.signInRepository(email, password, userApp);
         }
     }
 

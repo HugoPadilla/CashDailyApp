@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.Main.ActivityClientes.ActivityNuevoCliente.NewClientActivity">
+        tools:context=".ui.navigationView.NewClientFragment">
 
 
         <com.google.android.material.button.MaterialButton

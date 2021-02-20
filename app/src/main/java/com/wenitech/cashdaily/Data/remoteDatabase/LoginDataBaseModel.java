@@ -1,4 +1,4 @@
-package com.wenitech.cashdaily.Data.dataBase;
+package com.wenitech.cashdaily.Data.remoteDatabase;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -12,12 +12,11 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.wenitech.cashdaily.Data.model.UserApp;
 import com.wenitech.cashdaily.Util.StartedResetPassword;
 import com.wenitech.cashdaily.Util.StartedSingIn;
-import com.wenitech.cashdaily.common.ApiAccessSingleton.FirebaseAuthAPI;
 import com.wenitech.cashdaily.Util.StartedLogin;
 
 public class LoginDataBaseModel {
 
-    private FirebaseAuthAPI mAuth;
+    private MyFirebaseAuth mAuth;
 
     private MutableLiveData<StartedLogin> _statedLogin = new MutableLiveData<>();
     private MutableLiveData<StartedSingIn> _startedSingIn = new MutableLiveData<>(StartedSingIn.SING_IN_INIT);
@@ -25,7 +24,7 @@ public class LoginDataBaseModel {
 
     // Constructor para iniciar las intancia de la FirebaseAuth
     public LoginDataBaseModel() {
-        mAuth = FirebaseAuthAPI.getInstance();
+        mAuth = MyFirebaseAuth.getInstance();
         get_statedLogin();
     }
 
@@ -81,7 +80,7 @@ public class LoginDataBaseModel {
 
         get_statedLogin().setValue(DefStateLogin(StartedLogin.LOGIN_IN_PROCESS));
 
-        mAuth.getAuthInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.getAuth().signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -103,7 +102,7 @@ public class LoginDataBaseModel {
      */
     public void SignInDataBase(String email, String password, UserApp user) {
         get_startedSingIn().setValue(StartedSingIn.SING_IN_PROCESS);
-        mAuth.getAuthInstance().createUserWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+        mAuth.getAuth().createUserWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
 
@@ -134,7 +133,7 @@ public class LoginDataBaseModel {
     public void ResetPassword(String email, String password) {
         get_startedResetPassword().setValue(DefStartedResetPassword(StartedResetPassword.RESET_PASSWORD_PROCESS));
 
-        mAuth.getAuthInstance().sendPasswordResetEmail(email)
+        mAuth.getAuth().sendPasswordResetEmail(email)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
