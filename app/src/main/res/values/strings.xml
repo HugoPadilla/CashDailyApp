@@ -2,8 +2,11 @@
     <string name="app_name">Cash Daily</string>
     <string name="open_drawer">abrir</string>
     <string name="close_drawer">cerrar</string>
-    <string name="activity_crear_cuenta_subtitulo">Crear una cuenta es super facil. Solo llena este formulario pero asegurate de escribir un correo al cual tengas acceso, te enviaremos un mensaje de confirmacion.</string>
+    <string name="activity_crear_cuenta_subtitulo">Escribe un correo al cual tengas acceso, te enviaremos un mensaje de confirmacion.</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_form_payment_fragment">Forma de cobro</string>
+
     <string name="email_card_detail_transition_name">email_card_transition</string>
+
+    <string name="price_format">%,.2f $</string>
 </resources>

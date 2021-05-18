@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- color primary on App-->
-    <color name="primary">#0095D1</color>
-    <color name="primaryLightColor">#02B7FD</color>
-    <color name="primaryDarkColor">#0082B7</color>
+    <color name="ligth_blue_500">#03A9F4</color>
+    <color name="ligth_blue_700">#0288D1</color>
+    <color name="primaryLightColor">#9C27B0</color>
+    <!-- Color of accent   -->
+    <color name="colorAccent">@color/secondary</color>
 
     <!-- Color secondary in App -->
-    <color name="secondary">#00A9EC</color>
-    <color name="secondaryVariant">#0FD1FE</color>
+    <color name="secondary">#0FD1FE</color>
+    <color name="secondaryVariant">#64FFDA</color>
     <color name="background">#F5FCFF</color>
     <color name="surface">#FFFFFF</color>
 
     <color name="succes">#11C5A5</color>
     <color name="error">#C51162</color>
 
-    <!-- Color of accent   -->
-    <color name="colorAccent">@color/secondary</color>
 
     <!-- Color for text o icon in primary and secondary   -->
     <color name="onPrimary">#FFFFFF</color>
     <color name="onSecondary">#FFFFFF</color>
-    <color name="onBackground">#262626</color>
+    <color name="onBackground">#DE000000</color>
     <color name="onSurface">#262626</color>
     <color name="onSurfaceMedium">#707070</color>
     <color name="onSurfaceLigth">#F0FAFE</color>

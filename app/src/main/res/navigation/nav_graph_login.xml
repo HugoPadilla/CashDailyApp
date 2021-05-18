@@ -6,7 +6,7 @@
     app:startDestination="@id/fragmentLogin">
     <fragment
         android:id="@+id/fragmentLogin"
-        android:name="com.wenitech.cashdaily.ui.login.FragmentLogin"
+        android:name="com.wenitech.cashdaily.features.authentication.ui.fragment.FragmentLogin"
         android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentSignIn"
-        android:name="com.wenitech.cashdaily.ui.login.FragmentSignIn"
+        android:name="com.wenitech.cashdaily.features.authentication.ui.fragment.FragmentSignIn"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" >
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentRecoverPassword"
-        android:name="com.wenitech.cashdaily.ui.login.FragmentRecoverPassword"
+        android:name="com.wenitech.cashdaily.features.authentication.ui.fragment.FragmentRecoverPassword"
         android:label="Recover Password"
         tools:layout="@layout/fragment_recover_password">
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <activity
         android:id="@+id/mainNavActivity"
-        android:name="com.wenitech.cashdaily.ui.MainNavActivity"
+        android:name="com.wenitech.cashdaily.features.MainNavActivity"
         android:label="activity_nav_main"
         tools:layout="@layout/activity_nav_main" />
 

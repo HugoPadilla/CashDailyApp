@@ -6,15 +6,15 @@
     >
     <data>
         <variable
-            name="LoginViewModel"
-            type="com.wenitech.cashdaily.viewModel.login.LoginViewModel" />
+            name="viewModel"
+            type="com.wenitech.cashdaily.features.authentication.viewModel.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.login.FragmentLogin">
+        tools:context=".features.authentication.ui.fragment.FragmentLogin">
 
         <ImageView
             android:id="@+id/image_view_logo"
@@ -54,7 +54,7 @@
                 android:inputType="textEmailAddress"
                 android:nextFocusDown="@id/button_iniciar_sesion"
                 android:singleLine="true"
-                android:text="@={LoginViewModel._Email}"
+                android:text="@={viewModel._email}"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             app:helperText=" "
             app:layout_constraintBottom_toTopOf="@+id/textview_reset_password"
@@ -83,7 +83,7 @@
                 android:inputType="textPassword"
                 android:nextFocusDown="@id/button_iniciar_sesion"
                 android:singleLine="true"
-                android:text="@={LoginViewModel._Password}"
+                android:text="@={viewModel._password}"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -109,7 +109,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/bg_button_azul_solido_radiun"
-            android:onClick="@{() -> LoginViewModel.logIn()}"
+            android:onClick="@{() -> viewModel.logIn()}"
             android:paddingLeft="54dp"
             android:paddingRight="54dp"
             android:text="iniciar sesión"

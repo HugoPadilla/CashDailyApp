@@ -7,60 +7,85 @@
 
         <variable
             name="viewModel"
-            type="com.wenitech.cashdaily.viewModel.login.LoginViewModel" />
+            type="com.wenitech.cashdaily.features.authentication.viewModel.LoginViewModel" />
     </data>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        tools:context=".ui.login.FragmentSignIn">
+        tools:context=".features.authentication.ui.fragment.FragmentSignIn">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar2"
                 style="@style/Widget.MaterialComponents.Toolbar.Primary"
-                app:titleTextColor="@color/onPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="Crear Cuenta"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:title="Crear Cuenta"
+                app:titleTextColor="@color/onPrimary">
 
             </androidx.appcompat.widget.Toolbar>
+
 
             <TextView
                 android:id="@+id/text_view_crear_cuenta_subtitulo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/activity_crear_cuenta_subtitulo"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutUserName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_crear_cuenta_subtitulo"
+                app:startIconDrawable="@drawable/ic_profile">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel._nameUser}"
+                    android:hint="Nombre se usuario">
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input_layout_crear_cuenta_correo"
+                android:id="@+id/textInputLayoutEmail"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_crear_cuenta_subtitulo">
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUserName"
+                app:startIconDrawable="@android:drawable/ic_dialog_email">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_crear_cuenta_correo"
@@ -69,11 +94,11 @@
                     android:hint="Correo electronico"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
-                    android:text="@={viewModel._Email}" />
+                    android:text="@={viewModel._email}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutSignInPassword"
+                android:id="@+id/textInputLayoutPassword"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -85,7 +110,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_input_layout_crear_cuenta_correo">
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextSignInPassword"
@@ -94,11 +119,11 @@
                     android:hint="Contraseña"
                     android:inputType="textPassword"
                     android:singleLine="true"
-                    android:text="@={viewModel._Password}" />
+                    android:text="@={viewModel._password}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayoutSignInConfirmPassword"
+                android:id="@+id/textInputLayoutConfirmPassword"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -108,7 +133,7 @@
                 app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutSignInPassword">
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextConfirmPassword"
@@ -117,20 +142,20 @@
                     android:hint="Confirmar Contraseña"
                     android:inputType="textPassword"
                     android:singleLine="true"
-                    android:text="@={viewModel._PasswordConfirm}" />
+                    android:text="@={viewModel._passwordConfirm}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <CheckBox
-                android:id="@+id/check_box_crear_cuenta_terminos"
+                android:id="@+id/checkBoxTerm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Aceptar los terminos"
-                app:layout_constraintStart_toStartOf="@+id/textInputLayoutSignInConfirmPassword"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutSignInConfirmPassword" />
+                app:layout_constraintStart_toStartOf="@+id/textInputLayoutConfirmPassword"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayoutConfirmPassword" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button_crear_cuenta_crear_cuenta"
+                android:id="@+id/buttonSingUp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -144,7 +169,7 @@
                 android:textColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/check_box_crear_cuenta_terminos" />
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxTerm" />
 
             <ProgressBar
                 android:id="@+id/progressBar_singin"
@@ -200,14 +225,14 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button_crear_cuenta_crear_cuenta"
+                app:layout_constraintTop_toBottomOf="@+id/buttonSingUp"
                 app:layout_constraintVertical_bias="1.0" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/groupView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="text_input_layout_crear_cuenta_correo,textInputLayoutSignInConfirmPassword,button_crear_cuenta_crear_cuenta,text_view_crear_cuenta_subtitulo,textInputLayoutSignInPassword"
+                app:constraint_referenced_ids="textInputLayoutEmail,textInputLayoutConfirmPassword,buttonSingUp,text_view_crear_cuenta_subtitulo,textInputLayoutPassword,checkBoxTerm,textView4,text_view_crear_cuenta_iniciar_sesion"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

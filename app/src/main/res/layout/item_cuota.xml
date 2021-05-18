@@ -36,12 +36,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/text_view_item_cuota_valor_cuota"
+            android:id="@+id/value_quote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:text="@tools:sample/full_names[0]"
+            android:text="+5,000.00"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textColor="@color/succes"
             app:layout_constraintBottom_toTopOf="@+id/guideline5"
             app:layout_constraintStart_toEndOf="@+id/image_view_item_cuota_trading" />
 
@@ -60,15 +61,15 @@
             app:layout_constraintGuide_begin="36.7dp" />
 
         <TextView
-            android:id="@+id/text_view_item_cuota_nombre"
+            android:id="@+id/author_quote"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
-            android:text="26, Enero"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             app:layout_constraintBottom_toTopOf="@+id/guideline11"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/text_view_item_cuota_valor_cuota" />
+            app:layout_constraintStart_toStartOf="@+id/value_quote"
+            tools:text="@tools:sample/full_names" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline10"
@@ -85,29 +86,18 @@
             app:layout_constraintGuide_begin="56.7dp" />
 
         <TextView
-            android:id="@+id/text_view_item_cuota_fecha"
+            android:id="@+id/fecha_quote"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:text="+5,000.00"
+            android:text="25, abril"
             android:textAlignment="textEnd"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-            android:textColor="@color/succes"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline5"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/text_view_item_cuota_editar"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/text_view_item_cuota_editar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline5"
-            app:layout_constraintStart_toEndOf="@+id/text_view_item_cuota_valor_cuota" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

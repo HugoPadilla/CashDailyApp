@@ -36,7 +36,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.PerfilClienteActivity">
+            tools:context=".features.client.ui.PerfilClienteActivity">
 
             <ImageView
                 android:id="@+id/imageView8"
@@ -45,7 +45,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@color/primary" />
+                app:srcCompat="@color/ligth_blue_500" />
 
             <ImageView
                 android:id="@+id/imageView10"
