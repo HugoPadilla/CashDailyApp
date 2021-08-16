@@ -1,12 +1,41 @@
 <resources>
+    <string name="default_web_client_id" translatable="false">250142339046-fdq6hdf6bjpmi0jaa9662gcqvkanm8u2.apps.googleusercontent.com</string>
+    <string name="firebase_database_url" translatable="false">https://cash-daily-433cc.firebaseio.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">250142339046</string>
+    <string name="google_api_key" translatable="false">AIzaSyAtVYZrkYbrCuAZVAWDQKFo-Yo249w2hGk</string>
+    <string name="google_app_id" translatable="false">1:250142339046:android:8dc5f15e753f54b2767027</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAtVYZrkYbrCuAZVAWDQKFo-Yo249w2hGk</string>
+    <string name="google_storage_bucket" translatable="false">cash-daily-433cc.appspot.com</string>
+    <string name="project_id" translatable="false">cash-daily-433cc</string>
+
     <string name="app_name">Cash Daily</string>
+
     <string name="open_drawer">abrir</string>
     <string name="close_drawer">cerrar</string>
-    <string name="activity_crear_cuenta_subtitulo">Escribe un correo al cual tengas acceso, te enviaremos un mensaje de confirmacion.</string>
+    <string name="title_signin">Crear cuenta de usuario</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_form_payment_fragment">Forma de cobro</string>
 
     <string name="email_card_detail_transition_name">email_card_transition</string>
 
     <string name="price_format">%,.2f $</string>
+
+    <string name="menu_item_notifications">Notificasiones</string>
+    <string name="menu_item_theme">Temas</string>
+    <string name="menu_item_exit">Salir</string>
+
+    <string name="dialog_session_close_title">Cerrar sesion</string>
+    <string name="dialog_session_close_message">Estas a punto de salir de tu cuenta y es posible que exista alguna informacion sin guardar en la nube. Asegurate de haber sincronizado todo antes de salir.</string>
+    <string name="dialog_session_close_positive_button">Cerrar sesion</string>
+    <string name="dialog_session_close_negative_button">Cancelar</string>
+
+    <!-- default values-->
+    <string name="default_loading">Loading...</string>
+    <string name="default_money_zero">$0.00</string>
+    <string name="default_zero_amount">0</string>
+    <string name="text_sign_in">Crear una cuenta de usarios con tu correo personal. Enviaremos un mensaje de confirmacion.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_my_compose">MyComposeActivity</string>
+    <string name="title_activity_main_compose">MainActivityCompose</string>
 </resources>

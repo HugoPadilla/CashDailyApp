@@ -1,13 +1,13 @@
 package com.wenitech.cashdaily.di
 
-import com.wenitech.cashdaily.data.firebase.Authentication
-import com.wenitech.cashdaily.data.firebase.AuthenticationImpl
-import com.wenitech.cashdaily.data.firebase.Firestore
-import com.wenitech.cashdaily.data.firebase.FirestoreImpl
-import com.wenitech.cashdaily.data.repository.AuthenticationRepositoryImp
-import com.wenitech.cashdaily.domain.repository.FirestoreRepository
-import com.wenitech.cashdaily.data.repository.FirestoreRepositoryImp
-import com.wenitech.cashdaily.domain.repository.AuthenticationRepository
+import com.wenitech.cashdaily.data.remoteDataSource.RemoteDataSource
+import com.wenitech.cashdaily.data.remoteDataSource.RemoteDataSourceImpl
+import com.wenitech.cashdaily.data.repositories.AuthRepositoryImpl
+import com.wenitech.cashdaily.data.repositories.DataRepositoryImp
+import com.wenitech.cashdaily.data.repositories.RouteRepositoryImpl
+import com.wenitech.cashdaily.domain.repositories.AuthRepository
+import com.wenitech.cashdaily.domain.repositories.DataRepository
+import com.wenitech.cashdaily.domain.repositories.RoutesRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,17 +16,17 @@ import dagger.hilt.android.components.ActivityRetainedComponent
 @Module
 @InstallIn(ActivityRetainedComponent::class)
 abstract class ActivityModule {
-    // Binds interfaces con implementaciones
+    // Binds interfaces con implementation
+    @Binds
+    abstract fun bindRemoteDataSource(remoteDataSourceImpl: RemoteDataSourceImpl): RemoteDataSource
 
     @Binds
-    abstract fun bindAuthenticationRepositoryImpl(authenticationRepositoryImp: AuthenticationRepositoryImp) : AuthenticationRepository
+    abstract fun bindAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository
 
     @Binds
-    abstract fun bindAuthenticationImpl(authenticationImpl: AuthenticationImpl) : Authentication
+    abstract fun bindDataRepository(dataRepositoryImp: DataRepositoryImp): DataRepository
 
     @Binds
-    abstract fun bindFirestoreRepositoryImpl(firestoreRepositoryImp: FirestoreRepositoryImp) : FirestoreRepository
+    abstract fun bindRouteRepository(routeRepositoryImpl: RouteRepositoryImpl): RoutesRepository
 
-    @Binds
-    abstract fun bindFirestoreDataBaseImpl(firestoreImpl: FirestoreImpl) : Firestore
 }

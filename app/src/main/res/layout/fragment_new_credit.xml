@@ -7,13 +7,13 @@
 
         <variable
             name="customerCreditViewMode"
-            type="com.wenitech.cashdaily.features.customerCredit.viewModel.NewCreditViewModel" />
+            type="com.wenitech.cashdaily.framework.features.credit.newCredit.NewCreditViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".features.customerCredit.ui.NewCreditFragment">
+        tools:context=".framework.features.credit.newCredit.NewCreditFragment">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -35,6 +35,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:hint="Total Credito"
+                    app:startIconDrawable="@drawable/ic_dollar"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_input_layout_nuevo_credito_valor_prestamo"
@@ -58,6 +59,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:hint="Valor Prestamo"
+                    app:startIconDrawable="@drawable/ic_dollar"
                     app:layout_constraintEnd_toStartOf="@+id/guideline12"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_input_layout_nuevo_credito_fecha"
@@ -79,6 +81,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
                     android:hint="Porcentaje"
+                    app:startIconDrawable="@drawable/ic_percent"
                     app:endIconMode="dropdown_menu"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline12"
@@ -123,8 +126,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    app:startIconDrawable="@drawable/ic_asset_dolar_blanco"
                     android:hint="Fecha"
+                    app:startIconDrawable="@drawable/ic_calendar"
                     app:errorEnabled="true"
                     app:layout_constraintEnd_toStartOf="@+id/guideline12"
                     app:layout_constraintStart_toStartOf="parent"
@@ -342,7 +345,6 @@
             android:onClick="@{() -> customerCreditViewMode.saveCustomerCreditFromClient()}"
             android:text="guardar"
             android:textColor="@android:color/white"
-            app:backgroundTint="@color/colorAccent"
             app:icon="@drawable/ic_systema_check_blanco"
             app:iconTint="@android:color/white" />
 

@@ -4,25 +4,32 @@
     tools:showIn="navigation_view">
 
     <group>
+
+        <item android:title="Rutas">
+            <menu>
+                <item android:title="Principal"/>
+                <item android:title="Ruta dos"/>
+            </menu>
+        </item>
         <item
             android:id="@+id/perfilFragment"
-            android:icon="@drawable/ic_systema_persona_negro"
+            android:icon="@drawable/ic_user"
             android:title="Perfil" />
         <item
             android:id="@+id/menu_iten_drawer_suscripcion"
-            android:icon="@drawable/ic_asset_estrella_negro"
+            android:icon="@drawable/ic_star"
             android:title="Plan" />
         <item
             android:id="@+id/menu_iten_drawer_compartir"
-            android:icon="@drawable/ic_systema_share_negro"
+            android:icon="@drawable/ic_share"
             android:title="Compartir App" />
         <item
             android:id="@+id/menu_iten_drawer_calificar_app"
-            android:icon="@drawable/ic_systema_ok_negro"
+            android:icon="@drawable/ic_thumbs_up"
             android:title="Calificar App" />
         <item
             android:id="@+id/ajustesFragment"
-            android:icon="@drawable/ic_systema_configuracion_negro"
+            android:icon="@drawable/ic_settings"
             android:title="Ajustes" />
         <item
             android:id="@+id/menu_iten_drawer_cerrar_sesion"

@@ -7,7 +7,7 @@
 
         <variable
             name="customerCreditViewModel"
-            type="com.wenitech.cashdaily.features.customerCredit.viewModel.CustomerCreditViewModel" />
+            type="com.wenitech.cashdaily.framework.features.client.customerCredit.viewModel.CustomerCreditViewModel" />
 
     </data>
 
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:transitionName="@string/email_card_detail_transition_name"
-        tools:context=".features.customerCredit.ui.CustomerCreditFragment">
+        tools:context=".framework.features.client.customerCredit.ui.CustomerCreditFragment">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,13 +51,13 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/textViewTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
-                        android:text="Restante"
+                        android:text="Deuda"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
                         android:textSize="14sp"
                         android:visibility="gone"
@@ -79,7 +79,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
                         tools:text="$000.00" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -121,7 +121,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.52"
-                app:layout_constraintVertical_chainStyle="packed" />
+                app:layout_constraintVertical_chainStyle="packed"
+                android:contentDescription="Logo" />
 
             <TextView
                 android:id="@+id/textViewTituloBlankCredit3"
@@ -169,7 +170,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewDescriptionBlankCredit3" />
 
             <androidx.constraintlayout.widget.Group
-                android:id="@+id/groupContentCustomer"
+                android:id="@+id/groupRecentMovements"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
@@ -183,17 +184,18 @@
                 android:id="@+id/groupBlankCredit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:constraint_referenced_ids="imageViewBlankCredit3,textViewTituloBlankCredit3,textViewDescriptionBlankCredit3,buttonNewCredit"
                 app:layout_constraintBottom_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ProgressBar
-            android:id="@+id/progressBar2"
+            android:id="@+id/progressBar"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -219,11 +221,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:clickable="true"
-            android:enabled="true"
+            android:contentDescription="Add cuota"
+            android:enabled="false"
+            android:focusable="true"
             android:src="@drawable/ic_down"
             app:layout_anchor="@id/bottomAppBar"
-            app:tint="@android:color/white"
-            android:focusable="true" />
+            app:tint="@android:color/white" />
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

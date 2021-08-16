@@ -2,20 +2,34 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wenitech.cashdaily">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".framework.commons.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".base.Application"
         android:theme="@style/Theme.CashDaily">
-        <activity android:name=".features.client.ui.PerfilClienteActivity"/>
         <activity
-            android:name=".features.MainNavActivity"
+            android:name=".framework.MainActivityCompose"
+            android:exported="true"
+            android:label="@string/title_activity_main_compose"
+            android:theme="@style/Theme.CashDaily.NoActionBar" />
+        <activity
+            android:name=".framework.MyComposeActivity"
+            android:exported="true"
+            android:label="@string/title_activity_my_compose"
+            android:theme="@style/Theme.CashDaily.NoActionBar" />
+        <activity
+            android:name=".framework.features.home.ui.MyComposeActivity"
+            android:exported="true"
+            android:label="@string/title_activity_my_compose"
+            android:theme="@style/Theme.CashDaily.NoActionBar" />
+        <activity
+            android:name=".framework.features.MainNavActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -24,9 +38,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".features.authentication.ui.LoginActivity"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

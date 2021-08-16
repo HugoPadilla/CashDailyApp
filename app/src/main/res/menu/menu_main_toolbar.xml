@@ -3,20 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
     <item
-        android:id="@+id/menu_item_search"
-        android:icon="@drawable/ic_search"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        android:title="Buscar"
-        app:showAsAction="always|collapseActionView" />
-    <item
         android:id="@+id/menu_item_notifications"
-        android:icon="@drawable/ic_notifications"
-        android:title="Notificasiones"
+        android:icon="@drawable/ic_bell"
+        android:title="@string/menu_item_notifications"
         app:showAsAction="always"/>
     <item
         android:id="@+id/menu_item_tema"
-        android:title="Temas" />
+        android:title="@string/menu_item_theme" />
     <item
         android:id="@+id/menu_item_exit"
-        android:title="Salir" />
+        android:title="@string/menu_item_exit" />
 </menu>

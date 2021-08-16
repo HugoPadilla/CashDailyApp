@@ -4,12 +4,12 @@
 
     <item
         android:id="@+id/menu_item_bottom_app_bar_perfil"
-        android:icon="@drawable/ic_systema_persona_negro"
+        android:icon="@drawable/ic_user"
         android:title="Nuevo"
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_item_bottom_app_bar_telefono"
-        android:icon="@drawable/ic_systema_telefono_blanco"
+        android:icon="@drawable/ic_phone"
         android:title="Informacion"
         app:showAsAction="always" />
     <item
@@ -19,6 +19,6 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_item_bottom_app_bar_eliminar"
-        android:icon="@drawable/ic_systema_eliminar_negro"
+        android:icon="@drawable/ic_trash"
         android:title="Eliminar credito" />
 </menu>

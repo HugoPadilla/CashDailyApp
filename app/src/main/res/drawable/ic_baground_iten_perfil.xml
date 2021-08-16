@@ -7,7 +7,7 @@
                 android1:startColor="@color/colorImagenPerfil">
             </gradient>
             <corners android1:radius="90dp"/>
-            <stroke android1:color="@color/ligth_blue_700" android1:width="2dp"/>
+            <stroke android1:color="@color/primary_700" android1:width="2dp"/>
         </shape>
     </item>
 </selector>

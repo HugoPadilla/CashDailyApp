@@ -1,33 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- color primary on App-->
-    <color name="ligth_blue_500">#03A9F4</color>
-    <color name="ligth_blue_700">#0288D1</color>
-    <color name="primaryLightColor">#9C27B0</color>
-    <!-- Color of accent   -->
-    <color name="colorAccent">@color/secondary</color>
+    <color name="primary_400">#2BB6EE</color>
+    <color name="primary_500">#00A9EC</color>
+    <color name="primary_700">#0088CA</color>
+    <color name="on_primary">#FFFFFF</color>
 
-    <!-- Color secondary in App -->
-    <color name="secondary">#0FD1FE</color>
-    <color name="secondaryVariant">#64FFDA</color>
-    <color name="background">#F5FCFF</color>
-    <color name="surface">#FFFFFF</color>
+    <color name="secondary_500">#ffff</color>
+    <color name="secondary_700">#ffff</color>
+    <color name="on_secondary">#DE000000</color>
 
-    <color name="succes">#11C5A5</color>
+    <color name="surface">#ffff</color>
+    <color name="on_surface_high">#DE000000</color>
+    <color name="on_surface_medium">#99000000</color>
+    <color name="on_surface_disable">#61000000</color>
+
+    <color name="background">#ffff</color>
+    <color name="on_background">#DE262626</color>
+
+
+    <color name="success">#11C5A5</color>
+    <color name="on_success">#FFFFFF</color>
+
     <color name="error">#C51162</color>
+    <color name="on_error">#FFFFFF</color>
 
-
-    <!-- Color for text o icon in primary and secondary   -->
-    <color name="onPrimary">#FFFFFF</color>
-    <color name="onSecondary">#FFFFFF</color>
-    <color name="onBackground">#DE000000</color>
-    <color name="onSurface">#262626</color>
-    <color name="onSurfaceMedium">#707070</color>
-    <color name="onSurfaceLigth">#F0FAFE</color>
-
-    <color name="onError">#FFFFFF</color>
-    <color name="onSucces">#FFFFFF</color>
+    <color name="light_purple_500">#8675FF</color>
+    <color name="light_pink_500">#FF718B</color>
+    <color name="light_yellow_500">#FEBA69</color>
 
     <color name="colorImagenPerfil">#30536F</color>
     <color name="colorTradingStop">#550096</color>
+
 </resources>
+
+

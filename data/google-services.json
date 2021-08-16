@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "250142339046",
+    "firebase_url": "https://cash-daily-433cc.firebaseio.com",
+    "project_id": "cash-daily-433cc",
+    "storage_bucket": "cash-daily-433cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250142339046:android:8dc5f15e753f54b2767027",
+        "android_client_info": {
+          "package_name": "com.wenitech.cashdaily"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "250142339046-9obdiknor844l12voijvnoetegpt8vr2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wenitech.cashdaily",
+            "certificate_hash": "bd3c27e6a48d25a5106ecc6e42c1e4d7a3d1f04a"
+          }
+        },
+        {
+          "client_id": "250142339046-fdq6hdf6bjpmi0jaa9662gcqvkanm8u2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtVYZrkYbrCuAZVAWDQKFo-Yo249w2hGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "250142339046-fdq6hdf6bjpmi0jaa9662gcqvkanm8u2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

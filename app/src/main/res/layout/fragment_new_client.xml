@@ -9,10 +9,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".features.client.ui.NewClientFragment">
+        tools:context=".framework.features.client.newClient.NewClientFragment">
 
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonSaveClient"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -21,7 +21,8 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
             android:text="Guardar datos"
-            android:textColor="@color/onPrimary"
+            android:theme="@style/Primary.Button"
+            android:background="@drawable/bg_button_azul_solido_radiun"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,9 +58,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_marginTop="16dp"
             android:text="Informacion personal"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Headline6"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,7 +71,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:text="Informacion de contacto"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Headline6"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout9" />
 
@@ -144,6 +145,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            app:startIconDrawable="@drawable/ic_phone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_nuevo_cliente_detalles_contacto">
@@ -165,6 +167,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            app:startIconDrawable="@drawable/ic_map"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout10">
@@ -186,6 +189,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            app:startIconDrawable="@drawable/ic_map_pin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout11">
