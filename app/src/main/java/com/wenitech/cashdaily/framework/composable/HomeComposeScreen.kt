@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.domain.entities.Box
 import com.wenitech.cashdaily.domain.entities.Ruta
-import com.wenitech.cashdaily.framework.commons.rutasData
+import com.wenitech.cashdaily.framework.commons.routesData
 import com.wenitech.cashdaily.framework.composable.commons.CashAvailableCardView
 import com.wenitech.cashdaily.framework.composable.commons.PrimaryExtendeButton
 import com.wenitech.cashdaily.framework.features.home.viewModel.HomeFragmentViewModel
@@ -32,7 +32,7 @@ import com.wenitech.cashdaily.framework.ui.theme.BackgroundLight
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 
 @Composable
-fun HomeComposeScreen(viewModel: HomeFragmentViewModel) {
+fun HomeComposeScreen(viewModel: HomeFragmentViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
 
     val boxState by viewModel.homeUiState.collectAsState()
     val routesState by viewModel.routeUiState.collectAsState()
@@ -172,22 +172,6 @@ fun Chip(modifier: Modifier = Modifier, text: String) {
 @Composable
 fun DefaultPreview() {
     CashDailyTheme {
-        HomeContent(box = Box(totalCash = 126000.00), routes = rutasData)
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreviewDark() {
-    CashDailyTheme(darkTheme = true) {
-        HomeContent(box = Box(totalCash = 126000.00), routes = rutasData)
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ChipPreview() {
-    CashDailyTheme {
-        Chip(text = "Chip preview")
+        HomeContent(box = Box(totalCash = 126000.00), routes = routesData)
     }
 }

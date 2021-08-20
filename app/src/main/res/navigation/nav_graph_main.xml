@@ -80,6 +80,9 @@
         <argument
             android:name="idClient"
             app:argType="string" />
+        <argument
+            android:name="refCredit"
+            app:argType="string" />
 
 
     </fragment>

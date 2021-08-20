@@ -4,6 +4,7 @@ buildscript {
 
     ext {
         compose_version = '1.0.0-rc01'
+        nav_compose_version = '1.0.0-alpha02'
     }
 
     repositories {

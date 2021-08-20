@@ -1,20 +1,19 @@
 package com.wenitech.cashdaily.framework.composable.commons
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
+import com.wenitech.cashdaily.domain.entities.Client
+import com.wenitech.cashdaily.framework.ui.theme.Shapes
 import java.text.NumberFormat
 
 @Composable
@@ -38,7 +37,7 @@ fun CashAvailableCardView(money: Double, modifier: Modifier = Modifier, elevatio
                 modifier = Modifier.padding(top = 4.dp),
                 style = TextStyle(
                     fontWeight = FontWeight.Medium,
-                    fontSize =  MaterialTheme.typography.h4.fontSize
+                    fontSize = MaterialTheme.typography.h4.fontSize
                 ),
                 color = MaterialTheme.colors.onSecondary,
                 text = textMoney
@@ -48,10 +47,88 @@ fun CashAvailableCardView(money: Double, modifier: Modifier = Modifier, elevatio
 
 }
 
+@ExperimentalMaterialApi
 @Composable
-@Preview
-fun PreviewCashAvailable() {
-    CashDailyTheme {
-        CashAvailableCardView(money = 120000.00)
+fun CreditClient(
+    idClient: String,
+    name: String,
+    direction: String,
+    prestamo: Double,
+    deuda: Double,
+    cuota: Double,
+    numeroCuotas: Int,
+    numeroCuotasAdd: Double,
+    progress: Float,
+    modifier: Modifier = Modifier,
+    elevation: Dp = 16.dp
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        elevation = elevation,
+        shape = RoundedCornerShape(10.dp),
+        backgroundColor = MaterialTheme.colors.primary,
+        contentColor = MaterialTheme.colors.onPrimary
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(start = 20.dp, top = 2.dp, end = 20.dp, bottom = 18.dp)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+
+            ClientItem(
+                client = Client(id = idClient, fullName = name, direction = direction),
+                onClick = { idClient, refCredit ->
+
+                }
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp)
+                    .height(2.dp)
+                    .background(
+                        color = MaterialTheme.colors.background
+                    )
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(32.dp)
+            ) {
+                ItemValue(title = "Prestamo", value = prestamo)
+                ItemValue(title = "Deuda", value = deuda)
+                ItemValue(title = "Cuota", value = cuota)
+            }
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+
+                Text(
+                    text = "$numeroCuotasAdd/$numeroCuotas",
+                    style = MaterialTheme.typography.overline
+                )
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(Shapes.medium),
+                    color = MaterialTheme.colors.secondary,
+                    progress = progress
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun ItemValue(title: String, value: Double) {
+    val valueFormat = NumberFormat.getCurrencyInstance().format(value)
+    Column {
+        Text(text = title, style = MaterialTheme.typography.caption)
+        Text(text = valueFormat, style = MaterialTheme.typography.subtitle2)
     }
 }

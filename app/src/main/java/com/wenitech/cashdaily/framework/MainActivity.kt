@@ -14,12 +14,7 @@ class MainActivityCompose : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CashDailyTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    BodyContent()
-                }
-            }
+            NavComposeApp()
         }
     }
 }

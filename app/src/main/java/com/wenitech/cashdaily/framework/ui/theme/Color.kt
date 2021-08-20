@@ -17,6 +17,8 @@ val BackgroundLight = Color(0xFFF6F8FA)
 
 val TextLight = Color(0xFF10293F)
 
+val success = Color(0xFF11C5A5)
+
 
 // Dark color
 

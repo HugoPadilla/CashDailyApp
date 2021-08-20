@@ -21,17 +21,17 @@ import androidx.compose.ui.unit.dp
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.domain.entities.Client
 import com.wenitech.cashdaily.framework.commons.clientsData
-import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 import com.wenitech.cashdaily.framework.ui.theme.BackgroundLight
+import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 
 @ExperimentalMaterialApi
 @Composable
 fun ClientItem(
     client: Client,
-    onClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     elevation: Dp = 0.dp,
-    cornerRadius: Dp = 10.dp
+    cornerRadius: Dp = 10.dp,
+    onClick: (idClient: String, refCredit: String) -> Unit
 ) {
 
     Card(
@@ -40,7 +40,7 @@ fun ClientItem(
         shape = RoundedCornerShape(cornerRadius),
         modifier = modifier.fillMaxWidth(),
         onClick = {
-            onClick(client.id.orEmpty())
+            onClick(client.id!!, client.refCredit!!.id)
         }
     ) {
         Row(
@@ -73,7 +73,7 @@ fun ClientItem(
                 Text(
                     modifier = Modifier.padding(top = 2.dp),
                     style = MaterialTheme.typography.caption,
-                    text = "${client.city}, ${client.direction}"
+                    text = client.direction
                 )
             }
         }
@@ -86,7 +86,7 @@ fun ClientItem(
 @Composable
 fun PreviewClientItem() {
     CashDailyTheme {
-        ClientItem(client = clientsData[0], onClick = {
+        ClientItem(client = clientsData[0], onClick = { idClient, refCredit ->
 
         })
     }

@@ -1,5 +1,6 @@
 package com.wenitech.cashdaily.framework.composable
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -22,7 +23,11 @@ import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 
 @ExperimentalMaterialApi
 @Composable
-fun ClientsComposeScreen(viewModel: ClientViewModel, onFloatingButtonClick: () -> Unit, onClientClick: (String) -> Unit) {
+fun ClientsComposeScreen(
+    viewModel: ClientViewModel,
+    onFloatingButtonClick: () -> Unit,
+    onClientClick: (idClient: String, refCredit: String) -> Unit
+) {
 
     val listClient by viewModel.listClient.collectAsState()
 
@@ -30,7 +35,8 @@ fun ClientsComposeScreen(viewModel: ClientViewModel, onFloatingButtonClick: () -
         ClientsContent(
             listClint = listClient,
             onFloatingButtonClick = onFloatingButtonClick,
-            onClientClick = onClientClick)
+            onClientClick = onClientClick
+        )
     }
 }
 
@@ -40,17 +46,18 @@ fun ClientsComposeScreen(viewModel: ClientViewModel, onFloatingButtonClick: () -
 private fun ClientsContent(
     listClint: List<Client>,
     onFloatingButtonClick: () -> Unit,
-    onClientClick: (String) -> Unit
+    onClientClick: (idClient: String, refCredit: String) -> Unit
 ) {
 
-    Scaffold(floatingActionButton = {
-        FloatingActionButton(onClick = onFloatingButtonClick) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_user_plus),
-                contentDescription = "Button add new user"
+    Scaffold(
+        floatingActionButton = {
+            FabButtonNormal(
+                iconDrawable = R.drawable.ic_user_plus,
+                contentDescription = "Add new client",
+                onFloatingButtonClick = onFloatingButtonClick
             )
         }
-    }) {
+    ) {
 
         Column(
             modifier = Modifier
@@ -75,7 +82,6 @@ private fun ClientsContent(
                 items(listClint) { client ->
                     ClientItem(
                         client = client,
-                        cornerRadius = 0.dp,
                         onClick = onClientClick
                     )
                 }
@@ -86,21 +92,31 @@ private fun ClientsContent(
     }
 }
 
+@Composable
+fun FabButtonNormal(
+    @DrawableRes iconDrawable: Int,
+    contentDescription: String,
+    onFloatingButtonClick: () -> Unit
+) {
+    FloatingActionButton(onClick = onFloatingButtonClick) {
+        Icon(
+            painter = painterResource(id = iconDrawable),
+            contentDescription = contentDescription
+        )
+    }
+}
 
 @ExperimentalMaterialApi
 @Preview(name = "Light Mode")
 @Composable
 fun PreviewContent() {
     CashDailyTheme {
-        ClientsContent(listClint = clientsData, onFloatingButtonClick = { /*TODO*/ }, onClientClick = {})
-    }
-}
+        ClientsContent(
+            listClint = clientsData,
+            onFloatingButtonClick = { /*TODO*/ },
+            onClientClick = { idClient, refCredit ->
 
-@ExperimentalMaterialApi
-@Preview(name= "Dark Mode")
-@Composable
-fun PreviewContentDark() {
-    CashDailyTheme(darkTheme = true) {
-        ClientsContent(listClint = clientsData, onFloatingButtonClick = { /*TODO*/ }, onClientClick = {})
+            }
+        )
     }
 }

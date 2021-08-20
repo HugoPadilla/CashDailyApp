@@ -3,142 +3,60 @@ package com.wenitech.cashdaily.framework.features.client.customerCredit.viewMode
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.wenitech.cashdaily.commons.Resource
+import com.wenitech.cashdaily.domain.entities.Client
 import com.wenitech.cashdaily.domain.entities.Credit
+import com.wenitech.cashdaily.domain.entities.Quota
 import com.wenitech.cashdaily.domain.usecases.credit.GetCreditClientUseCase
 import com.wenitech.cashdaily.domain.usecases.credit.GetQuotasUseCase
 import com.wenitech.cashdaily.domain.usecases.credit.SaveQuotaOfCreditClientUseCase
-import com.wenitech.cashdaily.framework.features.client.customerCredit.BaseMviViewModel
-import com.wenitech.cashdaily.framework.features.client.customerCredit.CustomerContract
-import com.wenitech.cashdaily.framework.features.client.customerCredit.ReduceAction
-import com.wenitech.cashdaily.framework.features.client.customerCredit.model.ClientParcelable
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-sealed class CustomerReduceAction : ReduceAction {
-    object Loading : CustomerReduceAction()
-    data class Loaded(val credit: Credit) : CustomerReduceAction()
-    data class LoadError(val message: String) : CustomerReduceAction()
-}
 
 class CustomerCreditViewModel @ViewModelInject constructor(
     private val auth: FirebaseAuth,
     private val getCreditClientUseCase: GetCreditClientUseCase,
     private val getQuotasUseCase: GetQuotasUseCase,
     private val saveQuotaOfCreditClientUseCase: SaveQuotaOfCreditClientUseCase,
-) : BaseMviViewModel<CustomerContract.CustomerState, CustomerContract.CustomerEvent, CustomerReduceAction>(
-    initialState = CustomerContract.CustomerState.initial
-) {
+) : ViewModel() {
 
-    // Model Client Parcelable
-    private val clientParzelableMutableLiveData = MutableLiveData<ClientParcelable>()
-    val clientParcelable: LiveData<ClientParcelable> get() = clientParzelableMutableLiveData
+    private val _idClient: MutableLiveData<String> = MutableLiveData()
+    val idClient: LiveData<String> get() = _idClient
+
+    private val _loading = MutableStateFlow(true)
+    val loading: StateFlow<Boolean> = _loading
+
+    private val _client: MutableStateFlow<Client> = MutableStateFlow(Client())
+    val client: StateFlow<Client> = _client
+
+    private val _credit: MutableStateFlow<Credit> = MutableStateFlow(Credit())
+    val customerState: StateFlow<Credit> = _credit
+
+    private val _listQuotas: MutableStateFlow<List<Quota>> = MutableStateFlow(listOf())
+    val quotaCustomer: StateFlow<List<Quota>> = _listQuotas
 
     private val _resultNewQuota: MutableLiveData<Resource<String>> = MutableLiveData()
     val resultNewQuota: LiveData<Resource<String>> get() = _resultNewQuota
 
-    private val _customerState: MutableLiveData<CustomerContract.CustomerState> = MutableLiveData()
-    val customerState: LiveData<CustomerContract.CustomerState> = _customerState
 
-    private val _quotaCustomer: MutableLiveData<CustomerContract.QuotaCustomerState> =
-        MutableLiveData()
-    val quotaCustomer: LiveData<CustomerContract.QuotaCustomerState> = _quotaCustomer
-
-
-    fun process(event: CustomerContract.CustomerEvent) {
-        when (event) {
-            is CustomerContract.CustomerEvent.SetNewQuota -> setNewQuota(event.value)
-            is CustomerContract.CustomerEvent.SetClientParzelable -> setClientParcelable(event.clientParcelable)
-            is CustomerContract.CustomerEvent.getCustomerCredit -> getCreditClient(
-                event.idClient,
-                event.idCredit
-            )
-        }
+    fun setArgs(idClient: String, refCredit: String) {
+        getCreditClient(idClient = idClient, idCredit = refCredit)
     }
 
-    /**
-     * Carga el objeto cliente enviado como argumento desde Navigation
-     *
-     * @param clientParcelable - Objeto parcelable que se envia como
-     * parametro personalizado en la navegacion
-     */
-    private fun setClientParcelable(clientParcelable: ClientParcelable) {
-        clientParzelableMutableLiveData.value = clientParcelable
-    }
-
-    private fun getCreditClient(idClient: String, idCredit: String) {
+    fun setNewQuota(valueQuota: Double, idClient: String, refCreditActive: String) {
         viewModelScope.launch {
 
             val uid = auth.uid
 
-            if (!uid.isNullOrEmpty() && !idClient.isNullOrEmpty() && !idCredit.isNullOrEmpty()) {
-                getCreditClientUseCase(uid, idClient, idCredit).collect { creditResult ->
-                    when (creditResult) {
-                        is Resource.Failure -> {
-                            /* _customerState.value =
-                                 CustomerContract.CustomerState.Error(creditResult.throwable)*/
-                        }
-                        is Resource.Loading -> {
-                            // _customerState.value = CustomerContract.CustomerState.Loading
-                        }
-                        is Resource.Success -> {
-                            /* _customerState.value = CustomerContract.CustomerState.Success(
-                                 creditResult.data
-                             )*/
-                            getQuotasCreditClient()
-                        }
-                    }
-                }
-            } else {
-                //  _customerState.value = CustomerContract.CustomerState.Error(Throwable())
-            }
-        }
-    }
+            if (!uid.isNullOrEmpty() && idClient.isNotEmpty() && refCreditActive.isNotEmpty()) {
 
-    private fun getQuotasCreditClient() {
-        viewModelScope.launch {
-
-            val uid = auth.uid
-            val idClient = clientParcelable.value?.id
-            val refCreditActive = clientParcelable.value?.idCredit
-
-            if (!uid.isNullOrEmpty() && !idClient.isNullOrEmpty() && !refCreditActive.isNullOrEmpty()) {
-                getQuotasUseCase(uid, idClient, refCreditActive).collect {
-                    when (it) {
-                        is Resource.Failure -> {
-                            _quotaCustomer.value = CustomerContract.QuotaCustomerState.Error
-                        }
-                        is Resource.Loading -> {
-                            _quotaCustomer.value = CustomerContract.QuotaCustomerState.Loading
-                        }
-                        is Resource.Success -> {
-                            if (it.data.isEmpty()) {
-                                _quotaCustomer.value = CustomerContract.QuotaCustomerState.Empty
-                            } else {
-                                _quotaCustomer.value =
-                                    CustomerContract.QuotaCustomerState.Success(it.data)
-                            }
-                        }
-                    }
-                }
-            } else {
-                _quotaCustomer.value = CustomerContract.QuotaCustomerState.Empty
-            }
-        }
-    }
-
-    private fun setNewQuota(valueQuota: Double) {
-        viewModelScope.launch {
-
-            val uid = auth.uid
-            val idClient = clientParcelable.value?.id
-            val refCreditActive = clientParcelable.value?.idCredit
-
-            if (!uid.isNullOrEmpty() && !idClient.isNullOrEmpty() && !refCreditActive.isNullOrEmpty()) {
-
-                val newQuota = com.wenitech.cashdaily.domain.entities.Quota(
+                val newQuota = Quota(
                     null,
                     null,
                     auth.currentUser!!.displayName!!,
@@ -154,56 +72,52 @@ class CustomerCreditViewModel @ViewModelInject constructor(
         }
     }
 
-    override suspend fun executeIntent(mviIntent: CustomerContract.CustomerEvent) {
-        when (mviIntent) {
-            is CustomerContract.CustomerEvent.SetClientParzelable -> TODO()
-            is CustomerContract.CustomerEvent.SetNewQuota -> TODO()
-            is CustomerContract.CustomerEvent.getCustomerCredit -> {
-                //handle(CustomerReduceAction.Loading)
-                val uid = auth.uid
+    private fun getCreditClient(idClient: String, idCredit: String) {
+        viewModelScope.launch {
 
-                if (!uid.isNullOrEmpty()) {
-                    getCreditClientUseCase(
-                        uid,
-                        mviIntent.idClient,
-                        mviIntent.idCredit
-                    ).collect { creditResult ->
-                        when (creditResult) {
-                            is Resource.Failure -> {
-                                handle(CustomerReduceAction.LoadError("Presentamos incovenientes, intente mas tarde"))
-                            }
-                            is Resource.Loading -> {
-                               handle(CustomerReduceAction.Loading)
-                            }
-                            is Resource.Success -> {
-                                handle(CustomerReduceAction.Loaded(credit = creditResult.data))
-                                getQuotasCreditClient()
-                            }
+            val uid = auth.uid
+
+            if (!uid.isNullOrEmpty() && idClient.isNotEmpty() && idCredit.isNotEmpty()) {
+                getCreditClientUseCase(uid, idClient, idCredit).collect { creditResult ->
+                    when (creditResult) {
+                        is Resource.Failure -> {
+                            _loading.value = false
+                        }
+                        is Resource.Loading -> {
+                            _loading.value = true
+                        }
+                        is Resource.Success -> {
+                            _loading.value = false
+                            _credit.value = creditResult.data
+                            getQuotasCreditClient(idClient = idClient, refCreditActive = idCredit)
                         }
                     }
-                } else {
-                    handle(CustomerReduceAction.LoadError("No se ha iniciado sesion. Es necesario autenticarse"))
                 }
             }
         }
     }
 
-    override fun reduce(
-        state: CustomerContract.CustomerState,
-        reduceAction: CustomerReduceAction
-    ): CustomerContract.CustomerState = when (reduceAction) {
-        is CustomerReduceAction.LoadError -> state.copy(
-            loadState = CustomerContract.LoadState.ERROR,
-            errorMessage = reduceAction.message
-        )
-        is CustomerReduceAction.Loaded -> state.copy(
-            loadState = CustomerContract.LoadState.LOADED,
-            credit = reduceAction.credit,
-            errorMessage = ""
-        )
-        CustomerReduceAction.Loading -> state.copy(
-            loadState = CustomerContract.LoadState.LOADING,
-            errorMessage = ""
-        )
+    private fun getQuotasCreditClient(idClient: String, refCreditActive: String) {
+        viewModelScope.launch {
+
+            val uid = auth.uid
+
+            if (!uid.isNullOrEmpty() && idClient.isNotEmpty() && refCreditActive.isNotEmpty()) {
+                getQuotasUseCase(uid, idClient, refCreditActive).collect { result ->
+                    when (result) {
+                        is Resource.Failure -> {
+
+                        }
+                        is Resource.Loading -> {
+
+                        }
+                        is Resource.Success -> {
+
+                        }
+                    }
+                }
+            }
+        }
     }
+
 }

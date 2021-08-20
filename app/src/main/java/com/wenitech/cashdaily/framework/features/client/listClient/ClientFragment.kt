@@ -36,7 +36,12 @@ class ClientFragment : Fragment() {
                 ClientsComposeScreen(
                     viewModel = clientViewModel,
                     onFloatingButtonClick = { navigateToNewClient() },
-                    onClientClick = {navigateToCustomerCredit(it)})
+                    onClientClick = { idClient, refCredit ->
+                        navigateToCustomerCredit(
+                            idClient = idClient,
+                            refCredit = refCredit
+                        )
+                    })
             }
         }
     }
@@ -50,8 +55,8 @@ class ClientFragment : Fragment() {
         navController.navigate(R.id.action_clientFragment_to_newClientActivity)
     }
 
-    private fun navigateToCustomerCredit(idClient: String) {
-        val action = NavGraphMainDirections.actionGlobalCustomerCreditFragment(idClient)
+    private fun navigateToCustomerCredit(idClient: String, refCredit: String) {
+        val action = NavGraphMainDirections.actionGlobalCustomerCreditFragment(idClient, refCredit)
         navController.navigate(action)
     }
 }

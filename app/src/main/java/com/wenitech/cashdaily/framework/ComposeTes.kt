@@ -1,5 +1,6 @@
-package com.wenitech.cashdaily.framework.features
+package com.wenitech.cashdaily.framework
 
+import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.activity.ComponentActivity
@@ -38,7 +39,7 @@ class ComposeTes : ComponentActivity() {
         Text(text = "Hello word")
     }
 
-    @Preview
+    @Preview(uiMode = UI_MODE_NIGHT_MASK)
     @Composable
     fun PreviewText() {
         MainContent()

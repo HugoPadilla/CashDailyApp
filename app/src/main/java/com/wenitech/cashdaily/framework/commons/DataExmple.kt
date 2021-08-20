@@ -1,9 +1,11 @@
 package com.wenitech.cashdaily.framework.commons
 
 import com.wenitech.cashdaily.domain.entities.Client
+import com.wenitech.cashdaily.domain.entities.Credit
+import com.wenitech.cashdaily.domain.entities.Quota
 import com.wenitech.cashdaily.domain.entities.Ruta
 
-val rutasData = listOf(
+val routesData = listOf(
     Ruta(name = "Maren Lubin", authorId = "Menlo Park, CA"),
     Ruta(name = "Leslie Alexander", authorId = "Kalamazoo, MI"),
     Ruta(name = "Robert Fox", authorId = "Poway, CA"),
@@ -18,4 +20,24 @@ val clientsData = listOf(
     Client(fullName = "Marvin McKinney", city = "San Luis Obispo", direction = "CA"),
     Client(fullName = "Esther Howard", city = "Manhattan", direction = "NY"),
     Client(fullName = "Ralph Edwards", city = "Bakersfield", direction = "CA")
+)
+
+val quotesListData = listOf(
+    Quota(author = "Name author", value = 2400.00),
+    Quota(author = "Name author", value = 2400.00),
+    Quota(author = "Name author", value = 2400.00),
+    Quota(author = "Name author", value = 2400.00),
+    Quota(author = "Name author", value = 2400.00),
+)
+
+val creditData = listOf(
+    Credit(
+        amountFees = 30,
+        creditDebt = 90000.00,
+        creditValue = 100000.00,
+        creditTotal = 120000.00,
+        creditQuotaValue = 4000.00,
+        paymentMethod = "Diario",
+        percentage = 20
+    )
 )
