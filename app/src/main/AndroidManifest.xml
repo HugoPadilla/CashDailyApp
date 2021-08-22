@@ -17,17 +17,9 @@
             android:name=".framework.MainActivityCompose"
             android:exported="true"
             android:label="@string/title_activity_main_compose"
-            android:theme="@style/Theme.CashDaily.NoActionBar" />
-        <activity
-            android:name=".framework.MyComposeActivity"
-            android:exported="true"
-            android:label="@string/title_activity_my_compose"
-            android:theme="@style/Theme.CashDaily.NoActionBar" />
-        <activity
-            android:name=".framework.features.home.ui.MyComposeActivity"
-            android:exported="true"
-            android:label="@string/title_activity_my_compose"
-            android:theme="@style/Theme.CashDaily.NoActionBar" />
+            android:theme="@style/Theme.CashDaily.NoActionBar" >
+
+        </activity>
         <activity
             android:name=".framework.features.MainNavActivity"
             android:screenOrientation="portrait">

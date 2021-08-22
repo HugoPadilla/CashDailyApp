@@ -1,17 +1,18 @@
 package com.wenitech.cashdaily.framework.features
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.wenitech.cashdaily.commons.AuthenticationStatus
 import com.wenitech.cashdaily.commons.Resource
 import com.wenitech.cashdaily.domain.entities.User
 import com.wenitech.cashdaily.domain.usecases.auth.GetProfileUserAppUseCase
-import kotlinx.coroutines.flow.*
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val getProfileUserAppUseCase: GetProfileUserAppUseCase
 ) : ViewModel() {
 
