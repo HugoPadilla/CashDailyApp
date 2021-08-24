@@ -10,10 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.wenitech.cashdaily.NavGraphMainDirections
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.databinding.FragmentClientBinding
-import com.wenitech.cashdaily.framework.composable.ClientsComposeScreen
 import com.wenitech.cashdaily.framework.features.client.listClient.viewModel.ClientViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,7 +31,7 @@ class ClientFragment : Fragment() {
         binding = FragmentClientBinding.inflate(inflater, container, false)
         return binding.root.apply {
             findViewById<ComposeView>(R.id.composeViewClients).setContent {
-                ClientsComposeScreen(
+               /* ClientsComposeScreen(
                     viewModel = clientViewModel,
                     onFloatingButtonClick = { navigateToNewClient() },
                     onClientClick = { idClient, refCredit ->
@@ -41,7 +39,7 @@ class ClientFragment : Fragment() {
                             idClient = idClient,
                             refCredit = refCredit
                         )
-                    })
+                    })*/
             }
         }
     }
@@ -56,7 +54,7 @@ class ClientFragment : Fragment() {
     }
 
     private fun navigateToCustomerCredit(idClient: String, refCredit: String) {
-        val action = NavGraphMainDirections.actionGlobalCustomerCreditFragment(idClient, refCredit)
-        navController.navigate(action)
+        //val action = NavGraphMainDirections.actionGlobalCustomerCreditFragment(idClient, refCredit)
+        navController.navigate(R.id.customerCreditFragment)
     }
 }

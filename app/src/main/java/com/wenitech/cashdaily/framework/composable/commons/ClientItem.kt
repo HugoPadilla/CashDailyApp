@@ -40,7 +40,7 @@ fun ClientItem(
         shape = RoundedCornerShape(cornerRadius),
         modifier = modifier.fillMaxWidth(),
         onClick = {
-            onClick(client.id!!, client.refCredit!!.id)
+            onClick(client.id?: "", client.refCredit?.id ?: "")
         }
     ) {
         Row(

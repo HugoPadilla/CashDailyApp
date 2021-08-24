@@ -2,20 +2,26 @@ package com.wenitech.cashdaily.framework.features.caja.viewModel
 
 
 import android.util.Log
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.wenitech.cashdaily.commons.Resource
 import com.wenitech.cashdaily.domain.entities.Box
+import com.wenitech.cashdaily.domain.entities.CashTransactions
 import com.wenitech.cashdaily.domain.usecases.caja.GetRecentMovementsUseCase
 import com.wenitech.cashdaily.domain.usecases.caja.GetUserBoxUseCase
 import com.wenitech.cashdaily.domain.usecases.caja.RemoveMoneyOnBoxUseCase
 import com.wenitech.cashdaily.domain.usecases.caja.SaveMoneyOnBoxUseCase
 import com.wenitech.cashdaily.framework.features.caja.BoxContract
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class BoxViewModel @ViewModelInject constructor(
+@HiltViewModel
+class BoxViewModel @Inject constructor(
     private val auth: FirebaseAuth,
     private val getUserBoxUseCase: GetUserBoxUseCase,
     private val getRecentMovementsUseCaseUseCase: GetRecentMovementsUseCase,
@@ -23,17 +29,23 @@ class BoxViewModel @ViewModelInject constructor(
     private val removeMoneyOnBoxUseCase: RemoveMoneyOnBoxUseCase
 ) : ViewModel() {
 
-    private val _boxState = MutableLiveData<BoxContract.BoxState>()
-    val boxState: LiveData<BoxContract.BoxState> = _boxState
+    private val _boxState = MutableStateFlow(Box())
+    val boxState: StateFlow<Box> = _boxState
 
-    private val _cashMovement = MutableLiveData<BoxContract.CashState>()
-    val cashMovement: LiveData<BoxContract.CashState> = _cashMovement
+    private val _cashMovement = MutableStateFlow<List<CashTransactions>>(listOf())
+    val cashMovement: StateFlow<List<CashTransactions>> = _cashMovement
 
 
     fun process(event: BoxContract.BoxEvent) {
         when (event) {
-            is BoxContract.BoxEvent.AddMoneyClicked -> addMoneyOnBox(event.money, event.descriptions)
-            is BoxContract.BoxEvent.RemoveMoneyClicked -> removeMoney(event.money, event.descriptions)
+            is BoxContract.BoxEvent.AddMoneyClicked -> addMoneyOnBox(
+                event.money,
+                event.descriptions
+            )
+            is BoxContract.BoxEvent.RemoveMoneyClicked -> removeMoney(
+                event.money,
+                event.descriptions
+            )
         }
     }
 
@@ -49,18 +61,18 @@ class BoxViewModel @ViewModelInject constructor(
                 getUserBoxUseCase(uid).collect {
                     when (it) {
                         is Resource.Failure -> {
-                            _boxState.value = BoxContract.BoxState.Error(it.msg.toString().trim())
+                            //_boxState.value = BoxContract.BoxState.Error(it.msg.toString().trim())
                         }
                         is Resource.Loading -> {
-                            _boxState.value = BoxContract.BoxState.Loading
+                            //_boxState.value = BoxContract.BoxState.Loading
                         }
                         is Resource.Success -> {
-                            _boxState.value = BoxContract.BoxState.Success(it.data)
+                            _boxState.value = it.data
                         }
                     }
                 }
             } else {
-                _boxState.value = BoxContract.BoxState.Success(Box())
+                //_boxState.value = BoxContract.BoxState.Success(Box())
             }
         }
     }
@@ -69,12 +81,14 @@ class BoxViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             getRecentMovementsUseCaseUseCase(auth.uid.toString()).collect {
                 when (it) {
-                    is Resource.Failure -> _cashMovement.value =
-                        BoxContract.CashState.Error(it.msg.toString())
-                    is Resource.Loading -> _cashMovement.value =
-                        BoxContract.CashState.Loading
+                    is Resource.Failure -> {
+
+                    }
+                    is Resource.Loading -> {
+
+                    }
                     is Resource.Success -> {
-                        _cashMovement.value = BoxContract.CashState.Success(it.data)
+                        _cashMovement.value = it.data
                         Log.d("FETCHMOVEMENT", "fetchMovement: ${it.data}")
                     }
                 }

@@ -67,28 +67,11 @@
         android:label="Credito activo"
         tools:layout="@layout/fragment_customer_credit">
         <action
-            android:id="@+id/action_customerCreditFragment_to_navigationNewCredit"
-            app:destination="@id/navigationNewCredit">
-            <argument android:name="idClient"
-                app:argType="string"
-                android:defaultValue="IDCLIENT"
-                app:nullable="false"/>
-        </action>
-        <action
             android:id="@+id/action_customerCreditFragment_to_profileClientFragment"
             app:destination="@id/profileClientFragment" />
-        <argument
-            android:name="idClient"
-            app:argType="string" />
-        <argument
-            android:name="refCredit"
-            app:argType="string" />
 
 
     </fragment>
-    <action
-        android:id="@+id/action_global_customerCreditFragment"
-        app:destination="@id/customerCreditFragment" />
     <fragment
         android:id="@+id/cobrarHoyFragment"
         android:name="com.wenitech.cashdaily.framework.features.home.ui.CobrarHoyFragment"

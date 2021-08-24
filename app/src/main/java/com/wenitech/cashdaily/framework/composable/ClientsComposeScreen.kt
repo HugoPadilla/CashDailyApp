@@ -14,8 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.domain.entities.Client
+import com.wenitech.cashdaily.framework.ScaffoldScreen
 import com.wenitech.cashdaily.framework.commons.clientsData
 import com.wenitech.cashdaily.framework.composable.commons.ClientItem
 import com.wenitech.cashdaily.framework.features.client.listClient.viewModel.ClientViewModel
@@ -24,14 +27,15 @@ import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 @ExperimentalMaterialApi
 @Composable
 fun ClientsComposeScreen(
-    viewModel: ClientViewModel,
+    navController: NavController,
+    viewModel: ClientViewModel = viewModel(),
     onFloatingButtonClick: () -> Unit,
     onClientClick: (idClient: String, refCredit: String) -> Unit
 ) {
 
     val listClient by viewModel.listClient.collectAsState()
 
-    CashDailyTheme {
+    ScaffoldScreen(navController = navController) {
         ClientsContent(
             listClint = listClient,
             onFloatingButtonClick = onFloatingButtonClick,
@@ -62,7 +66,7 @@ private fun ClientsContent(
         Column(
             modifier = Modifier
                 .fillMaxHeight()
-                .background(MaterialTheme.colors.surface)
+                .background(MaterialTheme.colors.surface),
         ) {
 
             LazyColumn {
@@ -75,7 +79,17 @@ private fun ClientsContent(
                             .padding(16.dp),
                         value = name,
                         onValueChange = { name = it },
-                        label = { Text(text = "Buscar cliente") }
+                        label = { Text(text = "Buscar cliente") },
+                        leadingIcon = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_search),
+                                contentDescription = null
+                            )
+                        },
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            focusedBorderColor = MaterialTheme.colors.secondary,
+                            focusedLabelColor = MaterialTheme.colors.secondary
+                        )
                     )
                 }
 

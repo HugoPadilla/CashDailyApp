@@ -1,9 +1,7 @@
 package com.wenitech.cashdaily.framework.commons
 
-import com.wenitech.cashdaily.domain.entities.Client
-import com.wenitech.cashdaily.domain.entities.Credit
-import com.wenitech.cashdaily.domain.entities.Quota
-import com.wenitech.cashdaily.domain.entities.Ruta
+import com.google.firebase.Timestamp
+import com.wenitech.cashdaily.domain.entities.*
 
 val routesData = listOf(
     Ruta(name = "Maren Lubin", authorId = "Menlo Park, CA"),
@@ -40,4 +38,42 @@ val creditData = listOf(
         paymentMethod = "Diario",
         percentage = 20
     )
+)
+
+val cashTransactionsData = listOf(
+    CashTransactions(
+        serverTimestamp = Timestamp.now(),
+        description = "Lorem ipsu dolor, me losen",
+        value = 3000.00
+    ),
+    CashTransactions(
+        serverTimestamp = Timestamp.now(),
+        description = "Lorem ipsu dolor, me losen",
+        value = 3000.00
+    ),
+    CashTransactions(
+        serverTimestamp = Timestamp.now(),
+        description = "Lorem ipsu dolor, me losen",
+        value = 3000.00
+    ),
+    CashTransactions(
+        serverTimestamp = Timestamp.now(),
+        description = "Lorem ipsu dolor, me losen",
+        value = 3000.00
+    ),
+    CashTransactions(
+        serverTimestamp = Timestamp.now(),
+        description = "Lorem ipsu dolor, me losen",
+        value = 3000.00
+    ),
+    CashTransactions(
+        serverTimestamp = Timestamp.now(),
+        description = "Lorem ipsu dolor, me losen",
+        value = 3000.00
+    ),
+    CashTransactions(
+        serverTimestamp = Timestamp.now(),
+        description = "Lorem ipsu dolor, me losen",
+        value = 3000.00
+    ),
 )

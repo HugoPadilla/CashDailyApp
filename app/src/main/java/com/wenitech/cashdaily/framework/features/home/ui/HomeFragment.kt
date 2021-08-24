@@ -1,5 +1,6 @@
 package com.wenitech.cashdaily.framework.features.home.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,8 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.databinding.HomeFragmentBinding
-import com.wenitech.cashdaily.framework.composable.HomeComposeScreen
+import com.wenitech.cashdaily.framework.MainActivityCompose
 import com.wenitech.cashdaily.framework.features.home.viewModel.HomeFragmentViewModel
-import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,10 +33,6 @@ class HomeFragment : Fragment(){
         return binding.root.apply {
             findViewById<ComposeView>(R.id.composeView).setContent {
 
-                CashDailyTheme {
-                    HomeComposeScreen(homeFragmentViewModel)
-                }
-
             }
         }
     }
@@ -45,6 +41,11 @@ class HomeFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
 
         navController = Navigation.findNavController(requireView())
+    }
+
+    private fun NavigateToMainActivityCompose() {
+        val intent = Intent(requireActivity(), MainActivityCompose::class.java)
+        startActivity(intent)
     }
 
 }

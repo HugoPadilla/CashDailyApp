@@ -18,17 +18,16 @@
             android:exported="true"
             android:label="@string/title_activity_main_compose"
             android:theme="@style/Theme.CashDaily.NoActionBar" >
-
-        </activity>
-        <activity
-            android:name=".framework.features.MainNavActivity"
-            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".framework.features.MainNavActivity"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

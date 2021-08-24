@@ -16,14 +16,14 @@ import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 
 @Composable
 fun PrimaryExtendeButton(
-    onClick: () -> Unit,
     modifier: Modifier = Modifier,
     text: String,
-    iconDrawable: Int = R.drawable.ic_user_plus
+    iconDrawable: Int = R.drawable.ic_user_plus,
+    onClick: () -> Unit
 ) {
 
     Button(
-        onClick = onClick,
+        onClick = onClick ,
         modifier = modifier
             .fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(

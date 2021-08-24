@@ -1,18 +1,23 @@
 package com.wenitech.cashdaily.framework.features.client.listClient.viewModel
 
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.wenitech.cashdaily.commons.Resource
 import com.wenitech.cashdaily.domain.entities.Client
 import com.wenitech.cashdaily.domain.usecases.client.GetAllClientsPagingUseCase
 import com.wenitech.cashdaily.framework.features.client.listClient.ClientContract
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ClientViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ClientViewModel @Inject constructor(
     private val auth: FirebaseAuth,
     private val getAllClientsPagingUseCase: GetAllClientsPagingUseCase,
 ) : ViewModel() {

@@ -8,7 +8,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -21,9 +24,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.domain.entities.Box
 import com.wenitech.cashdaily.domain.entities.Ruta
+import com.wenitech.cashdaily.framework.ScaffoldScreen
 import com.wenitech.cashdaily.framework.commons.routesData
 import com.wenitech.cashdaily.framework.composable.commons.CashAvailableCardView
 import com.wenitech.cashdaily.framework.composable.commons.PrimaryExtendeButton
@@ -32,34 +38,36 @@ import com.wenitech.cashdaily.framework.ui.theme.BackgroundLight
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 
 @Composable
-fun HomeComposeScreen(viewModel: HomeFragmentViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
+fun HomeScreen(
+    navController: NavController,
+    viewModel: HomeFragmentViewModel = viewModel(),
+    onNewCreditClick: () -> Unit
+) {
 
     val boxState by viewModel.homeUiState.collectAsState()
     val routesState by viewModel.routeUiState.collectAsState()
 
-    CashDailyTheme {
-        HomeContent(box = boxState, routes = routesState)
+    ScaffoldScreen(navController = navController) {
+        HomeContent(box = boxState, routes = routesState, onNewCreditClick = onNewCreditClick)
+    }
+
+}
+
+@Composable
+fun HomeContent(box: Box, routes: List<Ruta>, onNewCreditClick: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, top = 0.dp, end = 16.dp, bottom = 0.dp)
+    ) {
+
+        CreditList(box, routes, onNewCreditClick = onNewCreditClick)
+
     }
 }
 
 @Composable
-fun HomeContent(box: Box, routes: List<Ruta>) {
-    Scaffold {
-
-        Column(
-            modifier = Modifier
-                .padding(start = 16.dp, top = 0.dp, end = 16.dp, bottom = 0.dp)
-                .fillMaxSize()
-        ) {
-
-            CreditList(box, routes)
-
-        }
-    }
-}
-
-@Composable
-fun CreditList(box: Box, rutas: List<Ruta>) {
+fun CreditList(box: Box, rutas: List<Ruta>, onNewCreditClick: () -> Unit) {
 
     LazyColumn {
 
@@ -81,7 +89,7 @@ fun CreditList(box: Box, rutas: List<Ruta>) {
 
         item {
             PrimaryExtendeButton(
-                onClick = { /*TODO*/ },
+                onClick = onNewCreditClick,
                 modifier = Modifier.padding(bottom = 10.dp),
                 text = "NUEVO CREDITO"
             )
@@ -172,6 +180,8 @@ fun Chip(modifier: Modifier = Modifier, text: String) {
 @Composable
 fun DefaultPreview() {
     CashDailyTheme {
-        HomeContent(box = Box(totalCash = 126000.00), routes = routesData)
+        HomeContent(box = Box(totalCash = 126000.00), routes = routesData) {
+
+        }
     }
 }

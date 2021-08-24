@@ -4,18 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.wenitech.cashdaily.R
-import com.wenitech.cashdaily.domain.entities.CashTransactions
 import com.wenitech.cashdaily.databinding.FragmentCajaBinding
+import com.wenitech.cashdaily.domain.entities.CashTransactions
 import com.wenitech.cashdaily.framework.features.caja.BoxContract
 import com.wenitech.cashdaily.framework.features.caja.ui.adapter.RecyclerViewGastoAdapter
 import com.wenitech.cashdaily.framework.features.caja.viewModel.BoxViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.NumberFormat
 
 @Suppress("UNREACHABLE_CODE")
 @AndroidEntryPoint
@@ -41,7 +38,7 @@ class BoxFragment : Fragment(), RecyclerViewGastoAdapter.Listener, BottomShetDia
 
         onClickViewListener()
         setupRecyclerViewMovement()
-        observeLiveData()
+        //observeLiveData()
     }
 
     private fun onClickViewListener() {
@@ -62,7 +59,7 @@ class BoxFragment : Fragment(), RecyclerViewGastoAdapter.Listener, BottomShetDia
         binding.recyclerViewCajaTransaciones.adapter = recyclerViewCashMovement
     }
 
-    private fun observeLiveData() {
+    /*private fun observeLiveData() {
 
         viewModel.boxState.observe(viewLifecycleOwner, {
             when (it) {
@@ -108,7 +105,7 @@ class BoxFragment : Fragment(), RecyclerViewGastoAdapter.Listener, BottomShetDia
                 }
             }
         })
-    }
+    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()
