@@ -96,7 +96,7 @@ class BoxViewModel @Inject constructor(
         }
     }
 
-    private fun addMoneyOnBox(money: Double, description: String) {
+    fun addMoneyOnBox(money: Double, description: String) {
         viewModelScope.launch {
             saveMoneyOnBoxUseCase(auth.uid.toString(), money, description).collect {
 
@@ -104,7 +104,7 @@ class BoxViewModel @Inject constructor(
         }
     }
 
-    private fun removeMoney(money: Double, description: String) {
+    fun removeMoney(money: Double, description: String) {
         viewModelScope.launch {
             removeMoneyOnBoxUseCase(auth.uid.toString(), money, description).collect {
 

@@ -58,9 +58,10 @@ fun NavComposeApp() {
                     navController = navController,
                     cashAvailable = boxState.totalCash,
                     transactionsList = transactionsList,
-                    onAddMonetClick = { /*TODO*/ }) {
-
-                }
+                    onValueClick = { value, description ->
+                        viewModel.addMoneyOnBox(value, description)
+                    }
+                )
             }
 
             composable(IconScreens.Informe.route) {

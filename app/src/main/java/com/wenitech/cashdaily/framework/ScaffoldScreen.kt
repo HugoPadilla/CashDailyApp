@@ -42,7 +42,7 @@ fun ScaffoldScreen(navController: NavController, screen: @Composable () -> Unit)
         scaffoldState = scaffoldState,
         drawerContent = { Drawer() }
     ){
-        Column(modifier = Modifier.padding(it)) {
+        Column(modifier = Modifier.padding(it).padding(bottom = 58.dp)) {
             screen()
         }
     }
