@@ -29,7 +29,6 @@ import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.domain.entities.Box
 import com.wenitech.cashdaily.domain.entities.Ruta
-import com.wenitech.cashdaily.framework.ScaffoldScreen
 import com.wenitech.cashdaily.framework.commons.routesData
 import com.wenitech.cashdaily.framework.composable.commons.CashAvailableCardView
 import com.wenitech.cashdaily.framework.composable.commons.PrimaryExtendeButton
@@ -47,9 +46,7 @@ fun HomeScreen(
     val boxState by viewModel.homeUiState.collectAsState()
     val routesState by viewModel.routeUiState.collectAsState()
 
-    ScaffoldScreen(navController = navController) {
-        HomeContent(box = boxState, routes = routesState, onNewCreditClick = onNewCreditClick)
-    }
+    HomeContent(box = boxState, routes = routesState, onNewCreditClick = onNewCreditClick)
 
 }
 
