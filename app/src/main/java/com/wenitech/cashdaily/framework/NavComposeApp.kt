@@ -4,10 +4,11 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.wenitech.cashdaily.framework.composable.*
 import com.wenitech.cashdaily.framework.features.caja.viewModel.BoxViewModel
 import com.wenitech.cashdaily.framework.features.client.listClient.viewModel.ClientViewModel
@@ -16,12 +17,11 @@ import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 
 @ExperimentalMaterialApi
 @Composable
-fun NavComposeApp() {
-
-    val navController = rememberNavController()
+fun NavComposeApp(modifier: Modifier, navController: NavHostController) {
 
     CashDailyTheme {
         NavHost(
+            modifier = modifier,
             navController = navController,
             startDestination = "home"
         ) {

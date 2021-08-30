@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.domain.entities.CashTransactions
-import com.wenitech.cashdaily.framework.ScaffoldScreen
 import com.wenitech.cashdaily.framework.commons.cashTransactionsData
 import com.wenitech.cashdaily.framework.composable.commons.CashAvailableCardView
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
@@ -55,28 +54,28 @@ fun BoxScreen(
                 isRemoveMoney = isRemoveMoney
             )
         }) {
-        ScaffoldScreen(navController = navController) {
-            BoxContent(
-                cashAvailable = cashAvailable,
-                cashTransactions = transactionsList,
-                onAddMonetClick = {
-                    scope.launch {
-                        label = "Escribe un valor"
-                        textButton = "Agregar dinero"
-                        isRemoveMoney = false
-                        bottomSheetState.show()
-                    }
-                },
-                onRemoveClick = {
-                    scope.launch {
-                        label = "Escribe un valor"
-                        textButton = "Registrar gasto"
-                        isRemoveMoney = true
-                        bottomSheetState.show()
-                    }
+
+        BoxContent(
+            cashAvailable = cashAvailable,
+            cashTransactions = transactionsList,
+            onAddMonetClick = {
+                scope.launch {
+                    label = "Escribe un valor"
+                    textButton = "Agregar dinero"
+                    isRemoveMoney = false
+                    bottomSheetState.show()
                 }
-            )
-        }
+            },
+            onRemoveClick = {
+                scope.launch {
+                    label = "Escribe un valor"
+                    textButton = "Registrar gasto"
+                    isRemoveMoney = true
+                    bottomSheetState.show()
+                }
+            }
+        )
+
     }
 
 }

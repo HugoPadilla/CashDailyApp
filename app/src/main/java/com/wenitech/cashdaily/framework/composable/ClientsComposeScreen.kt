@@ -18,7 +18,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.domain.entities.Client
-import com.wenitech.cashdaily.framework.ScaffoldScreen
 import com.wenitech.cashdaily.framework.commons.clientsData
 import com.wenitech.cashdaily.framework.composable.commons.ClientItem
 import com.wenitech.cashdaily.framework.features.client.listClient.viewModel.ClientViewModel
@@ -35,13 +34,12 @@ fun ClientsComposeScreen(
 
     val listClient by viewModel.listClient.collectAsState()
 
-    ScaffoldScreen(navController = navController) {
-        ClientsContent(
-            listClint = listClient,
-            onFloatingButtonClick = onFloatingButtonClick,
-            onClientClick = onClientClick
-        )
-    }
+    ClientsContent(
+        listClint = listClient,
+        onFloatingButtonClick = onFloatingButtonClick,
+        onClientClick = onClientClick
+    )
+
 }
 
 
