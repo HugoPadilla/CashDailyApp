@@ -18,11 +18,11 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
-    primary = SurfaceLight,
-    primaryVariant = SurfaceLight,
-    secondary = Blue500,
+    primary = Blue500,
+    primaryVariant = Blue700,
+    onPrimary = PrimaryLight,
+    secondary = Teal200,
     onSecondary= SurfaceLight,
-    onPrimary = TextLight,
     surface = SurfaceLight,
     onSurface = TextLight,
     background = BackgroundLight
