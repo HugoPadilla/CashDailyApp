@@ -12,7 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.databinding.HomeFragmentBinding
-import com.wenitech.cashdaily.framework.MainActivityCompose
+import com.wenitech.cashdaily.framework.MainComposeActivity
 import com.wenitech.cashdaily.framework.features.home.viewModel.HomeFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,7 +44,7 @@ class HomeFragment : Fragment(){
     }
 
     private fun NavigateToMainActivityCompose() {
-        val intent = Intent(requireActivity(), MainActivityCompose::class.java)
+        val intent = Intent(requireActivity(), MainComposeActivity::class.java)
         startActivity(intent)
     }
 

@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".framework.commons.Application"
+        android:name=".framework.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CashDaily">
         <activity
-            android:name=".framework.MainActivityCompose"
+            android:name=".framework.MainComposeActivity"
             android:exported="true"
-            android:label="@string/title_activity_main_compose"
-            android:theme="@style/Theme.CashDaily.NoActionBar" >
+            android:label="@string/app_name"
+            android:theme="@style/Theme.CashDaily.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
@@ -27,8 +27,11 @@
         </activity>
         <activity
             android:name=".framework.features.MainNavActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".framework.features.authentication.AuthenticationActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
