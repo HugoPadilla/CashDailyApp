@@ -12,7 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.databinding.FragmentCustomerCreditBinding
-import com.wenitech.cashdaily.framework.composable.CustomerCreditScreen
+import com.wenitech.cashdaily.framework.component.CustomerCreditScreen
 import com.wenitech.cashdaily.framework.features.client.customerCredit.viewModel.CustomerCreditViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -3,8 +3,8 @@ package com.wenitech.cashdaily.data.repositories
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
-import com.wenitech.cashdaily.data.remoteDataSource.RemoteDataSource
 import com.wenitech.cashdaily.commons.ResultAuth
+import com.wenitech.cashdaily.data.remoteDataSource.RemoteDataSource
 import com.wenitech.cashdaily.domain.constant.TypeAccountEnum
 import com.wenitech.cashdaily.domain.entities.User
 import com.wenitech.cashdaily.domain.repositories.AuthRepository
@@ -58,8 +58,10 @@ class AuthRepositoryImpl @Inject constructor(
         try {
             val currentUser = auth.createUserWithEmailAndPassword(email, password).await().user
             if (currentUser != null) {
-                val success = remoteDataSource.createAccount(currentUser.uid,
-                    User(id = null, timestampCreation = null, businessName = "", email = email,
+                val success = remoteDataSource.createAccount(
+                    currentUser.uid,
+                    User(
+                        id = null, timestampCreation = null, businessName = "", email = email,
                         isFullProfile = false,
                         typeAccount = TypeAccountEnum.Admin.name,
                         fullName = name,
@@ -75,10 +77,28 @@ class AuthRepositoryImpl @Inject constructor(
             }
         } catch (e: Throwable) {
             if (e is FirebaseAuthUserCollisionException) {
-                offer(ResultAuth.collicion("Esta cuenta ya existe", e.message.toString()))
+                offer(ResultAuth.collision("Esta cuenta ya existe", e.message.toString()))
             } else {
                 offer(ResultAuth.failed("Error al crear tu cuenta", e.message.toString()))
             }
+        }
+
+        awaitClose {
+
+        }
+    }
+
+    override suspend fun sendRecoverPassword(
+        email: String
+    ): Flow<ResultAuth<String>> = callbackFlow {
+        trySend(ResultAuth.loading(null))
+
+        try {
+            val result = auth.sendPasswordResetEmail(email).await()
+            trySend(ResultAuth.success("Correo de recuperacion enviado"))
+
+        } catch (e: Throwable) {
+            trySend(ResultAuth.failed("Error al enviar el mensaje", e.message.toString()))
         }
 
         awaitClose {
