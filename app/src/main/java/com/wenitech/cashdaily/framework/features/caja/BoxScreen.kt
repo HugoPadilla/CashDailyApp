@@ -1,4 +1,4 @@
-package com.wenitech.cashdaily.framework.component
+package com.wenitech.cashdaily.framework.features.caja
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -121,7 +121,7 @@ fun BoxContent(
                             painter = painterResource(id = R.drawable.ic_trending_down),
                             contentDescription = null
                         )
-                        Text(text = "Remove money")
+                        Text(text = "Retirar dinero")
                     }
                     OutlinedButton(
                         contentPadding = PaddingValues(horizontal = 30.dp, vertical = 8.dp),
@@ -134,7 +134,7 @@ fun BoxContent(
                             painter = painterResource(id = R.drawable.ic_trending_up),
                             contentDescription = null
                         )
-                        Text(text = "Add money")
+                        Text(text = "Agregar dinero")
                     }
                 }
             }

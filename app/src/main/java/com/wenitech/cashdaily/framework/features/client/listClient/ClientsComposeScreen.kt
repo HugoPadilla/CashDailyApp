@@ -1,4 +1,4 @@
-package com.wenitech.cashdaily.framework.component
+package com.wenitech.cashdaily.framework.features.client.listClient
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background

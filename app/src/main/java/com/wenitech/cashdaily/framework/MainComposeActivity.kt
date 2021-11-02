@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth.getInstance
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.framework.features.authentication.AuthenticationActivity
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
-import com.wenitech.cashdaily.framework.utils.IconScreens
+import com.wenitech.cashdaily.framework.utils.MainNavRoutes
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -47,10 +47,10 @@ class MainComposeActivity : ComponentActivity() {
             val scope = rememberCoroutineScope()
 
             val bottomNavigationItems = listOf(
-                IconScreens.Home,
-                IconScreens.Clients,
-                IconScreens.Caja,
-                IconScreens.Informe
+                MainNavRoutes.Home,
+                MainNavRoutes.Clients,
+                MainNavRoutes.Caja,
+                MainNavRoutes.Informe
             )
 
             CashDailyTheme {
@@ -141,7 +141,7 @@ fun Appbar(onMenuClick: () -> Unit) {
 }
 
 @Composable
-fun BottomAppNavBar(navController: NavController, bottomNavigationItems: List<IconScreens>) {
+fun BottomAppNavBar(navController: NavController, bottomNavigationItems: List<MainNavRoutes>) {
     BottomAppBar(
         backgroundColor = MaterialTheme.colors.surface,
         contentColor = MaterialTheme.colors.secondary,

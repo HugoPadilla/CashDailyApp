@@ -49,7 +49,7 @@ fun CustomTextField(
             Text(
                 modifier = Modifier.padding(start = 16.dp, top = 2.dp),
                 text = message,
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.caption,
                 color = MaterialTheme.colors.error
             )
         }

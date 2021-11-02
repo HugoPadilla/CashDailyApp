@@ -1,4 +1,4 @@
-package com.wenitech.cashdaily.framework.component
+package com.wenitech.cashdaily.framework.features.home
 
 import android.content.Intent
 import androidx.compose.foundation.BorderStroke

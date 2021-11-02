@@ -9,12 +9,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.wenitech.cashdaily.framework.component.*
+import com.wenitech.cashdaily.framework.features.caja.BoxScreen
 import com.wenitech.cashdaily.framework.features.caja.viewModel.BoxViewModel
+import com.wenitech.cashdaily.framework.features.client.listClient.ClientsComposeScreen
 import com.wenitech.cashdaily.framework.features.client.listClient.viewModel.ClientViewModel
+import com.wenitech.cashdaily.framework.features.credit.newCredit.RegisterCreditScreen
+import com.wenitech.cashdaily.framework.features.home.HomeScreen
 import com.wenitech.cashdaily.framework.features.home.viewModel.HomeFragmentViewModel
+import com.wenitech.cashdaily.framework.features.informe.InformeScreen
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
-import com.wenitech.cashdaily.framework.utils.IconScreens
+import com.wenitech.cashdaily.framework.utils.MainNavRoutes
 
 @ExperimentalMaterialApi
 @Composable
@@ -24,11 +28,11 @@ fun NavComposeApp(modifier: Modifier, navController: NavHostController, onNaviga
         NavHost(
             modifier = modifier,
             navController = navController,
-            startDestination = IconScreens.Home.route
+            startDestination = MainNavRoutes.Home.route
         ) {
 
             // Bottom nav
-            composable(IconScreens.Home.route) {
+            composable(MainNavRoutes.Home.route) {
                 val viewModel = hiltViewModel<HomeFragmentViewModel>()
                 HomeScreen(navController = navController, viewModel = viewModel) {
                     // Navigate to new client screen
@@ -37,7 +41,7 @@ fun NavComposeApp(modifier: Modifier, navController: NavHostController, onNaviga
                 }
             }
 
-            composable(IconScreens.Clients.route) {
+            composable(MainNavRoutes.Clients.route) {
                 val viewModel = hiltViewModel<ClientViewModel>()
                 ClientsComposeScreen(
                     navController = navController,
@@ -49,7 +53,7 @@ fun NavComposeApp(modifier: Modifier, navController: NavHostController, onNaviga
                 )
             }
 
-            composable(IconScreens.Caja.route) {
+            composable(MainNavRoutes.Caja.route) {
 
                 val viewModel = hiltViewModel<BoxViewModel>()
 
@@ -66,7 +70,7 @@ fun NavComposeApp(modifier: Modifier, navController: NavHostController, onNaviga
                 )
             }
 
-            composable(IconScreens.Informe.route) {
+            composable(MainNavRoutes.Informe.route) {
                 InformeScreen(navController = navController)
             }
 
