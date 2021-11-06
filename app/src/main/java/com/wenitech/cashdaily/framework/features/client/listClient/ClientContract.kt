@@ -14,7 +14,7 @@ class ClientContract {
     sealed class ClientState : UiState {
         object Error : ClientState()
         object Loading : ClientState()
-        data class Success(val clients: List<Client>) : ClientState()
+        data class Success(val clientModels: List<Client>) : ClientState()
     }
 
     sealed class ClientEffect : UiEffect {

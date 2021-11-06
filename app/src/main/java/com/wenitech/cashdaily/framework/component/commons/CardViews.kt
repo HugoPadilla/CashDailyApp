@@ -77,7 +77,7 @@ fun CreditClient(
         ) {
 
             ClientItem(
-                client = Client(id = idClient, fullName = name, direction = direction),
+                clientModel = Client(id = idClient, fullName = name, direction = direction),
                 onClick = { idClient, refCredit ->
 
                 }

@@ -5,7 +5,7 @@ import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wenitech.cashdaily.commons.Status.*
+import com.wenitech.cashdaily.domain.common.Status.*
 import com.wenitech.cashdaily.domain.usecases.auth.LoginUseCase
 import com.wenitech.cashdaily.framework.features.authentication.loginScreen.uiState.LoginUiState
 import dagger.hilt.android.lifecycle.HiltViewModel

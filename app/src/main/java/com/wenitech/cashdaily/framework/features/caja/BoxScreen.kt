@@ -28,7 +28,7 @@ import java.text.NumberFormat
 fun BoxScreen(
     navController: NavController,
     cashAvailable: Double,
-    transactionsList: List<CashTransactions>,
+    transactionsModelList: List<CashTransactions>,
     onValueClick: (Double, String) -> Unit,
 ) {
 
@@ -57,7 +57,7 @@ fun BoxScreen(
 
         BoxContent(
             cashAvailable = cashAvailable,
-            cashTransactions = transactionsList,
+            cashTransactionModels = transactionsModelList,
             onAddMonetClick = {
                 scope.launch {
                     label = "Escribe un valor"
@@ -84,7 +84,7 @@ fun BoxScreen(
 @Composable
 fun BoxContent(
     cashAvailable: Double,
-    cashTransactions: List<CashTransactions>,
+    cashTransactionModels: List<CashTransactions>,
     onAddMonetClick: () -> Unit,
     onRemoveClick: () -> Unit
 ) {
@@ -147,9 +147,9 @@ fun BoxContent(
                 )
             }
 
-            items(cashTransactions) { transition ->
+            items(cashTransactionModels) { transition ->
 
-                val date = transition.serverTimestamp?.toDate() ?: "Fecha:"
+                val date = transition.serverTimestamp ?: "Fecha:"
                 val currentAmount = NumberFormat.getCurrencyInstance().format(transition.value)
 
                 Card(
@@ -270,7 +270,7 @@ fun PreviewBoxContent() {
     CashDailyTheme {
         BoxContent(
             cashAvailable = 12000.00,
-            cashTransactions = cashTransactionsData,
+            cashTransactionModels = cashTransactionsData,
             onAddMonetClick = {},
             onRemoveClick = {})
     }

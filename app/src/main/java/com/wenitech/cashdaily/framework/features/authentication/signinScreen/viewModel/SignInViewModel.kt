@@ -4,7 +4,6 @@ import android.text.TextUtils
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wenitech.cashdaily.commons.Status
 import com.wenitech.cashdaily.domain.usecases.auth.SignInUseCase
 import com.wenitech.cashdaily.framework.features.authentication.signinScreen.uiState.SignInUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -76,10 +75,10 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             signInUseCase("USER_NAME", email, password).collect {
                 when (it.status) {
-                    Status.LOADING -> _signInUiState.send(SignInUiState.Loading)
-                    Status.SUCCESS -> _signInUiState.send(SignInUiState.Success)
-                    Status.COLLICION -> _signInUiState.send(SignInUiState.Collision(it.messenger.toString()))
-                    Status.FAILED -> _signInUiState.send(SignInUiState.Failed(it.messenger.toString()))
+                    com.wenitech.cashdaily.domain.common.Status.LOADING -> _signInUiState.send(SignInUiState.Loading)
+                    com.wenitech.cashdaily.domain.common.Status.SUCCESS -> _signInUiState.send(SignInUiState.Success)
+                    com.wenitech.cashdaily.domain.common.Status.COLLICION -> _signInUiState.send(SignInUiState.Collision(it.messenger.toString()))
+                    com.wenitech.cashdaily.domain.common.Status.FAILED -> _signInUiState.send(SignInUiState.Failed(it.messenger.toString()))
                 }
             }
         }

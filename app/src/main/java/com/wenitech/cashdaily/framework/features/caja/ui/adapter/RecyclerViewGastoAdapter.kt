@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.framework.commons.BaseViewHolder
-import com.wenitech.cashdaily.domain.entities.CashTransactions
+import com.wenitech.cashdaily.data.entities.CashTransactionsModel
 import com.wenitech.cashdaily.databinding.ItemMovimientoCajaBinding
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -15,12 +15,12 @@ class RecyclerViewGastoAdapter(
 ) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     interface Listener {
-        fun onClickItemMovementBox(item: CashTransactions, position: Int)
+        fun onClickItemMovementBox(item: CashTransactionsModel, position: Int)
     }
 
-    private var data: List<CashTransactions> = listOf()
+    private var data: List<CashTransactionsModel> = listOf()
 
-    fun setData(data: List<CashTransactions>) {
+    fun setData(data: List<CashTransactionsModel>) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -38,9 +38,9 @@ class RecyclerViewGastoAdapter(
     }
 
     private inner class mViewHolder(val binding: ItemMovimientoCajaBinding) :
-        BaseViewHolder<CashTransactions>(binding.root) {
+        BaseViewHolder<CashTransactionsModel>(binding.root) {
 
-        override fun bind(item: CashTransactions, position: Int) {
+        override fun bind(item: CashTransactionsModel, position: Int) {
 
             val stringValor: String
             val stringDate: String

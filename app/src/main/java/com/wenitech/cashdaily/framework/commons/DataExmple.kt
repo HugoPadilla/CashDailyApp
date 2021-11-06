@@ -1,7 +1,7 @@
 package com.wenitech.cashdaily.framework.commons
 
-import com.google.firebase.Timestamp
 import com.wenitech.cashdaily.domain.entities.*
+import java.util.*
 
 val routesData = listOf(
     Ruta(name = "Maren Lubin", authorId = "Menlo Park, CA"),
@@ -42,37 +42,37 @@ val creditData = listOf(
 
 val cashTransactionsData = listOf(
     CashTransactions(
-        serverTimestamp = Timestamp.now(),
+        serverTimestamp = Date(),
         description = "Lorem ipsu dolor, me losen",
         value = 3000.00
     ),
     CashTransactions(
-        serverTimestamp = Timestamp.now(),
+        serverTimestamp = Date(),
         description = "Lorem ipsu dolor, me losen",
         value = 3000.00
     ),
     CashTransactions(
-        serverTimestamp = Timestamp.now(),
+        serverTimestamp = Date(),
         description = "Lorem ipsu dolor, me losen",
         value = 3000.00
     ),
     CashTransactions(
-        serverTimestamp = Timestamp.now(),
+        serverTimestamp = Date(),
         description = "Lorem ipsu dolor, me losen",
         value = 3000.00
     ),
     CashTransactions(
-        serverTimestamp = Timestamp.now(),
+        serverTimestamp = Date(),
         description = "Lorem ipsu dolor, me losen",
         value = 3000.00
     ),
     CashTransactions(
-        serverTimestamp = Timestamp.now(),
+        serverTimestamp = Date(),
         description = "Lorem ipsu dolor, me losen",
         value = 3000.00
     ),
     CashTransactions(
-        serverTimestamp = Timestamp.now(),
+        serverTimestamp = Date(),
         description = "Lorem ipsu dolor, me losen",
         value = 3000.00
     ),

@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.wenitech.cashdaily.R
-import com.wenitech.cashdaily.commons.Resource
 import com.wenitech.cashdaily.databinding.FragmentPerfilBinding
 import com.wenitech.cashdaily.framework.features.userApp.viewModel.ProfileUserViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,15 +42,15 @@ class ProfileUserFragment : Fragment() {
 
 
     private fun setupDateOfUserOnView() {
-        profileUserViewModel.userAppLiveData.observe(viewLifecycleOwner, Observer { resources ->
+        profileUserViewModel.userModelAppLiveData.observe(viewLifecycleOwner, Observer { resources ->
             when (resources){
-                is Resource.Failure -> {
+                is com.wenitech.cashdaily.domain.common.Resource.Failure -> {
                     Toast.makeText(requireContext(), "Error: ${resources.throwable.message}", Toast.LENGTH_SHORT).show()
                 }
-                is Resource.Loading -> {
+                is com.wenitech.cashdaily.domain.common.Resource.Loading -> {
                     Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
                 }
-                is Resource.Success -> {
+                is com.wenitech.cashdaily.domain.common.Resource.Success -> {
                     binding.textViewFullName.text = resources.data.fullName
                     binding.textViewEmail.text = resources.data.email
                     binding.textViewTypeUserAccount.text = "Type use account"

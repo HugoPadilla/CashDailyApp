@@ -3,7 +3,6 @@ package com.wenitech.cashdaily.framework.features.home.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
-import com.wenitech.cashdaily.commons.Resource
 import com.wenitech.cashdaily.domain.entities.Box
 import com.wenitech.cashdaily.domain.entities.Ruta
 import com.wenitech.cashdaily.domain.usecases.caja.GetUserBoxUseCase
@@ -22,7 +21,7 @@ class HomeFragmentViewModel @Inject constructor(
     private val getRoutesUseCase: GetRoutesUseCase,
 ) : ViewModel() {
 
-    private val _homeUiState = MutableStateFlow<Box>(Box())
+    private val _homeUiState = MutableStateFlow(Box())
     val homeUiState: StateFlow<Box> = _homeUiState
 
     private val _routeUiState = MutableStateFlow<List<Ruta>>(listOf())
@@ -40,13 +39,13 @@ class HomeFragmentViewModel @Inject constructor(
                 getUserBoxUseCase(uid).collect {
                     //_homeUiState.value = it
                     when (it) {
-                        is Resource.Failure -> {
+                        is com.wenitech.cashdaily.domain.common.Resource.Failure -> {
 
                         }
-                        is Resource.Loading -> {
+                        is com.wenitech.cashdaily.domain.common.Resource.Loading -> {
 
                         }
-                        is Resource.Success -> {
+                        is com.wenitech.cashdaily.domain.common.Resource.Success -> {
                             _homeUiState.value = it.data
                         }
                     }
@@ -62,13 +61,13 @@ class HomeFragmentViewModel @Inject constructor(
             getRoutesUseCase().collect {
                 //_routeUiState.value = it
                 when (it) {
-                    is Resource.Failure -> {
+                    is com.wenitech.cashdaily.domain.common.Resource.Failure -> {
 
                     }
-                    is Resource.Loading -> {
+                    is com.wenitech.cashdaily.domain.common.Resource.Loading -> {
 
                     }
-                    is Resource.Success -> {
+                    is com.wenitech.cashdaily.domain.common.Resource.Success -> {
                         _routeUiState.value = it.data
                     }
                 }

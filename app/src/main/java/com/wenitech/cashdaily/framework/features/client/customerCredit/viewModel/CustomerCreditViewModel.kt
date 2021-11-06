@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
-import com.wenitech.cashdaily.commons.Resource
+import com.wenitech.cashdaily.domain.common.Resource
 import com.wenitech.cashdaily.domain.entities.Client
 import com.wenitech.cashdaily.domain.entities.Credit
 import com.wenitech.cashdaily.domain.entities.Quota
@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 class CustomerCreditViewModel @ViewModelInject constructor(
@@ -32,17 +33,18 @@ class CustomerCreditViewModel @ViewModelInject constructor(
     private val _loading = MutableStateFlow(true)
     val loading: StateFlow<Boolean> = _loading
 
-    private val _client: MutableStateFlow<Client> = MutableStateFlow(Client())
-    val client: StateFlow<Client> = _client
+    private val _clientModel: MutableStateFlow<Client> = MutableStateFlow(Client())
+    val clientModel: StateFlow<Client> = _clientModel
 
-    private val _credit: MutableStateFlow<Credit> = MutableStateFlow(Credit())
-    val customerState: StateFlow<Credit> = _credit
+    private val _creditModel: MutableStateFlow<Credit> = MutableStateFlow(Credit())
+    val customerState: StateFlow<Credit> = _creditModel
 
     private val _listQuotas: MutableStateFlow<List<Quota>> = MutableStateFlow(listOf())
-    val quotaCustomer: StateFlow<List<Quota>> = _listQuotas
+    val quotaModelCustomer: StateFlow<List<Quota>> = _listQuotas
 
-    private val _resultNewQuota: MutableLiveData<Resource<String>> = MutableLiveData()
-    val resultNewQuota: LiveData<Resource<String>> get() = _resultNewQuota
+    private val _resultNewQuota: MutableLiveData<com.wenitech.cashdaily.domain.common.Resource<String>> =
+        MutableLiveData()
+    val resultNewQuota: LiveData<com.wenitech.cashdaily.domain.common.Resource<String>> get() = _resultNewQuota
 
 
     fun setArgs(idClient: String, refCredit: String) {
@@ -58,7 +60,7 @@ class CustomerCreditViewModel @ViewModelInject constructor(
 
                 val newQuota = Quota(
                     null,
-                    null,
+                    Date(),
                     auth.currentUser!!.displayName!!,
                     valueQuota
                 )
@@ -67,7 +69,8 @@ class CustomerCreditViewModel @ViewModelInject constructor(
                     _resultNewQuota.value = it
                 }
             } else {
-                _resultNewQuota.value = Resource.Failure(Throwable("No has iniciado sesion"))
+                _resultNewQuota.value =
+                    Resource.Failure(Throwable("No has iniciado sesion"))
             }
         }
     }
@@ -88,7 +91,7 @@ class CustomerCreditViewModel @ViewModelInject constructor(
                         }
                         is Resource.Success -> {
                             _loading.value = false
-                            _credit.value = creditResult.data
+                            _creditModel.value = creditResult.data
                             getQuotasCreditClient(idClient = idClient, refCreditActive = idCredit)
                         }
                     }

@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.wenitech.cashdaily.R
-import com.wenitech.cashdaily.commons.Resource
+import com.wenitech.cashdaily.domain.common.Resource
 import com.wenitech.cashdaily.databinding.FragmentNewClientBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,14 +51,14 @@ class NewClientFragment : Fragment() {
 
         viewModel.resourceSaveClient.observe(viewLifecycleOwner, Observer {
             when (it) {
-                is Resource.Failure -> {
+                is com.wenitech.cashdaily.domain.common.Resource.Failure -> {
                     showProgressBar(false)
                     onError(it.msg.toString())
                 }
-                is Resource.Loading -> {
+                is com.wenitech.cashdaily.domain.common.Resource.Loading -> {
                     showProgressBar(true)
                 }
-                is Resource.Success -> {
+                is com.wenitech.cashdaily.domain.common.Resource.Success -> {
                     showProgressBar(false)
                     onSucces(it.data.toString())
                     findNavController().navigateUp()

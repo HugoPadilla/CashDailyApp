@@ -6,21 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.wenitech.cashdaily.databinding.ItemRouteBinding
-import com.wenitech.cashdaily.domain.entities.Ruta
+import com.wenitech.cashdaily.data.entities.RutaModel
 import com.wenitech.cashdaily.framework.commons.BaseViewHolder
 
 class RecyclerViewRoutesAdapter(
     private val listener: InterfaceRecyclerViewRoute
 ) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
-    private var listRoutes: List<Ruta> = listOf()
+    private var listRoutes: List<RutaModel> = listOf()
 
     interface InterfaceRecyclerViewRoute {
-        fun onRouteClick(route: Ruta, position: Int, view: View)
+        fun onRouteClick(route: RutaModel, position: Int, view: View)
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setRouteData(list: List<Ruta>) {
+    fun setRouteData(list: List<RutaModel>) {
         this.listRoutes = list
         this.notifyDataSetChanged()
     }
@@ -31,8 +31,8 @@ class RecyclerViewRoutesAdapter(
     }
 
     private inner class MyViewHolder(private val binding: ItemRouteBinding) :
-        BaseViewHolder<Ruta>(binding.root) {
-        override fun bind(item: Ruta, position: Int) {
+        BaseViewHolder<RutaModel>(binding.root) {
+        override fun bind(item: RutaModel, position: Int) {
             binding.textViewName.text = item.name
             binding.textViewDate.text = item.authorId
 

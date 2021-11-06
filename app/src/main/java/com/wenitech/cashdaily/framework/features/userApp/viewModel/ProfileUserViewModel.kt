@@ -1,38 +1,35 @@
 package com.wenitech.cashdaily.framework.features.userApp.viewModel
 
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
-import com.google.firebase.auth.FirebaseAuth
-import com.wenitech.cashdaily.commons.Resource
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.wenitech.cashdaily.domain.common.Resource
 import com.wenitech.cashdaily.domain.entities.User
-import com.wenitech.cashdaily.domain.usecases.auth.GetProfileUserAppUseCase
+import com.wenitech.cashdaily.domain.usecases.auth.GetProfileUserUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProfileUserViewModel @ViewModelInject constructor(
-    private val auth: FirebaseAuth,
-    private val getProfileUserAppUseCase: GetProfileUserAppUseCase,
+@HiltViewModel
+class ProfileUserViewModel @Inject constructor(
+    private val getProfileUserUseCase: GetProfileUserUseCase,
 ) : ViewModel() {
 
     val _userAppLivedata = MutableLiveData<Resource<User>>()
-    val userAppLiveData: LiveData<Resource<User>> = _userAppLivedata
+    val userModelAppLiveData: LiveData<Resource<User>> =
+        _userAppLivedata
 
     init {
         getProfile()
     }
 
     private fun getProfile() {
-        val uid = auth.currentUser?.uid
-        if (!uid.isNullOrEmpty()) {
-            viewModelScope.launch {
-                getProfileUserAppUseCase(uid).collect {
-                    _userAppLivedata.value = it
-                }
+        viewModelScope.launch {
+            getProfileUserUseCase().collect {
+                _userAppLivedata.value = it
             }
-        } else {
-            // No se ha iniciado sesion
         }
     }
-
-
 }

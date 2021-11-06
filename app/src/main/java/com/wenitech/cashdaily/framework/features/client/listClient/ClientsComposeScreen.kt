@@ -32,7 +32,7 @@ fun ClientsComposeScreen(
     onClientClick: (idClient: String, refCredit: String) -> Unit
 ) {
 
-    val listClient by viewModel.listClient.collectAsState()
+    val listClient by viewModel.listClientModel.collectAsState()
 
     ClientsContent(
         listClint = listClient,
@@ -93,7 +93,7 @@ private fun ClientsContent(
 
                 items(listClint) { client ->
                     ClientItem(
-                        client = client,
+                        clientModel = client,
                         onClick = onClientClick
                     )
                 }

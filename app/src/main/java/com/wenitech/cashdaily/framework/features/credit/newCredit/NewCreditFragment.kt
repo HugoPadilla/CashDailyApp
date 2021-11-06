@@ -20,7 +20,7 @@ import androidx.navigation.fragment.navArgs
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.commons.Dialog.DatePickerFragment
 import com.wenitech.cashdaily.databinding.FragmentNewCreditBinding
-import com.wenitech.cashdaily.commons.Resource
+import com.wenitech.cashdaily.domain.common.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -220,12 +220,12 @@ class NewCreditFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         // Resultado de guardar un nuevo credito
         viewModel.resultSaveNewCredit.observe(viewLifecycleOwner, {
             when (it) {
-                is Resource.Failure -> {
+                is com.wenitech.cashdaily.domain.common.Resource.Failure -> {
                     showProgressIndicator(false)
                     onError()
                 }
-                is Resource.Loading -> showProgressIndicator(true)
-                is Resource.Success -> {
+                is com.wenitech.cashdaily.domain.common.Resource.Loading -> showProgressIndicator(true)
+                is com.wenitech.cashdaily.domain.common.Resource.Success -> {
                     onSuccess()
                     viewModel.resertForm()
 

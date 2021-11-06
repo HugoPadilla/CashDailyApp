@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wenitech.cashdaily.databinding.FragmentCajaBinding
-import com.wenitech.cashdaily.domain.entities.CashTransactions
+import com.wenitech.cashdaily.data.entities.CashTransactionsModel
 import com.wenitech.cashdaily.framework.features.caja.BoxContract
 import com.wenitech.cashdaily.framework.features.caja.ui.adapter.RecyclerViewGastoAdapter
 import com.wenitech.cashdaily.framework.features.caja.viewModel.BoxViewModel
@@ -112,7 +112,7 @@ class BoxFragment : Fragment(), RecyclerViewGastoAdapter.Listener, BottomShetDia
         _binding = null
     }
 
-    override fun onClickItemMovementBox(item: CashTransactions, position: Int) {
+    override fun onClickItemMovementBox(item: CashTransactionsModel, position: Int) {
 
     }
 

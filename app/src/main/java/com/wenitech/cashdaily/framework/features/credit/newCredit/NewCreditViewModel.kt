@@ -9,7 +9,8 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.wenitech.cashdaily.R
-import com.wenitech.cashdaily.commons.Resource
+import com.wenitech.cashdaily.data.entities.CreditModel
+import com.wenitech.cashdaily.data.entities.toDomain
 import com.wenitech.cashdaily.domain.constant.PaymentMethodEnum
 import com.wenitech.cashdaily.domain.entities.Credit
 import com.wenitech.cashdaily.domain.usecases.credit.SaveNewCreditUseCase
@@ -27,8 +28,9 @@ class NewCreditViewModel @ViewModelInject constructor(
     private val _idClient = MutableLiveData<String>()
     val idClient get() = _idClient
 
-    private val _resultSaveNewCredit = MutableLiveData<Resource<String>>()
-    val resultSaveNewCredit: MutableLiveData<Resource<String>> get() = _resultSaveNewCredit
+    private val _resultSaveNewCredit =
+        MutableLiveData<com.wenitech.cashdaily.domain.common.Resource<String>>()
+    val resultSaveNewCredit: MutableLiveData<com.wenitech.cashdaily.domain.common.Resource<String>> get() = _resultSaveNewCredit
 
     // MutableLiveData Of NewCreditFragment for views
     var _fechaCreditMutableLiveData: MutableLiveData<String> = MutableLiveData()
@@ -81,9 +83,9 @@ class NewCreditViewModel @ViewModelInject constructor(
     // Metodo util
     private fun buildCreditObjet(): Credit {
 
-        val newCredit = Credit()
+        val newCredit = CreditModel()
 
-        _resultSaveNewCredit.value = Resource.Loading()
+        _resultSaveNewCredit.value = com.wenitech.cashdaily.domain.common.Resource.Loading()
 
         newCredit.timestampCreation =
             convertDateToTimestamp(_fechaCreditMutableLiveData.value, _hourCredit.value)
@@ -135,7 +137,7 @@ class NewCreditViewModel @ViewModelInject constructor(
         }
 
 
-        return newCredit
+        return newCredit.toDomain()
     }
 
 
@@ -207,7 +209,7 @@ class NewCreditViewModel @ViewModelInject constructor(
         _totalCredit.value = ""
         _plazoCredit.value = ""
         _valueCuotaCredit.value = ""
-        _resultSaveNewCredit.value = Resource.Loading()
+        _resultSaveNewCredit.value = com.wenitech.cashdaily.domain.common.Resource.Loading()
     }
 
     companion object {

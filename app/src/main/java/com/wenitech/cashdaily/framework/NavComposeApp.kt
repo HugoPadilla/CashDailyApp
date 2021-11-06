@@ -57,13 +57,13 @@ fun NavComposeApp(modifier: Modifier, navController: NavHostController, onNaviga
 
                 val viewModel = hiltViewModel<BoxViewModel>()
 
-                val boxState by viewModel.boxState.collectAsState()
-                val transactionsList by viewModel.cashMovement.collectAsState()
+                val boxState by viewModel.boxModelState.collectAsState()
+                val transactionsList by viewModel.cashMovementModel.collectAsState()
 
                 BoxScreen(
                     navController = navController,
                     cashAvailable = boxState.totalCash,
-                    transactionsList = transactionsList,
+                    transactionsModelList = transactionsList,
                     onValueClick = { value, description ->
                         viewModel.addMoneyOnBox(value, description)
                     }

@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
-import com.wenitech.cashdaily.commons.Resource
+import com.wenitech.cashdaily.domain.common.Resource
 import com.wenitech.cashdaily.domain.entities.Box
 import com.wenitech.cashdaily.domain.entities.CashTransactions
 import com.wenitech.cashdaily.domain.usecases.caja.GetRecentMovementsUseCase
@@ -30,10 +30,10 @@ class BoxViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _boxState = MutableStateFlow(Box())
-    val boxState: StateFlow<Box> = _boxState
+    val boxModelState: StateFlow<Box> = _boxState
 
     private val _cashMovement = MutableStateFlow<List<CashTransactions>>(listOf())
-    val cashMovement: StateFlow<List<CashTransactions>> = _cashMovement
+    val cashMovementModel: StateFlow<List<CashTransactions>> = _cashMovement
 
 
     fun process(event: BoxContract.BoxEvent) {
@@ -79,7 +79,7 @@ class BoxViewModel @Inject constructor(
 
     private fun fetchMovement() {
         viewModelScope.launch {
-            getRecentMovementsUseCaseUseCase(auth.uid.toString()).collect {
+            getRecentMovementsUseCaseUseCase().collect {
                 when (it) {
                     is Resource.Failure -> {
 

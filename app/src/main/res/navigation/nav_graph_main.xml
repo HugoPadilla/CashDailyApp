@@ -117,9 +117,8 @@
         tools:layout="@layout/profile_client_fragment" />
     <fragment
         android:id="@+id/fragmentLogin"
-        android:name="com.wenitech.cashdaily.framework.features.authentication.loginScreen.LoginFragment"
         android:label="Login"
-        tools:layout="@layout/fragment_login" >
+        >
         <action
             android:id="@+id/action_fragmentLogin_to_fragmentSignIn"
             app:destination="@id/fragmentSignIn" />
@@ -135,9 +134,8 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentSignIn"
-        android:name="com.wenitech.cashdaily.framework.features.authentication.signinScreen.fragment.FragmentSignIn"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" >
+         >
         <action
             android:id="@+id/action_fragmentSignIn_to_fragmentLogin"
             app:destination="@id/fragmentLogin"
@@ -149,7 +147,6 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentRecoverPassword"
-        android:name="com.wenitech.cashdaily.framework.features.authentication.recoverPasswordScreen.RecoverPasswordScreen"
         android:label="Recover Password"
         tools:layout="@layout/fragment_recover_password">
         <action

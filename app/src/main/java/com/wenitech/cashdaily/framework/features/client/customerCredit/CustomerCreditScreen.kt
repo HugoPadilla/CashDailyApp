@@ -14,6 +14,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenitech.cashdaily.R
+import com.wenitech.cashdaily.data.entities.ClientModel
+import com.wenitech.cashdaily.data.entities.CreditModel
+import com.wenitech.cashdaily.data.entities.QuotaModel
 import com.wenitech.cashdaily.domain.entities.Client
 import com.wenitech.cashdaily.domain.entities.Credit
 import com.wenitech.cashdaily.domain.entities.Quota
@@ -33,14 +36,14 @@ fun CustomerCreditScreen(viewModel: CustomerCreditViewModel = androidx.lifecycle
     val isLoading by viewModel.loading.collectAsState()
     val client by viewModel.idClient.observeAsState()
     val customerClient by viewModel.customerState.collectAsState()
-    val listQuota by viewModel.quotaCustomer.collectAsState()
+    val listQuota by viewModel.quotaModelCustomer.collectAsState()
 
     CashDailyTheme {
         CustomerCreditContent(
             loading = isLoading,
-            client = clientsData[0],
-            credit = customerClient,
-            listQuota = listQuota
+            clientModel = clientsData[0],
+            creditModel = customerClient,
+            listQuotaModel = listQuota
         ) {
             // Open dialog for new quota
             viewModel.setNewQuota(0.0, client!!, customerClient.id!!)
@@ -52,9 +55,9 @@ fun CustomerCreditScreen(viewModel: CustomerCreditViewModel = androidx.lifecycle
 @Composable
 private fun CustomerCreditContent(
     loading: Boolean = false,
-    client: Client,
-    credit: Credit,
-    listQuota: List<Quota>,
+    clientModel: Client,
+    creditModel: Credit,
+    listQuotaModel: List<Quota>,
     onAddQuota: () -> Unit
 ) {
     Scaffold(
@@ -72,19 +75,19 @@ private fun CustomerCreditContent(
         ) {
             if (!loading) {
                 CreditClient(
-                    idClient = client.id ?: "",
-                    name = client.fullName,
-                    direction = "${client.city}, ${client.direction}",
-                    prestamo = credit.creditTotal,
-                    deuda = credit.creditDebt,
-                    cuota = credit.creditQuotaValue,
-                    numeroCuotas = credit.amountFees,
+                    idClient = clientModel.id ?: "",
+                    name = clientModel.fullName,
+                    direction = "${clientModel.city}, ${clientModel.direction}",
+                    prestamo = creditModel.creditTotal,
+                    deuda = creditModel.creditDebt,
+                    cuota = creditModel.creditQuotaValue,
+                    numeroCuotas = creditModel.amountFees,
                     numeroCuotasAdd = 0.0,
                     progress = 0.0f,
                     modifier = Modifier.padding(top = 20.dp, bottom = 18.dp)
                 )
 
-                QuotasList(listQuota = listQuota)
+                QuotasList(listQuotaModel = listQuotaModel)
             } else {
                 Text(text = "Cargando informacion...")
             }
@@ -93,7 +96,7 @@ private fun CustomerCreditContent(
 }
 
 @Composable
-fun QuotasList(listQuota: List<Quota>) {
+fun QuotasList(listQuotaModel: List<Quota>) {
     LazyColumn {
 
         item {
@@ -104,9 +107,9 @@ fun QuotasList(listQuota: List<Quota>) {
             )
         }
 
-        items(listQuota) { quota ->
+        items(listQuotaModel) { quota ->
 
-            val date = quota.timestamp?.toDate() ?: "Fecha:"
+            val date = quota.timestamp ?: "Fecha:"
             val currentAmount = NumberFormat.getCurrencyInstance().format(quota.value)
 
             Card(modifier = Modifier.padding(bottom = 4.dp), contentColor = success) {
@@ -146,9 +149,9 @@ fun QuotasList(listQuota: List<Quota>) {
 fun PreviewCustomerCredit() {
     CashDailyTheme {
         CustomerCreditContent(
-            client = clientsData[0],
-            credit = creditData[0],
-            listQuota = quotesListData
+            clientModel = clientsData[0],
+            creditModel = creditData[0],
+            listQuotaModel = quotesListData
         ) {
 
         }

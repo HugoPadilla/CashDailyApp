@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
-import com.wenitech.cashdaily.commons.Resource
+import com.wenitech.cashdaily.domain.common.Resource
 import com.wenitech.cashdaily.domain.entities.Client
 import com.wenitech.cashdaily.domain.usecases.client.GetAllClientsPagingUseCase
 import com.wenitech.cashdaily.framework.features.client.listClient.ClientContract
@@ -26,7 +26,7 @@ class ClientViewModel @Inject constructor(
     val uiState: LiveData<ClientContract.ClientState> = _uiState
 
     private val _listClient = MutableStateFlow(listOf<Client>())
-    val listClient: StateFlow<List<Client>> = _listClient
+    val listClientModel: StateFlow<List<Client>> = _listClient
 
     init {
         fetchClients()
@@ -35,7 +35,7 @@ class ClientViewModel @Inject constructor(
     private fun fetchClients() {
         viewModelScope.launch {
             val uid = auth.uid
-            if (!uid.isNullOrEmpty()){
+            if (!uid.isNullOrEmpty()) {
                 getAllClientsPagingUseCase().collect {
                     when (it) {
                         is Resource.Failure -> _uiState.value = ClientContract.ClientState.Error

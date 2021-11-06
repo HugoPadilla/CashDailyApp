@@ -1,7 +1,7 @@
 package com.wenitech.cashdaily.framework.features.client.customerCredit
 
-import com.wenitech.cashdaily.domain.entities.Credit
-import com.wenitech.cashdaily.domain.entities.Quota
+import com.wenitech.cashdaily.data.entities.CreditModel
+import com.wenitech.cashdaily.data.entities.QuotaModel
 import com.wenitech.cashdaily.framework.features.client.customerCredit.model.ClientParcelable
 
 class CustomerContract {
@@ -21,13 +21,13 @@ class CustomerContract {
 
     data class CustomerState(
         val loadState: LoadState,
-        val credit: Credit,
+        val creditModel: CreditModel,
         val errorMessage: String
     ) : State {
         companion object {
             val initial = CustomerState(
                 loadState = LoadState.IDLE,
-                credit = Credit(),
+                creditModel = CreditModel(),
                 errorMessage = ""
             )
         }
@@ -37,7 +37,7 @@ class CustomerContract {
         object Loading : QuotaCustomerState()
         object Error : QuotaCustomerState()
         object Empty : QuotaCustomerState()
-        data class Success(val listQuota: List<Quota>) : QuotaCustomerState()
+        data class Success(val listQuotaModel: List<QuotaModel>) : QuotaCustomerState()
     }
 
 }

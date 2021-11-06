@@ -2,9 +2,9 @@ package com.wenitech.cashdaily.framework.features
 
 import androidx.lifecycle.*
 import com.wenitech.cashdaily.commons.AuthenticationStatus
-import com.wenitech.cashdaily.commons.Resource
+import com.wenitech.cashdaily.domain.common.Resource
 import com.wenitech.cashdaily.domain.entities.User
-import com.wenitech.cashdaily.domain.usecases.auth.GetProfileUserAppUseCase
+import com.wenitech.cashdaily.domain.usecases.auth.GetProfileUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -13,20 +13,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getProfileUserAppUseCase: GetProfileUserAppUseCase
+    private val getProfileUserUseCase: GetProfileUserUseCase
 ) : ViewModel() {
 
     private val _stateAuth = MutableLiveData<AuthenticationStatus>()
     val stateAuth: LiveData<AuthenticationStatus> = _stateAuth
 
     private val _user = MutableStateFlow<Resource<User>>(Resource.Loading())
-    val user: LiveData<Resource<User>> = _user.asLiveData()
+    val userModel: LiveData<Resource<User>> = _user.asLiveData()
 
 
-    fun getProfile(uid: String){
+    fun getProfile(){
         viewModelScope.launch {
             try {
-                getProfileUserAppUseCase(uid).collect {
+                getProfileUserUseCase().collect {
                     _user.value = it
                 }
             } catch (e: Throwable) {

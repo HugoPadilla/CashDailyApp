@@ -22,7 +22,6 @@ import com.google.firebase.auth.FirebaseAuth.AuthStateListener
 import com.google.firebase.auth.FirebaseAuth.getInstance
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.commons.AuthenticationStatus
-import com.wenitech.cashdaily.commons.Resource
 import com.wenitech.cashdaily.databinding.ActivityNavMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -112,17 +111,17 @@ class MainNavActivity : AppCompatActivity() {
             openDialogLSessionClose()
         }
 
-        viewModel.user.observe(this, { resource ->
+        viewModel.userModel.observe(this, { resource ->
             when (resource) {
-                is Resource.Failure -> {
+                is com.wenitech.cashdaily.domain.common.Resource.Failure -> {
                     userName.text = resource.throwable.message
                     emailAddress.text = ""
                 }
-                is Resource.Loading -> {
+                is com.wenitech.cashdaily.domain.common.Resource.Loading -> {
                     userName.text = getString(R.string.default_loading)
                     emailAddress.text = getString(R.string.default_loading)
                 }
-                is Resource.Success -> {
+                is com.wenitech.cashdaily.domain.common.Resource.Success -> {
                     userName.text = resource.data.fullName
                     emailAddress.text = resource.data.email
                 }
@@ -138,7 +137,7 @@ class MainNavActivity : AppCompatActivity() {
         viewModel.stateAuth.observe(this, { status ->
             when (status!!) {
                 AuthenticationStatus.AUTHENTICATED -> {
-                    viewModel.getProfile(auth.uid.toString())
+                    viewModel.getProfile()
                 }
                 AuthenticationStatus.AUTHENTICATING -> {
                     // Todo: Authenticating

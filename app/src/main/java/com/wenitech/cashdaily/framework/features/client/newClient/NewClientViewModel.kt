@@ -1,22 +1,25 @@
 package com.wenitech.cashdaily.framework.features.client.newClient
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
-import com.google.firebase.Timestamp
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
-import com.wenitech.cashdaily.commons.Resource
 import com.wenitech.cashdaily.domain.entities.Client
 import com.wenitech.cashdaily.domain.usecases.client.SaveClientUseCase
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
 
 class NewClientViewModel @ViewModelInject constructor(
     private val auth: FirebaseAuth,
     private val saveClientUseCase: SaveClientUseCase,
 ) : ViewModel() {
 
-    private val _resourceSaveClient: MutableLiveData<Resource<String>> = MutableLiveData()
-    val resourceSaveClient: LiveData<Resource<String>> get() = _resourceSaveClient
+    private val _resourceSaveClient: MutableLiveData<com.wenitech.cashdaily.domain.common.Resource<String>> =
+        MutableLiveData()
+    val resourceSaveClient: LiveData<com.wenitech.cashdaily.domain.common.Resource<String>> get() = _resourceSaveClient
 
     fun saveNewClient(
         fullName: String,
@@ -31,8 +34,8 @@ class NewClientViewModel @ViewModelInject constructor(
         val client = Client(
             id = null,
             creationDate = null,
-            paymentDate = Timestamp.now(),
-            finishDate = Timestamp.now(),
+            paymentDate = Date(),
+            finishDate = Date(),
             idNumber = cedulaClient,
             fullName = fullName,
             gender = gender,

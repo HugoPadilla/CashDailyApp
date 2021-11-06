@@ -7,23 +7,23 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.framework.commons.BaseViewHolder
-import com.wenitech.cashdaily.domain.entities.Client
+import com.wenitech.cashdaily.data.entities.ClientModel
 import com.wenitech.cashdaily.databinding.ItemClienteBinding
 
 class RecyclerViewClientsAdapter(
         private val listener: MyRecyclerViewInterface,
 ) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
-    private var listClient: List<Client> = listOf()
+    private var listClientModel: List<ClientModel> = listOf()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(listClient: List<Client>) {
-        this.listClient = listClient
+    fun setData(listClientModel: List<ClientModel>) {
+        this.listClientModel = listClientModel
         notifyDataSetChanged()
     }
 
     interface MyRecyclerViewInterface {
-        fun onItemClick(client: Client, position: Int, cardView: View)
+        fun onItemClick(clientModel: ClientModel, position: Int, cardView: View)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
@@ -33,17 +33,17 @@ class RecyclerViewClientsAdapter(
 
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
         when (holder) {
-            is MyViewHolder -> holder.bind(listClient[position], position)
+            is MyViewHolder -> holder.bind(listClientModel[position], position)
         }
     }
 
     override fun getItemCount(): Int {
-        return listClient.size
+        return listClientModel.size
     }
 
-    private inner class MyViewHolder(private val binding: ItemClienteBinding) : BaseViewHolder<Client>(binding.root) {
+    private inner class MyViewHolder(private val binding: ItemClienteBinding) : BaseViewHolder<ClientModel>(binding.root) {
         @SuppressLint("SetTextI18n")
-        override fun bind(item: Client, position: Int) {
+        override fun bind(item: ClientModel, position: Int) {
             binding.textViewNombreCliente.text = item.fullName
             binding.textViewDireccionCliente.text = "${item.city}, ${item.direction}"
             if (item.creditActive) {

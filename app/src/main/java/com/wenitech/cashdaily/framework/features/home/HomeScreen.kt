@@ -50,33 +50,33 @@ fun HomeScreen(
     val boxState by viewModel.homeUiState.collectAsState()
     val routesState by viewModel.routeUiState.collectAsState()
 
-    HomeContent(box = boxState, routes = routesState, onNewCreditClick = {
+    HomeContent(boxModel = boxState, routes = routesState, onNewCreditClick = {
         context.startActivity(Intent(context, AuthenticationActivity::class.java))
     })
 
 }
 
 @Composable
-fun HomeContent(box: Box, routes: List<Ruta>, onNewCreditClick: () -> Unit) {
+fun HomeContent(boxModel: Box, routes: List<Ruta>, onNewCreditClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 16.dp, top = 0.dp, end = 16.dp, bottom = 0.dp)
     ) {
 
-        CreditList(box, routes, onNewCreditClick = onNewCreditClick)
+        CreditList(boxModel, routes, onNewCreditClick = onNewCreditClick)
 
     }
 }
 
 @Composable
-fun CreditList(box: Box, rutas: List<Ruta>, onNewCreditClick: () -> Unit) {
+fun CreditList(boxModel: Box, rutaModels: List<Ruta>, onNewCreditClick: () -> Unit) {
 
     LazyColumn {
 
         item {
             CashAvailableCardView(
-                money = box.totalCash,
+                money = boxModel.totalCash,
                 modifier = Modifier.padding(top = 24.dp, bottom = 16.dp)
             )
         }
@@ -98,7 +98,7 @@ fun CreditList(box: Box, rutas: List<Ruta>, onNewCreditClick: () -> Unit) {
             )
         }
 
-        items(rutas) { credit ->
+        items(rutaModels) { credit ->
             RutaItem(client = credit, modifier = Modifier)
         }
     }
@@ -183,7 +183,7 @@ fun Chip(modifier: Modifier = Modifier, text: String) {
 @Composable
 fun DefaultPreview() {
     CashDailyTheme {
-        HomeContent(box = Box(totalCash = 126000.00), routes = routesData) {
+        HomeContent(boxModel = Box(totalCash = 126000.00), routes = routesData) {
 
         }
     }

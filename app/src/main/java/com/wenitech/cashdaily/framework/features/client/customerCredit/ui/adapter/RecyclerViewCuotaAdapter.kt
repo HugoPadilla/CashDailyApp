@@ -4,22 +4,22 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.wenitech.cashdaily.domain.entities.Quota
+import com.wenitech.cashdaily.data.entities.QuotaModel
 import com.wenitech.cashdaily.databinding.ItemCuotaBinding
 import com.wenitech.cashdaily.framework.commons.BaseViewHolder
 import java.text.*
 
 class RecyclerViewCuotaAdapter(private val listener: RecyclerViewCuotaListener) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
-    private var listQuota = listOf<Quota>()
+    private var listQuota = listOf<QuotaModel>()
 
-    fun setData(listQuota: List<Quota>){
-        this.listQuota = listQuota
+    fun setData(listQuotaModel: List<QuotaModel>){
+        this.listQuota = listQuotaModel
         notifyDataSetChanged()
     }
 
     interface RecyclerViewCuotaListener {
-        fun listenerOfItem(item: Quota, position: Int, root: CardView)
+        fun listenerOfItem(item: QuotaModel, position: Int, root: CardView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): mViewHolder {
@@ -39,9 +39,9 @@ class RecyclerViewCuotaAdapter(private val listener: RecyclerViewCuotaListener) 
         return listQuota.size
     }
 
-    inner class mViewHolder(private val binding: ItemCuotaBinding) : BaseViewHolder<Quota>(binding.root) {
+    inner class mViewHolder(private val binding: ItemCuotaBinding) : BaseViewHolder<QuotaModel>(binding.root) {
 
-        override fun bind(item: Quota, position: Int) {
+        override fun bind(item: QuotaModel, position: Int) {
 
             binding.fechaQuote.text = SimpleDateFormat("yyyy-MM-dd").format(item.timestamp?.toDate())
             binding.valueQuote.text = java.text.NumberFormat.getCurrencyInstance().format(item.value)

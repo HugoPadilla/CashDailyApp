@@ -27,7 +27,7 @@ import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 @ExperimentalMaterialApi
 @Composable
 fun ClientItem(
-    client: Client,
+    clientModel: Client,
     modifier: Modifier = Modifier,
     elevation: Dp = 0.dp,
     cornerRadius: Dp = 10.dp,
@@ -40,7 +40,7 @@ fun ClientItem(
         shape = RoundedCornerShape(cornerRadius),
         modifier = modifier.fillMaxWidth(),
         onClick = {
-            onClick(client.id?: "", client.refCredit?.id ?: "")
+            onClick(clientModel.id?: "", clientModel.refCredit ?: "")
         }
     ) {
         Row(
@@ -68,12 +68,12 @@ fun ClientItem(
             ) {
                 Text(
                     style = MaterialTheme.typography.subtitle1,
-                    text = client.fullName
+                    text = clientModel.fullName
                 )
                 Text(
                     modifier = Modifier.padding(top = 2.dp),
                     style = MaterialTheme.typography.caption,
-                    text = client.direction
+                    text = clientModel.direction
                 )
             }
         }
@@ -86,7 +86,7 @@ fun ClientItem(
 @Composable
 fun PreviewClientItem() {
     CashDailyTheme {
-        ClientItem(client = clientsData[0], onClick = { idClient, refCredit ->
+        ClientItem(clientModel = clientsData[0], onClick = { idClient, refCredit ->
 
         })
     }

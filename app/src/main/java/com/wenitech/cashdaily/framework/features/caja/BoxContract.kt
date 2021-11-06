@@ -1,7 +1,7 @@
 package com.wenitech.cashdaily.framework.features.caja
 
-import com.wenitech.cashdaily.domain.entities.Box
-import com.wenitech.cashdaily.domain.entities.CashTransactions
+import com.wenitech.cashdaily.data.entities.BoxModel
+import com.wenitech.cashdaily.data.entities.CashTransactionsModel
 import com.wenitech.cashdaily.framework.utils.UiEffect
 import com.wenitech.cashdaily.framework.utils.UiEvent
 import com.wenitech.cashdaily.framework.utils.UiState
@@ -15,13 +15,13 @@ class BoxContract {
 
     sealed class BoxState : UiState {
         data class Error(val msg: String) : BoxState()
-        data class Success(val box: Box) : BoxState()
+        data class Success(val boxModel: BoxModel) : BoxState()
         object Loading : BoxState()
     }
 
     sealed class CashState {
         data class Error(val msg: String) : CashState()
-        data class Success(val cashMovement: List<CashTransactions>) : CashState()
+        data class Success(val cashMovementModel: List<CashTransactionsModel>) : CashState()
         object Loading : CashState()
     }
 

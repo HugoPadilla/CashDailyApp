@@ -1,32 +1,74 @@
 package com.wenitech.cashdaily.di
 
-import com.wenitech.cashdaily.data.remoteDataSource.RemoteDataSource
-import com.wenitech.cashdaily.data.remoteDataSource.RemoteDataSourceImpl
-import com.wenitech.cashdaily.data.repositories.AuthRepositoryImpl
-import com.wenitech.cashdaily.data.repositories.DataRepositoryImp
-import com.wenitech.cashdaily.data.repositories.RouteRepositoryImpl
 import com.wenitech.cashdaily.domain.repositories.AuthRepository
 import com.wenitech.cashdaily.domain.repositories.DataRepository
 import com.wenitech.cashdaily.domain.repositories.RoutesRepository
-import dagger.Binds
+import com.wenitech.cashdaily.domain.usecases.auth.GetProfileUserUseCase
+import com.wenitech.cashdaily.domain.usecases.auth.LoginUseCase
+import com.wenitech.cashdaily.domain.usecases.auth.RecoverPasswordUseCase
+import com.wenitech.cashdaily.domain.usecases.auth.SignInUseCase
+import com.wenitech.cashdaily.domain.usecases.caja.GetRecentMovementsUseCase
+import com.wenitech.cashdaily.domain.usecases.caja.GetUserBoxUseCase
+import com.wenitech.cashdaily.domain.usecases.caja.RemoveMoneyOnBoxUseCase
+import com.wenitech.cashdaily.domain.usecases.caja.SaveMoneyOnBoxUseCase
+import com.wenitech.cashdaily.domain.usecases.client.GetAllClientsPagingUseCase
+import com.wenitech.cashdaily.domain.usecases.route.GetRoutesUseCase
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
-abstract class ActivityModule {
+object ActivityModule {
     // Binds interfaces con implementation
-    @Binds
-    abstract fun bindRemoteDataSource(remoteDataSourceImpl: RemoteDataSourceImpl): RemoteDataSource
+    @Provides
+    fun provideGetUserBoxUseCase(dataRepository: DataRepository): GetUserBoxUseCase {
+        return GetUserBoxUseCase(dataRepository)
+    }
 
-    @Binds
-    abstract fun bindAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository
+    @Provides
+    fun provideRecentMovementsUseCase(dataRepository: DataRepository): GetRecentMovementsUseCase {
+        return GetRecentMovementsUseCase(dataRepository)
+    }
 
-    @Binds
-    abstract fun bindDataRepository(dataRepositoryImp: DataRepositoryImp): DataRepository
+    @Provides
+    fun provideSaveMoneyOnBoxUseCase(dataRepository: DataRepository): SaveMoneyOnBoxUseCase {
+        return SaveMoneyOnBoxUseCase(dataRepository)
+    }
 
-    @Binds
-    abstract fun bindRouteRepository(routeRepositoryImpl: RouteRepositoryImpl): RoutesRepository
+    @Provides
+    fun provideRemoveMoneyOnBoxUseCase(dataRepository: DataRepository): RemoveMoneyOnBoxUseCase {
+        return RemoveMoneyOnBoxUseCase(dataRepository)
+    }
 
+    @Provides
+    fun provideGetAllClientsPagingUseCase(dataRepository: DataRepository): GetAllClientsPagingUseCase {
+        return GetAllClientsPagingUseCase(dataRepository)
+    }
+
+    @Provides
+    fun provideGetRoutesUseCase(routesRepository: RoutesRepository): GetRoutesUseCase {
+        return GetRoutesUseCase(routesRepository)
+    }
+
+    @Provides
+    fun provideLoginUseCase(authRepository: AuthRepository): LoginUseCase {
+        return LoginUseCase(authRepository)
+    }
+
+    @Provides
+    fun provideGetProfileUserAppUseCase(dataRepository: DataRepository): GetProfileUserUseCase {
+        return GetProfileUserUseCase(dataRepository)
+    }
+
+    @Provides
+    fun provideRecoverPasswordUseCase(authRepository: AuthRepository): RecoverPasswordUseCase {
+        return RecoverPasswordUseCase(authRepository)
+    }
+
+    @Provides
+    fun provideSignInUseCase(authRepository: AuthRepository): SignInUseCase {
+        return SignInUseCase(authRepository)
+    }
 }
