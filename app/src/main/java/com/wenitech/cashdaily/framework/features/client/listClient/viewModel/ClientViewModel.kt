@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseAuth
 import com.wenitech.cashdaily.domain.common.Resource
 import com.wenitech.cashdaily.domain.entities.Client
 import com.wenitech.cashdaily.domain.usecases.client.GetAllClientsPagingUseCase
@@ -18,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ClientViewModel @Inject constructor(
-    private val auth: FirebaseAuth,
     private val getAllClientsPagingUseCase: GetAllClientsPagingUseCase,
 ) : ViewModel() {
 
@@ -34,23 +32,18 @@ class ClientViewModel @Inject constructor(
 
     private fun fetchClients() {
         viewModelScope.launch {
-            val uid = auth.uid
-            if (!uid.isNullOrEmpty()) {
-                getAllClientsPagingUseCase().collect {
-                    when (it) {
-                        is Resource.Failure -> _uiState.value = ClientContract.ClientState.Error
-                        is Resource.Loading -> _uiState.value = ClientContract.ClientState.Loading
-                        is Resource.Success -> {
-                            _uiState.value = ClientContract.ClientState.Success(it.data)
-                            _listClient.value = it.data
-                        }
+            getAllClientsPagingUseCase().collect {
+                when (it) {
+                    is Resource.Failure -> _uiState.value = ClientContract.ClientState.Error
+                    is Resource.Loading -> _uiState.value = ClientContract.ClientState.Loading
+                    is Resource.Success -> {
+                        _uiState.value = ClientContract.ClientState.Success(it.data)
+                        _listClient.value = it.data
                     }
                 }
-            } else {
-                _uiState.value = ClientContract.ClientState.Success(listOf())
             }
+
         }
     }
-
 
 }

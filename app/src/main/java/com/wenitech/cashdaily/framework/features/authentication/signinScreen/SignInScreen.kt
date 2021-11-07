@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
-import com.wenitech.cashdaily.framework.component.commons.CustomTextField
+import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
 import com.wenitech.cashdaily.framework.features.authentication.signinScreen.uiState.SignInUiState
 import com.wenitech.cashdaily.framework.features.authentication.signinScreen.viewModel.SignInViewModel
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme

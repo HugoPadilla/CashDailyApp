@@ -1,20 +1,16 @@
 package com.wenitech.cashdaily.framework.features.credit.newCredit
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenitech.cashdaily.R
-import com.wenitech.cashdaily.framework.component.commons.CustomTextField
+import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 
 @Composable
@@ -30,47 +26,39 @@ fun RegisterCreditContent() {
             .padding(horizontal = 16.dp)
     ) {
 
+        Spacer(modifier = Modifier.height(20.dp))
+
         Text(
             text = "Total credito",
-            style = MaterialTheme.typography.subtitle1,
+            style = MaterialTheme.typography.h6,
             modifier = Modifier.fillMaxWidth()
         )
 
         Text(
-            text = "$200,000.00",
+            text = "$200,000",
             style = MaterialTheme.typography.h3,
             modifier = Modifier.fillMaxWidth()
         )
 
-        Row {
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Row(modifier = Modifier.fillMaxWidth()) {
             CustomTextField(
                 label = "Valor prestamo",
-                value = "",
+                value = "250,000",
                 icon = R.drawable.ic_dollar,
-                onValueChange = {}
+                onValueChange = {},
+                modifier = Modifier.weight(.6f)
             )
+
+            Spacer(modifier = Modifier.width(10.dp))
 
             CustomTextField(
                 label = "Porcentaje",
-                value = "",
+                value = "90",
                 icon = R.drawable.ic_percent,
-                onValueChange = {}
-            )
-        }
-
-        Row {
-            OutlinedTextField(
-                label = { Text(text = "Valor prestamo") },
-                value = "",
                 onValueChange = {},
-                modifier = Modifier.fillMaxWidth(0.5f)
-            )
-
-            OutlinedTextField(
-                label = { Text(text = "Valor prestamo") },
-                value = "",
-                onValueChange = {},
-                modifier = Modifier.fillMaxWidth(0.5f)
+                modifier = Modifier.weight(.3f)
             )
         }
 

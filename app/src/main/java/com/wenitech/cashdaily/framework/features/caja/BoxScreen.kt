@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.domain.entities.CashTransactions
-import com.wenitech.cashdaily.framework.commons.cashTransactionsData
+import com.wenitech.cashdaily.framework.DataExample.cashTransactionsData
 import com.wenitech.cashdaily.framework.component.commons.CashAvailableCardView
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 import com.wenitech.cashdaily.framework.ui.theme.success

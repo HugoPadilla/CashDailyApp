@@ -18,8 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
-import com.wenitech.cashdaily.framework.component.commons.CustomTextField
 import com.wenitech.cashdaily.framework.component.commons.TextButtonRegister
+import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
 import com.wenitech.cashdaily.framework.features.authentication.Navigation
 import com.wenitech.cashdaily.framework.features.authentication.loginScreen.uiState.LoginUiState
 import com.wenitech.cashdaily.framework.features.authentication.loginScreen.viewModel.LoginViewModel

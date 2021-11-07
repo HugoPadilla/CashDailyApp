@@ -31,18 +31,18 @@ import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.domain.entities.Box
 import com.wenitech.cashdaily.domain.entities.Ruta
-import com.wenitech.cashdaily.framework.commons.routesData
+import com.wenitech.cashdaily.framework.DataExample.routesData
 import com.wenitech.cashdaily.framework.component.commons.CashAvailableCardView
 import com.wenitech.cashdaily.framework.component.commons.PrimaryButtonExtended
 import com.wenitech.cashdaily.framework.features.authentication.AuthenticationActivity
-import com.wenitech.cashdaily.framework.features.home.viewModel.HomeFragmentViewModel
+import com.wenitech.cashdaily.framework.features.home.viewModel.HomeViewModel
 import com.wenitech.cashdaily.framework.ui.theme.BackgroundLight
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 
 @Composable
 fun HomeScreen(
     navController: NavController,
-    viewModel: HomeFragmentViewModel = viewModel(),
+    viewModel: HomeViewModel = viewModel(),
     onNewCreditClick: () -> Unit
 ) {
 

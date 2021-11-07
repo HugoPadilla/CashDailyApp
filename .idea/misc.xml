@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/drawable-xxhdpi/bg_item_blue.xml" value="0.3769230769230769" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/drawable/bg_button_azul_solido_radiun.xml" value="0.37135416666666665" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/drawable/bg_button_blanco_delineado_azul.xml" value="0.37135416666666665" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/drawable/bg_button_dialogo_rojo_solido_radiun.xml" value="0.37135416666666665" />
@@ -61,26 +62,37 @@
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/bottom_sheet_remove_money.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/credits_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/dialogo_agregar_dinero_caja.xml" value="0.2203125" />
+        <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/dialogo_cambiar_nombre_usuario.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/dialogo_nueva_cuota.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/dialogo_retirar_dinero_caja.xml" value="0.2203125" />
+        <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_acercade.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_caja.xml" value="0.25" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_client.xml" value="0.35104166666666664" />
+        <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_cobrar_hoy.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_customer_credit.xml" value="0.3175925925925926" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_form_payment.xml" value="0.35520833333333335" />
+        <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_help.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_informe.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_login.xml" value="0.34974358974358977" />
-        <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_new_client.xml" value="0.25" />
+        <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_new_client.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_new_credit.xml" value="0.3416666666666667" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_new_route.xml" value="0.33" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_perfil.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_recover_password.xml" value="0.18611111111111112" />
-        <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_reset_pasword.xml" value="0.25" />
+        <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_reset_pasword.xml" value="0.33" />
+        <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_settings.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_sign_in.xml" value="0.33" />
+        <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/fragment_vencidos.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/home_fragment.xml" value="0.1" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/item_cliente.xml" value="0.33" />
+        <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/item_cuota.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/item_dropdown.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/item_movimiento_caja.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/item_navigation_drawer_header.xml" value="0.2203125" />
+        <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/item_prestamo.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/item_route.xml" value="0.8036866359447005" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/profile_client_fragment.xml" value="0.35520833333333335" />
+        <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/routes_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/layout/teet_fragment.xml" value="0.33" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/menu/menu_bottom_app_bar_customer_credit.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/hugoj/StudioProjects/CashDailyApp/app/src/main/res/menu/menu_bottom_navigation_main.xml" value="0.35520833333333335" />
