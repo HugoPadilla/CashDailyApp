@@ -21,10 +21,10 @@ class CreditModel(
     var isChargedOnSunday: Boolean = false,
 )
 
-fun CreditModel.toDomain() = com.wenitech.cashdaily.domain.entities.Credit(
+fun CreditModel.toDomain() = Credit(
     id = id,
-    timestampCreation = timestampCreation?.toDate(),
-    timestampNextPayment = timestampNextPayment?.toDate(),
+    dateCreation = timestampCreation?.toDate(),
+    dateNextPayment = timestampNextPayment?.toDate(),
     paymentMethod = paymentMethod,
     creditDebt = creditDebt,
     creditQuotaValue = creditQuotaValue,
@@ -38,8 +38,8 @@ fun CreditModel.toDomain() = com.wenitech.cashdaily.domain.entities.Credit(
 
 fun CreditModel.toData(credit: Credit) = CreditModel(
     credit.id,
-    Timestamp(credit.timestampCreation!!.time, 0),
-    Timestamp(credit.timestampNextPayment!!.time, 0),
+    Timestamp(credit.dateCreation!!.time, 0),
+    Timestamp(credit.dateNextPayment!!.time, 0),
     credit.paymentMethod,
     credit.creditDebt,
     credit.creditQuotaValue,

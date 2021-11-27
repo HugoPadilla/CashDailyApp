@@ -4,6 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -12,7 +14,12 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,7 +27,7 @@ import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.framework.component.commons.TextButtonRegister
 import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
-import com.wenitech.cashdaily.framework.features.authentication.Navigation
+import com.wenitech.cashdaily.framework.features.authentication.AuthDestinations
 import com.wenitech.cashdaily.framework.features.authentication.loginScreen.uiState.LoginUiState
 import com.wenitech.cashdaily.framework.features.authentication.loginScreen.viewModel.LoginViewModel
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
@@ -101,6 +108,7 @@ private fun LoginContent(
 ) {
 
     val scrollState = rememberScrollState()
+    val focusManager = LocalFocusManager.current
 
     Scaffold(
         modifier = Modifier
@@ -131,8 +139,18 @@ private fun LoginContent(
                 label = "Correo electronico",
                 value = emailValue,
                 messageError = emailMessageError,
-                icon = R.drawable.ic_mail,
-                onValueChange = onEmailChange
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_mail),
+                        contentDescription = null
+                    )
+                },
+                onValueChange = onEmailChange,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                keyboardActions = KeyboardActions(onNext = {
+                    // Todo: focus to next textField
+                    focusManager.moveFocus(FocusDirection.Down)
+                })
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -142,15 +160,28 @@ private fun LoginContent(
                 label = "Contrasena",
                 value = passwordValue,
                 messageError = passwordMessageError,
-                icon = R.drawable.ic_lock,
-                onValueChange = onPasswordChange
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_lock),
+                        contentDescription = null
+                    )
+                },
+                onValueChange = onPasswordChange,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Send
+                ),
+                keyboardActions = KeyboardActions(onSend = {
+                    onLoginListener(emailValue, passwordValue)
+                }),
+                visualTransformation = PasswordVisualTransformation()
             )
 
             Text(
                 modifier = Modifier
                     .padding(top = 24.dp, start = 0.dp)
                     .height(32.dp)
-                    .clickable { onNavigateRegisterListener(Navigation.RecoverPassword.route) },
+                    .clickable { onNavigateRegisterListener(AuthDestinations.RecoverPassword.route) },
                 style = MaterialTheme.typography.body1,
                 text = "Recuperar contraseña",
                 textAlign = TextAlign.Center
@@ -174,8 +205,9 @@ private fun LoginContent(
             TextButtonRegister(
                 modifier = Modifier.padding(bottom = 32.dp),
                 onNavigationRegisterListener = {
-                    onNavigateRegisterListener(Navigation.SingIn.route)
-                }, textButton = "Registrate"
+                    onNavigateRegisterListener(AuthDestinations.SingIn.route)
+                },
+                textButton = "Registrate"
             )
 
         }

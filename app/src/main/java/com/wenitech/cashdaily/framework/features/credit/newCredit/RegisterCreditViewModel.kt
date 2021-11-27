@@ -1,18 +1,16 @@
 package com.wenitech.cashdaily.framework.features.credit.newCredit
 
 import android.text.TextUtils
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
-import com.google.firebase.auth.FirebaseAuth
-import com.wenitech.cashdaily.data.entities.CreditModel
-import com.wenitech.cashdaily.data.entities.toDomain
 import com.wenitech.cashdaily.domain.common.Resource
 import com.wenitech.cashdaily.domain.entities.Credit
 import com.wenitech.cashdaily.domain.usecases.credit.SaveNewCreditUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.text.ParseException
@@ -22,39 +20,64 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterCreditViewModel @Inject constructor(
-    private val auth: FirebaseAuth,
     private val saveNewCreditUseCase: SaveNewCreditUseCase,
 ) : ViewModel() {
 
-    private val _idClient = MutableLiveData<String>()
-    val idClient get() = _idClient
+    private val _modalityOptions =
+        MutableStateFlow(listOf("Diario", "Semanal", "Quincenal", "Mensual"))
+    val modalityOptions: StateFlow<List<String>> get() = _modalityOptions
 
-    private val _resultSaveNewCredit =
-        MutableLiveData<Resource<String>>()
+    private val _idClient = MutableStateFlow("")
+    fun setIdClient(idClient: String){
+        _idClient.value = idClient
+    }
+
+    // Todo: Reemplazar por un dataClass que represente el estado de la UI
+    private val _resultSaveNewCredit = MutableLiveData<Resource<String>>()
     val resultSaveNewCredit: MutableLiveData<Resource<String>> get() = _resultSaveNewCredit
 
-    // MutableLiveData Of NewCreditFragment for views
-    var _fechaCreditMutableLiveData: MutableLiveData<String> = MutableLiveData()
-    var _hourCredit: MutableLiveData<String> = MutableLiveData()
-    var _valueCredit: MutableLiveData<String> = MutableLiveData()
-    var _porcentajeCredit: MutableLiveData<String> = MutableLiveData()
-    var _totalCredit: MutableLiveData<String> = MutableLiveData()
-    var _plazoCredit: MutableLiveData<String> = MutableLiveData()
-    var _valueCuotaCredit: MutableLiveData<String> = MutableLiveData()
-    var _formaCobroCredit: MutableLiveData<String> = MutableLiveData()
-    var _radioGrupSelecte: MutableLiveData<Int> = MutableLiveData(View.GONE)
+    private val _totalCredit = MutableStateFlow("")
+    val totalCredit: StateFlow<String> get() = _totalCredit
+    private var _dateCredit = MutableStateFlow("")
+    val dateCredit: StateFlow<String> get() = _dateCredit
+    private val _valueCredit = MutableStateFlow("")
+    val valueCredit: StateFlow<String> get() = _valueCredit
+    private val _percentCredit = MutableStateFlow("")
+    val percentCredit: StateFlow<String> get() = _percentCredit
+    private val _modalitySelected = MutableStateFlow(modalityOptions.value[0])
+    val modalitySelected: StateFlow<String> get() = _modalitySelected
+    fun onModalityOptionSelected(optionSelect: String) {
+        _modalitySelected.value = optionSelect
+    }
 
-    // MutableLiveData messageErro views
-    var _fechaCreditMessageError = MutableLiveData<String>()
-    var _hourCreditMessageError = MutableLiveData<String>()
-    var _valueCreditMessageError = MutableLiveData<String>()
-    var _porcentajeCreditMessageError = MutableLiveData<String>()
-    var _totalCreditMessageError = MutableLiveData<String>()
-    var _plazoCreditMessageError = MutableLiveData<String>()
-    var _valueCuotaCreditMessageError = MutableLiveData<String>()
+    private val _amountFees = MutableStateFlow("")
+    val amountFees: StateFlow<String> get() = _amountFees
+    private val _quotaValue = MutableStateFlow("")
+    val quotaValue: StateFlow<String> get() = _quotaValue
+
+    // MutableLiveData messageError views
+    private var _dateCreditMessageError = MutableStateFlow<String?>(null)
+    val dateCreditMessageError: StateFlow<String?> = _dateCreditMessageError
+    private var _valueCreditMessageError = MutableStateFlow<String?>(null)
+    val valueCreditMessageError: StateFlow<String?> = _valueCreditMessageError
+    private var _percentCreditMessageError = MutableStateFlow<String?>(null)
+    val percentCreditMessageError: StateFlow<String?> = _percentCreditMessageError
+    private var _amountFeesMessageError = MutableStateFlow<String?>(null)
+    val amountFeesMessageError: StateFlow<String?> = _amountFeesMessageError
+    private var _valueQuotaCreditMessageError = MutableStateFlow<String?>(null)
+    val valueQuotaMessageError: StateFlow<String?> = _valueQuotaCreditMessageError
 
     init {
         initDateForEditText()
+    }
+
+    private fun initDateForEditText() {
+        val date = Date()
+        val formatFecha = SimpleDateFormat("dd MMMM yyyy")
+        val formatHora = SimpleDateFormat("hh:mm a")
+        val fecha = formatFecha.format(date)
+        val hora = formatHora.format(date)
+        _dateCredit.value = "$fecha $hora"
     }
 
     /**
@@ -62,17 +85,24 @@ class RegisterCreditViewModel @Inject constructor(
      */
     fun saveCustomerCreditFromClient() {
 
-        val uid = auth.currentUser?.uid
-        if (!uid.isNullOrEmpty()) {
-            if (isFormCreditValid && isFormModalityCreditValid) {
-                val newCredit = buildCreditObjet()
-                viewModelScope.launch {
-                    saveNewCreditUseCase(uid, _idClient.value.toString(), newCredit).collect {
-                        _resultSaveNewCredit.value = it
+        if (isFormCreditValid && isFormModalityCreditValid) {
+            val newCredit = buildCreditObjet()
+            viewModelScope.launch {
+                saveNewCreditUseCase(_idClient.value, newCredit).collect {
+                    when (it) {
+                        is Resource.Failure -> {
+
+                        }
+                        is Resource.Loading -> {
+
+                        }
+                        is Resource.Success -> {
+
+                        }
                     }
                 }
-
             }
+
         }
     }
 
@@ -84,18 +114,16 @@ class RegisterCreditViewModel @Inject constructor(
     // Metodo util
     private fun buildCreditObjet(): Credit {
 
-        val newCredit = CreditModel()
+        val newCredit = Credit()
 
+        newCredit.apply {
+            dateCreation = Date(_dateCredit.value)
+            creditValue = _valueCredit.value.toDouble()
+            percentage = _percentCredit.value.toInt()
+            creditTotal = _totalCredit.value.toDouble()
+            creditDebt = _totalCredit.value.toDouble()
+        }
         _resultSaveNewCredit.value = Resource.Loading()
-
-        newCredit.timestampCreation =
-            convertDateToTimestamp(_fechaCreditMutableLiveData.value, _hourCredit.value)
-        newCredit.creditValue = _valueCredit.value!!.trim {
-            it <= ' '
-        }.toDouble()
-        newCredit.percentage = _porcentajeCredit.value!!.trim { it <= ' ' }.toInt()
-        newCredit.creditTotal = _totalCredit.value!!.trim { it <= ' ' }.toDouble()
-        newCredit.creditDebt = _totalCredit.value!!.trim { it <= ' ' }.toDouble()
 
         /*when (_radioGrupSelecte.value) {
             R.id.radio_button_nuevo_credito_diario -> {
@@ -138,39 +166,31 @@ class RegisterCreditViewModel @Inject constructor(
         }*/
 
 
-        return newCredit.toDomain()
+        return newCredit
     }
 
 
-    val isFormCreditValid: Boolean
+    private val isFormCreditValid: Boolean
         get() {
             when {
-                TextUtils.isEmpty(_fechaCreditMutableLiveData.value) -> {
-                    _fechaCreditMessageError.value = "Seleciona una fecha"
+                TextUtils.isEmpty(_dateCredit.value) -> {
+                    _dateCreditMessageError.value = "Seleciona una fecha"
                     return false
                 }
-                TextUtils.isEmpty(_hourCredit.value) -> {
-                    _hourCreditMessageError.value = "Establece una hora"
-                    return false
-                }
+
                 TextUtils.isEmpty(_valueCredit.value) -> {
                     _valueCreditMessageError.value = "Escribe un valor"
                     return false
                 }
-                TextUtils.isEmpty(_porcentajeCredit.value) -> {
-                    _porcentajeCreditMessageError.value = "Establece un porcentaje"
+                TextUtils.isEmpty(_percentCredit.value) -> {
+                    _percentCreditMessageError.value = "Establece un porcentaje"
                     return false
                 }
-                TextUtils.isEmpty(_totalCredit.value) -> {
-                    _totalCreditMessageError.value = "Total de credito"
-                    return false
-                }
+
                 else -> {
-                    _fechaCreditMessageError.value = ""
-                    _hourCreditMessageError.value = ""
+                    _dateCreditMessageError.value = ""
                     _valueCreditMessageError.value = ""
-                    _porcentajeCreditMessageError.value = ""
-                    _totalCreditMessageError.setValue("")
+                    _percentCreditMessageError.value = ""
                     return true
                 }
             }
@@ -179,39 +199,19 @@ class RegisterCreditViewModel @Inject constructor(
     /**
      * @return
      */
-    val isFormModalityCreditValid: Boolean
+    private val isFormModalityCreditValid: Boolean
         get() {
             var isValid = true
-            if (TextUtils.isEmpty(_plazoCredit.value)) {
-                _plazoCreditMessageError.value = "Estable una plazo"
+            if (TextUtils.isEmpty(_amountFees.value)) {
+                _amountFeesMessageError.value = "Estable una plazo"
                 isValid = false
-            } else if (TextUtils.isEmpty(_valueCuotaCredit.value)) {
-                _valueCuotaCreditMessageError.value = "Valor cuota"
+            } else if (TextUtils.isEmpty(quotaValue.value)) {
+                _valueQuotaCreditMessageError.value = "Valor cuota"
                 isValid = false
             }
             return isValid
         }
 
-
-    private fun initDateForEditText() {
-        val date = Date()
-        val formatFecha = SimpleDateFormat("dd/mm/yyy")
-        val formatHora = SimpleDateFormat("hh:mm a")
-        val fecha = formatFecha.format(date)
-        val hora = formatHora.format(date)
-        _fechaCreditMutableLiveData.value = fecha
-        _hourCredit.value = hora
-    }
-
-    fun resertForm() {
-        _valueCredit.value = ""
-        _porcentajeCredit.value = ""
-        _valueCuotaCredit.value = ""
-        _totalCredit.value = ""
-        _plazoCredit.value = ""
-        _valueCuotaCredit.value = ""
-        _resultSaveNewCredit.value = Resource.Loading()
-    }
 
     companion object {
         private fun convertDateToTimestamp(fecha: String?, hora: String?): Timestamp {

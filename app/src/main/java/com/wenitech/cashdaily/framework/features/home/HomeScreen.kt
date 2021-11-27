@@ -1,6 +1,5 @@
 package com.wenitech.cashdaily.framework.features.home
 
-import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,38 +20,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.domain.entities.Box
 import com.wenitech.cashdaily.domain.entities.Ruta
 import com.wenitech.cashdaily.framework.DataExample.routesData
-import com.wenitech.cashdaily.framework.component.commons.CashAvailableCardView
+import com.wenitech.cashdaily.framework.component.card.CardViewInfoBox
 import com.wenitech.cashdaily.framework.component.commons.PrimaryButtonExtended
-import com.wenitech.cashdaily.framework.features.authentication.AuthenticationActivity
 import com.wenitech.cashdaily.framework.features.home.viewModel.HomeViewModel
 import com.wenitech.cashdaily.framework.ui.theme.BackgroundLight
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 
 @Composable
 fun HomeScreen(
-    navController: NavController,
     viewModel: HomeViewModel = viewModel(),
-    onNewCreditClick: () -> Unit
+    onNewCreditClick: (idClient: String) -> Unit
 ) {
 
-    val context = LocalContext.current
     val boxState by viewModel.homeUiState.collectAsState()
     val routesState by viewModel.routeUiState.collectAsState()
 
-    HomeContent(boxModel = boxState, routes = routesState, onNewCreditClick = {
-        context.startActivity(Intent(context, AuthenticationActivity::class.java))
-    })
+    HomeContent(boxModel = boxState, routes = routesState, onNewCreditClick = { onNewCreditClick("idClientexample") })
 
 }
 
@@ -75,7 +67,7 @@ fun CreditList(boxModel: Box, rutaModels: List<Ruta>, onNewCreditClick: () -> Un
     LazyColumn {
 
         item {
-            CashAvailableCardView(
+            CardViewInfoBox(
                 money = boxModel.totalCash,
                 modifier = Modifier.padding(top = 24.dp, bottom = 16.dp)
             )

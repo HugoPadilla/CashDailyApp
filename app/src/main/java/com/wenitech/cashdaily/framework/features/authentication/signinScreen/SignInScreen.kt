@@ -180,7 +180,12 @@ fun SignInContent(
                 CustomTextField(
                     label = "Email",
                     value = email,
-                    icon = R.drawable.ic_mail,
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_mail),
+                            contentDescription = null
+                        )
+                    },
                     onValueChange = onEmailChange,
                     messageError = emailMsgError
                 )
@@ -188,7 +193,12 @@ fun SignInContent(
                 CustomTextField(
                     label = "Password",
                     value = password,
-                    icon = R.drawable.ic_lock,
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_lock),
+                            contentDescription = null
+                        )
+                    },
                     onValueChange = onPasswordChange,
                     messageError = passwordMsgError,
                 )
@@ -196,7 +206,12 @@ fun SignInContent(
                 CustomTextField(
                     label = "Password confirm",
                     value = passwordConfirm,
-                    icon = R.drawable.ic_lock,
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_lock),
+                            contentDescription = null
+                        )
+                    },
                     onValueChange = onPasswordConfirmChange,
                     messageError = passwordConfirmMsgError
                 )

@@ -69,7 +69,8 @@ class DataRepositoryImp(
             when (it) {
                 is Resource.Failure -> return@transform emit(Resource.Failure(it.throwable, it.msg))
                 is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.map { it.toDomain() }))
+                is Resource.Success -> return@transform emit(Resource.Success(it.data.map {
+                    it.toDomain() }))
             }
         }
     }
@@ -95,6 +96,16 @@ class DataRepositoryImp(
                 is Resource.Failure -> return@transform emit(Resource.Failure(it.throwable, it.msg))
                 is Resource.Loading -> return@transform emit(Resource.Loading())
                 is Resource.Success -> return@transform emit(Resource.Success(it.data.map { it.toDomain() }))
+            }
+        }
+    }
+
+    override suspend fun getClientById(idClient: String): Flow<Resource<Client>> {
+        return remoteDataSource.getClientById(idClient).transform {
+            when(it){
+                is Resource.Failure -> return@transform emit(Resource.Failure(it.throwable, it.msg))
+                is Resource.Loading -> return@transform emit(Resource.Loading())
+                is Resource.Success -> return@transform emit(Resource.Success(it.data.toDomain()))
             }
         }
     }
@@ -133,19 +144,18 @@ class DataRepositoryImp(
     }
 
     override suspend fun saveNewCredit(
-        uid: String,
         idClient: String,
         newCredit: Credit
     ): Flow<Resource<String>> {
-        return remoteDataSource.saveNewCredit(uid, idClient, CreditModel().toData(newCredit))
+        return remoteDataSource.saveNewCredit(idClient, CreditModel().toData(newCredit))
     }
 
     override suspend fun getCreditClient(
-        uid: String,
         idClient: String,
         idCredit: String
     ): Flow<Resource<Credit>> {
-        return remoteDataSource.getCreditClient(uid, idClient, idCredit).transform {
+        return remoteDataSource.getCreditClient(idClient, idCredit).transform {
+
             when (it) {
                 is Resource.Failure -> return@transform emit(
                     Resource.Failure(
@@ -160,11 +170,10 @@ class DataRepositoryImp(
     }
 
     override suspend fun getQuotaCredit(
-        uid: String,
         idClient: String,
         idCredit: String
     ): Flow<Resource<List<Quota>>> {
-        return remoteDataSource.getQuotaCredit(uid, idClient, idCredit).transform {
+        return remoteDataSource.getQuotaCredit(idClient, idCredit).transform {
             when (it) {
                 is Resource.Failure -> return@transform emit(
                     Resource.Failure(
@@ -179,12 +188,11 @@ class DataRepositoryImp(
     }
 
     override suspend fun saveNewQuota(
-        uid: String,
         idClient: String,
         idCredit: String,
         newQuota: Quota,
     ): Flow<Resource<String>> {
-        return remoteDataSource.saveNewQuota(uid, idClient, idCredit, QuotaModel().toData(newQuota))
+        return remoteDataSource.saveNewQuota(idClient, idCredit, QuotaModel(value = newQuota.value))
     }
 
     override suspend fun getReports(): Flow<Resource<ReportsDaily>> {

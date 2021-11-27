@@ -35,7 +35,7 @@ fun ClientModel.toDomain() = com.wenitech.cashdaily.domain.entities.Client(
     city,
     direction,
     creditActive,
-    refCredit.toString(),
+    refCredit?.id,
 )
 
 fun ClientModel.toData(client: Client): ClientModel = ClientModel(

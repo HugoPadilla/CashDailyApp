@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +30,7 @@ import com.wenitech.cashdaily.framework.features.authentication.signinScreen.vie
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalMaterialApi
 @AndroidEntryPoint
 class AuthenticationActivity() : ComponentActivity() {
 
@@ -38,15 +40,15 @@ class AuthenticationActivity() : ComponentActivity() {
             val navController = rememberNavController()
 
             CashDailyTheme {
-                NavHost(navController = navController, startDestination = Navigation.Start.route) {
+                NavHost(navController = navController, startDestination = AuthDestinations.Start.route) {
 
-                    composable(Navigation.Start.route) {
+                    composable(AuthDestinations.Start.route) {
                         AuthenticationHomeScreen(onNavigation = {
                             navController.navigate(it)
                         })
                     }
 
-                    composable(Navigation.Login.route) {
+                    composable(AuthDestinations.Login.route) {
                         val viewModel = hiltViewModel<LoginViewModel>()
                         LoginScreen(
                             navController = navController,
@@ -57,7 +59,7 @@ class AuthenticationActivity() : ComponentActivity() {
                         )
                     }
 
-                    composable(Navigation.SingIn.route) {
+                    composable(AuthDestinations.SingIn.route) {
                         val viewModel = hiltViewModel<SignInViewModel>()
                         SignInScreen(
                             navController = navController,
@@ -68,7 +70,7 @@ class AuthenticationActivity() : ComponentActivity() {
                         )
                     }
 
-                    composable(Navigation.RecoverPassword.route) {
+                    composable(AuthDestinations.RecoverPassword.route) {
                         val viewModel = hiltViewModel<RecoverPasswordViewModel>()
                         RecoverPasswordScreen(navController = navController, viewModel = viewModel)
                     }
@@ -111,7 +113,7 @@ fun AuthenticationHomeScreen(onNavigation: (route: String) -> Unit) {
             )
 
             Button(
-                onClick = { onNavigation(Navigation.Login.route) },
+                onClick = { onNavigation(AuthDestinations.Login.route) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp)

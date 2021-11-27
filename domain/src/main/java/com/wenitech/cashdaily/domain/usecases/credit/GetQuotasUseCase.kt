@@ -8,9 +8,8 @@ class GetQuotasUseCase(
     private val dataRepository: DataRepository
 ) {
     suspend operator fun invoke(
-        uid: String,
         idClient: String,
         idCredit: String
     ): Flow<com.wenitech.cashdaily.domain.common.Resource<List<Quota>>> =
-        dataRepository.getQuotaCredit(uid, idClient, idCredit)
+        dataRepository.getQuotaCredit(idClient, idCredit)
 }

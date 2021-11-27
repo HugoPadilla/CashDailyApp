@@ -48,8 +48,12 @@ class RemoteDataSourceImpl(
         val listener = queryDocument.addSnapshotListener { documentSnapshot, error ->
             if (documentSnapshot != null && documentSnapshot.exists()) {
                 offer(
-                    Resource.Success(documentSnapshot.toObject(
-                    UserModel::class.java)))
+                    Resource.Success(
+                        documentSnapshot.toObject(
+                            UserModel::class.java
+                        )
+                    )
+                )
             }
 
             error?.let {
@@ -71,8 +75,12 @@ class RemoteDataSourceImpl(
         val listener = query.addSnapshotListener { documentSnapshot, error ->
             if (documentSnapshot != null && documentSnapshot.exists()) {
                 offer(
-                    Resource.Success(documentSnapshot.toObject(
-                    BoxModel::class.java)))
+                    Resource.Success(
+                        documentSnapshot.toObject(
+                            BoxModel::class.java
+                        )
+                    )
+                )
             }
 
             error?.let {
@@ -98,8 +106,12 @@ class RemoteDataSourceImpl(
             val listener = query.addSnapshotListener { documentSnapshot, error ->
                 if (documentSnapshot != null) {
                     offer(
-                        Resource.Success(documentSnapshot.toObjects(
-                        CashTransactionsModel::class.java)))
+                        Resource.Success(
+                            documentSnapshot.toObjects(
+                                CashTransactionsModel::class.java
+                            )
+                        )
+                    )
                 }
 
                 error?.let {
@@ -145,13 +157,21 @@ class RemoteDataSourceImpl(
                     // Database writing
                     val cashTransactions =
                         CashTransactionsModel(null, null, description, true, value)
-                    transaction.update(refBox, BoxModel::totalCash.name, serverBoxModel.totalCash.plus(value))
+                    transaction.update(
+                        refBox,
+                        BoxModel::totalCash.name,
+                        serverBoxModel.totalCash.plus(value)
+                    )
                     transaction.set(refMovement, cashTransactions)
                 }
                 if (value < 0) {
                     val cashTransactions =
                         CashTransactionsModel(null, null, description, false, value)
-                    transaction.update(refBox, BoxModel::totalCash.name, serverBoxModel.totalCash.plus(value))
+                    transaction.update(
+                        refBox,
+                        BoxModel::totalCash.name,
+                        serverBoxModel.totalCash.plus(value)
+                    )
                     transaction.set(refMovement, cashTransactions)
                 }
 
@@ -183,8 +203,12 @@ class RemoteDataSourceImpl(
                 if (querySnapshot != null && !querySnapshot.isEmpty) {
                     lastClientReceived = querySnapshot.documents.last()
                     offer(
-                        Resource.Success(querySnapshot.toObjects(
-                        ClientModel::class.java)))
+                        Resource.Success(
+                            querySnapshot.toObjects(
+                                ClientModel::class.java
+                            )
+                        )
+                    )
                 }
 
                 error?.let {
@@ -211,8 +235,12 @@ class RemoteDataSourceImpl(
             val listener = query.addSnapshotListener { querySnapshot, error ->
                 if (querySnapshot != null && !querySnapshot.isEmpty) {
                     offer(
-                        Resource.Success(querySnapshot.toObjects(
-                        ClientModel::class.java)))
+                        Resource.Success(
+                            querySnapshot.toObjects(
+                                ClientModel::class.java
+                            )
+                        )
+                    )
                 }
 
                 error?.let {
@@ -242,8 +270,12 @@ class RemoteDataSourceImpl(
 
                 if (value != null && !value.isEmpty) {
                     offer(
-                        Resource.Success(value.toObjects(
-                        ClientModel::class.java)))
+                        Resource.Success(
+                            value.toObjects(
+                                ClientModel::class.java
+                            )
+                        )
+                    )
                 }
 
                 error?.let {
@@ -271,8 +303,12 @@ class RemoteDataSourceImpl(
             val listener = query.addSnapshotListener { value, error ->
                 if (value != null && !value.isEmpty) {
                     offer(
-                        Resource.Success(value.toObjects(
-                        ClientModel::class.java)))
+                        Resource.Success(
+                            value.toObjects(
+                                ClientModel::class.java
+                            )
+                        )
+                    )
                 }
 
                 error?.let {
@@ -300,7 +336,10 @@ class RemoteDataSourceImpl(
         emit(Resource.Failure(it, it.message.toString()))
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun updateClient(idClient: String, updateClientModel: ClientModel): Flow<Resource<String>> = flow {
+    override suspend fun updateClient(
+        idClient: String,
+        updateClientModel: ClientModel
+    ): Flow<Resource<String>> = flow {
         emit(Resource.Loading())
 
         val refClient = constant.getCollectionClients().document(idClient)
@@ -337,8 +376,12 @@ class RemoteDataSourceImpl(
         val listener = query.addSnapshotListener { snapshot, error ->
             if (snapshot != null && !snapshot.isEmpty) {
                 offer(
-                    Resource.Success(snapshot.toObjects(
-                    CreditModel::class.java)))
+                    Resource.Success(
+                        snapshot.toObjects(
+                            CreditModel::class.java
+                        )
+                    )
+                )
             }
 
             error?.let {
@@ -354,7 +397,6 @@ class RemoteDataSourceImpl(
     }
 
     override suspend fun getCreditClient(
-        uid: String,
         idClient: String,
         idCredit: String
     ): Flow<Resource<CreditModel>> = callbackFlow {
@@ -388,7 +430,6 @@ class RemoteDataSourceImpl(
     } as Flow<Resource<CreditModel>>
 
     override suspend fun saveNewCredit(
-        uid: String,
         idClient: String,
         newCreditModel: CreditModel
     ): Flow<Resource<String>> = flow {
@@ -439,7 +480,6 @@ class RemoteDataSourceImpl(
 
 
     override suspend fun getQuotaCredit(
-        uid: String,
         idClient: String,
         idCredit: String
     ): Flow<Resource<List<QuotaModel>>> = callbackFlow {
@@ -452,8 +492,12 @@ class RemoteDataSourceImpl(
         val listener = query.addSnapshotListener { querySnapshot, error ->
             if (querySnapshot != null && !querySnapshot.isEmpty) {
                 offer(
-                    Resource.Success(querySnapshot.toObjects(
-                    QuotaModel::class.java)))
+                    Resource.Success(
+                        querySnapshot.toObjects(
+                            QuotaModel::class.java
+                        )
+                    )
+                )
             }
 
             error?.let {
@@ -469,7 +513,6 @@ class RemoteDataSourceImpl(
     }
 
     override suspend fun saveNewQuota(
-        uid: String,
         idClient: String,
         idCredit: String,
         newQuotaModel: QuotaModel
@@ -532,4 +575,29 @@ class RemoteDataSourceImpl(
     override suspend fun getReports(): Flow<Resource<ReportsDailyModel>> = callbackFlow {
         // Todo: Implement getReports
     }
+
+    override suspend fun getClientById(idClient: String): Flow<Resource<ClientModel>> =
+        callbackFlow {
+            offer(Resource.Loading())
+
+            val query = constant.getDocumentClient(idClient)
+
+            val listener = query.addSnapshotListener { value, error ->
+
+                if (value != null && value.exists()) {
+                    offer(Resource.Success(value.toObject(ClientModel::class.java)))
+                }
+
+                error?.let {
+                    offer(Resource.Failure(it, it.message.toString()))
+                    cancel(it.message.toString())
+                }
+
+            }
+
+            awaitClose {
+                listener.remove()
+                cancel()
+            }
+        } as Flow<Resource<ClientModel>>
 }

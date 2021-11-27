@@ -1,4 +1,4 @@
-package com.wenitech.cashdaily.framework.component.commons
+package com.wenitech.cashdaily.framework.component.card
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -73,7 +73,7 @@ fun ClientItem(
                 Text(
                     modifier = Modifier.padding(top = 2.dp),
                     style = MaterialTheme.typography.caption,
-                    text = clientModel.direction
+                    text = "${clientModel.city}, ${clientModel.direction}"
                 )
             }
         }

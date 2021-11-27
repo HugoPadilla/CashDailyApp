@@ -12,6 +12,12 @@ import com.wenitech.cashdaily.domain.usecases.caja.GetUserBoxUseCase
 import com.wenitech.cashdaily.domain.usecases.caja.RemoveMoneyOnBoxUseCase
 import com.wenitech.cashdaily.domain.usecases.caja.SaveMoneyOnBoxUseCase
 import com.wenitech.cashdaily.domain.usecases.client.GetAllClientsPagingUseCase
+import com.wenitech.cashdaily.domain.usecases.client.GetClientById
+import com.wenitech.cashdaily.domain.usecases.client.SaveClientUseCase
+import com.wenitech.cashdaily.domain.usecases.credit.GetCreditClientUseCase
+import com.wenitech.cashdaily.domain.usecases.credit.GetQuotasUseCase
+import com.wenitech.cashdaily.domain.usecases.credit.SaveNewCreditUseCase
+import com.wenitech.cashdaily.domain.usecases.credit.SaveQuotaOfCreditClientUseCase
 import com.wenitech.cashdaily.domain.usecases.route.GetRoutesUseCase
 import dagger.Module
 import dagger.Provides
@@ -48,6 +54,21 @@ object ActivityModule {
     }
 
     @Provides
+    fun provideSaveClientUserCase(dataRepository: DataRepository): SaveClientUseCase {
+        return SaveClientUseCase(dataRepository)
+    }
+
+    @Provides
+    fun provideSaveNewCreditUserCase(dataRepository: DataRepository): SaveNewCreditUseCase {
+        return SaveNewCreditUseCase(dataRepository)
+    }
+
+    @Provides
+    fun provideGetClientById(dataRepository: DataRepository): GetClientById {
+        return GetClientById(dataRepository)
+    }
+
+    @Provides
     fun provideGetRoutesUseCase(routesRepository: RoutesRepository): GetRoutesUseCase {
         return GetRoutesUseCase(routesRepository)
     }
@@ -70,5 +91,20 @@ object ActivityModule {
     @Provides
     fun provideSignInUseCase(authRepository: AuthRepository): SignInUseCase {
         return SignInUseCase(authRepository)
+    }
+
+    @Provides
+    fun provideGetCreditClientUseCase(dataRepository: DataRepository): GetCreditClientUseCase {
+        return GetCreditClientUseCase(dataRepository)
+    }
+
+    @Provides
+    fun provideGetQuotasUseCase(dataRepository: DataRepository): GetQuotasUseCase {
+        return GetQuotasUseCase(dataRepository)
+    }
+
+    @Provides
+    fun provideSaveQuotaOfCreditClientUseCase(dataRepository: DataRepository): SaveQuotaOfCreditClientUseCase {
+        return SaveQuotaOfCreditClientUseCase(dataRepository)
     }
 }

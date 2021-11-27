@@ -5,8 +5,8 @@ import java.util.*
 
 class Credit(
     val id: String? = null,
-    var timestampCreation: Date? = null,
-    var timestampNextPayment: Date? = null,
+    var dateCreation: Date? = null,
+    var dateNextPayment: Date? = null,
     var paymentMethod: String = PaymentMethodEnum.Daily.name,
     var creditDebt: Double = 0.0,
     var creditQuotaValue: Double = 0.00,

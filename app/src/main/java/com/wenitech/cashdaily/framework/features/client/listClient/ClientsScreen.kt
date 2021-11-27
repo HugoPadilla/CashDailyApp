@@ -2,44 +2,51 @@ package com.wenitech.cashdaily.framework.features.client.listClient
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.domain.entities.Client
 import com.wenitech.cashdaily.framework.DataExample.clientsData
-import com.wenitech.cashdaily.framework.component.commons.ClientItem
-import com.wenitech.cashdaily.framework.features.client.listClient.viewModel.ClientViewModel
+import com.wenitech.cashdaily.framework.component.card.ClientItem
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 
 @ExperimentalMaterialApi
 @Composable
 fun ClientsComposeScreen(
-    navController: NavController,
-    viewModel: ClientViewModel = viewModel(),
-    onNewClientFloatingButtonClick: () -> Unit,
-    onClientClick: (idClient: String, refCredit: String) -> Unit
+    state: ClientState = ClientState(),
+    onNavigateNewClient: () -> Unit,
+    onNavigateClientInfo: (idClient: String, refClient: String) -> Unit
 ) {
 
-    val listClient by viewModel.listClientModel.collectAsState()
+    if (state.loading) {
+        LoadingContent()
+    } else {
+        ClientsContent(
+            listClint = state.listClient,
+            onNewClientFloatingButtonClick = onNavigateNewClient,
+            onClientClick = { idClient, refClient -> onNavigateClientInfo(idClient, refClient) }
+        )
+    }
 
-    ClientsContent(
-        listClint = listClient,
-        onNewClientFloatingButtonClick = onNewClientFloatingButtonClick,
-        onClientClick = onClientClick
-    )
+}
 
+@Composable
+fun LoadingContent() {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(text = "Loading info...", style = MaterialTheme.typography.h6)
+    }
 }
 
 
@@ -125,7 +132,7 @@ fun PreviewContent() {
     CashDailyTheme {
         ClientsContent(
             listClint = clientsData,
-            onNewClientFloatingButtonClick = {  },
+            onNewClientFloatingButtonClick = { },
             onClientClick = { idClient, refCredit ->
 
             }

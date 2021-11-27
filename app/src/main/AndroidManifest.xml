@@ -26,9 +26,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".framework.features.MainNavActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".framework.features.authentication.AuthenticationActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize" />

@@ -20,6 +20,7 @@ interface DataRepository {
     suspend fun getClientsCollectToday(): Flow<Resource<List<Client>>>
     suspend fun getBackCustomers(): Flow<Resource<List<Client>>>
     suspend fun getOverdueCustomers(): Flow<Resource<List<Client>>>
+    suspend fun getClientById(idClient: String): Flow<Resource<Client>>
     suspend fun saveNewClient(client: Client): Flow<Resource<String>>
     suspend fun updateClient(idClient: String, client: Client): Flow<Resource<String>>
     suspend fun removeClient(idClient: String): Flow<Resource<String>>
@@ -27,25 +28,21 @@ interface DataRepository {
     // CreditOfClient
     suspend fun getRecentCredits(uid: String, idClient: String): Flow<Resource<List<Credit>>>
     suspend fun getCreditClient(
-        uid: String,
         idClient: String,
         idCredit: String
     ): Flow<Resource<Credit>>
 
     suspend fun saveNewCredit(
-        uid: String,
         idClient: String,
         newCredit: Credit
     ): Flow<Resource<String>>
 
     suspend fun getQuotaCredit(
-        uid: String,
         idClient: String,
         idCredit: String
     ): Flow<Resource<List<Quota>>>
 
     suspend fun saveNewQuota(
-        uid: String,
         idClient: String,
         idCredit: String,
         newQuota: Quota,

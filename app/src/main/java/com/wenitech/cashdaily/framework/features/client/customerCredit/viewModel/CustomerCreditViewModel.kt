@@ -1,99 +1,113 @@
 package com.wenitech.cashdaily.framework.features.client.customerCredit.viewModel
 
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseAuth
 import com.wenitech.cashdaily.domain.common.Resource
-import com.wenitech.cashdaily.domain.entities.Client
-import com.wenitech.cashdaily.domain.entities.Credit
 import com.wenitech.cashdaily.domain.entities.Quota
+import com.wenitech.cashdaily.domain.usecases.client.GetClientById
 import com.wenitech.cashdaily.domain.usecases.credit.GetCreditClientUseCase
 import com.wenitech.cashdaily.domain.usecases.credit.GetQuotasUseCase
 import com.wenitech.cashdaily.domain.usecases.credit.SaveQuotaOfCreditClientUseCase
+import com.wenitech.cashdaily.framework.features.client.customerCredit.CustomerCreditState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.*
+import javax.inject.Inject
 
-
-class CustomerCreditViewModel @ViewModelInject constructor(
-    private val auth: FirebaseAuth,
+@HiltViewModel
+class CustomerCreditViewModel @Inject constructor(
+    private val getClientUseCase: GetClientById,
     private val getCreditClientUseCase: GetCreditClientUseCase,
     private val getQuotasUseCase: GetQuotasUseCase,
     private val saveQuotaOfCreditClientUseCase: SaveQuotaOfCreditClientUseCase,
 ) : ViewModel() {
 
-    private val _idClient: MutableLiveData<String> = MutableLiveData()
-    val idClient: LiveData<String> get() = _idClient
+    val TAG = "RESULT"
 
-    private val _loading = MutableStateFlow(true)
-    val loading: StateFlow<Boolean> = _loading
+    private val _uiState = MutableStateFlow(CustomerCreditState())
+    val uiState: StateFlow<CustomerCreditState> get() = _uiState
 
-    private val _clientModel: MutableStateFlow<Client> = MutableStateFlow(Client())
-    val clientModel: StateFlow<Client> = _clientModel
+    private val _idClient: MutableStateFlow<String> = MutableStateFlow("")
 
-    private val _creditModel: MutableStateFlow<Credit> = MutableStateFlow(Credit())
-    val customerState: StateFlow<Credit> = _creditModel
-
-    private val _listQuotas: MutableStateFlow<List<Quota>> = MutableStateFlow(listOf())
-    val quotaModelCustomer: StateFlow<List<Quota>> = _listQuotas
-
-    private val _resultNewQuota: MutableLiveData<com.wenitech.cashdaily.domain.common.Resource<String>> =
-        MutableLiveData()
-    val resultNewQuota: LiveData<com.wenitech.cashdaily.domain.common.Resource<String>> get() = _resultNewQuota
-
-
-    fun setArgs(idClient: String, refCredit: String) {
-        getCreditClient(idClient = idClient, idCredit = refCredit)
+    init {
     }
 
+    fun setIdClient(idClient: String?, refCredit: String?) {
+        _idClient.value = idClient ?: ""
+
+        idClient?.let {
+            getCurrentClient(it)
+        }
+
+        if (refCredit != null) {
+            getCreditClient(idClient = idClient!!, idCredit = refCredit)
+        }
+    }
+
+    /**
+     * Inserta nueva cuota en el credito actual
+     */
     fun setNewQuota(valueQuota: Double, idClient: String, refCreditActive: String) {
         viewModelScope.launch {
 
-            val uid = auth.uid
+            saveQuotaOfCreditClientUseCase(
+                idClient,
+                refCreditActive,
+                Quota(value = valueQuota)
+            ).collect {
+                when (it) {
+                    is Resource.Failure -> {
 
-            if (!uid.isNullOrEmpty() && idClient.isNotEmpty() && refCreditActive.isNotEmpty()) {
+                    }
+                    is Resource.Loading -> {
 
-                val newQuota = Quota(
-                    null,
-                    Date(),
-                    auth.currentUser!!.displayName!!,
-                    valueQuota
-                )
+                    }
+                    is Resource.Success -> {
 
-                saveQuotaOfCreditClientUseCase(uid, idClient, refCreditActive, newQuota).collect {
-                    _resultNewQuota.value = it
+                    }
                 }
-            } else {
-                _resultNewQuota.value =
-                    Resource.Failure(Throwable("No has iniciado sesion"))
+            }
+
+        }
+    }
+
+    private fun getCurrentClient(idClient: String){
+        viewModelScope.launch {
+            getClientUseCase(idClient = idClient).collect { clientResult ->
+                when(clientResult){
+                    is Resource.Failure -> {
+
+                    }
+                    is Resource.Loading -> {
+
+                    }
+                    is Resource.Success -> {
+                        _uiState.value = _uiState.value.copy(
+                            client = clientResult.data
+                        )
+                    }
+                }
             }
         }
     }
 
     private fun getCreditClient(idClient: String, idCredit: String) {
         viewModelScope.launch {
-
-            val uid = auth.uid
-
-            if (!uid.isNullOrEmpty() && idClient.isNotEmpty() && idCredit.isNotEmpty()) {
-                getCreditClientUseCase(uid, idClient, idCredit).collect { creditResult ->
-                    when (creditResult) {
-                        is Resource.Failure -> {
-                            _loading.value = false
-                        }
-                        is Resource.Loading -> {
-                            _loading.value = true
-                        }
-                        is Resource.Success -> {
-                            _loading.value = false
-                            _creditModel.value = creditResult.data
-                            getQuotasCreditClient(idClient = idClient, refCreditActive = idCredit)
-                        }
+            getCreditClientUseCase(idClient, idCredit).collect { creditResult ->
+                when (creditResult) {
+                    is Resource.Failure -> {
+                        Log.d(TAG, "getCreditClient: Ocurrio un error")
+                    }
+                    is Resource.Loading -> {
+                        Log.d(TAG, "getCreditClient: Cargando informacion")
+                    }
+                    is Resource.Success -> {
+                        Log.d(TAG, "getCreditClient: ${creditResult.data}")
+                        _uiState.value = _uiState.value.copy(credit = creditResult.data)
+                        getQuotasCreditClient(idClient = idClient, refCreditActive = idCredit)
                     }
                 }
             }
@@ -103,24 +117,22 @@ class CustomerCreditViewModel @ViewModelInject constructor(
     private fun getQuotasCreditClient(idClient: String, refCreditActive: String) {
         viewModelScope.launch {
 
-            val uid = auth.uid
-
-            if (!uid.isNullOrEmpty() && idClient.isNotEmpty() && refCreditActive.isNotEmpty()) {
-                getQuotasUseCase(uid, idClient, refCreditActive).collect { result ->
-                    when (result) {
-                        is Resource.Failure -> {
-
-                        }
-                        is Resource.Loading -> {
-
-                        }
-                        is Resource.Success -> {
-
-                        }
+            getQuotasUseCase(idClient, refCreditActive).collect { result ->
+                when (result) {
+                    is Resource.Failure -> {
+                        Log.d(
+                            TAG,
+                            "getQuotasCreditClient: Se presento un error ${result.throwable}"
+                        )
+                    }
+                    is Resource.Loading -> {
+                        Log.d(TAG, "getQuotasCreditClient: Cargando cuotas")
+                    }
+                    is Resource.Success -> {
+                        _uiState.value = _uiState.value.copy(listQuota = result.data)
                     }
                 }
             }
         }
     }
-
 }

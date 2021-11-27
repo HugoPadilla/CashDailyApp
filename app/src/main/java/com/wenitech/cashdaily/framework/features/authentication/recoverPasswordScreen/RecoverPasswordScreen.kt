@@ -20,10 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.domain.common.Status
-import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
 import com.wenitech.cashdaily.framework.component.commons.PrimaryButtonExtended
 import com.wenitech.cashdaily.framework.component.commons.TextButtonRegister
-import com.wenitech.cashdaily.framework.features.authentication.Navigation
+import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
+import com.wenitech.cashdaily.framework.features.authentication.AuthDestinations
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 import kotlinx.coroutines.flow.collectLatest
 
@@ -72,7 +72,7 @@ fun RecoverPasswordScreen(
 
     RecoverPasswordContent(
         onNavigationUp = { navController.navigateUp() },
-        onNavigationRegister = { navController.navigate(Navigation.SingIn.route) },
+        onNavigationRegister = { navController.navigate(AuthDestinations.SingIn.route) },
         onSendEmailListener = { viewModel.sendEmailRecover(it) },
         onValueChange = { viewModel.emailValueChange(it) },
         value = emailValue,
@@ -147,7 +147,12 @@ private fun RecoverPasswordContent(
                 label = "Correo electronico",
                 value = value,
                 messageError = emailValueMessageError,
-                icon = R.drawable.ic_mail,
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_mail),
+                        contentDescription = null
+                    )
+                },
                 onValueChange = onValueChange
             )
 
