@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.domain.common.Status
-import com.wenitech.cashdaily.framework.component.commons.PrimaryButtonExtended
-import com.wenitech.cashdaily.framework.component.commons.TextButtonRegister
+import com.wenitech.cashdaily.framework.component.button.PrimaryButtonExtended
+import com.wenitech.cashdaily.framework.component.button.TextButtonRegister
 import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
 import com.wenitech.cashdaily.framework.features.authentication.AuthDestinations
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme

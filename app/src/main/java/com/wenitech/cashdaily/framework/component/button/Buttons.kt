@@ -1,9 +1,9 @@
-package com.wenitech.cashdaily.framework.component.commons
+package com.wenitech.cashdaily.framework.component.button
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -15,32 +15,32 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
+import java.util.*
 
 @Composable
 fun PrimaryButtonExtended(
+    text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    contentPaddingValues: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
     enabled: Boolean = true,
-    text: String,
+    isUpperCase: Boolean = true,
+    elevation: ButtonElevation = ButtonDefaults.elevation(),
     @DrawableRes iconDrawable: Int? = null,
-    shape: Dp? = null
+    shape: Dp? = null,
+    colors: ButtonColors = ButtonDefaults.buttonColors()
 ) {
 
     Button(
         onClick = onClick,
+        modifier = modifier,
         enabled = enabled,
-        modifier = modifier
-            .fillMaxWidth(),
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.surface,
-            contentColor = MaterialTheme.colors.secondary
-        ),
-        shape = if (shape != null) {
-            RoundedCornerShape(shape)
-        } else MaterialTheme.shapes.small
+        elevation = elevation,
+        shape = shape?.let { RoundedCornerShape(it) } ?: MaterialTheme.shapes.small,
+        colors = colors
     ) {
         Row(
-            modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
+            modifier = Modifier.padding(paddingValues = contentPaddingValues),
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (iconDrawable != null) {
@@ -53,7 +53,7 @@ fun PrimaryButtonExtended(
 
             Text(
                 style = MaterialTheme.typography.button,
-                text = text,
+                text = if (isUpperCase) text.uppercase(Locale.getDefault()) else text,
             )
         }
     }

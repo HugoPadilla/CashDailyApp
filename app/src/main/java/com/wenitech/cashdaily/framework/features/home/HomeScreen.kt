@@ -30,7 +30,7 @@ import com.wenitech.cashdaily.domain.entities.Box
 import com.wenitech.cashdaily.domain.entities.Ruta
 import com.wenitech.cashdaily.framework.DataExample.routesData
 import com.wenitech.cashdaily.framework.component.card.CardViewInfoBox
-import com.wenitech.cashdaily.framework.component.commons.PrimaryButtonExtended
+import com.wenitech.cashdaily.framework.component.button.PrimaryButtonExtended
 import com.wenitech.cashdaily.framework.features.home.viewModel.HomeViewModel
 import com.wenitech.cashdaily.framework.ui.theme.BackgroundLight
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
