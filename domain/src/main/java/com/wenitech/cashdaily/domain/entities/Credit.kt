@@ -3,7 +3,10 @@ package com.wenitech.cashdaily.domain.entities
 import com.wenitech.cashdaily.domain.constant.PaymentMethodEnum
 import java.util.*
 
-class Credit(
+/**
+ * Data Class que
+ */
+data class Credit(
     val id: String? = null,
     var dateCreation: Date? = null,
     var dateNextPayment: Date? = null,
