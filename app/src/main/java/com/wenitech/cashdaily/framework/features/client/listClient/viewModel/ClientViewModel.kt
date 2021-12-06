@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ClientViewModel @Inject constructor(
-    private val getAllClientsPagingUseCase: GetAllClientsPagingUseCase,
+    private val getAllClientsPagingUseCase: GetAllClientsPagingUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ClientState())
@@ -22,6 +22,11 @@ class ClientViewModel @Inject constructor(
 
     init {
         fetchClients()
+    }
+
+    fun searchClientByName(valueSearch: String){
+        /* Todo: Implementar funion que usea el caso de uso para buscar cliente por nombre
+         */
     }
 
     private fun fetchClients() {

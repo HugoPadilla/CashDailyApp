@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -34,6 +35,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AuthenticationActivity() : ComponentActivity() {
 
+    @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -79,6 +81,7 @@ class AuthenticationActivity() : ComponentActivity() {
         }
     }
 
+    @ExperimentalAnimationApi
     private fun startActivityMain() {
         val intent = Intent(
             this@AuthenticationActivity,
