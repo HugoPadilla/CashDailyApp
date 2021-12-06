@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,6 +30,7 @@ import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 fun ClientItem(
     clientModel: Client,
     modifier: Modifier = Modifier,
+    backgroundColor: Color = MaterialTheme.colors.surface,
     elevation: Dp = 0.dp,
     cornerRadius: Dp = 10.dp,
     onClick: (idClient: String, refCredit: String) -> Unit
@@ -36,7 +38,7 @@ fun ClientItem(
 
     Card(
         elevation = elevation,
-        backgroundColor = MaterialTheme.colors.surface,
+        backgroundColor = backgroundColor,
         shape = RoundedCornerShape(cornerRadius),
         modifier = modifier.fillMaxWidth(),
         onClick = {

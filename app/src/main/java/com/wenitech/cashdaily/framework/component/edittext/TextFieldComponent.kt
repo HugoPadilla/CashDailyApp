@@ -30,7 +30,8 @@ fun CustomTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    singleLine: Boolean = true
+    singleLine: Boolean = true,
+    readOnly: Boolean = false
 ) {
     Column(
         modifier = modifier
@@ -48,7 +49,8 @@ fun CustomTextField(
             visualTransformation = visualTransformation,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
-            singleLine = singleLine
+            singleLine = singleLine,
+            readOnly = readOnly,
         )
 
         messageError?.let { message ->

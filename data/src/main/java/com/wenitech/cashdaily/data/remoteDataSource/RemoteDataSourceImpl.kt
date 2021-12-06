@@ -209,6 +209,8 @@ class RemoteDataSourceImpl(
                             )
                         )
                     )
+                } else {
+                    offer(Resource.Success(listOf<ClientModel>()))
                 }
 
                 error?.let {

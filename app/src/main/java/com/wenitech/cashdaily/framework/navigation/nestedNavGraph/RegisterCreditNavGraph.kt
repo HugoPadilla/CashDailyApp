@@ -1,18 +1,16 @@
 package com.wenitech.cashdaily.framework.navigation.nestedNavGraph
 
-import android.util.Log
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
 import androidx.navigation.navigation
-import com.wenitech.cashdaily.framework.features.client.listClient.ClientsComposeScreen
-import com.wenitech.cashdaily.framework.features.credit.newCredit.RegisterCreditScreen
-import com.wenitech.cashdaily.framework.features.credit.newCredit.RegisterCreditViewModel
+import com.wenitech.cashdaily.framework.features.client.listClient.viewModel.ClientViewModel
+import com.wenitech.cashdaily.framework.features.credit.registerCredit.RegisterCreditScreen
+import com.wenitech.cashdaily.framework.features.credit.registerCredit.RegisterCreditViewModel
+import com.wenitech.cashdaily.framework.features.credit.registerCredit.SelectedClientScreen
 import com.wenitech.cashdaily.framework.navigation.CREDIT_ROUTE
 import com.wenitech.cashdaily.framework.navigation.ClientDestinations
 
@@ -24,17 +22,31 @@ fun NavGraphBuilder.registerCreditNavGraph(navController: NavHostController) {
     ) {
 
         composable(route = ClientDestinations.SelectClient.route) {
-            // Todo: Composable selected client
-            ClientsComposeScreen(onNavigateNewClient = { /*TODO*/ }, onNavigateClientInfo = { idClient, refClient ->  })
+
+            val viewModel: ClientViewModel = hiltViewModel()
+            val uiState by viewModel.uiStates.collectAsState()
+
+            val (valueSearch, onValueSearchChange) = remember {
+                mutableStateOf("")
+            }
+
+            SelectedClientScreen(
+                listClient = uiState.listClient,
+                valueSearch = valueSearch,
+                onValueSearchChange = onValueSearchChange,
+                onBackNavigateClick = { navController.navigateUp() },
+                onSearchClick = viewModel::searchClientByName,
+                onNextStepClick = {
+                    navController.navigate(route = ClientDestinations.RegisterCredit.route + "/$it")
+                },
+                onNewClientClick = {
+                    // Todo: Navegar al formulario para agregar un nuevo cliente
+                })
+
         }
 
         composable(
-            route = ClientDestinations.RegisterCredit.route + "/{idClient}",
-            arguments = listOf(
-                navArgument(name = "idClient") {
-                    type = NavType.StringType
-                }
-            )
+            route = ClientDestinations.RegisterCredit.route + "/{idClient}"
         ) { navBackStackEntry ->
 
             val viewModel: RegisterCreditViewModel = hiltViewModel()
@@ -42,9 +54,23 @@ fun NavGraphBuilder.registerCreditNavGraph(navController: NavHostController) {
             val idClientArg = navBackStackEntry.arguments?.getString("idClient")
             LaunchedEffect(key1 = Unit, block = {
                 idClientArg?.let { viewModel.setIdClient(it) }
-                Log.d("LAUNCHED_EFFECT", idClientArg.toString())
             })
-            RegisterCreditScreen()
+
+            val uiState by viewModel.registerCreditUiState.collectAsState()
+
+            RegisterCreditScreen(
+                uiState = uiState,
+                onDismissDialog = viewModel::onDismissDialog,
+                onSuccessButtonClick = viewModel::onSuccessDialog,
+                onDateCredit = viewModel::setDateCredit,
+                onCreditValue = viewModel::setCreditValue,
+                onCreditPercent = viewModel::setCreditPercent,
+                onOptionSelected = viewModel::setOptionSelected,
+                onAmountFees = viewModel::setAmountFees,
+                onCreditQuotaValue = viewModel::setCreditQuotaValue,
+                onBackNavigateClick = { navController.navigateUp() },
+                onSaveButtonClick = viewModel::saveCustomerCreditFromClient
+            )
         }
     }
 }

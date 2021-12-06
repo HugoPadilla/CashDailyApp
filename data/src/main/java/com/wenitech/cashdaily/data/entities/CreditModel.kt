@@ -37,16 +37,16 @@ fun CreditModel.toDomain() = Credit(
 )
 
 fun CreditModel.toData(credit: Credit) = CreditModel(
-    credit.id,
-    Timestamp(credit.dateCreation!!.time, 0),
-    Timestamp(credit.dateNextPayment!!.time, 0),
-    credit.paymentMethod,
-    credit.creditDebt,
-    credit.creditQuotaValue,
-    credit.creditTotal,
-    credit.creditValue,
-    credit.percentage,
-    credit.amountFees,
-    credit.isChargedOnSaturday,
-    credit.isChargedOnSunday
+    id = credit.id,
+    timestampCreation = credit.dateCreation?.let { Timestamp(it) },
+    timestampNextPayment = credit.dateNextPayment?.let { Timestamp(it) },
+    paymentMethod = credit.paymentMethod,
+    creditDebt = credit.creditDebt,
+    creditQuotaValue = credit.creditQuotaValue,
+    creditTotal = credit.creditTotal,
+    creditValue = credit.creditValue,
+    percentage = credit.percentage,
+    amountFees = credit.amountFees,
+    isChargedOnSaturday = credit.isChargedOnSaturday,
+    isChargedOnSunday = credit.isChargedOnSunday
 )
