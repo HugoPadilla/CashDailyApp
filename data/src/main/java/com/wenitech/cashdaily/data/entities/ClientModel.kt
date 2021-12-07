@@ -23,7 +23,7 @@ data class ClientModel(
     val refCredit: DocumentReference? = null,
 )
 
-fun ClientModel.toDomain() = com.wenitech.cashdaily.domain.entities.Client(
+fun ClientModel.toDomain() = Client(
     id,
     creationDate?.toDate(),
     paymentDate?.toDate(),
@@ -38,16 +38,17 @@ fun ClientModel.toDomain() = com.wenitech.cashdaily.domain.entities.Client(
     refCredit?.id,
 )
 
-fun ClientModel.toData(client: Client): ClientModel = ClientModel(
+fun toData(client: Client): ClientModel = ClientModel(
     id = client.id,
-    creationDate = Timestamp(client.creationDate!!.time, 0),
-    paymentDate = Timestamp(client.paymentDate!!.time, 0),
-    finishDate = Timestamp(client.finishDate!!.time, 0),
+    creationDate = client.creationDate?.let { Timestamp(it) },
+    paymentDate = client.paymentDate?.let { Timestamp(it) },
+    finishDate = client.finishDate?.let { Timestamp(it) },
     idNumber = client.idNumber,
     fullName = client.fullName,
     gender = client.gender,
     phoneNumber = client.phoneNumber,
     city = client.city,
     direction = client.direction,
-    creditActive = client.creditActive, refCredit = null
+    creditActive = client.creditActive,
+    refCredit = null
 )
