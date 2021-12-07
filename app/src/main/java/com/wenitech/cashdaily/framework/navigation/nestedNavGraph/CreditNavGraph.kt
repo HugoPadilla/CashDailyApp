@@ -7,6 +7,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.navigation
 import com.wenitech.cashdaily.framework.features.client.customerCredit.CustomerCreditScreen
 import com.wenitech.cashdaily.framework.features.client.customerCredit.viewModel.CustomerCreditViewModel
@@ -17,10 +18,13 @@ import com.wenitech.cashdaily.framework.navigation.ClientDestinations
 fun NavGraphBuilder.customerCreditNavGraph(navController: NavHostController) {
     navigation(
         startDestination = ClientDestinations.CustomerCredit.route,
-        route = "$CREDIT_ROUTE/{idClient}/{refCredit}"
+        route = "$CREDIT_ROUTE?idClient={idClient}?refCredit={refCredit}"
     ) {
         composable(
-            route = ClientDestinations.CustomerCredit.route + "/{idClient}" + "/{refCredit}"
+            route = ClientDestinations.CustomerCredit.route + "?idClient={idClient}" + "?refCredit={refCredit}",
+            arguments = listOf(
+                navArgument(name = "idClient") { nullable = true },
+                navArgument(name = "refCredit") { nullable = true })
         ) { navBackStackEntire ->
             val idClient = navBackStackEntire.arguments?.getString("idClient")
             val refCredit = navBackStackEntire.arguments?.getString("refCredit")

@@ -51,7 +51,7 @@ fun MainNavGraph(
                 onNavigateNewClient = {  },
                 onNavigateClientInfo = { idClient, refCredit ->
                     navController.navigate(
-                        route = ClientDestinations.CustomerCredit.route + "/$idClient" + "/$refCredit"
+                        route = ClientDestinations.CustomerCredit.route + "?idClient=$idClient" + "?refCredit=$refCredit"
                     )
                 }
             )
