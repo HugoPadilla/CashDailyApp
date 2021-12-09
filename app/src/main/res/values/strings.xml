@@ -8,35 +8,24 @@
     <string name="google_storage_bucket" translatable="false">cash-daily-433cc.appspot.com</string>
     <string name="project_id" translatable="false">cash-daily-433cc</string>
 
-    <string name="app_name">Cash Daily</string>
-
-    <string name="open_drawer">abrir</string>
-    <string name="close_drawer">cerrar</string>
-    <string name="title_signin">Crear cuenta de usuario</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="title_form_payment_fragment">Forma de cobro</string>
-
-    <string name="email_card_detail_transition_name">email_card_transition</string>
-
-    <string name="price_format">%,.2f $</string>
-
-    <string name="menu_item_notifications">Notificasiones</string>
-    <string name="menu_item_theme">Temas</string>
-    <string name="menu_item_exit">Salir</string>
-
-    <string name="dialog_session_close_title">Cerrar sesion</string>
-    <string name="dialog_session_close_message">Estas a punto de salir de tu cuenta y es posible que exista alguna informacion sin guardar en la nube. Asegurate de haber sincronizado todo antes de salir.</string>
-    <string name="dialog_session_close_positive_button">Cerrar sesion</string>
-    <string name="dialog_session_close_negative_button">Cancelar</string>
-
     <!-- default values-->
-    <string name="default_loading">Loading...</string>
-    <string name="default_money_zero">$0.00</string>
-    <string name="default_zero_amount">0</string>
+    <string name="app_name">Cash Daily</string>
+    <string name="price_format">%,.2f $</string>
     <string name="text_sign_in">Crear una cuenta de usarios con tu correo personal. Enviaremos un mensaje de confirmacion.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_my_compose">MyComposeActivity</string>
-    <string name="title_activity_main_compose">MainActivityCompose</string>
     <string name="title_selected_client">Registrar \nnuevo credito</string>
+
+    <!--screen register client-->
+    <string name="title_new_client">Registrar nuevo cliente</string>
+    <string name="subtitle_loading_add_client">Agregando cliente</string>
+    <string name="full_name">Nombre y apellido</string>
+    <string name="identity">Identificacion</string>
+    <string name="gender">Genero</string>
+    <string name="phone">Telefono</string>
+    <string name="city">Ciudad</string>
+    <string name="direction">Dirección</string>
+    <string name="information_contact">Informacion de conctacto</string>
+    <string name="information_people">Informacion personal</string>
+    <string name="save_client">Guardar cliente</string>
+    <string name="new_client">Nuevo cliente</string>
+    <string name="accept">Aceptar</string>
 </resources>
