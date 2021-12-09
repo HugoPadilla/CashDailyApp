@@ -2,6 +2,7 @@ package com.wenitech.cashdaily.framework.component.card
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,7 +34,8 @@ fun ClientItem(
     backgroundColor: Color = MaterialTheme.colors.surface,
     elevation: Dp = 0.dp,
     cornerRadius: Dp = 10.dp,
-    onClick: (idClient: String, refCredit: String) -> Unit
+    onClick: (idClient: String, refCredit: String) -> Unit,
+    colorIndicator: Color? = null
 ) {
 
     Card(
@@ -42,7 +44,7 @@ fun ClientItem(
         shape = RoundedCornerShape(cornerRadius),
         modifier = modifier.fillMaxWidth(),
         onClick = {
-            onClick(clientModel.id?: "", clientModel.refCredit ?: "")
+            onClick(clientModel.id ?: "", clientModel.refCredit ?: "")
         }
     ) {
         Row(
@@ -66,7 +68,7 @@ fun ClientItem(
             Column(
                 modifier = Modifier
                     .padding(start = 16.dp)
-                    .weight(2f)
+                    .weight(.9f)
             ) {
                 Text(
                     style = MaterialTheme.typography.subtitle1,
@@ -78,6 +80,18 @@ fun ClientItem(
                     text = "${clientModel.city}, ${clientModel.direction}"
                 )
             }
+
+            colorIndicator?.let { color ->
+                Box(
+                    modifier = Modifier
+                        .width(18.dp)
+                        .height(18.dp)
+                        .clip(RoundedCornerShape(15.dp))
+                        .border(2.dp, color.copy(alpha = .2f), RoundedCornerShape(15.dp))
+                        .background(color = color.copy(alpha = .4f))
+                )
+            }
+
         }
     }
 
