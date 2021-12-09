@@ -79,14 +79,14 @@ fun CardViewInfoCredit(
                         )
                         Text(
                             style = MaterialTheme.typography.overline,
-                            text = "${(credit.creditDebt.toFloat() * 100f) / credit.creditTotal.toFloat()}%"
+                            text = "${((credit.creditTotal.toFloat() - credit.creditDebt.toFloat()) * 100f) / credit.creditTotal.toFloat()}%"
                         )
                     }
 
                     LinearProgressIndicator(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        progress = ((credit.creditDebt.toFloat() * 100f) / credit.creditTotal.toFloat()) / 100f
+                        progress = (((credit.creditTotal.toFloat() - credit.creditDebt.toFloat()) * 100f) / credit.creditTotal.toFloat()) / 100f
                     )
                 }
 
