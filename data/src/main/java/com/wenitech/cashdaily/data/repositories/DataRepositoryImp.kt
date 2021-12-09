@@ -111,14 +111,14 @@ class DataRepositoryImp(
     }
 
     override suspend fun saveNewClient(client: Client): Flow<Resource<String>> {
-        return remoteDataSource.saveNewClient(ClientModel().toData(client))
+        return remoteDataSource.saveNewClient(toData(client))
     }
 
     override suspend fun updateClient(
         idClient: String,
         client: Client
     ): Flow<Resource<String>> {
-        return remoteDataSource.updateClient(idClient, ClientModel().toData(client))
+        return remoteDataSource.updateClient(idClient, toData(client))
     }
 
     override suspend fun removeClient(idClient: String): Flow<Resource<String>> {

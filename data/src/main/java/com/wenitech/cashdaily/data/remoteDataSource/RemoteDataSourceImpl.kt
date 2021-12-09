@@ -332,7 +332,7 @@ class RemoteDataSourceImpl(
 
         refNewClient.set(clientModel).await()
 
-        emit(Resource.Success(""))
+        emit(Resource.Success(refNewClient.id))
 
     }.catch {
         emit(Resource.Failure(it, it.message.toString()))
