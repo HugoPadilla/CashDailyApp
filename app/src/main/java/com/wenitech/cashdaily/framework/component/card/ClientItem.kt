@@ -81,15 +81,26 @@ fun ClientItem(
                 )
             }
 
-            colorIndicator?.let { color ->
+            if(clientModel.creditActive) {
                 Box(
                     modifier = Modifier
                         .width(18.dp)
                         .height(18.dp)
                         .clip(RoundedCornerShape(15.dp))
-                        .border(2.dp, color.copy(alpha = .2f), RoundedCornerShape(15.dp))
-                        .background(color = color.copy(alpha = .4f))
+                        .border(2.dp, MaterialTheme.colors.primary.copy(alpha = .2f), RoundedCornerShape(15.dp))
+                        .background(color = MaterialTheme.colors.primary.copy(alpha = .4f))
                 )
+            } else {
+                colorIndicator?.let { color ->
+                    Box(
+                        modifier = Modifier
+                            .width(18.dp)
+                            .height(18.dp)
+                            .clip(RoundedCornerShape(15.dp))
+                            .border(2.dp, color.copy(alpha = .2f), RoundedCornerShape(15.dp))
+                            .background(color = color.copy(alpha = .4f))
+                    )
+                }
             }
 
         }
