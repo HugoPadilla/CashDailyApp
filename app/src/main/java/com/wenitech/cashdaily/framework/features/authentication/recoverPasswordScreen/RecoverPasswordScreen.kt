@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.domain.common.Status
-import com.wenitech.cashdaily.framework.component.button.PrimaryButtonExtended
+import com.wenitech.cashdaily.framework.component.button.PrimaryButton
 import com.wenitech.cashdaily.framework.component.button.TextButtonRegister
 import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
 import com.wenitech.cashdaily.framework.features.authentication.AuthDestinations
@@ -158,7 +158,7 @@ private fun RecoverPasswordContent(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            PrimaryButtonExtended(
+            PrimaryButton(
                 onClick = { onSendEmailListener(value) },
                 enabled = isValidEmail,
                 text = "Enviar email"
