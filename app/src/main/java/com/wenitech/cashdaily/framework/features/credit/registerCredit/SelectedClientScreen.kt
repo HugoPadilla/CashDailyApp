@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.domain.entities.Client
 import com.wenitech.cashdaily.framework.component.button.IconButtonCustom
-import com.wenitech.cashdaily.framework.component.button.PrimaryButtonExtended
+import com.wenitech.cashdaily.framework.component.button.PrimaryButton
 import com.wenitech.cashdaily.framework.component.card.ClientItem
 import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
@@ -128,7 +128,7 @@ fun SelectedClientScreen(
             }
         },
         floatingActionButton = {
-            PrimaryButtonExtended(
+            PrimaryButton(
                 text = "Agregar cliente",
                 onClick = onNewClientClick,
                 modifier = Modifier

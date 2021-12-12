@@ -18,7 +18,7 @@ import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 import java.util.*
 
 @Composable
-fun PrimaryButtonExtended(
+fun PrimaryButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -43,10 +43,10 @@ fun PrimaryButtonExtended(
             modifier = Modifier.padding(paddingValues = contentPaddingValues),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (iconDrawable != null) {
+            iconDrawable?.let {
                 Icon(
                     modifier = Modifier.padding(end = 16.dp),
-                    painter = painterResource(id = iconDrawable),
+                    painter = painterResource(id = it),
                     contentDescription = null,
                 )
             }
@@ -86,7 +86,7 @@ fun TextButtonRegister(
 @Composable
 fun PreviewPrimaryButtonExtended() {
     CashDailyTheme {
-        PrimaryButtonExtended(text = "PRIMARY BUTTON", onClick = {
+        PrimaryButton(text = "PRIMARY BUTTON", onClick = {
             // Todo: Preview on click button
         })
     }

@@ -21,7 +21,7 @@ import androidx.compose.ui.window.Dialog
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.framework.component.button.CustomRadioButton
 import com.wenitech.cashdaily.framework.component.button.IconButtonCustom
-import com.wenitech.cashdaily.framework.component.button.PrimaryButtonExtended
+import com.wenitech.cashdaily.framework.component.button.PrimaryButton
 import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 
@@ -117,7 +117,7 @@ fun RegisterCreditScreen(
             }
         },
         floatingActionButton = {
-            PrimaryButtonExtended(
+            PrimaryButton(
                 onClick = onSaveButtonClick,
                 text = "Guardar prestamo",
                 modifier = Modifier
@@ -134,8 +134,6 @@ fun RegisterCreditScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp)
         ) {
-
-            val context = LocalContext.current
 
             Spacer(modifier = Modifier.height(18.dp))
 
