@@ -8,7 +8,7 @@ import com.wenitech.cashdaily.domain.entities.Credit
 import com.wenitech.cashdaily.domain.usecases.credit.SaveNewCreditUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
@@ -32,7 +32,7 @@ class RegisterCreditViewModel @Inject constructor(
     )
 
     private val _uiState = MutableStateFlow(RegisterCreditUiState())
-    val registerCreditUiState: StateFlow<RegisterCreditUiState> get() = _uiState
+    val uiState = _uiState.asStateFlow()
 
     private val _idClient = MutableStateFlow("")
 

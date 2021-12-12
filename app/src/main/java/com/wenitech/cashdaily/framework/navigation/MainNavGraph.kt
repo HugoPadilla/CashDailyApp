@@ -88,6 +88,55 @@ fun MainNavGraph(
 
         registerCreditNavGraph(navController)
 
+        composable(route = "register_client") {
+
+            val viewModel: RegisterClientViewModel = hiltViewModel()
+
+            RegisterClientScreen(
+                uiState = viewModel.uiState.collectAsState().value,
+                onNavigationUp = { navController.navigateUp() },
+                onNavigationToRegisterCredit = {
+                    navController.navigate(ClientDestinations.RegisterCredit.route + "/$it")
+                },
+                onDismissDialog = viewModel::onDismissDialog,
+                onFullNameChange = viewModel::setFullName,
+                onIdNumberChange = viewModel::setIdNumber,
+                onGenderChange = viewModel::setGender,
+                onPhoneNumberChange = viewModel::setPhoneNumber,
+                onCityChange = viewModel::setCity,
+                onDirectionChange = viewModel::setDirection,
+                onRegisterClient = viewModel::saveNewClient
+            )
+        }
+
+        composable(
+            route = ClientDestinations.RegisterCredit.route + "/{idClient}"
+        ) { navBackStackEntry ->
+
+            val viewModel: RegisterCreditViewModel = hiltViewModel()
+
+            val idClientArg = navBackStackEntry.arguments?.getString("idClient")
+            LaunchedEffect(key1 = Unit, block = {
+                idClientArg?.let { viewModel.setIdClient(it) }
+            })
+
+            val uiState by viewModel.uiState.collectAsState()
+
+            RegisterCreditScreen(
+                uiState = uiState,
+                onDismissDialog = viewModel::onDismissDialog,
+                onSuccessButtonClick = viewModel::onSuccessDialog,
+                onDateCredit = viewModel::setDateCredit,
+                onCreditValue = viewModel::setCreditValue,
+                onCreditPercent = viewModel::setCreditPercent,
+                onOptionSelected = viewModel::setOptionSelected,
+                onAmountFees = viewModel::setAmountFees,
+                onCreditQuotaValue = viewModel::setCreditQuotaValue,
+                onBackNavigateClick = { navController.navigateUp() },
+                onSaveButtonClick = viewModel::saveCustomerCreditFromClient
+            )
+        }
+
     }
 
 }
