@@ -2,6 +2,7 @@ package com.wenitech.cashdaily.framework.navigation
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -13,6 +14,10 @@ import com.wenitech.cashdaily.framework.features.caja.BoxScreen
 import com.wenitech.cashdaily.framework.features.caja.viewModel.BoxViewModel
 import com.wenitech.cashdaily.framework.features.client.listClient.ClientsComposeScreen
 import com.wenitech.cashdaily.framework.features.client.listClient.viewModel.ClientViewModel
+import com.wenitech.cashdaily.framework.features.client.newClient.RegisterClientScreen
+import com.wenitech.cashdaily.framework.features.client.newClient.RegisterClientViewModel
+import com.wenitech.cashdaily.framework.features.credit.registerCredit.RegisterCreditScreen
+import com.wenitech.cashdaily.framework.features.credit.registerCredit.RegisterCreditViewModel
 import com.wenitech.cashdaily.framework.features.home.HomeScreen
 import com.wenitech.cashdaily.framework.features.home.viewModel.HomeViewModel
 import com.wenitech.cashdaily.framework.features.informe.InformeScreen
@@ -48,7 +53,7 @@ fun MainNavGraph(
             val state = viewModel.uiStates.collectAsState()
             ClientsComposeScreen(
                 state = state.value,
-                onNavigateNewClient = {  },
+                onNavigateNewClient = { navController.navigate("register_client") },
                 onNavigateClientInfo = { idClient, refCredit ->
                     navController.navigate(
                         route = ClientDestinations.CustomerCredit.route + "?idClient=$idClient" + "?refCredit=$refCredit"
