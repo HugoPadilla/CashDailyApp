@@ -4,6 +4,7 @@ import android.text.TextUtils
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wenitech.cashdaily.domain.common.ResultAuth
 import com.wenitech.cashdaily.domain.usecases.auth.RecoverPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -26,7 +27,7 @@ class RecoverPasswordViewModel @Inject constructor(
     val emailValueMessageError: StateFlow<String?> get() = _emailValueMessageError
 
     // Result state
-    private val _resultEmailRecover = Channel<com.wenitech.cashdaily.domain.common.ResultAuth<String>>(Channel.BUFFERED)
+    private val _resultEmailRecover = Channel<ResultAuth<Boolean>>(Channel.BUFFERED)
     val resultEmailRecover = _resultEmailRecover.receiveAsFlow()
 
     fun emailValueChange(emailValue: String) {

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 class RecoverPasswordUseCase(
     private val authRepository: AuthRepository
 ) {
-    suspend operator fun invoke(email: String): Flow<ResultAuth<String>> {
+    suspend operator fun invoke(email: String): Flow<ResultAuth<Boolean>> {
         return authRepository.sendRecoverPassword(email)
     }
 }

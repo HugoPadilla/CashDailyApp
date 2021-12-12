@@ -3,10 +3,7 @@ package com.wenitech.cashdaily.di
 import com.wenitech.cashdaily.domain.repositories.AuthRepository
 import com.wenitech.cashdaily.domain.repositories.DataRepository
 import com.wenitech.cashdaily.domain.repositories.RoutesRepository
-import com.wenitech.cashdaily.domain.usecases.auth.GetProfileUserUseCase
-import com.wenitech.cashdaily.domain.usecases.auth.LoginUseCase
-import com.wenitech.cashdaily.domain.usecases.auth.RecoverPasswordUseCase
-import com.wenitech.cashdaily.domain.usecases.auth.SignInUseCase
+import com.wenitech.cashdaily.domain.usecases.auth.*
 import com.wenitech.cashdaily.domain.usecases.caja.GetRecentMovementsUseCase
 import com.wenitech.cashdaily.domain.usecases.caja.GetUserBoxUseCase
 import com.wenitech.cashdaily.domain.usecases.caja.RemoveMoneyOnBoxUseCase
@@ -74,8 +71,8 @@ object ActivityModule {
     }
 
     @Provides
-    fun provideLoginUseCase(authRepository: AuthRepository): LoginUseCase {
-        return LoginUseCase(authRepository)
+    fun provideLoginUseCase(authRepository: AuthRepository): LoginEmailUseCase {
+        return LoginEmailUseCase(authRepository)
     }
 
     @Provides
@@ -89,8 +86,8 @@ object ActivityModule {
     }
 
     @Provides
-    fun provideSignInUseCase(authRepository: AuthRepository): SignInUseCase {
-        return SignInUseCase(authRepository)
+    fun provideSignInUseCase(authRepository: AuthRepository): SignInEmailUseCase {
+        return SignInEmailUseCase(authRepository)
     }
 
     @Provides
@@ -106,5 +103,26 @@ object ActivityModule {
     @Provides
     fun provideSaveQuotaOfCreditClientUseCase(dataRepository: DataRepository): SaveQuotaOfCreditClientUseCase {
         return SaveQuotaOfCreditClientUseCase(dataRepository)
+    }
+
+    // User case Authentication
+    @Provides
+    fun provideGetFirebaseAuth(authRepository: AuthRepository): GetFirebaseAuthState {
+        return GetFirebaseAuthState(authRepository)
+    }
+
+    @Provides
+    fun provideIsUserAuthUseCase(authRepository: AuthRepository): IsUserAuthenticatedUseCase {
+        return IsUserAuthenticatedUseCase(authRepository)
+    }
+
+    @Provides
+    fun provideSignOutUseCase(authRepository: AuthRepository): SignOutUseCase {
+        return SignOutUseCase(authRepository)
+    }
+
+    @Provides
+    fun providesSingInAnonymouslyUseCase(authRepository: AuthRepository): SingInAnonymouslyUseCase {
+        return SingInAnonymouslyUseCase(authRepository)
     }
 }
