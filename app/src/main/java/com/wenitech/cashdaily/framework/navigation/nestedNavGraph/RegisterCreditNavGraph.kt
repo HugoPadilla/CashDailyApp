@@ -56,7 +56,7 @@ fun NavGraphBuilder.registerCreditNavGraph(navController: NavHostController) {
                 idClientArg?.let { viewModel.setIdClient(it) }
             })
 
-            val uiState by viewModel.registerCreditUiState.collectAsState()
+            val uiState by viewModel.uiState.collectAsState()
 
             RegisterCreditScreen(
                 uiState = uiState,
