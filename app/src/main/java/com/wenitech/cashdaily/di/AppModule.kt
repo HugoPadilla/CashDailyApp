@@ -68,9 +68,8 @@ object AppModule {
     @Provides
     fun provideAuthRepository(
         auth: FirebaseAuth,
-        remoteDataSource: RemoteDataSource
     ): AuthRepository {
-        return AuthRepositoryImpl(auth, remoteDataSource)
+        return AuthRepositoryImpl(auth)
     }
 
     /**

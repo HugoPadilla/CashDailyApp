@@ -6,7 +6,7 @@ import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wenitech.cashdaily.domain.common.Status.*
-import com.wenitech.cashdaily.domain.usecases.auth.LoginUseCase
+import com.wenitech.cashdaily.domain.usecases.auth.LoginEmailUseCase
 import com.wenitech.cashdaily.framework.features.authentication.loginScreen.uiState.LoginUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase,
+    private val loginEmailUseCase: LoginEmailUseCase,
 ) : ViewModel() {
 
     private val _email = MutableStateFlow("")
@@ -44,19 +44,19 @@ class LoginViewModel @Inject constructor(
         if (isEmailValid(email) && isPasswordValid(password)) {
             viewModelScope.launch {
                 try {
-                    loginUseCase(email, password).collect {
+                    loginEmailUseCase(email, password).collect {
                         when (it.status) {
                             LOADING -> {
                                 loginUiState.value = LoginUiState.Loading
                             }
                             SUCCESS -> {
-                                loginUiState.value =LoginUiState.Success
+                                loginUiState.value = LoginUiState.Success
                             }
                             COLLICION -> {
                                 // Not used
                             }
                             FAILED -> {
-                                loginUiState.value =LoginUiState.Failed(it.messenger.toString())
+                                loginUiState.value = LoginUiState.Failed(it.messenger.toString())
                             }
                         }
                     }

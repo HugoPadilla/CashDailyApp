@@ -4,13 +4,9 @@ import com.wenitech.cashdaily.domain.common.ResultAuth
 import com.wenitech.cashdaily.domain.repositories.AuthRepository
 import kotlinx.coroutines.flow.Flow
 
-class SignInUseCase(
+class LoginEmailUseCase(
     private val authRepository: AuthRepository
 ) {
-    suspend operator fun invoke(
-        name: String,
-        email: String,
-        password: String
-    ): Flow<ResultAuth<String>> =
-        authRepository.singIn(name, email, password)
+    suspend operator fun invoke(email: String, password: String): Flow<ResultAuth<Boolean>> =
+        authRepository.loginWithEmail(email, password)
 }

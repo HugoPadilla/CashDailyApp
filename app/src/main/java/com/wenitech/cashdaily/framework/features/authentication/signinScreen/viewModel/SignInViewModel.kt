@@ -4,7 +4,7 @@ import android.text.TextUtils
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wenitech.cashdaily.domain.usecases.auth.SignInUseCase
+import com.wenitech.cashdaily.domain.usecases.auth.SignInEmailUseCase
 import com.wenitech.cashdaily.framework.features.authentication.signinScreen.uiState.SignInUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val signInUseCase: SignInUseCase
+    private val signInEmailUseCase: SignInEmailUseCase
 ) : ViewModel() {
 
     // Email used in EditText
@@ -68,17 +68,25 @@ class SignInViewModel @Inject constructor(
 
     fun onPasswordConfirmChange(passwordConfirm: String) {
         _passwordConfirm.value = passwordConfirm
-        isConfirmPasswordValid(password = password.value, passwordConfirm = passwordConfirm )
+        isConfirmPasswordValid(password = password.value, passwordConfirm = passwordConfirm)
     }
 
     fun doSignIn(email: String, password: String) {
         viewModelScope.launch {
-            signInUseCase("USER_NAME", email, password).collect {
+            signInEmailUseCase("USER_NAME", email, password).collect {
                 when (it.status) {
-                    com.wenitech.cashdaily.domain.common.Status.LOADING -> _signInUiState.send(SignInUiState.Loading)
-                    com.wenitech.cashdaily.domain.common.Status.SUCCESS -> _signInUiState.send(SignInUiState.Success)
-                    com.wenitech.cashdaily.domain.common.Status.COLLICION -> _signInUiState.send(SignInUiState.Collision(it.messenger.toString()))
-                    com.wenitech.cashdaily.domain.common.Status.FAILED -> _signInUiState.send(SignInUiState.Failed(it.messenger.toString()))
+                    com.wenitech.cashdaily.domain.common.Status.LOADING -> _signInUiState.send(
+                        SignInUiState.Loading
+                    )
+                    com.wenitech.cashdaily.domain.common.Status.SUCCESS -> _signInUiState.send(
+                        SignInUiState.Success
+                    )
+                    com.wenitech.cashdaily.domain.common.Status.COLLICION -> _signInUiState.send(
+                        SignInUiState.Collision(it.messenger.toString())
+                    )
+                    com.wenitech.cashdaily.domain.common.Status.FAILED -> _signInUiState.send(
+                        SignInUiState.Failed(it.messenger.toString())
+                    )
                 }
             }
         }
