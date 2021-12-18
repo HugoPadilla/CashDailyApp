@@ -9,9 +9,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -20,95 +19,53 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.framework.component.button.TextButtonRegister
 import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
-import com.wenitech.cashdaily.framework.features.authentication.AuthDestinations
-import com.wenitech.cashdaily.framework.features.authentication.loginScreen.uiState.LoginUiState
-import com.wenitech.cashdaily.framework.features.authentication.loginScreen.viewModel.LoginViewModel
+import com.wenitech.cashdaily.framework.features.authentication.loginScreen.state.LoginState
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 
 @Composable
 fun LoginScreen(
-    navController: NavController,
-    viewModel: LoginViewModel,
-    startActivityMain: () -> Unit
-) {
-
-    val email by viewModel.email.collectAsState()
-    val emailMessageError by viewModel.emailMessageError.collectAsState()
-
-    val password by viewModel.password.collectAsState()
-    val passwordMessageError by viewModel.passwordMessageError.collectAsState()
-
-    val isValidEmail = viewModel.isValidEmail.collectAsState()
-    val isValidPassword = viewModel.isValidPassword.collectAsState()
-
-    val isValidForm by derivedStateOf { isValidEmail.value && isValidPassword.value }
-
-    val loginUiState by viewModel.loginUiState.collectAsState()
-
-    when (loginUiState) {
-        is LoginUiState.Failed -> {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(text = "Error al iniciar sesion")
-            }
-        }
-        LoginUiState.Init -> {
-            LoginContent(
-                emailValue = email,
-                emailMessageError = emailMessageError,
-                passwordValue = password,
-                passwordMessageError = passwordMessageError,
-                isValidForm = isValidForm,
-                onEmailChange = { viewModel.onEmailChange(it) },
-                onPasswordChange = { viewModel.onPasswordChange(it) },
-                onLoginListener = { email, password ->
-                    viewModel.doLogIn(email = email, password = password)
-                },
-                onNavigateRegisterListener = { route ->
-                    navController.navigate(route)
-                }
-            )
-        }
-        LoginUiState.Loading -> {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(text = "Loading...")
-            }
-        }
-        LoginUiState.Success -> {
-            startActivityMain()
-        }
-    }
-}
-
-@Composable
-private fun LoginContent(
-    emailValue: String,
-    emailMessageError: String? = null,
-    passwordValue: String,
-    passwordMessageError: String? = null,
-    isValidForm: Boolean,
+    state: LoginState,
+    email: String,
     onEmailChange: (String) -> Unit,
+    password: String,
     onPasswordChange: (String) -> Unit,
-    onLoginListener: (email: String, password: String) -> Unit,
-    onNavigateRegisterListener: (route: String) -> Unit
+    onDismissLoadingDialog: () -> Unit,
+    onLogin: (email: String, password: String) -> Unit,
+    onNavigateToRegister: () -> Unit,
+    onNavigateToRecoverPassword: () -> Unit,
 ) {
 
     val scrollState = rememberScrollState()
     val focusManager = LocalFocusManager.current
+    val (isPasswordVisible, onPasswordVisible) = remember { mutableStateOf(false) }
+    val iconPassword = if (isPasswordVisible) R.drawable.ic_eye_off else R.drawable.ic_eye
+
+    if (state.shoDialogError) {
+        AlertDialog(
+            onDismissRequest = onDismissLoadingDialog,
+            text = { Text(text = "Correo o contraseña invalidos. Revisa tus credenciales") },
+            confirmButton = {
+                TextButton(onClick = onDismissLoadingDialog) {
+                    Text(text = "Revisar")
+                }
+            }
+        )
+    }
+
+    if (state.shoDialogLoading) {
+        AlertDialog(
+            onDismissRequest = {},
+            text = { Text(text = "Iniciando sesion...") },
+            confirmButton = {}
+        )
+    }
 
     Scaffold(
         modifier = Modifier
@@ -135,20 +92,19 @@ private fun LoginContent(
             )
 
             CustomTextField(
-                modifier = Modifier.padding(horizontal = 16.dp),
+                value = email,
+                onValueChange = onEmailChange,
                 label = "Correo electronico",
-                value = emailValue,
-                messageError = emailMessageError,
+                modifier = Modifier.padding(horizontal = 16.dp),
+                messageError = state.emailMessageError,
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_mail),
                         contentDescription = null
                     )
                 },
-                onValueChange = onEmailChange,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                 keyboardActions = KeyboardActions(onNext = {
-                    // Todo: focus to next textField
                     focusManager.moveFocus(FocusDirection.Down)
                 })
             )
@@ -156,32 +112,40 @@ private fun LoginContent(
             Spacer(modifier = Modifier.height(10.dp))
 
             CustomTextField(
-                modifier = Modifier.padding(horizontal = 16.dp),
+                value = password,
+                onValueChange = onPasswordChange,
                 label = "Contrasena",
-                value = passwordValue,
-                messageError = passwordMessageError,
+                modifier = Modifier.padding(horizontal = 16.dp),
+                messageError = state.passwordMessageError,
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_lock),
                         contentDescription = null
                     )
                 },
-                onValueChange = onPasswordChange,
+                trailingIcon = {
+                    IconButton(onClick = { onPasswordVisible(!isPasswordVisible) }) {
+                        Icon(
+                            painter = painterResource(id = iconPassword),
+                            contentDescription = null
+                        )
+                    }
+                },
+                visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Send
                 ),
                 keyboardActions = KeyboardActions(onSend = {
-                    onLoginListener(emailValue, passwordValue)
-                }),
-                visualTransformation = PasswordVisualTransformation()
+                    onLogin(email, password)
+                })
             )
 
             Text(
                 modifier = Modifier
                     .padding(top = 24.dp, start = 0.dp)
                     .height(32.dp)
-                    .clickable { onNavigateRegisterListener(AuthDestinations.RecoverPassword.route) },
+                    .clickable { onNavigateToRecoverPassword() },
                 style = MaterialTheme.typography.body1,
                 text = "Recuperar contraseña",
                 textAlign = TextAlign.Center
@@ -194,8 +158,8 @@ private fun LoginContent(
                     .fillMaxWidth()
                     .height(46.dp)
                     .padding(horizontal = 16.dp),
-                onClick = { onLoginListener(emailValue, passwordValue) },
-                enabled = isValidForm
+                onClick = { onLogin(email, password) },
+                enabled = state.buttonEnable
             ) {
                 Text(text = "INICIAR SESION")
             }
@@ -205,7 +169,7 @@ private fun LoginContent(
             TextButtonRegister(
                 modifier = Modifier.padding(bottom = 32.dp),
                 onNavigationRegisterListener = {
-                    onNavigateRegisterListener(AuthDestinations.SingIn.route)
+                    onNavigateToRegister()
                 },
                 textButton = "Registrate"
             )
@@ -214,55 +178,20 @@ private fun LoginContent(
     }
 }
 
-@Composable
-fun ShowAlertDialog(
-    showDialog: Boolean,
-    title: String,
-    text: String,
-    textPositive: String? = null,
-    textNegative: String? = null,
-    onDismissRequest: () -> Unit,
-    onPositiveClick: () -> Unit,
-    onNegativeClick: () -> Unit
-) {
-
-    if (showDialog) {
-        AlertDialog(
-            onDismissRequest = {
-                onDismissRequest()
-            },
-            title = { Text(text = title) },
-            text = { Text(text = text) },
-            confirmButton = {
-                if (!textPositive.isNullOrBlank()) {
-                    Button(onClick = { onPositiveClick() }) {
-                        Text(text = textPositive)
-                    }
-                }
-            },
-            dismissButton = {
-                if (!textNegative.isNullOrBlank()) {
-                    Button(onClick = { onNegativeClick() }) {
-                        Text(text = textNegative)
-                    }
-                }
-            },
-        )
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 fun PreviewLoginScreen() {
     CashDailyTheme {
-        LoginContent(
-            emailValue = "",
-            passwordValue = "",
-            isValidForm = false,
+        LoginScreen(
+            state = LoginState(),
+            email = "",
             onEmailChange = {},
+            password = "",
             onPasswordChange = {},
-            onLoginListener = { _, _ -> },
-            onNavigateRegisterListener = {}
+            onLogin = { _, _ -> },
+            onNavigateToRegister = {},
+            onDismissLoadingDialog = {},
+            onNavigateToRecoverPassword = {}
         )
     }
 }

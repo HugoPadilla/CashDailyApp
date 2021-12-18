@@ -12,6 +12,8 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -30,19 +32,26 @@ import com.wenitech.cashdaily.framework.features.authentication.signinScreen.Sig
 import com.wenitech.cashdaily.framework.features.authentication.signinScreen.viewModel.SignInViewModel
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
 
+@ExperimentalAnimationApi
+@ExperimentalCoroutinesApi
 @ExperimentalMaterialApi
 @AndroidEntryPoint
 class AuthenticationActivity() : ComponentActivity() {
 
-    @ExperimentalAnimationApi
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
 
             CashDailyTheme {
-                NavHost(navController = navController, startDestination = AuthDestinations.Start.route) {
+                NavHost(
+                    navController = navController,
+                    startDestination = AuthDestinations.Start.route
+                ) {
 
                     composable(AuthDestinations.Start.route) {
                         AuthenticationHomeScreen(onNavigation = {
@@ -52,11 +61,29 @@ class AuthenticationActivity() : ComponentActivity() {
 
                     composable(AuthDestinations.Login.route) {
                         val viewModel = hiltViewModel<LoginViewModel>()
+
+                        LaunchedEffect(key1 = Unit, block = {
+                            viewModel.state.collectLatest {
+                                when (it.onSuccess) {
+                                    true -> startActivityMain()
+                                    false -> return@collectLatest
+                                }
+                            }
+                        })
+
                         LoginScreen(
-                            navController = navController,
-                            viewModel = viewModel,
-                            startActivityMain = {
-                                startActivityMain()
+                            state = viewModel.state.collectAsState().value,
+                            email = viewModel.email.value,
+                            onEmailChange = viewModel::setEmail,
+                            password = viewModel.password.value,
+                            onPasswordChange = viewModel::setPassword,
+                            onDismissLoadingDialog = viewModel::onDismissLoadingDialog,
+                            onLogin = viewModel::doLogIn,
+                            onNavigateToRegister = {
+                                navController.navigate(AuthDestinations.SingIn.route)
+                            },
+                            onNavigateToRecoverPassword = {
+                                navController.navigate(AuthDestinations.RecoverPassword.route)
                             }
                         )
                     }
