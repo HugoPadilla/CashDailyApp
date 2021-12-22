@@ -1,144 +1,115 @@
 package com.wenitech.cashdaily.framework.features.authentication.signinScreen
 
-import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.compose.ui.window.Dialog
 import com.wenitech.cashdaily.R
+import com.wenitech.cashdaily.framework.component.appBar.CustomAppBar
+import com.wenitech.cashdaily.framework.component.dialog.ShowAlertDialog
 import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
-import com.wenitech.cashdaily.framework.features.authentication.signinScreen.uiState.SignInUiState
-import com.wenitech.cashdaily.framework.features.authentication.signinScreen.viewModel.SignInViewModel
+import com.wenitech.cashdaily.framework.features.authentication.signinScreen.state.ResultEnum.*
+import com.wenitech.cashdaily.framework.features.authentication.signinScreen.state.SignInState
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @Composable
 fun SignInScreen(
-    navController: NavController,
-    viewModel: SignInViewModel,
-    startActivityMain: () -> Unit
-) {
-
-    val localContext = LocalContext.current
-
-    LaunchedEffect(key1 = Unit) {
-        viewModel.signInUiState.collectLatest { value ->
-            when (value) {
-                SignInUiState.Loading -> {
-                    // Todo: Loading: Crear estado de carga en la interfas de usuario
-                    Toast.makeText(localContext, "Creando cuenta de usuario", Toast.LENGTH_SHORT)
-                        .show()
-                }
-                SignInUiState.Success -> {
-                    startActivityMain()
-                }
-                is SignInUiState.Collision -> {
-                    // Todo: Mostrar mensaje de colicicon de cuenta
-                    Toast.makeText(
-                        localContext,
-                        "Ya existe una cuenta de usuario con este correo",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                is SignInUiState.Failed -> {
-                    // Todo: Mostrar mensaje de error al crear cuenta
-                    Toast.makeText(
-                        localContext,
-                        "Presentamos inconveniente al crear tu cuenta",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
-    }
-
-    val email by viewModel.email.collectAsState()
-    val emailMessageError by viewModel.emailMessageError.collectAsState()
-
-    val password by viewModel.password.collectAsState()
-    val passwordMessageError by viewModel.passwordMessageError.collectAsState()
-
-    val passwordConfirm by viewModel.passwordConfirm.collectAsState()
-    val passwordConfirmMessageError by viewModel.passwordConfirmMessageError.collectAsState()
-
-    val isValidEmail by viewModel.isValidEmail.collectAsState()
-    val isValidPassword by viewModel.isValidPassword.collectAsState()
-    val isValidPasswordConfirm by viewModel.isValidPasswordConfirm.collectAsState()
-
-    val isValidForm by derivedStateOf {
-        isValidEmail && isValidPassword && isValidPasswordConfirm
-    }
-
-    SignInContent(
-        onNavigationUp = { navController.navigateUp() },
-        email = email,
-        emailMsgError = emailMessageError,
-        password = password,
-        passwordMsgError = passwordMessageError,
-        passwordConfirm = passwordConfirm,
-        passwordConfirmMsgError = passwordConfirmMessageError,
-        isButtonEnable = isValidForm,
-        onEmailChange = { viewModel.onEmailChange(it) },
-        onPasswordChange = { viewModel.onPasswordChange(it) },
-        onPasswordConfirmChange = { viewModel.onPasswordConfirmChange(it) },
-        onSignInListener = { viewModel.doSignIn(email = email, password = password) }
-    )
-}
-
-@Composable
-fun SignInContent(
-    modifier: Modifier = Modifier,
     onNavigationUp: () -> Unit,
+    state: SignInState,
     email: String,
-    emailMsgError: String?,
     password: String,
-    passwordMsgError: String?,
     passwordConfirm: String,
-    passwordConfirmMsgError: String?,
-    isButtonEnable: Boolean,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onPasswordConfirmChange: (String) -> Unit,
-    onSignInListener: () -> Unit
+    onDismissDialog: () -> Unit,
+    onSignInListener: (email: String, password: String) -> Unit
 ) {
 
     val scroll = rememberScrollState()
+    val focusManage = LocalFocusManager.current
 
-    Scaffold(
-        modifier = modifier.fillMaxSize(),
-        topBar = {
-            TopAppBar(
-                backgroundColor = Color.Unspecified,
-                elevation = 0.dp
+    val (passwordVisible, onPasswordVisible) = remember { mutableStateOf(false) }
+    val iconPassword = if (passwordVisible) R.drawable.ic_eye else R.drawable.ic_eye_off
+    val visualTransformationPassword =
+        if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
+
+    val (passwordConfirmVisible, onPasswordConfirmVisible) = remember { mutableStateOf(false) }
+    val iconPasswordConfirm = if (passwordConfirmVisible) R.drawable.ic_eye else R.drawable.ic_eye_off
+    val visualTransformationPasswordConfirm = if (passwordConfirmVisible) VisualTransformation.None else PasswordVisualTransformation()
+
+    when (state.result) {
+        Failed -> {
+            ShowAlertDialog(
+                showDialog = true,
+                title = stringResource(id = R.string.sign_in_error_dialog_title),
+                text = stringResource(id = R.string.sign_in_error_dialog),
+                textPositive = stringResource(id = R.string.sign_in_error_dialog_text_positive),
+                onDismissRequest = onDismissDialog,
+                onPositiveClick = onDismissDialog
             ) {
-                IconButton(
-                    onClick = { onNavigationUp() },
-                    modifier = Modifier
-                        .padding(top = 16.dp, start = 16.dp)
-                        .background(
-                            Color.White,
-                            shape = RoundedCornerShape(corner = CornerSize(8.dp))
-                        )
+
+            }
+        }
+        Collision -> {
+            AlertDialog(onDismissRequest = onDismissDialog,
+                title = { Text(text = stringResource(id = R.string.sign_in_collision_dialog_title)) },
+                text = {
+                    Text(
+                        text = stringResource(id = R.string.sign_in_collision_dialog_text)
+                    )
+                },
+                confirmButton = {
+                    TextButton(onClick = onDismissDialog) {
+                        Text(text = stringResource(id = R.string.sign_in_collision_dialog_confirm_button))
+                    }
+                }
+            )
+        }
+        Loading -> {
+            Dialog(onDismissRequest = { }) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_arrow_left),
-                        contentDescription = "Back button"
+                    Text(
+                        text = stringResource(id = R.string.sign_in_loading_text),
+                        color = MaterialTheme.colors.onSurface
                     )
                 }
+            }
+        }
+        else -> {
+        }
+    }
+
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            CustomAppBar(leadingIcon = R.drawable.ic_arrow_left) {
+                onNavigationUp()
             }
         }
     ) { paddingValue ->
@@ -160,13 +131,13 @@ fun SignInContent(
                 color = MaterialTheme.colors.primary,
                 style = MaterialTheme.typography.h4,
                 fontWeight = FontWeight(600),
-                text = "Registrarse",
+                text = stringResource(id = R.string.sign_in_title),
             )
 
             Text(
                 modifier = Modifier.padding(bottom = 12.dp),
                 style = MaterialTheme.typography.body1,
-                text = "Crear una cuenta con tu correo personal eviaremos un email de confirmacion.",
+                text = stringResource(id = R.string.sign_in_text),
             )
 
 
@@ -178,62 +149,96 @@ fun SignInContent(
             ) {
 
                 CustomTextField(
-                    label = "Email",
                     value = email,
+                    onValueChange = onEmailChange,
+                    label = stringResource(id = R.string.sign_in_email),
                     leadingIcon = {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_mail),
                             contentDescription = null
                         )
                     },
-                    onValueChange = onEmailChange,
-                    messageError = emailMsgError
+                    messageError = state.emailMessageError,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    keyboardActions = KeyboardActions(onNext = {
+                        focusManage.moveFocus(
+                            FocusDirection.Down
+                        )
+                    })
                 )
 
                 CustomTextField(
-                    label = "Password",
                     value = password,
+                    onValueChange = onPasswordChange,
+                    label = stringResource(id = R.string.sign_in_password),
+                    messageError = state.passwordMessageError,
                     leadingIcon = {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_lock),
                             contentDescription = null
                         )
                     },
-                    onValueChange = onPasswordChange,
-                    messageError = passwordMsgError,
+                    trailingIcon = {
+                        IconButton(onClick = { onPasswordVisible(passwordVisible.not()) }) {
+                            Icon(
+                                painter = painterResource(id = iconPassword),
+                                contentDescription = null
+                            )
+                        }
+                    },
+                    visualTransformation = visualTransformationPassword,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    keyboardActions = KeyboardActions(onNext = {
+                        focusManage.moveFocus(
+                            FocusDirection.Down
+                        )
+                    })
                 )
 
                 CustomTextField(
-                    label = "Password confirm",
                     value = passwordConfirm,
+                    onValueChange = onPasswordConfirmChange,
+                    label = stringResource(id = R.string.sign_in_password_confirn),
+                    messageError = state.passwordConfirmMessageError,
                     leadingIcon = {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_lock),
                             contentDescription = null
                         )
                     },
-                    onValueChange = onPasswordConfirmChange,
-                    messageError = passwordConfirmMsgError
+                    trailingIcon = {
+                        IconButton(onClick = { onPasswordConfirmVisible(passwordConfirmVisible.not()) }) {
+                            Icon(
+                                painter = painterResource(id = iconPasswordConfirm),
+                                contentDescription = null
+                            )
+                        }
+                    },
+                    visualTransformation = visualTransformationPasswordConfirm,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                    keyboardActions = KeyboardActions(onDone = {
+                        onSignInListener(email, password)
+                    })
                 )
 
                 Text(
                     modifier = Modifier.padding(top = 10.dp),
                     style = MaterialTheme.typography.body2,
                     textAlign = TextAlign.Center,
-                    text = "Al presionar el boton crear <cuenta esta>, aceptando las politicas de privacida de Cash Daily App"
+                    text = stringResource(id = R.string.termn)
                 )
 
             }
 
             Button(
-                enabled = isButtonEnable,
-                onClick = { onSignInListener() },
+                enabled = state.buttonEnable,
+                onClick = { onSignInListener(email, password) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp)
                     .height(46.dp)
             ) {
-                Text(text = "Crear cuenta")
+                Text(text = stringResource(id = R.string.sign_in_button))
             }
 
         }
@@ -241,24 +246,22 @@ fun SignInContent(
 
 }
 
+@ExperimentalCoroutinesApi
 @Preview
 @Composable
 fun PreviewSignIn() {
     CashDailyTheme {
-        SignInContent(
+        SignInScreen(
             onNavigationUp = {},
+            state = SignInState(),
             email = "",
-            emailMsgError = null,
             password = "",
-            passwordMsgError = null,
             passwordConfirm = "",
-            passwordConfirmMsgError = null,
             onEmailChange = {},
             onPasswordChange = {},
             onPasswordConfirmChange = {},
-            isButtonEnable = false
-        ) {
-
-        }
+            onSignInListener = { _, _ -> },
+            onDismissDialog = {}
+        )
     }
 }

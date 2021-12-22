@@ -45,7 +45,7 @@ fun LoginScreen(
     val scrollState = rememberScrollState()
     val focusManager = LocalFocusManager.current
     val (isPasswordVisible, onPasswordVisible) = remember { mutableStateOf(false) }
-    val iconPassword = if (isPasswordVisible) R.drawable.ic_eye_off else R.drawable.ic_eye
+    val iconPassword = if (isPasswordVisible) R.drawable.ic_eye else R.drawable.ic_eye_off
 
     if (state.shoDialogError) {
         AlertDialog(

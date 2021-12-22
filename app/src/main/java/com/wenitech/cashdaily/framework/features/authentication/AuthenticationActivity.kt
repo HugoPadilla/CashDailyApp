@@ -29,6 +29,7 @@ import com.wenitech.cashdaily.framework.features.authentication.loginScreen.view
 import com.wenitech.cashdaily.framework.features.authentication.recoverPasswordScreen.RecoverPasswordScreen
 import com.wenitech.cashdaily.framework.features.authentication.recoverPasswordScreen.RecoverPasswordViewModel
 import com.wenitech.cashdaily.framework.features.authentication.signinScreen.SignInScreen
+import com.wenitech.cashdaily.framework.features.authentication.signinScreen.state.ResultEnum
 import com.wenitech.cashdaily.framework.features.authentication.signinScreen.viewModel.SignInViewModel
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -89,13 +90,28 @@ class AuthenticationActivity() : ComponentActivity() {
                     }
 
                     composable(AuthDestinations.SingIn.route) {
-                        val viewModel = hiltViewModel<SignInViewModel>()
-                        SignInScreen(
-                            navController = navController,
-                            viewModel = viewModel,
-                            startActivityMain = {
-                                startActivityMain()
+                        val viewModel: SignInViewModel = hiltViewModel()
+
+                        LaunchedEffect(key1 = Unit) {
+                            viewModel.state.collectLatest {
+                                when (it.result) {
+                                    ResultEnum.Success -> startActivityMain()
+                                    else -> return@collectLatest
+                                }
                             }
+                        }
+
+                        SignInScreen(
+                            onNavigationUp = { navController.navigateUp() },
+                            state = viewModel.state.collectAsState().value,
+                            email = viewModel.email.value,
+                            password = viewModel.password.value,
+                            passwordConfirm = viewModel.passwordConfirm.value,
+                            onEmailChange = viewModel::onEmailChange,
+                            onPasswordChange = viewModel::onPasswordChange,
+                            onPasswordConfirmChange = viewModel::onPasswordConfirmChange,
+                            onSignInListener = viewModel::doSignIn,
+                            onDismissDialog = viewModel::onDismissDialog
                         )
                     }
 

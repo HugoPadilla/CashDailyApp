@@ -11,7 +11,6 @@
     <!-- default values-->
     <string name="app_name">Cash Daily</string>
     <string name="price_format">%,.2f $</string>
-    <string name="text_sign_in">Crear una cuenta de usarios con tu correo personal. Enviaremos un mensaje de confirmacion.</string>
     <string name="title_selected_client">Registrar \nnuevo credito</string>
 
     <!--screen register client-->
@@ -28,4 +27,20 @@
     <string name="save_client">Guardar cliente</string>
     <string name="new_client">Nuevo cliente</string>
     <string name="accept">Aceptar</string>
+
+    <!--screen sign in-->
+    <string name="sign_in_title">Registrarse</string>
+    <string name="sign_in_text">Crear una cuenta de usarios con tu correo personal. Enviaremos un mensaje de confirmacion.</string>
+    <string name="sign_in_email">Correo</string>
+    <string name="sign_in_password">Nueva contraseña</string>
+    <string name="sign_in_password_confirn">Confirmar contraseña</string>
+    <string name="termn"><![CDATA[Al presionar el boton <cuenta esta>, aceptando las politicas de privacida de Cash Daily App]]></string>
+    <string name="sign_in_button">Crear cuenta</string>
+    <string name="sign_in_error_dialog">Presentamos problemas en este momento.\nPor favor, intententa mas tarde.</string>
+    <string name="sign_in_collision_dialog_title">Correo utilizado</string>
+    <string name="sign_in_collision_dialog_text">Ya existe una cuenta registrada con este correo.\n \nRecupera tu contraseña si la has olvidado</string>
+    <string name="sign_in_collision_dialog_confirm_button">Cerrar</string>
+    <string name="sign_in_loading_text">Creando cuenta de usuario</string>
+    <string name="sign_in_error_dialog_text_positive">Cerrar</string>
+    <string name="sign_in_error_dialog_title">Problemas para registrarse</string>
 </resources>
