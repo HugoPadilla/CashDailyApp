@@ -1,17 +1,16 @@
 package com.wenitech.cashdaily.framework.features.authentication.recoverPasswordScreen
 
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -20,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.domain.common.Status
+import com.wenitech.cashdaily.framework.component.appBar.CustomAppBar
 import com.wenitech.cashdaily.framework.component.button.PrimaryButtonExtended
 import com.wenitech.cashdaily.framework.component.button.TextButtonRegister
 import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
@@ -97,24 +97,8 @@ private fun RecoverPasswordContent(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            TopAppBar(
-                backgroundColor = Color.Unspecified,
-                elevation = 0.dp
-            ) {
-                IconButton(
-                    onClick = { onNavigationUp() },
-                    modifier = Modifier
-                        .padding(top = 16.dp, start = 16.dp)
-                        .background(
-                            Color.White,
-                            shape = RoundedCornerShape(corner = CornerSize(8.dp))
-                        )
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_arrow_left),
-                        contentDescription = "Back button"
-                    )
-                }
+            CustomAppBar(leadingIcon = R.drawable.ic_arrow_left) {
+                onNavigationUp()
             }
         }
     ) {
