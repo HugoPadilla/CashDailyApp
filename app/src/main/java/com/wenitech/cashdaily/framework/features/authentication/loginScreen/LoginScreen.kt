@@ -26,12 +26,12 @@ import androidx.compose.ui.unit.dp
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.framework.component.button.TextButtonRegister
 import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
-import com.wenitech.cashdaily.framework.features.authentication.loginScreen.state.LoginState
+import com.wenitech.cashdaily.framework.features.authentication.loginScreen.state.LoginUiState
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 
 @Composable
 fun LoginScreen(
-    state: LoginState,
+    uiState: LoginUiState,
     email: String,
     onEmailChange: (String) -> Unit,
     password: String,
@@ -47,7 +47,7 @@ fun LoginScreen(
     val (isPasswordVisible, onPasswordVisible) = remember { mutableStateOf(false) }
     val iconPassword = if (isPasswordVisible) R.drawable.ic_eye else R.drawable.ic_eye_off
 
-    if (state.shoDialogError) {
+    if (uiState.isErrorLogin) {
         AlertDialog(
             onDismissRequest = onDismissLoadingDialog,
             text = { Text(text = "Correo o contraseña invalidos. Revisa tus credenciales") },
@@ -59,7 +59,7 @@ fun LoginScreen(
         )
     }
 
-    if (state.shoDialogLoading) {
+    if (uiState.isLoadingLogin) {
         AlertDialog(
             onDismissRequest = {},
             text = { Text(text = "Iniciando sesion...") },
@@ -96,7 +96,7 @@ fun LoginScreen(
                 onValueChange = onEmailChange,
                 label = "Correo electronico",
                 modifier = Modifier.padding(horizontal = 16.dp),
-                messageError = state.emailMessageError,
+                messageError = uiState.emailMessageError,
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_mail),
@@ -116,7 +116,7 @@ fun LoginScreen(
                 onValueChange = onPasswordChange,
                 label = "Contrasena",
                 modifier = Modifier.padding(horizontal = 16.dp),
-                messageError = state.passwordMessageError,
+                messageError = uiState.passwordMessageError,
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_lock),
@@ -159,7 +159,7 @@ fun LoginScreen(
                     .height(46.dp)
                     .padding(horizontal = 16.dp),
                 onClick = { onLogin(email, password) },
-                enabled = state.buttonEnable
+                enabled = uiState.isEnableButton
             ) {
                 Text(text = "INICIAR SESION")
             }
@@ -183,7 +183,7 @@ fun LoginScreen(
 fun PreviewLoginScreen() {
     CashDailyTheme {
         LoginScreen(
-            state = LoginState(),
+            uiState = LoginUiState(),
             email = "",
             onEmailChange = {},
             password = "",

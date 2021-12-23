@@ -22,13 +22,12 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.framework.component.appBar.CustomAppBar
 import com.wenitech.cashdaily.framework.component.dialog.ShowAlertDialog
 import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
 import com.wenitech.cashdaily.framework.features.authentication.signinScreen.state.ResultEnum.*
-import com.wenitech.cashdaily.framework.features.authentication.signinScreen.state.SignInState
+import com.wenitech.cashdaily.framework.features.authentication.signinScreen.state.SignInUiState
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -36,7 +35,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @Composable
 fun SignInScreen(
     onNavigationUp: () -> Unit,
-    state: SignInState,
+    uiState: SignInUiState,
     email: String,
     password: String,
     passwordConfirm: String,
@@ -56,10 +55,12 @@ fun SignInScreen(
         if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation()
 
     val (passwordConfirmVisible, onPasswordConfirmVisible) = remember { mutableStateOf(false) }
-    val iconPasswordConfirm = if (passwordConfirmVisible) R.drawable.ic_eye else R.drawable.ic_eye_off
-    val visualTransformationPasswordConfirm = if (passwordConfirmVisible) VisualTransformation.None else PasswordVisualTransformation()
+    val iconPasswordConfirm =
+        if (passwordConfirmVisible) R.drawable.ic_eye else R.drawable.ic_eye_off
+    val visualTransformationPasswordConfirm =
+        if (passwordConfirmVisible) VisualTransformation.None else PasswordVisualTransformation()
 
-    when (state.result) {
+    when (uiState.result) {
         Failed -> {
             ShowAlertDialog(
                 showDialog = true,
@@ -88,21 +89,13 @@ fun SignInScreen(
             )
         }
         Loading -> {
-            Dialog(onDismissRequest = { }) {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.sign_in_loading_text),
-                        color = MaterialTheme.colors.onSurface
-                    )
-                }
-            }
+            AlertDialog(
+                onDismissRequest = {},
+                text = { Text(text = stringResource(id = R.string.sign_in_loading_text)) },
+                buttons = {}
+            )
         }
-        else -> {
-        }
+        else -> Unit
     }
 
     Scaffold(
@@ -158,7 +151,7 @@ fun SignInScreen(
                             contentDescription = null
                         )
                     },
-                    messageError = state.emailMessageError,
+                    messageError = uiState.emailMessageError,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                     keyboardActions = KeyboardActions(onNext = {
                         focusManage.moveFocus(
@@ -171,7 +164,7 @@ fun SignInScreen(
                     value = password,
                     onValueChange = onPasswordChange,
                     label = stringResource(id = R.string.sign_in_password),
-                    messageError = state.passwordMessageError,
+                    messageError = uiState.passwordMessageError,
                     leadingIcon = {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_lock),
@@ -199,7 +192,7 @@ fun SignInScreen(
                     value = passwordConfirm,
                     onValueChange = onPasswordConfirmChange,
                     label = stringResource(id = R.string.sign_in_password_confirn),
-                    messageError = state.passwordConfirmMessageError,
+                    messageError = uiState.passwordConfirmMessageError,
                     leadingIcon = {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_lock),
@@ -231,7 +224,7 @@ fun SignInScreen(
             }
 
             Button(
-                enabled = state.buttonEnable,
+                enabled = uiState.buttonEnable,
                 onClick = { onSignInListener(email, password) },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -253,7 +246,7 @@ fun PreviewSignIn() {
     CashDailyTheme {
         SignInScreen(
             onNavigationUp = {},
-            state = SignInState(),
+            uiState = SignInUiState(),
             email = "",
             password = "",
             passwordConfirm = "",

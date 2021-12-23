@@ -1,6 +1,6 @@
 package com.wenitech.cashdaily.framework.features.authentication.signinScreen.state
 
-data class SignInState(
+data class SignInUiState(
     val emailMessageError: String? = null,
     val passwordMessageError: String? = null,
     val passwordConfirmMessageError: String? = null,

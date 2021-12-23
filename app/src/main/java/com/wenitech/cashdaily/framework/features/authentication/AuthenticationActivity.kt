@@ -13,7 +13,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -34,7 +33,6 @@ import com.wenitech.cashdaily.framework.features.authentication.signinScreen.vie
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collectLatest
 
 @ExperimentalAnimationApi
 @ExperimentalCoroutinesApi
@@ -62,17 +60,14 @@ class AuthenticationActivity : ComponentActivity() {
                     composable(AuthDestinations.Login.route) {
                         val viewModel = hiltViewModel<LoginViewModel>()
 
-                        LaunchedEffect(key1 = Unit, block = {
-                            viewModel.state.collectLatest {
-                                when (it.onSuccess) {
-                                    true -> startActivityMain()
-                                    false -> return@collectLatest
-                                }
+                        LaunchedEffect(viewModel.uiState) {
+                            if (viewModel.uiState.isSuccessLogin) {
+                                startActivityMain()
                             }
-                        })
+                        }
 
                         LoginScreen(
-                            state = viewModel.state.collectAsState().value,
+                            uiState = viewModel.uiState,
                             email = viewModel.email.value,
                             onEmailChange = viewModel::setEmail,
                             password = viewModel.password.value,
@@ -91,21 +86,20 @@ class AuthenticationActivity : ComponentActivity() {
                     composable(AuthDestinations.SingIn.route) {
                         val viewModel: SignInViewModel = hiltViewModel()
 
-                        LaunchedEffect(key1 = Unit) {
-                            viewModel.state.collectLatest {
-                                when (it.result) {
-                                    ResultEnum.Success -> startActivityMain()
-                                    else -> return@collectLatest
-                                }
+                        LaunchedEffect(viewModel.uiState) {
+                            when (viewModel.uiState.result) {
+                                ResultEnum.Success -> startActivityMain()
+                                else -> Unit
                             }
+
                         }
 
                         SignInScreen(
                             onNavigationUp = { navController.navigateUp() },
-                            state = viewModel.state.collectAsState().value,
-                            email = viewModel.email.value,
-                            password = viewModel.password.value,
-                            passwordConfirm = viewModel.passwordConfirm.value,
+                            uiState = viewModel.uiState,
+                            email = viewModel.email,
+                            password = viewModel.password,
+                            passwordConfirm = viewModel.passwordConfirm,
                             onEmailChange = viewModel::onEmailChange,
                             onPasswordChange = viewModel::onPasswordChange,
                             onPasswordConfirmChange = viewModel::onPasswordConfirmChange,

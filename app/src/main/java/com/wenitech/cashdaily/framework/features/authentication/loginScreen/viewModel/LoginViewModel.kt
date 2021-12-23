@@ -3,16 +3,21 @@ package com.wenitech.cashdaily.framework.features.authentication.loginScreen.vie
 import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wenitech.cashdaily.domain.common.Status.*
 import com.wenitech.cashdaily.domain.usecases.auth.LoginEmailUseCase
-import com.wenitech.cashdaily.framework.features.authentication.loginScreen.state.LoginState
+import com.wenitech.cashdaily.framework.features.authentication.loginScreen.state.LoginUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,11 +27,12 @@ class LoginViewModel @Inject constructor(
     private val loginEmailUseCase: LoginEmailUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(LoginState())
-    val state = _state.asStateFlow()
+    var uiState by mutableStateOf(LoginUiState())
+        private set
 
     var email = mutableStateOf("")
         private set
+
     var password = mutableStateOf("")
         private set
 
@@ -49,7 +55,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onDismissLoadingDialog() {
-        _state.value = _state.value.copy(shoDialogError = false)
+        uiState = uiState.copy(isErrorLogin = false)
     }
 
     fun doLogIn(email: String, password: String) {
@@ -59,27 +65,27 @@ class LoginViewModel @Inject constructor(
                     loginEmailUseCase(email, password).collect {
                         when (it.status) {
                             LOADING -> {
-                                _state.value = _state.value.copy(
-                                    onSuccess = false,
-                                    shoDialogError = false,
-                                    shoDialogLoading = true,
+                                uiState = uiState.copy(
+                                    isSuccessLogin = false,
+                                    isErrorLogin = false,
+                                    isLoadingLogin = true,
                                 )
                             }
                             SUCCESS -> {
-                                _state.value = _state.value.copy(
-                                    onSuccess = true,
-                                    shoDialogError = false,
-                                    shoDialogLoading = false,
+                                uiState = uiState.copy(
+                                    isSuccessLogin = true,
+                                    isErrorLogin = false,
+                                    isLoadingLogin = false,
                                 )
                             }
                             COLLICION -> {
                                 // Not used
                             }
                             FAILED -> {
-                                _state.value = _state.value.copy(
-                                    onSuccess = false,
-                                    shoDialogError = true,
-                                    shoDialogLoading = false,
+                                uiState = uiState.copy(
+                                    isSuccessLogin = false,
+                                    isErrorLogin = true,
+                                    isLoadingLogin = false,
                                 )
                             }
                         }
@@ -92,15 +98,15 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun setEmailMessageError(msg: String?) {
-        _state.value = _state.value.copy(emailMessageError = msg)
+        uiState = uiState.copy(emailMessageError = msg)
     }
 
     private fun setPasswordMessageError(msg: String?) {
-        _state.value = _state.value.copy(passwordMessageError = msg)
+        uiState = uiState.copy(passwordMessageError = msg)
     }
 
     private fun setEnableButton(enableButton: Boolean) {
-        _state.value = _state.value.copy(buttonEnable = enableButton)
+        uiState = uiState.copy(isEnableButton = enableButton)
     }
 
     private fun isEmailValid(email: String): Boolean {

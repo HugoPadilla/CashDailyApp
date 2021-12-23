@@ -3,11 +3,11 @@ package com.wenitech.cashdaily.framework.features.authentication.loginScreen.sta
 import javax.annotation.concurrent.Immutable
 
 @Immutable
-data class LoginState(
+data class LoginUiState(
     val emailMessageError: String? = null,
     val passwordMessageError: String? = null,
-    val onSuccess: Boolean = false,
-    val shoDialogLoading: Boolean = false,
-    val shoDialogError: Boolean = false,
-    val buttonEnable: Boolean = false,
+    val isSuccessLogin: Boolean = false,
+    val isLoadingLogin: Boolean = false,
+    val isErrorLogin: Boolean = false,
+    val isEnableButton: Boolean = false,
 )

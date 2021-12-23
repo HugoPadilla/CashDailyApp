@@ -2,17 +2,22 @@ package com.wenitech.cashdaily.framework.features.authentication.signinScreen.vi
 
 import android.text.TextUtils
 import android.util.Patterns
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wenitech.cashdaily.domain.common.Status
 import com.wenitech.cashdaily.domain.usecases.auth.SignInEmailUseCase
 import com.wenitech.cashdaily.framework.features.authentication.signinScreen.state.ResultEnum
-import com.wenitech.cashdaily.framework.features.authentication.signinScreen.state.SignInState
+import com.wenitech.cashdaily.framework.features.authentication.signinScreen.state.SignInUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,21 +27,21 @@ class SignInViewModel @Inject constructor(
     private val signInEmailUseCase: SignInEmailUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(SignInState())
-    val state = _state.asStateFlow()
-
-    var email = mutableStateOf("")
+    var uiState by mutableStateOf(SignInUiState())
         private set
 
-    var password = mutableStateOf("")
+    var email by mutableStateOf("")
         private set
 
-    var passwordConfirm = mutableStateOf("")
+    var password by mutableStateOf("")
+        private set
+
+    var passwordConfirm by mutableStateOf("")
         private set
 
     init {
         snapshotFlow {
-            email.value to password.value to passwordConfirm.value
+            email to password to passwordConfirm
         }
             .mapLatest {
                 isEmailValid(it.first.first)
@@ -48,37 +53,33 @@ class SignInViewModel @Inject constructor(
     }
 
     fun onEmailChange(email: String) {
-        this.email.value = email
+        this.email = email
     }
 
     fun onPasswordChange(password: String) {
-        this.password.value = password
+        this.password = password
     }
 
     fun onPasswordConfirmChange(passwordConfirm: String) {
-        this.passwordConfirm.value = passwordConfirm
+        this.passwordConfirm = passwordConfirm
     }
 
     fun onDismissDialog() {
-        _state.value = _state.value.copy(result = ResultEnum.Init)
+        uiState = uiState.copy(result = ResultEnum.Init)
     }
 
     private fun setEnableButton(enable: Boolean) {
-        _state.value = _state.value.copy(buttonEnable = enable)
+        uiState = uiState.copy(buttonEnable = enable)
     }
 
     fun doSignIn(email: String, password: String) {
         viewModelScope.launch {
-            signInEmailUseCase("USER_NAME", email, password).collect {
-                when (it.status) {
-                    Status.LOADING -> _state.value = _state
-                        .value.copy(result = ResultEnum.Loading)
-                    Status.SUCCESS -> _state.value = _state
-                        .value.copy(result = ResultEnum.Success)
-                    Status.COLLICION -> _state.value = _state
-                        .value.copy(result = ResultEnum.Collision)
-                    Status.FAILED -> _state.value = _state
-                        .value.copy(result = ResultEnum.Failed)
+            signInEmailUseCase("USER_NAME", email, password).collect { result ->
+                uiState = when (result.status) {
+                    Status.LOADING -> uiState.copy(result = ResultEnum.Loading)
+                    Status.SUCCESS -> uiState.copy(result = ResultEnum.Success)
+                    Status.COLLICION -> uiState.copy(result = ResultEnum.Collision)
+                    Status.FAILED -> uiState.copy(result = ResultEnum.Failed)
                 }
             }
         }
@@ -87,15 +88,16 @@ class SignInViewModel @Inject constructor(
     private fun isEmailValid(email: String): Boolean {
         return when {
             TextUtils.isEmpty(email) -> {
-                _state.value = _state.value.copy(emailMessageError = "Escribe un correo")
+                uiState = uiState.copy(emailMessageError = "Escribe un correo")
                 false
             }
             !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                _state.value = _state.value.copy(emailMessageError = "Este no es un correo valido")
+                uiState =
+                    uiState.copy(emailMessageError = "Este no es un correo valido")
                 false
             }
             else -> {
-                _state.value = _state.value.copy(emailMessageError = null)
+                uiState = uiState.copy(emailMessageError = null)
                 true
             }
         }
@@ -104,16 +106,16 @@ class SignInViewModel @Inject constructor(
     private fun isPasswordValid(password: String): Boolean {
         return when {
             TextUtils.isEmpty(password) -> {
-                _state.value = _state.value.copy(passwordMessageError = "Escribe tu contraseña")
+                uiState = uiState.copy(passwordMessageError = "Escribe tu contraseña")
                 false
             }
             password.length < 8 -> {
-                _state.value =
-                    _state.value.copy(passwordMessageError = "Debe tener al menos 8 carapteres")
+                uiState =
+                    uiState.copy(passwordMessageError = "Debe tener al menos 8 carapteres")
                 false
             }
             else -> {
-                _state.value = _state.value.copy(passwordMessageError = null)
+                uiState = uiState.copy(passwordMessageError = null)
                 true
             }
         }
@@ -122,17 +124,17 @@ class SignInViewModel @Inject constructor(
     private fun isConfirmPasswordValid(password: String?, passwordConfirm: String?): Boolean {
         return when {
             TextUtils.isEmpty(passwordConfirm) -> {
-                _state.value =
-                    _state.value.copy(passwordConfirmMessageError = "Debes confirmar tu contraseña")
+                uiState =
+                    uiState.copy(passwordConfirmMessageError = "Debes confirmar tu contraseña")
                 false
             }
             !TextUtils.equals(password, passwordConfirm) -> {
-                _state.value =
-                    _state.value.copy(passwordConfirmMessageError = "Contraseñas no coinciden")
+                uiState =
+                    uiState.copy(passwordConfirmMessageError = "Contraseñas no coinciden")
                 false
             }
             else -> {
-                _state.value = _state.value.copy(passwordConfirmMessageError = null)
+                uiState = uiState.copy(passwordConfirmMessageError = null)
                 true
             }
         }
