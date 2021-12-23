@@ -43,4 +43,16 @@
     <string name="sign_in_loading_text">Creando cuenta de usuario</string>
     <string name="sign_in_error_dialog_text_positive">Cerrar</string>
     <string name="sign_in_error_dialog_title">Problemas para registrarse</string>
+
+    <!--screen recover password-->
+    <string name="recover_password_dialog_success_title">Mensaje enviado</string>
+    <string name="recover_password_dialog_success_text">Se ha enviado correctamente un mensaje para restablecer tu contraseña. \nPor favor, revisa tu bandeja.</string>
+    <string name="recover_password_dialog_success_confirm_button">Cerrar</string>
+    <string name="recover_password_dialog_loading_loading">Enviando mensaje</string>
+    <string name="recover_password_dialog_error_title">Error al enviar mensaje</string>
+    <string name="recover_password_title">Restablecer contraseña</string>
+    <string name="recover_password_description">Enviaremos instrucciones sobre cómo restablecer su contraseña a la direccion de correo electronico que se ha registrado con nosotros.</string>
+    <string name="recover_password_email">Correo electronico</string>
+    <string name="recover_password_button">Enviar email</string>
+    <string name="recover_password_register">Registrate</string>
 </resources>

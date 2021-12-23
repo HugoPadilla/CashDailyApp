@@ -2,63 +2,111 @@ package com.wenitech.cashdaily.framework.features.authentication.recoverPassword
 
 import android.text.TextUtils
 import android.util.Patterns
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wenitech.cashdaily.domain.common.ResultAuth
+import com.wenitech.cashdaily.domain.common.Status
 import com.wenitech.cashdaily.domain.usecases.auth.RecoverPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class RecoverPasswordViewModel @Inject constructor(
     private val recoverPasswordUseCase: RecoverPasswordUseCase
 ) : ViewModel() {
 
-    private val _emailRecover = MutableStateFlow("")
-    val emailRecover: StateFlow<String> get() = _emailRecover
+    var uiState by mutableStateOf(RecoverPasswordUiState())
+        private set
 
-    private val _emailValueMessageError = MutableStateFlow<String?>(null)
-    val emailValueMessageError: StateFlow<String?> get() = _emailValueMessageError
-
-    // Result state
-    private val _resultEmailRecover = Channel<ResultAuth<Boolean>>(Channel.BUFFERED)
-    val resultEmailRecover = _resultEmailRecover.receiveAsFlow()
+    var emailValue by mutableStateOf("")
+        private set
 
     fun emailValueChange(emailValue: String) {
-        _emailRecover.value = emailValue
-        isEmailValid(emailValue)
+        this.emailValue = emailValue
+        snapshotFlow { emailValue }
+            .mapLatest { isEmailValid(it) }
+            .onEach { setEnableButton(it) }
+            .launchIn(viewModelScope)
     }
 
-    fun clearEditText() {
-        _emailRecover.value = ""
+    fun dismissDialog() {
+        uiState = uiState.copy(
+            isLoadingSendEmail = false,
+            isSuccessSendEmail = false,
+            isErrorMessage = null
+        )
     }
 
     fun sendEmailRecover(email: String) {
         viewModelScope.launch {
             recoverPasswordUseCase(email).collect {
-                _resultEmailRecover.send(it)
+                when (it.status) {
+                    Status.LOADING -> {
+                        uiState = uiState.copy(
+                            isLoadingSendEmail = true,
+                            isSuccessSendEmail = false,
+                            isErrorMessage = null
+                        )
+                    }
+                    Status.SUCCESS -> {
+                        emailValueChange("")
+                        uiState = uiState.copy(
+                            isLoadingSendEmail = false,
+                            isSuccessSendEmail = true,
+                            isErrorMessage = null
+                        )
+                    }
+                    Status.FAILED -> {
+                        uiState = uiState.copy(
+                            isLoadingSendEmail = false,
+                            isSuccessSendEmail = false,
+                            isErrorMessage = it.messenger
+                        )
+                    }
+                    else -> {
+                    }
+                }
             }
         }
     }
 
+    private fun setEmailMessageError(message: String?) {
+        uiState = uiState.copy(emailMessageError = message)
+    }
+
+    private fun setEnableButton(enabled: Boolean) {
+        uiState = uiState.copy(isEnableButton = enabled)
+    }
+
+    private fun clearEditText() {
+        emailValue = ""
+    }
+
     private fun isEmailValid(email: String?): Boolean {
-        var valid = true
-        if (TextUtils.isEmpty(email)) {
-            _emailValueMessageError.value = "Escribe tu correo"
-            valid = false
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailValueMessageError.value = "Esto no es un correo valido"
-            valid = false
-        } else {
-            _emailValueMessageError.value = null
+        return when {
+            TextUtils.isEmpty(email) -> {
+                setEmailMessageError("Escribe tu correo")
+                false
+            }
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                setEmailMessageError("Esto no es un correo valido")
+                false
+            }
+            else -> {
+                setEmailMessageError(null)
+                true
+            }
         }
-        return valid
     }
 
 }

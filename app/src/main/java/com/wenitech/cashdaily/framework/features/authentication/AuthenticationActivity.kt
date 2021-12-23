@@ -40,8 +40,7 @@ import kotlinx.coroutines.flow.collectLatest
 @ExperimentalCoroutinesApi
 @ExperimentalMaterialApi
 @AndroidEntryPoint
-class AuthenticationActivity() : ComponentActivity() {
-
+class AuthenticationActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,8 +115,17 @@ class AuthenticationActivity() : ComponentActivity() {
                     }
 
                     composable(AuthDestinations.RecoverPassword.route) {
-                        val viewModel = hiltViewModel<RecoverPasswordViewModel>()
-                        RecoverPasswordScreen(navController = navController, viewModel = viewModel)
+                        val viewModel: RecoverPasswordViewModel = hiltViewModel()
+
+                        RecoverPasswordScreen(
+                            uiState = viewModel.uiState,
+                            onNavigationUp = { navController.navigateUp() },
+                            emailValue = viewModel.emailValue,
+                            onEmailValueChange = viewModel::emailValueChange,
+                            onNavigationRegister = { navController.navigate(AuthDestinations.SingIn.route) },
+                            onSendEmailClick = viewModel::sendEmailRecover,
+                            onDismissDialog = viewModel::dismissDialog
+                        )
                     }
                 }
             }
