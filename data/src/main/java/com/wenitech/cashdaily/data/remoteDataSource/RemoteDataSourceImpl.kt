@@ -22,52 +22,6 @@ class RemoteDataSourceImpl(
     private val constant: Constant,
 ) : RemoteDataSource {
 
-    @Suppress("UNREACHABLE_CODE")
-    override suspend fun createAccount(userModel: UserModel): Boolean {
-        return try {
-
-            val refUserApp = constant.getDocumentProfileUser()
-            val refBox = constant.getDocumentBox()
-
-            db.runBatch { batch ->
-
-                batch.set(refUserApp, userModel)
-                batch.set(refBox, BoxModel())
-
-            }.await()
-            true
-        } catch (e: Throwable) {
-            false
-        }
-    }
-
-    override suspend fun getUserProfile(): Flow<Resource<UserModel>> = callbackFlow {
-        offer(Resource.Loading())
-        val queryDocument = constant.getDocumentProfileUser()
-
-        val listener = queryDocument.addSnapshotListener { documentSnapshot, error ->
-            if (documentSnapshot != null && documentSnapshot.exists()) {
-                offer(
-                    Resource.Success(
-                        documentSnapshot.toObject(
-                            UserModel::class.java
-                        )
-                    )
-                )
-            }
-
-            error?.let {
-                offer(Resource.Failure(it, it.message.toString()))
-                cancel(it.message.toString())
-            }
-        }
-
-        awaitClose {
-            listener.remove()
-            cancel()
-        }
-    } as Flow<Resource<UserModel>>
-
     override suspend fun getUserBox(): Flow<Resource<BoxModel>> = callbackFlow {
         offer(Resource.Loading())
         val query = constant.getDocumentBox()

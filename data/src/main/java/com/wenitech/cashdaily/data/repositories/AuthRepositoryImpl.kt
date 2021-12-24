@@ -41,12 +41,11 @@ class AuthRepositoryImpl(
             auth.signOut()
             emit(ResultAuth.success(false))
         } catch (e: Exception) {
-            emit(ResultAuth.failed(e.message ?: "", false))
+            emit(ResultAuth.failed(e.message ?: "Tenemos incoveniente al cerrar la sesion. Intenta nuevamente", false))
         }
     }
 
     override suspend fun singInEmail(
-        name: String,
         email: String,
         password: String
     ): Flow<ResultAuth<Boolean>> = flow {

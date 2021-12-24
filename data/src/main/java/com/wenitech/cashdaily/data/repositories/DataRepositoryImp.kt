@@ -4,25 +4,13 @@ import com.wenitech.cashdaily.data.entities.*
 import com.wenitech.cashdaily.data.remoteDataSource.RemoteDataSource
 import com.wenitech.cashdaily.domain.common.Resource
 import com.wenitech.cashdaily.domain.entities.*
-import com.wenitech.cashdaily.domain.repositories.AuthRepository
 import com.wenitech.cashdaily.domain.repositories.DataRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transform
 
 class DataRepositoryImp(
     private val remoteDataSource: RemoteDataSource,
-    private val authRepository: AuthRepository
 ) : DataRepository {
-
-    override suspend fun getUserProfile(): Flow<Resource<User>> {
-        return remoteDataSource.getUserProfile().transform {
-            when (it) {
-                is Resource.Failure -> return@transform emit(Resource.Failure(it.throwable, it.msg))
-                is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.toUserDomain()))
-            }
-        }
-    }
 
     override suspend fun getUserBox(): Flow<Resource<Box>> {
         return remoteDataSource.getUserBox().transform {

@@ -6,16 +6,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface RemoteDataSource {
 
-    suspend fun createAccount(userModel: UserModel): Boolean
-
     // Application
-    suspend fun getUserProfile(): Flow<Resource<UserModel>>
     suspend fun getUserBox(): Flow<Resource<BoxModel>>
     suspend fun getRecentMoves(): Flow<Resource<List<CashTransactionsModel>>>
-    suspend fun saveMoneyOnBox(
-        value: Double,
-        description: String
-    ): Flow<Resource<String>>
+    suspend fun saveMoneyOnBox(value: Double, description: String): Flow<Resource<String>>
 
     // Client
     suspend fun getAllClientsPaging(): Flow<Resource<List<ClientModel>>>
@@ -27,7 +21,6 @@ interface RemoteDataSource {
         idClient: String,
         updateClientModel: ClientModel
     ): Flow<Resource<String>>
-
     suspend fun removeClient(idClient: String): Flow<Resource<String>>
 
     // Credit

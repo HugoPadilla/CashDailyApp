@@ -3,6 +3,7 @@ package com.wenitech.cashdaily.di
 import com.wenitech.cashdaily.domain.repositories.AuthRepository
 import com.wenitech.cashdaily.domain.repositories.DataRepository
 import com.wenitech.cashdaily.domain.repositories.RoutesRepository
+import com.wenitech.cashdaily.domain.repositories.UserRepository
 import com.wenitech.cashdaily.domain.usecases.auth.*
 import com.wenitech.cashdaily.domain.usecases.caja.GetRecentMovementsUseCase
 import com.wenitech.cashdaily.domain.usecases.caja.GetUserBoxUseCase
@@ -76,8 +77,8 @@ object ActivityModule {
     }
 
     @Provides
-    fun provideGetProfileUserAppUseCase(dataRepository: DataRepository): GetProfileUserUseCase {
-        return GetProfileUserUseCase(dataRepository)
+    fun provideGetProfileUserAppUseCase(userRepository: UserRepository): GetProfileUserUseCase {
+        return GetProfileUserUseCase(userRepository)
     }
 
     @Provides
@@ -86,8 +87,11 @@ object ActivityModule {
     }
 
     @Provides
-    fun provideSignInUseCase(authRepository: AuthRepository): SignInEmailUseCase {
-        return SignInEmailUseCase(authRepository)
+    fun provideSignInUseCase(
+        authRepository: AuthRepository,
+        userRepository: UserRepository
+    ): SignInEmailUseCase {
+        return SignInEmailUseCase(authRepository, userRepository)
     }
 
     @Provides
@@ -107,8 +111,8 @@ object ActivityModule {
 
     // User case Authentication
     @Provides
-    fun provideGetFirebaseAuth(authRepository: AuthRepository): GetFirebaseAuthState {
-        return GetFirebaseAuthState(authRepository)
+    fun provideGetFirebaseAuth(authRepository: AuthRepository): GetAuthState {
+        return GetAuthState(authRepository)
     }
 
     @Provides

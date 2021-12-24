@@ -7,13 +7,9 @@ import kotlinx.coroutines.flow.Flow
 interface DataRepository {
 
     // Application
-    suspend fun getUserProfile(): Flow<Resource<User>>
     suspend fun getUserBox(): Flow<Resource<Box>>
     suspend fun getRecentMoves(): Flow<Resource<List<CashTransactions>>>
-    suspend fun saveMoneyOnBox(
-        value: Double,
-        description: String
-    ): Flow<Resource<String>>
+    suspend fun saveMoneyOnBox(value: Double, description: String): Flow<Resource<String>>
 
     // Client
     suspend fun getAllClientsPaging(): Flow<Resource<List<Client>>>

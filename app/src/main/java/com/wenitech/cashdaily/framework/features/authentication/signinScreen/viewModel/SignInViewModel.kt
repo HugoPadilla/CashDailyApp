@@ -74,7 +74,7 @@ class SignInViewModel @Inject constructor(
 
     fun doSignIn(email: String, password: String) {
         viewModelScope.launch {
-            signInEmailUseCase("USER_NAME", email, password).collect { result ->
+            signInEmailUseCase(email, password).collect { result ->
                 uiState = when (result.status) {
                     Status.LOADING -> uiState.copy(result = ResultEnum.Loading)
                     Status.SUCCESS -> uiState.copy(result = ResultEnum.Success)

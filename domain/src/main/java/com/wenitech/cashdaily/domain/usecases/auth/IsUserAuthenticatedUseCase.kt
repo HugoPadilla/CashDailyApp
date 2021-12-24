@@ -5,5 +5,5 @@ import com.wenitech.cashdaily.domain.repositories.AuthRepository
 class IsUserAuthenticatedUseCase(
     private val authRepository: AuthRepository
 ) {
-    operator fun invoke() = authRepository.isUserAuthenticatedInFirebase()
+    operator fun invoke(): Boolean = authRepository.isUserAuthenticatedInFirebase()
 }

@@ -8,20 +8,26 @@ import com.wenitech.cashdaily.commons.NetWorkStatus
 import com.wenitech.cashdaily.data.databaselocal.Database
 import com.wenitech.cashdaily.data.remoteDataSource.RemoteDataSource
 import com.wenitech.cashdaily.data.remoteDataSource.RemoteDataSourceImpl
+import com.wenitech.cashdaily.data.remoteDataSource.UserRemoteDataSource
+import com.wenitech.cashdaily.data.remoteDataSource.UserRemoteDataSourceImpl
 import com.wenitech.cashdaily.data.remoteDataSource.routes.Constant
 import com.wenitech.cashdaily.data.repositories.AuthRepositoryImpl
 import com.wenitech.cashdaily.data.repositories.DataRepositoryImp
 import com.wenitech.cashdaily.data.repositories.RouteRepositoryImpl
+import com.wenitech.cashdaily.data.repositories.UserRepositoryImpl
 import com.wenitech.cashdaily.domain.repositories.AuthRepository
 import com.wenitech.cashdaily.domain.repositories.DataRepository
 import com.wenitech.cashdaily.domain.repositories.RoutesRepository
+import com.wenitech.cashdaily.domain.repositories.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Singleton
 
+@ExperimentalCoroutinesApi
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
@@ -58,7 +64,15 @@ object AppModule {
         firestore: FirebaseFirestore,
         constant: Constant
     ): RemoteDataSource {
-        return RemoteDataSourceImpl(firestore, constant);
+        return RemoteDataSourceImpl(firestore, constant)
+    }
+
+    @Provides
+    fun provideUserRemoteDataSource(
+        db: FirebaseFirestore,
+        constant: Constant
+    ): UserRemoteDataSource {
+        return UserRemoteDataSourceImpl(db, constant)
     }
 
     /**
@@ -72,6 +86,12 @@ object AppModule {
         return AuthRepositoryImpl(auth)
     }
 
+    @Singleton
+    @Provides
+    fun provideUserRepository(userRemoteDataSource: UserRemoteDataSource): UserRepository {
+        return UserRepositoryImpl(userRemoteDataSource)
+    }
+
     /**
      * Provee instancia de Repositorio de acceso a los datos
      */
@@ -79,9 +99,8 @@ object AppModule {
     @Provides
     fun provideDataRepository(
         remoteDataSource: RemoteDataSource,
-        auth: AuthRepository
     ): DataRepository {
-        return DataRepositoryImp(remoteDataSource, auth)
+        return DataRepositoryImp(remoteDataSource)
     }
 
     @Singleton
