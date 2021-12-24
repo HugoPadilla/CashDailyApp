@@ -54,8 +54,8 @@ object AppModule {
     fun provideRemoteDataSource(
         firestore: FirebaseFirestore,
         constant: Constant
-    ): RemoteDataSource {
-        return RemoteDataSourceImpl(firestore, constant)
+    ): ClientRemoteDataSource {
+        return ClientRemoteDataSourceImpl(firestore, constant)
     }
 
     @Provides
@@ -69,6 +69,14 @@ object AppModule {
         constant: Constant
     ): UserRemoteDataSource {
         return UserRemoteDataSourceImpl(db, constant)
+    }
+
+    @Provides
+    fun provideCreditRemoteDataSource(
+        db: FirebaseFirestore,
+        constant: Constant
+    ): CustomerCreditRemoteDataSource {
+        return CustomerCreditRemoteDataSourceImpl(db, constant)
     }
 
     /**
@@ -94,15 +102,21 @@ object AppModule {
     @Singleton
     @Provides
     fun provideDataRepository(
-        remoteDataSource: RemoteDataSource,
+        clientRemoteDataSource: ClientRemoteDataSource,
     ): DataRepository {
-        return DataRepositoryImp(remoteDataSource)
+        return DataRepositoryImp(clientRemoteDataSource)
     }
 
     @Singleton
     @Provides
     fun provideBoxRepository(boxRemoteDataSource: BoxRemoteDataSource): BoxRepository {
         return BoxRepositoryImpl(boxRemoteDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideCreditRepository(customerCreditRemoteDataSource: CustomerCreditRemoteDataSource): CreditRepository {
+        return CreditRepositoryImpl(customerCreditRemoteDataSource)
     }
 
     @Singleton

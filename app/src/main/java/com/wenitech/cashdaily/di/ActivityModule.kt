@@ -54,11 +54,6 @@ object ActivityModule {
     }
 
     @Provides
-    fun provideSaveNewCreditUserCase(dataRepository: DataRepository): SaveNewCreditUseCase {
-        return SaveNewCreditUseCase(dataRepository)
-    }
-
-    @Provides
     fun provideGetClientById(dataRepository: DataRepository): GetClientById {
         return GetClientById(dataRepository)
     }
@@ -92,18 +87,23 @@ object ActivityModule {
     }
 
     @Provides
-    fun provideGetCreditClientUseCase(dataRepository: DataRepository): GetCreditClientUseCase {
-        return GetCreditClientUseCase(dataRepository)
+    fun provideSaveNewCreditUserCase(creditRepository: CreditRepository): SaveNewCreditUseCase {
+        return SaveNewCreditUseCase(creditRepository)
     }
 
     @Provides
-    fun provideGetQuotasUseCase(dataRepository: DataRepository): GetQuotasUseCase {
-        return GetQuotasUseCase(dataRepository)
+    fun provideGetCreditClientUseCase(creditRepository: CreditRepository): GetCreditClientUseCase {
+        return GetCreditClientUseCase(creditRepository)
     }
 
     @Provides
-    fun provideSaveQuotaOfCreditClientUseCase(dataRepository: DataRepository): SaveQuotaOfCreditClientUseCase {
-        return SaveQuotaOfCreditClientUseCase(dataRepository)
+    fun provideGetQuotasUseCase(creditRepository: CreditRepository): GetQuotasUseCase {
+        return GetQuotasUseCase(creditRepository)
+    }
+
+    @Provides
+    fun provideSaveQuotaOfCreditClientUseCase(creditRepository: CreditRepository): SaveQuotaOfCreditClientUseCase {
+        return SaveQuotaOfCreditClientUseCase(creditRepository)
     }
 
     // User case Authentication

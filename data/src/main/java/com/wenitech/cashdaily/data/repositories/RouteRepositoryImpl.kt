@@ -4,7 +4,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.wenitech.cashdaily.data.entities.RutaModel
 import com.wenitech.cashdaily.data.remoteDataSource.routes.Constant
-import com.wenitech.cashdaily.domain.common.Resource
+import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.Ruta
 import com.wenitech.cashdaily.domain.repositories.RoutesRepository
 import kotlinx.coroutines.Dispatchers
@@ -24,8 +24,8 @@ class RouteRepositoryImpl(
      * LISTENER.
      *
      */
-    override suspend fun getRoutes(): Flow<Resource<List<Ruta>>> = callbackFlow {
-        offer(Resource.Loading())
+    override suspend fun getRoutes(): Flow<Response<List<Ruta>>> = callbackFlow {
+        offer(Response.Loading)
 
         val queryCollection = constant
             .getCollectionRoutes()
@@ -34,12 +34,12 @@ class RouteRepositoryImpl(
         val listener = queryCollection.addSnapshotListener { documentSnapshot, error ->
 
             if (documentSnapshot != null) {
-                offer(Resource.Success(documentSnapshot.toObjects(
+                offer(Response.Success(documentSnapshot.toObjects(
                     Ruta::class.java)))
             }
 
             error?.let {
-                offer(Resource.Failure(it))
+                offer(Response.Error(it))
                 cancel(it.message.toString())
             }
         }
@@ -55,17 +55,17 @@ class RouteRepositoryImpl(
      * SINGLE OPERATION
      *
      */
-    override suspend fun saveNewRoute(newRoute: Ruta): Flow<Resource<String>> = flow {
-        emit(Resource.Loading())
+    override suspend fun saveNewRoute(newRoute: Ruta): Flow<Response<String>> = flow {
+        emit(Response.Loading)
 
         val document = constant.getCollectionRoutes().document()
 
         document.set(newRoute).await()
 
-        emit(Resource.Success(""))
+        emit(Response.Success(""))
 
     }.catch {
-        emit(Resource.Failure(it))
+        emit(Response.Error(it))
     }.flowOn(Dispatchers.IO)
 
     /**
@@ -75,33 +75,33 @@ class RouteRepositoryImpl(
     override suspend fun updateNewRoute(
         idRoute: String,
         updateRoute: Ruta
-    ): Flow<Resource<String>> = flow {
-        emit(Resource.Loading())
+    ): Flow<Response<String>> = flow {
+        emit(Response.Loading)
 
         val document = constant.getDocumentRoute(idRoute)
 
         document.set(updateRoute).await()
 
-        emit(Resource.Success(""))
+        emit(Response.Success(""))
     }.catch {
-        emit(Resource.Failure(it))
+        emit(Response.Error(it))
     }.flowOn(Dispatchers.IO)
 
     /**
      * SINGLE OPERATION
      *
      */
-    override suspend fun removeNewRoute(idRoute: String): Flow<Resource<String>> = flow {
-        emit(Resource.Loading())
+    override suspend fun removeNewRoute(idRoute: String): Flow<Response<String>> = flow {
+        emit(Response.Loading)
 
         val document = constant.getDocumentRoute(idRoute)
 
         document.delete().await()
 
-        emit(Resource.Success(""))
+        emit(Response.Success(""))
 
     }.catch {
-        emit(Resource.Failure(it))
+        emit(Response.Error(it))
     }.flowOn(Dispatchers.IO)
 
 }

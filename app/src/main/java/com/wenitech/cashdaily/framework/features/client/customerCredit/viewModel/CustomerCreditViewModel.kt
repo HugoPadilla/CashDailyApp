@@ -3,7 +3,7 @@ package com.wenitech.cashdaily.framework.features.client.customerCredit.viewMode
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wenitech.cashdaily.domain.common.Resource
+import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.Quota
 import com.wenitech.cashdaily.domain.usecases.client.GetClientById
 import com.wenitech.cashdaily.domain.usecases.credit.GetCreditClientUseCase
@@ -59,13 +59,13 @@ class CustomerCreditViewModel @Inject constructor(
                 Quota(value = valueQuota)
             ).collect {
                 when (it) {
-                    is Resource.Failure -> {
+                    is Response.Error -> {
 
                     }
-                    is Resource.Loading -> {
+                    is Response.Loading -> {
 
                     }
-                    is Resource.Success -> {
+                    is Response.Success -> {
 
                     }
                 }
@@ -78,13 +78,13 @@ class CustomerCreditViewModel @Inject constructor(
         viewModelScope.launch {
             getClientUseCase(idClient = idClient).collect { clientResult ->
                 when(clientResult){
-                    is Resource.Failure -> {
+                    is Response.Error -> {
 
                     }
-                    is Resource.Loading -> {
+                    is Response.Loading -> {
 
                     }
-                    is Resource.Success -> {
+                    is Response.Success -> {
                         _uiState.value = _uiState.value.copy(
                             client = clientResult.data
                         )
@@ -98,13 +98,13 @@ class CustomerCreditViewModel @Inject constructor(
         viewModelScope.launch {
             getCreditClientUseCase(idClient, idCredit).collect { creditResult ->
                 when (creditResult) {
-                    is Resource.Failure -> {
+                    is Response.Error -> {
                         Log.d(TAG, "getCreditClient: Ocurrio un error")
                     }
-                    is Resource.Loading -> {
+                    is Response.Loading -> {
                         Log.d(TAG, "getCreditClient: Cargando informacion")
                     }
-                    is Resource.Success -> {
+                    is Response.Success -> {
                         Log.d(TAG, "getCreditClient: ${creditResult.data}")
                         _uiState.value = _uiState.value.copy(credit = creditResult.data)
                         getQuotasCreditClient(idClient = idClient, refCreditActive = idCredit)
@@ -119,16 +119,16 @@ class CustomerCreditViewModel @Inject constructor(
 
             getQuotasUseCase(idClient, refCreditActive).collect { result ->
                 when (result) {
-                    is Resource.Failure -> {
+                    is Response.Error -> {
                         Log.d(
                             TAG,
                             "getQuotasCreditClient: Se presento un error ${result.throwable}"
                         )
                     }
-                    is Resource.Loading -> {
+                    is Response.Loading -> {
                         Log.d(TAG, "getQuotasCreditClient: Cargando cuotas")
                     }
-                    is Resource.Success -> {
+                    is Response.Success -> {
                         _uiState.value = _uiState.value.copy(listQuota = result.data)
                     }
                 }

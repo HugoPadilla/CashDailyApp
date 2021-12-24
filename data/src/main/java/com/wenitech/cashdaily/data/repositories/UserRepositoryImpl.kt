@@ -3,7 +3,7 @@ package com.wenitech.cashdaily.data.repositories
 import com.wenitech.cashdaily.data.entities.UserModel
 import com.wenitech.cashdaily.data.entities.toUserDomain
 import com.wenitech.cashdaily.data.remoteDataSource.UserRemoteDataSource
-import com.wenitech.cashdaily.domain.common.Resource
+import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.User
 import com.wenitech.cashdaily.domain.repositories.UserRepository
 import kotlinx.coroutines.flow.Flow
@@ -16,12 +16,12 @@ class UserRepositoryImpl(
         return userRemoteDataSource.createDocumentUser(UserModel(email = user.email))
     }
 
-    override suspend fun getUserProfile(): Flow<Resource<User>> {
+    override suspend fun getUserProfile(): Flow<Response<User>> {
         return userRemoteDataSource.getUserProfile().transform {
             when (it) {
-                is Resource.Failure -> return@transform emit(Resource.Failure(it.throwable, it.msg))
-                is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.toUserDomain()))
+                is Response.Error -> return@transform emit(Response.Error(it.throwable, it.msg))
+                is Response.Loading -> return@transform emit(Response.Loading)
+                is Response.Success -> return@transform emit(Response.Success(it.data.toUserDomain()))
             }
         }
     }

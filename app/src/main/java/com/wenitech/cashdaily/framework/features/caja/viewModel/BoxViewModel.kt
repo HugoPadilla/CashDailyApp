@@ -3,7 +3,7 @@ package com.wenitech.cashdaily.framework.features.caja.viewModel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wenitech.cashdaily.domain.common.Resource
+import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.Box
 import com.wenitech.cashdaily.domain.entities.CashTransactions
 import com.wenitech.cashdaily.domain.usecases.caja.GetRecentMovementsUseCase
@@ -43,13 +43,13 @@ class BoxViewModel @Inject constructor(
         viewModelScope.launch {
             getUserBoxUseCase().collect {
                 when (it) {
-                    is Resource.Failure -> {
+                    is Response.Error -> {
                         //_boxState.value = BoxContract.BoxState.Error(it.msg.toString().trim())
                     }
-                    is Resource.Loading -> {
+                    is Response.Loading -> {
                         //_boxState.value = BoxContract.BoxState.Loading
                     }
-                    is Resource.Success -> {
+                    is Response.Success -> {
                         _boxState.value = it.data
                     }
                 }
@@ -64,13 +64,13 @@ class BoxViewModel @Inject constructor(
         viewModelScope.launch {
             getRecentMovementsUseCaseUseCase().collect {
                 when (it) {
-                    is Resource.Failure -> {
+                    is Response.Error -> {
 
                     }
-                    is Resource.Loading -> {
+                    is Response.Loading -> {
 
                     }
-                    is Resource.Success -> {
+                    is Response.Success -> {
                         _cashMovement.value = it.data
                         Log.d("FETCHMOVEMENT", "fetchMovement: ${it.data}")
                     }

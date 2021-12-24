@@ -4,7 +4,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.wenitech.cashdaily.data.entities.BoxModel
 import com.wenitech.cashdaily.data.entities.UserModel
 import com.wenitech.cashdaily.data.remoteDataSource.routes.Constant
-import com.wenitech.cashdaily.domain.common.Resource
+import com.wenitech.cashdaily.domain.common.Response
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
@@ -36,17 +36,17 @@ class UserRemoteDataSourceImpl(
         }
     }
 
-    override suspend fun getUserProfile(): Flow<Resource<UserModel>> = callbackFlow {
-        offer(Resource.Loading())
+    override suspend fun getUserProfile(): Flow<Response<UserModel>> = callbackFlow {
+        offer(Response.Loading)
         val queryDocument = constant.getDocumentProfileUser()
 
         val listener = queryDocument.addSnapshotListener { documentSnapshot, error ->
             if (documentSnapshot != null && documentSnapshot.exists()) {
-                offer(Resource.Success(documentSnapshot.toObject(UserModel::class.java)))
+                offer(Response.Success(documentSnapshot.toObject(UserModel::class.java)))
             }
 
             error?.let {
-                offer(Resource.Failure(it, it.message.toString()))
+                offer(Response.Error(it, it.message.toString()))
                 cancel(it.message.toString())
             }
         }
@@ -55,5 +55,5 @@ class UserRemoteDataSourceImpl(
             listener.remove()
             cancel()
         }
-    } as Flow<Resource<UserModel>>
+    } as Flow<Response<UserModel>>
 }

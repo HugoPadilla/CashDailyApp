@@ -4,7 +4,7 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wenitech.cashdaily.domain.common.Resource
+import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.Client
 import com.wenitech.cashdaily.domain.usecases.client.SaveClientUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -87,13 +87,13 @@ class RegisterClientViewModel @Inject constructor(
             viewModelScope.launch {
                 saveClientUseCase(client).collect {
                     when (it) {
-                        is Resource.Failure -> {
+                        is Response.Error -> {
                             _uiState.value = _uiState.value.copy(showDialog = TypeDialog.Error)
                         }
-                        is Resource.Loading -> {
+                        is Response.Loading -> {
                             _uiState.value = _uiState.value.copy(showDialog = TypeDialog.Loading)
                         }
-                        is Resource.Success -> {
+                        is Response.Success -> {
                             _uiState.value = _uiState.value.copy(
                                 showDialog = TypeDialog.Success,
                                 registeredCustomerId = if (it.data.isEmpty()) it.data else "ffwefjf39f"

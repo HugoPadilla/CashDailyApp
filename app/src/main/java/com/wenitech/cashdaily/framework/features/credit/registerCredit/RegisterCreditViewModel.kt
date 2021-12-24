@@ -3,7 +3,7 @@ package com.wenitech.cashdaily.framework.features.credit.registerCredit
 import android.text.TextUtils
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wenitech.cashdaily.domain.common.Resource
+import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.Credit
 import com.wenitech.cashdaily.domain.usecases.credit.SaveNewCreditUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -126,21 +126,21 @@ class RegisterCreditViewModel @Inject constructor(
             viewModelScope.launch {
                 saveNewCreditUseCase(_idClient.value, newCredit).collect {
                     when (it) {
-                        is Resource.Failure -> {
+                        is Response.Error -> {
                             _uiState.value = _uiState.value.copy(
                                 isSuccessResult = false,
                                 isLoadingResult = false,
                                 isFailedResult = true
                             )
                         }
-                        is Resource.Loading -> {
+                        is Response.Loading -> {
                             _uiState.value = _uiState.value.copy(
                                 isSuccessResult = false,
                                 isLoadingResult = true,
                                 isFailedResult = false
                             )
                         }
-                        is Resource.Success -> {
+                        is Response.Success -> {
                             _uiState.value = _uiState.value.copy(
                                 isSuccessResult = true,
                                 isLoadingResult = false,

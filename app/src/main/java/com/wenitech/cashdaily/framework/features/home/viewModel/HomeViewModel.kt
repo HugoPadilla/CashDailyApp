@@ -2,7 +2,7 @@ package com.wenitech.cashdaily.framework.features.home.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wenitech.cashdaily.domain.common.Resource
+import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.Box
 import com.wenitech.cashdaily.domain.entities.Ruta
 import com.wenitech.cashdaily.domain.usecases.caja.GetUserBoxUseCase
@@ -36,13 +36,13 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getUserBoxUseCase().collect {
                 when (it) {
-                    is Resource.Failure -> {
+                    is Response.Error -> {
 
                     }
-                    is Resource.Loading -> {
+                    is Response.Loading -> {
 
                     }
-                    is Resource.Success -> {
+                    is Response.Success -> {
                         _homeUiState.value = it.data
                     }
                 }
@@ -54,13 +54,13 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getRoutesUseCase().collect {
                 when (it) {
-                    is Resource.Failure -> {
+                    is Response.Error -> {
 
                     }
-                    is Resource.Loading -> {
+                    is Response.Loading -> {
 
                     }
-                    is Resource.Success -> {
+                    is Response.Success -> {
                         _routeUiState.value = it.data
                     }
                 }

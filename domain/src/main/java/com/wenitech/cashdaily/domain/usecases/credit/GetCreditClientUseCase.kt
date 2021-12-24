@@ -1,17 +1,17 @@
 package com.wenitech.cashdaily.domain.usecases.credit
 
-import com.wenitech.cashdaily.domain.common.Resource
+import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.Credit
-import com.wenitech.cashdaily.domain.repositories.DataRepository
+import com.wenitech.cashdaily.domain.repositories.CreditRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetCreditClientUseCase(
-    private val dataRepository: DataRepository
+    private val creditRepository: CreditRepository
 ) {
     suspend operator fun invoke(
         idClient: String,
         idCredit: String
-    ): Flow<Resource<Credit>> =
-        dataRepository.getCreditClient(idClient, idCredit)
+    ): Flow<Response<Credit>> =
+        creditRepository.getCreditClient(idClient, idCredit)
 
 }
