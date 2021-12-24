@@ -6,19 +6,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.wenitech.cashdaily.commons.NetWorkStatus
 import com.wenitech.cashdaily.data.databaselocal.Database
-import com.wenitech.cashdaily.data.remoteDataSource.RemoteDataSource
-import com.wenitech.cashdaily.data.remoteDataSource.RemoteDataSourceImpl
-import com.wenitech.cashdaily.data.remoteDataSource.UserRemoteDataSource
-import com.wenitech.cashdaily.data.remoteDataSource.UserRemoteDataSourceImpl
+import com.wenitech.cashdaily.data.remoteDataSource.*
 import com.wenitech.cashdaily.data.remoteDataSource.routes.Constant
-import com.wenitech.cashdaily.data.repositories.AuthRepositoryImpl
-import com.wenitech.cashdaily.data.repositories.DataRepositoryImp
-import com.wenitech.cashdaily.data.repositories.RouteRepositoryImpl
-import com.wenitech.cashdaily.data.repositories.UserRepositoryImpl
-import com.wenitech.cashdaily.domain.repositories.AuthRepository
-import com.wenitech.cashdaily.domain.repositories.DataRepository
-import com.wenitech.cashdaily.domain.repositories.RoutesRepository
-import com.wenitech.cashdaily.domain.repositories.UserRepository
+import com.wenitech.cashdaily.data.repositories.*
+import com.wenitech.cashdaily.domain.repositories.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -68,6 +59,11 @@ object AppModule {
     }
 
     @Provides
+    fun provideBoxRemoteDataSource(db: FirebaseFirestore, constant: Constant): BoxRemoteDataSource {
+        return BoxRemoteDataSourceImpl(db, constant)
+    }
+
+    @Provides
     fun provideUserRemoteDataSource(
         db: FirebaseFirestore,
         constant: Constant
@@ -101,6 +97,12 @@ object AppModule {
         remoteDataSource: RemoteDataSource,
     ): DataRepository {
         return DataRepositoryImp(remoteDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideBoxRepository(boxRemoteDataSource: BoxRemoteDataSource): BoxRepository {
+        return BoxRepositoryImpl(boxRemoteDataSource)
     }
 
     @Singleton

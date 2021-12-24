@@ -1,15 +1,13 @@
 package com.wenitech.cashdaily.domain.repositories
 
 import com.wenitech.cashdaily.domain.common.Resource
-import com.wenitech.cashdaily.domain.entities.*
+import com.wenitech.cashdaily.domain.entities.Client
+import com.wenitech.cashdaily.domain.entities.Credit
+import com.wenitech.cashdaily.domain.entities.Quota
+import com.wenitech.cashdaily.domain.entities.ReportsDaily
 import kotlinx.coroutines.flow.Flow
 
 interface DataRepository {
-
-    // Application
-    suspend fun getUserBox(): Flow<Resource<Box>>
-    suspend fun getRecentMoves(): Flow<Resource<List<CashTransactions>>>
-    suspend fun saveMoneyOnBox(value: Double, description: String): Flow<Resource<String>>
 
     // Client
     suspend fun getAllClientsPaging(): Flow<Resource<List<Client>>>

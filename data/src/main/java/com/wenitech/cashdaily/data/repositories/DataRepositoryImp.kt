@@ -12,33 +12,6 @@ class DataRepositoryImp(
     private val remoteDataSource: RemoteDataSource,
 ) : DataRepository {
 
-    override suspend fun getUserBox(): Flow<Resource<Box>> {
-        return remoteDataSource.getUserBox().transform {
-            when (it) {
-                is Resource.Failure -> return@transform emit(Resource.Failure(it.throwable, it.msg))
-                is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.toDomain()))
-            }
-        }
-    }
-
-    override suspend fun getRecentMoves(): Flow<Resource<List<CashTransactions>>> {
-        return remoteDataSource.getRecentMoves().transform {
-            when (it) {
-                is Resource.Failure -> return@transform emit(Resource.Failure(it.throwable, it.msg))
-                is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.map { it.toDomain() }))
-            }
-        }
-    }
-
-    override suspend fun saveMoneyOnBox(
-        value: Double,
-        description: String
-    ): Flow<Resource<String>> {
-        return remoteDataSource.saveMoneyOnBox(value, description)
-    }
-
     override suspend fun getAllClientsPaging(): Flow<Resource<List<Client>>> {
         return remoteDataSource.getAllClientsPaging().transform {
             when (it) {

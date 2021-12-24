@@ -1,9 +1,6 @@
 package com.wenitech.cashdaily.di
 
-import com.wenitech.cashdaily.domain.repositories.AuthRepository
-import com.wenitech.cashdaily.domain.repositories.DataRepository
-import com.wenitech.cashdaily.domain.repositories.RoutesRepository
-import com.wenitech.cashdaily.domain.repositories.UserRepository
+import com.wenitech.cashdaily.domain.repositories.*
 import com.wenitech.cashdaily.domain.usecases.auth.*
 import com.wenitech.cashdaily.domain.usecases.caja.GetRecentMovementsUseCase
 import com.wenitech.cashdaily.domain.usecases.caja.GetUserBoxUseCase
@@ -27,23 +24,23 @@ import dagger.hilt.android.components.ActivityRetainedComponent
 object ActivityModule {
     // Binds interfaces con implementation
     @Provides
-    fun provideGetUserBoxUseCase(dataRepository: DataRepository): GetUserBoxUseCase {
-        return GetUserBoxUseCase(dataRepository)
+    fun provideGetUserBoxUseCase(boxRepository: BoxRepository): GetUserBoxUseCase {
+        return GetUserBoxUseCase(boxRepository)
     }
 
     @Provides
-    fun provideRecentMovementsUseCase(dataRepository: DataRepository): GetRecentMovementsUseCase {
-        return GetRecentMovementsUseCase(dataRepository)
+    fun provideRecentMovementsUseCase(boxRepository: BoxRepository): GetRecentMovementsUseCase {
+        return GetRecentMovementsUseCase(boxRepository)
     }
 
     @Provides
-    fun provideSaveMoneyOnBoxUseCase(dataRepository: DataRepository): SaveMoneyOnBoxUseCase {
-        return SaveMoneyOnBoxUseCase(dataRepository)
+    fun provideSaveMoneyOnBoxUseCase(boxRepository: BoxRepository): SaveMoneyOnBoxUseCase {
+        return SaveMoneyOnBoxUseCase(boxRepository)
     }
 
     @Provides
-    fun provideRemoveMoneyOnBoxUseCase(dataRepository: DataRepository): RemoveMoneyOnBoxUseCase {
-        return RemoveMoneyOnBoxUseCase(dataRepository)
+    fun provideRemoveMoneyOnBoxUseCase(boxRepository: BoxRepository): RemoveMoneyOnBoxUseCase {
+        return RemoveMoneyOnBoxUseCase(boxRepository)
     }
 
     @Provides
