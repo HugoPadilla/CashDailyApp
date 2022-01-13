@@ -8,11 +8,12 @@ import com.wenitech.cashdaily.domain.entities.User
 import com.wenitech.cashdaily.domain.repositories.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transform
+import javax.inject.Inject
 
-class UserRepositoryImpl(
+class UserRepositoryImpl @Inject constructor(
     private val userRemoteDataSource: UserRemoteDataSource
 ) : UserRepository {
-    override suspend fun createDocumentNewUser(user: User): Boolean {
+    override suspend fun addNewUser(user: User): Boolean {
         return userRemoteDataSource.createDocumentUser(UserModel(email = user.email))
     }
 
@@ -24,5 +25,9 @@ class UserRepositoryImpl(
                 is Response.Success -> return@transform emit(Response.Success(it.data.toUserDomain()))
             }
         }
+    }
+
+    override suspend fun deleteUserProfile(): Boolean {
+        TODO("Not yet implemented")
     }
 }

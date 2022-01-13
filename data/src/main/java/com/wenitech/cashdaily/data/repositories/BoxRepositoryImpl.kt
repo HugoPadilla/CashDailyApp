@@ -8,8 +8,11 @@ import com.wenitech.cashdaily.domain.entities.CashTransactions
 import com.wenitech.cashdaily.domain.repositories.BoxRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transform
+import javax.inject.Inject
 
-class BoxRepositoryImpl(private val boxRemoteDataSource: BoxRemoteDataSource): BoxRepository {
+class BoxRepositoryImpl @Inject constructor(
+    private val boxRemoteDataSource: BoxRemoteDataSource
+) : BoxRepository {
     override suspend fun getUserBox(): Flow<Response<Box>> {
         return boxRemoteDataSource.getUserBox().transform {
             when (it) {
@@ -21,11 +24,16 @@ class BoxRepositoryImpl(private val boxRemoteDataSource: BoxRemoteDataSource): B
     }
 
     override suspend fun getRecentMoves(): Flow<Response<List<CashTransactions>>> {
-        return boxRemoteDataSource.getRecentMoves().transform {
-            when (it) {
-                is Response.Error -> return@transform emit(Response.Error(it.throwable, it.msg))
+        return boxRemoteDataSource.getRecentMoves().transform { response ->
+            when (response) {
+                is Response.Error -> return@transform emit(
+                    Response.Error(
+                        response.throwable,
+                        response.msg
+                    )
+                )
                 is Response.Loading -> return@transform emit(Response.Loading)
-                is Response.Success -> return@transform emit(Response.Success(it.data.map { it.toDomain() }))
+                is Response.Success -> return@transform emit(Response.Success(response.data.map { it.toDomain() }))
             }
         }
     }

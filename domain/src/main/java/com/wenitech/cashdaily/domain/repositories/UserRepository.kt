@@ -5,6 +5,7 @@ import com.wenitech.cashdaily.domain.entities.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
-    suspend fun createDocumentNewUser(user: User): Boolean
+    suspend fun addNewUser(user: User): Boolean
     suspend fun getUserProfile(): Flow<Response<User>>
+    suspend fun deleteUserProfile(): Boolean
 }

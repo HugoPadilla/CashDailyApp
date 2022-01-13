@@ -7,8 +7,11 @@ import com.wenitech.cashdaily.domain.entities.ReportsDaily
 import com.wenitech.cashdaily.domain.repositories.GeneralReportRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transform
+import javax.inject.Inject
 
-class GeneralReportRepositoryImpl(private val generalReportRemoteDataSource: GeneralReportRemoteDataSource) : GeneralReportRepository {
+class GeneralReportRepositoryImpl @Inject constructor(
+    private val generalReportRemoteDataSource: GeneralReportRemoteDataSource
+) : GeneralReportRepository {
     override suspend fun getReports(): Flow<Response<ReportsDaily>> {
         return generalReportRemoteDataSource.getReports().transform {
             when (it) {

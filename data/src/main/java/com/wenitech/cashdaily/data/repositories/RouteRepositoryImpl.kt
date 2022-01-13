@@ -13,9 +13,10 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class RouteRepositoryImpl(
+class RouteRepositoryImpl @Inject constructor(
     private val db: FirebaseFirestore,
     private val constant: Constant,
 ) : RoutesRepository {
@@ -34,8 +35,13 @@ class RouteRepositoryImpl(
         val listener = queryCollection.addSnapshotListener { documentSnapshot, error ->
 
             if (documentSnapshot != null) {
-                offer(Response.Success(documentSnapshot.toObjects(
-                    Ruta::class.java)))
+                offer(
+                    Response.Success(
+                        documentSnapshot.toObjects(
+                            Ruta::class.java
+                        )
+                    )
+                )
             }
 
             error?.let {

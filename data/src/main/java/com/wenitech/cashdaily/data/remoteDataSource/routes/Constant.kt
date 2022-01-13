@@ -4,6 +4,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import javax.inject.Inject
+import javax.inject.Singleton
 
 const val COLLECTION_USERS = "users"
 const val COLLECTION_BOX = "box"
@@ -13,7 +15,8 @@ const val COLLECTION_CREDITS = "credits"
 const val COLLECTION_QUOTAS = "quotas"
 const val COLLECTION_ROUTE = "routes"
 
-class Constant(
+@Singleton
+class Constant @Inject constructor(
     private val db: FirebaseFirestore,
     private val auth: FirebaseAuth,
 ) {

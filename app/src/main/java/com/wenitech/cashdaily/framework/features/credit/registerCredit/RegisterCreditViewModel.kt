@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.Credit
-import com.wenitech.cashdaily.domain.usecases.credit.SaveNewCreditUseCase
+import com.wenitech.cashdaily.domain.usecases.credit.CreateCustomerCreditUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterCreditViewModel @Inject constructor(
-    private val saveNewCreditUseCase: SaveNewCreditUseCase,
+    private val createCustomerCreditUseCase: CreateCustomerCreditUseCase,
 ) : ViewModel() {
 
     private val customDateFormat = SimpleDateFormat("dd MMMM yyyy hh:mm a", Locale.getDefault())
@@ -124,7 +124,7 @@ class RegisterCreditViewModel @Inject constructor(
         if (isFormCreditValid) {
             val newCredit = buildCreditObjet()
             viewModelScope.launch {
-                saveNewCreditUseCase(_idClient.value, newCredit).collect {
+                createCustomerCreditUseCase(_idClient.value, newCredit).collect {
                     when (it) {
                         is Response.Error -> {
                             _uiState.value = _uiState.value.copy(

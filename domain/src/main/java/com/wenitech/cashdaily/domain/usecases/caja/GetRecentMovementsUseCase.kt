@@ -4,11 +4,12 @@ import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.CashTransactions
 import com.wenitech.cashdaily.domain.repositories.BoxRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 /**
- * Caso de uso: Obtiene las transacciones recientes hechas en la caja
+ * Obtiene las transacciones recientes hechas en la caja
  */
-class GetRecentMovementsUseCase(
+class GetRecentMovementsUseCase @Inject constructor(
     private val boxRepository: BoxRepository
 ) {
     suspend operator fun invoke(): Flow<Response<List<CashTransactions>>> =

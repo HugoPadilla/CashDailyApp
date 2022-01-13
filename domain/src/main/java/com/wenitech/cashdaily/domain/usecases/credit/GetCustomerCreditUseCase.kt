@@ -4,14 +4,15 @@ import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.Credit
 import com.wenitech.cashdaily.domain.repositories.CreditRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class SaveNewCreditUseCase(
+class GetCustomerCreditUseCase @Inject constructor(
     private val creditRepository: CreditRepository
 ) {
     suspend operator fun invoke(
         idClient: String,
-        newCredit: Credit
-    ): Flow<Response<String>> =
-        creditRepository.saveNewCredit(idClient, newCredit)
+        idCredit: String
+    ): Flow<Response<Credit>> =
+        creditRepository.getCreditClient(idClient, idCredit)
 
 }

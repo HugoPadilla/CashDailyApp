@@ -13,10 +13,11 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @Suppress("UNCHECKED_CAST", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class ClientRemoteDataSourceImpl(
+class ClientRemoteDataSourceImpl @Inject constructor(
     private val db: FirebaseFirestore,
     private val constant: Constant,
 ) : ClientRemoteDataSource {

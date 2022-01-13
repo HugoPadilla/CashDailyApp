@@ -4,8 +4,9 @@ import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.Quota
 import com.wenitech.cashdaily.domain.repositories.CreditRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class SaveQuotaOfCreditClientUseCase(
+class SaveQuotaOfCreditClientUseCase @Inject constructor(
     private val creditRepository: CreditRepository
 ) {
     suspend operator fun invoke(

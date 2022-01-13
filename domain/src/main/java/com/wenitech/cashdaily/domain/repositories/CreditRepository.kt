@@ -6,6 +6,7 @@ import com.wenitech.cashdaily.domain.entities.Quota
 import kotlinx.coroutines.flow.Flow
 
 interface CreditRepository {
+    suspend fun deleteCustomerCredit(idClient: String, idCredit: String): Flow<Response<Void?>>
     suspend fun getRecentCredits(uid: String, idClient: String): Flow<Response<List<Credit>>>
     suspend fun getCreditClient(
         idClient: String,

@@ -77,7 +77,9 @@ class SignInViewModel @Inject constructor(
             signInEmailUseCase(email, password).collect { result ->
                 uiState = when (result.status) {
                     Status.LOADING -> uiState.copy(result = ResultEnum.Loading)
-                    Status.SUCCESS -> uiState.copy(result = ResultEnum.Success)
+                    Status.SUCCESS -> {
+                        uiState.copy(result = ResultEnum.Success)
+                    }
                     Status.COLLICION -> uiState.copy(result = ResultEnum.Collision)
                     Status.FAILED -> uiState.copy(result = ResultEnum.Failed)
                 }

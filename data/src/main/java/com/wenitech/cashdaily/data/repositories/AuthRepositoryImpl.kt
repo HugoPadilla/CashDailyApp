@@ -11,9 +11,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class AuthRepositoryImpl(
+class AuthRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth,
 ) : AuthRepository {
     override fun isUserAuthenticatedInFirebase(): Boolean = auth.currentUser != null
@@ -41,7 +42,12 @@ class AuthRepositoryImpl(
             auth.signOut()
             emit(ResultAuth.success(false))
         } catch (e: Exception) {
-            emit(ResultAuth.failed(e.message ?: "Tenemos incoveniente al cerrar la sesion. Intenta nuevamente", false))
+            emit(
+                ResultAuth.failed(
+                    e.message ?: "Tenemos incoveniente al cerrar la sesion. Intenta nuevamente",
+                    false
+                )
+            )
         }
     }
 

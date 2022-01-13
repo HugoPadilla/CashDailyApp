@@ -6,8 +6,9 @@ import com.wenitech.cashdaily.domain.repositories.AuthRepository
 import com.wenitech.cashdaily.domain.repositories.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onCompletion
+import javax.inject.Inject
 
-class SignInEmailUseCase(
+class SignInEmailUseCase @Inject constructor(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository
 ) {
@@ -15,8 +16,8 @@ class SignInEmailUseCase(
         email: String,
         password: String
     ): Flow<ResultAuth<Boolean>> = authRepository.singInEmail(email, password).onCompletion {
-        if (it != null){
-            userRepository.createDocumentNewUser(User(email = email))
+        if (it == null){
+            userRepository.addNewUser(User(email = email))
         }
     }
 }

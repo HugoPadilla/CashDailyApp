@@ -7,8 +7,9 @@ import com.wenitech.cashdaily.domain.entities.*
 import com.wenitech.cashdaily.domain.repositories.DataRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transform
+import javax.inject.Inject
 
-class DataRepositoryImp(
+class DataRepositoryImp @Inject constructor(
     private val clientRemoteDataSource: ClientRemoteDataSource,
 ) : DataRepository {
 
@@ -31,7 +32,8 @@ class DataRepositoryImp(
                 is Response.Error -> return@transform emit(Response.Error(it.throwable, it.msg))
                 is Response.Loading -> return@transform emit(Response.Loading)
                 is Response.Success -> return@transform emit(Response.Success(it.data.map {
-                    it.toDomain() }))
+                    it.toDomain()
+                }))
             }
         }
     }
@@ -63,7 +65,7 @@ class DataRepositoryImp(
 
     override suspend fun getClientById(idClient: String): Flow<Response<Client>> {
         return clientRemoteDataSource.getClientById(idClient).transform {
-            when(it){
+            when (it) {
                 is Response.Error -> return@transform emit(Response.Error(it.throwable, it.msg))
                 is Response.Loading -> return@transform emit(Response.Loading)
                 is Response.Success -> return@transform emit(Response.Success(it.data.toDomain()))

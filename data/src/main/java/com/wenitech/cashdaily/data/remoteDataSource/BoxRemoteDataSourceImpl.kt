@@ -13,9 +13,10 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class BoxRemoteDataSourceImpl(
+class BoxRemoteDataSourceImpl @Inject constructor(
     private val db: FirebaseFirestore,
     private val constant: Constant
 ) : BoxRemoteDataSource {
