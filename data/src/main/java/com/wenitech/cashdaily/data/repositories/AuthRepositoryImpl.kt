@@ -92,7 +92,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     override fun getFirebaseAuthState(): Flow<Boolean> = callbackFlow {
         val authStateListener = FirebaseAuth.AuthStateListener {
-            offer(it.currentUser == null)
+            offer(it.currentUser != null)
         }
 
         auth.addAuthStateListener(authStateListener)
