@@ -17,6 +17,7 @@ data class UserModel(
     var typeAccount: String = TypeAccountEnum.Admin.name,
     val fullName: String = "",
     val urlPhoto: String = "",
+    val roles: List<String> = listOf("Admin"), // Todo: Establecer dinamicamente el rol del usuario
 )
 
 fun UserModel.toUserDomain() = User(

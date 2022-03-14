@@ -4,7 +4,7 @@ import com.wenitech.cashdaily.domain.repositories.AuthRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetAuthState @Inject constructor(
+class GetAuthStateUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
     operator fun invoke(): Flow<Boolean> = authRepository.getFirebaseAuthState()
