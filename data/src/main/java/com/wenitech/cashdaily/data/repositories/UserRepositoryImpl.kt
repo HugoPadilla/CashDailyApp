@@ -1,33 +1,47 @@
 package com.wenitech.cashdaily.data.repositories
 
-import com.wenitech.cashdaily.data.entities.UserModel
-import com.wenitech.cashdaily.data.entities.toUserDomain
-import com.wenitech.cashdaily.data.remoteDataSource.UserRemoteDataSource
 import com.wenitech.cashdaily.domain.common.Response
+import com.wenitech.cashdaily.domain.common.ResultAuth
 import com.wenitech.cashdaily.domain.entities.User
+import com.wenitech.cashdaily.domain.repositories.LoginRepository
+import com.wenitech.cashdaily.domain.repositories.RegistrationRepository
 import com.wenitech.cashdaily.domain.repositories.UserRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val userRemoteDataSource: UserRemoteDataSource
+    private val loginRepository: LoginRepository,
+    private val registrationRepository: RegistrationRepository,
 ) : UserRepository {
-    override suspend fun addNewUser(user: User): Boolean {
-        return userRemoteDataSource.createDocumentUser(UserModel(email = user.email))
+    override  fun getUserProfile(): Flow<Response<User>> {
+        return loginRepository.getUserProfile()
     }
 
-    override suspend fun getUserProfile(): Flow<Response<User>> {
-        return userRemoteDataSource.getUserProfile().transform {
-            when (it) {
-                is Response.Error -> return@transform emit(Response.Error(it.throwable, it.msg))
-                is Response.Loading -> return@transform emit(Response.Loading)
-                is Response.Success -> return@transform emit(Response.Success(it.data.toUserDomain()))
-            }
-        }
+    override fun isUserAuthenticated(): Boolean {
+       return loginRepository.isUserAuthenticated()
     }
 
-    override suspend fun deleteUserProfile(): Boolean {
-        TODO("Not yet implemented")
+    override fun authState(): Flow<Boolean> {
+        return loginRepository.authState()
+    }
+
+    override fun loginWithEmail(email: String, password: String): Flow<ResultAuth<Boolean>> {
+        return loginRepository.loginWithEmail(email, password)
+    }
+
+    override fun signOut(): Flow<ResultAuth<Boolean>> {
+        return loginRepository.signOut()
+    }
+
+    override fun registerWithEmail(email: String, password: String): Flow<ResultAuth<String>> {
+        return registrationRepository.registerWithEmail(email, password)
+    }
+
+    override fun registerWithAnonymously(): Flow<ResultAuth<Boolean>> {
+        return registrationRepository.registerWithAnonymously()
+    }
+
+    override fun sendRecoveryPasswordMessageToEmail(email: String): Flow<ResultAuth<Boolean>> {
+        return registrationRepository.sendRecoveryPasswordMessageToEmail(email)
     }
 }

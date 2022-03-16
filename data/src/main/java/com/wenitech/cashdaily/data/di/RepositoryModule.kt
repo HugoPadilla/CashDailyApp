@@ -13,7 +13,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
     @Binds
-    abstract fun bindAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository
+    abstract fun bindUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
+
+    @Binds
+    abstract fun bindLoginRepository(loginRepository: LoginRepositoryImpl): LoginRepository
+
+    @Binds
+    abstract fun bindRegistrationRepository(registrationRepositoryImpl: RegistrationRepositoryImpl): RegistrationRepository
 
     @Binds
     abstract fun bindBoxRepository(boxRepositoryImpl: BoxRepositoryImpl): BoxRepository
@@ -29,7 +35,4 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindRoutesRepository(routeRepositoryImpl: RouteRepositoryImpl): RoutesRepository
-
-    @Binds
-    abstract fun bindUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
 }

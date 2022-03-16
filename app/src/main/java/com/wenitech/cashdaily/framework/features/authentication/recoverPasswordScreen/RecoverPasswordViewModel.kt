@@ -8,7 +8,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wenitech.cashdaily.domain.common.Status
+import com.wenitech.cashdaily.domain.common.ResultAuth
 import com.wenitech.cashdaily.domain.usecases.auth.RecoverPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -49,31 +49,30 @@ class RecoverPasswordViewModel @Inject constructor(
 
     fun sendEmailRecover(email: String) {
         viewModelScope.launch {
-            recoverPasswordUseCase(email).collect {
-                when (it.status) {
-                    Status.LOADING -> {
+            recoverPasswordUseCase(email).collect { resultAuth ->
+                when (resultAuth) {
+                    is ResultAuth.Collision -> TODO()
+                    is ResultAuth.Failed -> {
+                        uiState = uiState.copy(
+                            isLoadingSendEmail = false,
+                            isSuccessSendEmail = false,
+                            isErrorMessage = resultAuth.msg
+                        )
+                    }
+                    ResultAuth.Loading -> {
                         uiState = uiState.copy(
                             isLoadingSendEmail = true,
                             isSuccessSendEmail = false,
                             isErrorMessage = null
                         )
                     }
-                    Status.SUCCESS -> {
+                    is ResultAuth.Success -> {
                         emailValueChange("")
                         uiState = uiState.copy(
                             isLoadingSendEmail = false,
                             isSuccessSendEmail = true,
                             isErrorMessage = null
                         )
-                    }
-                    Status.FAILED -> {
-                        uiState = uiState.copy(
-                            isLoadingSendEmail = false,
-                            isSuccessSendEmail = false,
-                            isErrorMessage = it.messenger
-                        )
-                    }
-                    else -> {
                     }
                 }
             }

@@ -9,7 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wenitech.cashdaily.domain.common.Status.*
+import com.wenitech.cashdaily.domain.common.ResultAuth
 import com.wenitech.cashdaily.domain.usecases.auth.LoginEmailUseCase
 import com.wenitech.cashdaily.framework.features.authentication.loginScreen.state.LoginUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -63,31 +63,27 @@ class LoginViewModel @Inject constructor(
             viewModelScope.launch {
                 try {
                     loginEmailUseCase(email, password).collect {
-                        when (it.status) {
-                            LOADING -> {
-                                uiState = uiState.copy(
-                                    isSuccessLogin = false,
-                                    isErrorLogin = false,
-                                    isLoadingLogin = true,
-                                )
-                            }
-                            SUCCESS -> {
-                                uiState = uiState.copy(
-                                    isSuccessLogin = true,
-                                    isErrorLogin = false,
-                                    isLoadingLogin = false,
-                                )
-                            }
-                            COLLICION -> {
-                                // Not used
-                            }
-                            FAILED -> {
+                        when (it) {
+                            is ResultAuth.Collision -> {}// Not used
+                            is ResultAuth.Failed -> {
                                 uiState = uiState.copy(
                                     isSuccessLogin = false,
                                     isErrorLogin = true,
                                     isLoadingLogin = false,
                                 )
                             }
+                            ResultAuth.Loading -> {
+                                uiState = uiState.copy(
+                                    isSuccessLogin = false,
+                                    isErrorLogin = false,
+                                    isLoadingLogin = true,
+                                )
+                            }
+                            is ResultAuth.Success ->  uiState = uiState.copy(
+                                isSuccessLogin = true,
+                                isErrorLogin = false,
+                                isLoadingLogin = false,
+                            )
                         }
                     }
                 } catch (e: Throwable) {

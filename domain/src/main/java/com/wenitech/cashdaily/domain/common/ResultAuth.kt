@@ -1,27 +1,10 @@
 package com.wenitech.cashdaily.domain.common
 
-data class ResultAuth<out T>(
-    val status: Status,
-    val data: T?,
-    var messenger: String?,
-) {
+sealed class ResultAuth<out T> {
+    data class Collision(val msg: String? = null) : ResultAuth<Nothing>()
+    data class Failed(val msg: String? = null, val throwable: Throwable? = null) :
+        ResultAuth<Nothing>()
 
-    companion object {
-
-        fun <T> loading(data: T?): ResultAuth<T> {
-            return ResultAuth(Status.LOADING, data, null)
-        }
-
-        fun <T> success(data: T): ResultAuth<T> {
-            return ResultAuth(Status.SUCCESS, data, null)
-        }
-
-        fun <T> collision(msg: String, data: T): ResultAuth<T> {
-            return ResultAuth(Status.COLLICION, data, msg)
-        }
-
-        fun <T> failed(msg: String, data: T): ResultAuth<T> {
-            return ResultAuth(Status.FAILED, data, msg)
-        }
-    }
+    object Loading : ResultAuth<Nothing>()
+    data class Success<T>(val data: T? = null) : ResultAuth<T>()
 }

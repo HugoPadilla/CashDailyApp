@@ -18,7 +18,7 @@ class UserRemoteDataSourceImpl @Inject constructor(
     private val db: FirebaseFirestore,
     private val constant: Constant,
 ) : UserRemoteDataSource {
-    override suspend fun createDocumentUser(userModel: UserModel): Boolean {
+    override suspend fun createUserProfile(userModel: UserModel): Boolean {
         return try {
 
             val refUserApp = constant.getDocumentProfileUser()
@@ -37,7 +37,8 @@ class UserRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getUserProfile(): Flow<Response<UserModel>> = callbackFlow {
+    // TODO: 15/03/2022 Refactor return: flow single event
+    override fun readUserProfile(): Flow<Response<UserModel>> = callbackFlow {
         offer(Response.Loading)
         val queryDocument = constant.getDocumentProfileUser()
 

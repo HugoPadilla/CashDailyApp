@@ -8,7 +8,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wenitech.cashdaily.domain.common.Status
+import com.wenitech.cashdaily.domain.common.ResultAuth
 import com.wenitech.cashdaily.domain.usecases.auth.SignInEmailUseCase
 import com.wenitech.cashdaily.framework.features.authentication.signinScreen.state.ResultEnum
 import com.wenitech.cashdaily.framework.features.authentication.signinScreen.state.SignInUiState
@@ -74,14 +74,12 @@ class SignInViewModel @Inject constructor(
 
     fun doSignIn(email: String, password: String) {
         viewModelScope.launch {
-            signInEmailUseCase(email, password).collect { result ->
-                uiState = when (result.status) {
-                    Status.LOADING -> uiState.copy(result = ResultEnum.Loading)
-                    Status.SUCCESS -> {
-                        uiState.copy(result = ResultEnum.Success)
-                    }
-                    Status.COLLICION -> uiState.copy(result = ResultEnum.Collision)
-                    Status.FAILED -> uiState.copy(result = ResultEnum.Failed)
+            signInEmailUseCase(email, password).collect { resultAuth ->
+                uiState = when (resultAuth) {
+                    is ResultAuth.Collision -> uiState.copy(result = ResultEnum.Collision)
+                    is ResultAuth.Failed -> uiState.copy(result = ResultEnum.Failed)
+                    ResultAuth.Loading -> uiState.copy(result = ResultEnum.Loading)
+                    is ResultAuth.Success -> uiState.copy(result = ResultEnum.Success)
                 }
             }
         }

@@ -5,6 +5,7 @@ import com.wenitech.cashdaily.domain.common.Response
 import kotlinx.coroutines.flow.Flow
 
 interface UserRemoteDataSource {
-    suspend fun createDocumentUser(userModel: UserModel): Boolean
-    suspend fun getUserProfile(): Flow<Response<UserModel>>
+    suspend fun createUserProfile(userModel: UserModel): Boolean
+
+    fun readUserProfile(): Flow<Response<UserModel>>
 }
