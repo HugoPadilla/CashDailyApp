@@ -1,51 +1,46 @@
 package com.wenitech.cashdaily.framework
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuth.AuthStateListener
-import com.google.firebase.auth.FirebaseAuth.getInstance
 import com.wenitech.cashdaily.framework.component.appBar.PrimaryAppBar
 import com.wenitech.cashdaily.framework.component.appBar.PrimaryBottomBar
 import com.wenitech.cashdaily.framework.component.drawer.PrimaryDrawer
-import com.wenitech.cashdaily.framework.features.authentication.AuthenticationActivity
+import com.wenitech.cashdaily.framework.features.authentication.navigation.AuthDestinations
+import com.wenitech.cashdaily.framework.features.authentication.navigation.AuthDestinationsRoot
 import com.wenitech.cashdaily.framework.navigation.BottomNavDestinations
-import com.wenitech.cashdaily.framework.navigation.MainNavGraph
+import com.wenitech.cashdaily.framework.navigation.MainGraph
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
+@ExperimentalCoroutinesApi
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @AndroidEntryPoint
-class MainComposeActivity : ComponentActivity() {
+class MainActivity : ComponentActivity() {
 
-    private lateinit var authStateListener: AuthStateListener
-    private val auth: FirebaseAuth = getInstance()
+    val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setupFirebaseAuthListener()
-
         setContent {
+
+            val userAuthenticationState by viewModel.getAuthState
 
             val navController = rememberNavController()
             val currentRoute = navController
@@ -66,33 +61,39 @@ class MainComposeActivity : ComponentActivity() {
                 mutableStateOf("Home")
             }
 
-            val (showBottomBar, onShowBottomBar) = remember {
-                mutableStateOf(true)
-            }
-
-            onShowBottomBar(
-                when (currentRoute.value?.destination?.route) {
-                    BottomNavDestinations.Home.route -> true
-                    BottomNavDestinations.Clients.route -> true
-                    BottomNavDestinations.Box.route -> true
-                    BottomNavDestinations.Report.route -> true
-                    else -> false
-                }
-            )
-
             val density = LocalDensity.current
+
+            LaunchedEffect(userAuthenticationState) {
+                if (userAuthenticationState) {
+                    navController.navigate(BottomNavDestinations.Home.route) {
+                        popUpTo(AuthDestinationsRoot) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
+                } else {
+                    if (currentRoute.value?.destination?.route != AuthDestinations.Start.route) {
+                        navController.navigate(AuthDestinationsRoot)
+                        navController.graph.clear()
+                        scaffoldState.drawerState.close()
+                    }
+                }
+            }
 
             CashDailyTheme {
                 Scaffold(
                     scaffoldState = scaffoldState,
                     drawerContent = {
                         PrimaryDrawer {
-                            auth.signOut()
+                            viewModel.signOut()
+                            /*navController.navigate(AuthDestinations.Start.route)
+                            navController.graph.clear()*/
                         }
                     },
+                    drawerGesturesEnabled = userAuthenticationState,
                     topBar = {
                         AnimatedVisibility(
-                            visible = showBottomBar,
+                            visible = userAuthenticationState,
                             enter = slideInVertically(
                                 initialOffsetY = {
                                     with(density) { -40.dp.roundToPx() }
@@ -100,7 +101,7 @@ class MainComposeActivity : ComponentActivity() {
                             ) + expandVertically(
                                 expandFrom = Alignment.Top
                             ) + fadeIn(initialAlpha = .3f),
-                            exit = slideOutVertically()
+                            exit = slideOutVertically() + fadeOut()
                         ) {
                             PrimaryAppBar(title = labelAppBar) {
                                 scope.launch { scaffoldState.drawerState.open() }
@@ -108,14 +109,14 @@ class MainComposeActivity : ComponentActivity() {
                         }
                     },
                     content = {
-                        MainNavGraph(
+                        MainGraph(
                             modifier = Modifier.padding(it),
                             navController = navController
                         )
                     },
                     bottomBar = {
                         AnimatedVisibility(
-                            visible = showBottomBar,
+                            visible = userAuthenticationState,
                             enter = slideInVertically(
                                 initialOffsetY = {
                                     with(density) { -40.dp.roundToPx() }
@@ -123,7 +124,7 @@ class MainComposeActivity : ComponentActivity() {
                             ) + expandVertically(
                                 expandFrom = Alignment.Top
                             ) + fadeIn(initialAlpha = .3f),
-                            exit = slideOutVertically()
+                            exit = slideOutVertically() + fadeOut()
                         ) {
                             PrimaryBottomBar(
                                 navController = navController,
@@ -133,35 +134,6 @@ class MainComposeActivity : ComponentActivity() {
                         }
                     }
                 )
-            }
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        auth.addAuthStateListener(authStateListener)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        auth.removeAuthStateListener(authStateListener)
-    }
-
-    private fun setupFirebaseAuthListener() {
-        authStateListener = AuthStateListener { firebaseAuth ->
-            if (firebaseAuth.currentUser != null) {
-                /* viewModel.setStateAuth(AuthenticationStatus.UNAUTHENTICATED)
-                 navigateToLogin()*/
-                Toast.makeText(this, "Autenticado", Toast.LENGTH_SHORT).show()
-            } else {
-                /*viewModel.setStateAuth(AuthenticationStatus.AUTHENTICATED)*/
-                Toast.makeText(this, "No authenticado", Toast.LENGTH_SHORT).show()
-
-                val intent = Intent(this, AuthenticationActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-
-                startActivity(intent)
-                finish()
             }
         }
     }

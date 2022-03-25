@@ -10,6 +10,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.wenitech.cashdaily.framework.features.authentication.navigation.AuthDestinationsRoot
+import com.wenitech.cashdaily.framework.features.authentication.navigation.authenticationGraph
 import com.wenitech.cashdaily.framework.features.caja.BoxScreen
 import com.wenitech.cashdaily.framework.features.caja.viewModel.BoxViewModel
 import com.wenitech.cashdaily.framework.features.client.listClient.ClientsComposeScreen
@@ -23,19 +25,23 @@ import com.wenitech.cashdaily.framework.features.home.viewModel.HomeViewModel
 import com.wenitech.cashdaily.framework.features.informe.InformeScreen
 import com.wenitech.cashdaily.framework.navigation.nestedNavGraph.customerCreditNavGraph
 import com.wenitech.cashdaily.framework.navigation.nestedNavGraph.registerCreditNavGraph
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @ExperimentalMaterialApi
 @Composable
-fun MainNavGraph(
+fun MainGraph(
     modifier: Modifier,
     navController: NavHostController
 ) {
-
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = BottomNavDestinations.Home.route
+        startDestination = AuthDestinationsRoot
     ) {
+
+        // Authentication graph
+        authenticationGraph(navController = navController)
 
         // Bottom nav bar
         composable(BottomNavDestinations.Home.route) {
@@ -138,5 +144,4 @@ fun MainNavGraph(
         }
 
     }
-
 }
