@@ -2,10 +2,10 @@ package com.wenitech.cashdaily.framework.features.home.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wenitech.cashdaily.domain.common.Resource
+import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.Box
 import com.wenitech.cashdaily.domain.entities.Ruta
-import com.wenitech.cashdaily.domain.usecases.caja.GetUserBoxUseCase
+import com.wenitech.cashdaily.domain.usecases.caja.GetBoxUseCase
 import com.wenitech.cashdaily.domain.usecases.route.GetRoutesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getUserBoxUseCase: GetUserBoxUseCase,
+    private val getBoxUseCase: GetBoxUseCase,
     private val getRoutesUseCase: GetRoutesUseCase,
 ) : ViewModel() {
 
@@ -34,15 +34,15 @@ class HomeViewModel @Inject constructor(
     private fun getUserBox() {
 
         viewModelScope.launch {
-            getUserBoxUseCase().collect {
+            getBoxUseCase().collect {
                 when (it) {
-                    is Resource.Failure -> {
+                    is Response.Error -> {
 
                     }
-                    is Resource.Loading -> {
+                    is Response.Loading -> {
 
                     }
-                    is Resource.Success -> {
+                    is Response.Success -> {
                         _homeUiState.value = it.data
                     }
                 }
@@ -54,13 +54,13 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getRoutesUseCase().collect {
                 when (it) {
-                    is Resource.Failure -> {
+                    is Response.Error -> {
 
                     }
-                    is Resource.Loading -> {
+                    is Response.Loading -> {
 
                     }
-                    is Resource.Success -> {
+                    is Response.Success -> {
                         _routeUiState.value = it.data
                     }
                 }

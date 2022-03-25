@@ -1,12 +1,13 @@
 package com.wenitech.cashdaily.domain.usecases.auth
 
 import com.wenitech.cashdaily.domain.common.ResultAuth
-import com.wenitech.cashdaily.domain.repositories.AuthRepository
+import com.wenitech.cashdaily.domain.repositories.UserRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class LoginEmailUseCase(
-    private val authRepository: AuthRepository
+class LoginEmailUseCase @Inject constructor(
+    private val userRepository: UserRepository
 ) {
-    suspend operator fun invoke(email: String, password: String): Flow<ResultAuth<Boolean>> =
-        authRepository.loginWithEmail(email, password)
+    operator fun invoke(email: String, password: String): Flow<ResultAuth<Boolean>> =
+        userRepository.loginWithEmail(email, password)
 }

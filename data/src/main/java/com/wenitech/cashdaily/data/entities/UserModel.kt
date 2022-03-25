@@ -4,6 +4,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ServerTimestamp
 import com.wenitech.cashdaily.domain.constant.TypeAccountEnum
+import com.wenitech.cashdaily.domain.entities.User
 
 data class UserModel(
     @DocumentId
@@ -16,9 +17,10 @@ data class UserModel(
     var typeAccount: String = TypeAccountEnum.Admin.name,
     val fullName: String = "",
     val urlPhoto: String = "",
+    val roles: List<String> = listOf("Admin"), // Todo: Establecer dinamicamente el rol del usuario
 )
 
-fun UserModel.toUserDomain() = com.wenitech.cashdaily.domain.entities.User(
+fun UserModel.toUserDomain() = User(
     id = id,
     timestampCreation = timestampCreation?.toDate(),
     businessName = businessName,

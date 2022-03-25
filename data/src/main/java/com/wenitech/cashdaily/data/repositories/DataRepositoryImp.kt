@@ -1,62 +1,25 @@
 package com.wenitech.cashdaily.data.repositories
 
 import com.wenitech.cashdaily.data.entities.*
-import com.wenitech.cashdaily.data.remoteDataSource.RemoteDataSource
-import com.wenitech.cashdaily.domain.common.Resource
+import com.wenitech.cashdaily.data.remoteDataSource.ClientRemoteDataSource
+import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.*
-import com.wenitech.cashdaily.domain.repositories.AuthRepository
 import com.wenitech.cashdaily.domain.repositories.DataRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transform
+import javax.inject.Inject
 
-class DataRepositoryImp(
-    private val remoteDataSource: RemoteDataSource,
-    private val authRepository: AuthRepository
+// TODO: 13/03/2022 Refactor name to ClientRepositoryImp
+class DataRepositoryImp @Inject constructor(
+    private val clientRemoteDataSource: ClientRemoteDataSource,
 ) : DataRepository {
 
-    override suspend fun getUserProfile(): Flow<Resource<User>> {
-        return remoteDataSource.getUserProfile().transform {
+    override suspend fun getAllClientsPaging(): Flow<Response<List<Client>>> {
+        return clientRemoteDataSource.getAllClientsPaging().transform {
             when (it) {
-                is Resource.Failure -> return@transform emit(Resource.Failure(it.throwable, it.msg))
-                is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.toUserDomain()))
-            }
-        }
-    }
-
-    override suspend fun getUserBox(): Flow<Resource<Box>> {
-        return remoteDataSource.getUserBox().transform {
-            when (it) {
-                is Resource.Failure -> return@transform emit(Resource.Failure(it.throwable, it.msg))
-                is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.toDomain()))
-            }
-        }
-    }
-
-    override suspend fun getRecentMoves(): Flow<Resource<List<CashTransactions>>> {
-        return remoteDataSource.getRecentMoves().transform {
-            when (it) {
-                is Resource.Failure -> return@transform emit(Resource.Failure(it.throwable, it.msg))
-                is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.map { it.toDomain() }))
-            }
-        }
-    }
-
-    override suspend fun saveMoneyOnBox(
-        value: Double,
-        description: String
-    ): Flow<Resource<String>> {
-        return remoteDataSource.saveMoneyOnBox(value, description)
-    }
-
-    override suspend fun getAllClientsPaging(): Flow<Resource<List<Client>>> {
-        return remoteDataSource.getAllClientsPaging().transform {
-            when (it) {
-                is Resource.Failure -> return@transform emit(Resource.Failure(it.throwable, it.msg))
-                is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.map { it.toDomain() }))
+                is Response.Error -> return@transform emit(Response.Error(it.throwable, it.msg))
+                is Response.Loading -> return@transform emit(Response.Loading)
+                is Response.Success -> return@transform emit(Response.Success(it.data.map { it.toDomain() }))
             }
         }
     }
@@ -64,144 +27,65 @@ class DataRepositoryImp(
     /**
      * Devuelve los clientes que se tiene que cobrar el dia actual
      */
-    override suspend fun getClientsCollectToday(): Flow<Resource<List<Client>>> {
-        return remoteDataSource.getClientsCollectToday().transform {
+    override suspend fun getClientsCollectToday(): Flow<Response<List<Client>>> {
+        return clientRemoteDataSource.getClientsCollectToday().transform {
             when (it) {
-                is Resource.Failure -> return@transform emit(Resource.Failure(it.throwable, it.msg))
-                is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.map {
-                    it.toDomain() }))
+                is Response.Error -> return@transform emit(Response.Error(it.throwable, it.msg))
+                is Response.Loading -> return@transform emit(Response.Loading)
+                is Response.Success -> return@transform emit(Response.Success(it.data.map {
+                    it.toDomain()
+                }))
             }
         }
     }
 
-    override suspend fun getBackCustomers(): Flow<Resource<List<Client>>> {
-        return remoteDataSource.getBackCustomers().transform {
+    override suspend fun getBackCustomers(): Flow<Response<List<Client>>> {
+        return clientRemoteDataSource.getBackCustomers().transform {
             when (it) {
-                is Resource.Failure -> return@transform emit(
-                    Resource.Failure(
+                is Response.Error -> return@transform emit(
+                    Response.Error(
                         it.throwable,
                         it.msg
                     )
                 )
-                is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.map { it.toDomain() }))
+                is Response.Loading -> return@transform emit(Response.Loading)
+                is Response.Success -> return@transform emit(Response.Success(it.data.map { it.toDomain() }))
             }
         }
     }
 
-    override suspend fun getOverdueCustomers(): Flow<Resource<List<Client>>> {
-        return remoteDataSource.getOverdueCustomers().transform {
+    override suspend fun getOverdueCustomers(): Flow<Response<List<Client>>> {
+        return clientRemoteDataSource.getOverdueCustomers().transform {
             when (it) {
-                is Resource.Failure -> return@transform emit(Resource.Failure(it.throwable, it.msg))
-                is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.map { it.toDomain() }))
+                is Response.Error -> return@transform emit(Response.Error(it.throwable, it.msg))
+                is Response.Loading -> return@transform emit(Response.Loading)
+                is Response.Success -> return@transform emit(Response.Success(it.data.map { it.toDomain() }))
             }
         }
     }
 
-    override suspend fun getClientById(idClient: String): Flow<Resource<Client>> {
-        return remoteDataSource.getClientById(idClient).transform {
-            when(it){
-                is Resource.Failure -> return@transform emit(Resource.Failure(it.throwable, it.msg))
-                is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.toDomain()))
+    override suspend fun getClientById(idClient: String): Flow<Response<Client>> {
+        return clientRemoteDataSource.getClientById(idClient).transform {
+            when (it) {
+                is Response.Error -> return@transform emit(Response.Error(it.throwable, it.msg))
+                is Response.Loading -> return@transform emit(Response.Loading)
+                is Response.Success -> return@transform emit(Response.Success(it.data.toDomain()))
             }
         }
     }
 
-    override suspend fun saveNewClient(client: Client): Flow<Resource<String>> {
-        return remoteDataSource.saveNewClient(toData(client))
+    override suspend fun saveNewClient(client: Client): Flow<Response<String>> {
+        return clientRemoteDataSource.saveNewClient(toData(client))
     }
 
     override suspend fun updateClient(
         idClient: String,
         client: Client
-    ): Flow<Resource<String>> {
-        return remoteDataSource.updateClient(idClient, toData(client))
+    ): Flow<Response<String>> {
+        return clientRemoteDataSource.updateClient(idClient, toData(client))
     }
 
-    override suspend fun removeClient(idClient: String): Flow<Resource<String>> {
-        return remoteDataSource.removeClient(idClient)
-    }
-
-    override suspend fun getRecentCredits(
-        uid: String,
-        idClient: String
-    ): Flow<Resource<List<Credit>>> {
-        return remoteDataSource.getRecentCredits(uid, idClient).transform {
-            when (it) {
-                is Resource.Failure -> return@transform emit(
-                    Resource.Failure(
-                        it.throwable,
-                        it.msg
-                    )
-                )
-                is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.map { it.toDomain() }))
-            }
-        }
-    }
-
-    override suspend fun saveNewCredit(
-        idClient: String,
-        newCredit: Credit
-    ): Flow<Resource<String>> {
-        return remoteDataSource.saveNewCredit(idClient, CreditModel().toData(newCredit))
-    }
-
-    override suspend fun getCreditClient(
-        idClient: String,
-        idCredit: String
-    ): Flow<Resource<Credit>> {
-        return remoteDataSource.getCreditClient(idClient, idCredit).transform {
-
-            when (it) {
-                is Resource.Failure -> return@transform emit(
-                    Resource.Failure(
-                        it.throwable,
-                        it.msg
-                    )
-                )
-                is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.toDomain()))
-            }
-        }
-    }
-
-    override suspend fun getQuotaCredit(
-        idClient: String,
-        idCredit: String
-    ): Flow<Resource<List<Quota>>> {
-        return remoteDataSource.getQuotaCredit(idClient, idCredit).transform {
-            when (it) {
-                is Resource.Failure -> return@transform emit(
-                    Resource.Failure(
-                        it.throwable,
-                        it.msg
-                    )
-                )
-                is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.map { it.toDomain() }))
-            }
-        }
-    }
-
-    override suspend fun saveNewQuota(
-        idClient: String,
-        idCredit: String,
-        newQuota: Quota,
-    ): Flow<Resource<String>> {
-        return remoteDataSource.saveNewQuota(idClient, idCredit, QuotaModel(value = newQuota.value))
-    }
-
-    override suspend fun getReports(): Flow<Resource<ReportsDaily>> {
-        return remoteDataSource.getReports().transform {
-            when (it) {
-                is Resource.Failure -> return@transform emit(Resource.Failure(it.throwable, it.msg))
-                is Resource.Loading -> return@transform emit(Resource.Loading())
-                is Resource.Success -> return@transform emit(Resource.Success(it.data.toDomain()))
-            }
-        }
+    override suspend fun removeClient(idClient: String): Flow<Response<String>> {
+        return clientRemoteDataSource.removeClient(idClient)
     }
 }

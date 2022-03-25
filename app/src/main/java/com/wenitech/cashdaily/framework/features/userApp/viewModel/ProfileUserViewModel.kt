@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wenitech.cashdaily.domain.common.Resource
+import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.User
-import com.wenitech.cashdaily.domain.usecases.auth.GetProfileUserUseCase
+import com.wenitech.cashdaily.domain.usecases.user.GetUserProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -14,11 +14,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileUserViewModel @Inject constructor(
-    private val getProfileUserUseCase: GetProfileUserUseCase,
+    private val getUserProfileUseCase: GetUserProfileUseCase,
 ) : ViewModel() {
 
-    val _userAppLivedata = MutableLiveData<Resource<User>>()
-    val userModelAppLiveData: LiveData<Resource<User>> =
+    val _userAppLivedata = MutableLiveData<Response<User>>()
+    val userModelAppLiveData: LiveData<Response<User>> =
         _userAppLivedata
 
     init {
@@ -27,7 +27,7 @@ class ProfileUserViewModel @Inject constructor(
 
     private fun getProfile() {
         viewModelScope.launch {
-            getProfileUserUseCase().collect {
+            getUserProfileUseCase().collect {
                 _userAppLivedata.value = it
             }
         }

@@ -10,6 +10,6 @@ class UpdateRouteUseCase(
     suspend operator fun invoke(
         idRoute: String,
         rutaUpdate: Ruta
-    ): Flow<com.wenitech.cashdaily.domain.common.Resource<String>> =
+    ): Flow<com.wenitech.cashdaily.domain.common.Response<String>> =
         routesRepository.updateNewRoute(idRoute, rutaUpdate)
 }

@@ -3,61 +3,87 @@ package com.wenitech.cashdaily.framework.features.authentication.loginScreen.vie
 import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wenitech.cashdaily.domain.common.Status.*
+import com.wenitech.cashdaily.domain.common.ResultAuth
 import com.wenitech.cashdaily.domain.usecases.auth.LoginEmailUseCase
-import com.wenitech.cashdaily.framework.features.authentication.loginScreen.uiState.LoginUiState
+import com.wenitech.cashdaily.framework.features.authentication.loginScreen.state.LoginUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginEmailUseCase: LoginEmailUseCase,
+    private val loginEmailUseCase: LoginEmailUseCase
 ) : ViewModel() {
 
-    private val _email = MutableStateFlow("")
-    val email: StateFlow<String> get() = _email
+    var uiState by mutableStateOf(LoginUiState())
+        private set
 
-    private val _emailMessageError = MutableStateFlow<String?>(null)
-    val emailMessageError: StateFlow<String?> get() = _emailMessageError
+    var email = mutableStateOf("")
+        private set
 
-    private val _password = MutableStateFlow("")
-    val password: StateFlow<String> get() = _password
+    var password = mutableStateOf("")
+        private set
 
-    private val _passwordMessageError = MutableStateFlow<String?>(null)
-    val passwordMessageError: StateFlow<String?> get() = _passwordMessageError
+    init {
+        snapshotFlow { email.value to password.value }
+            .mapLatest {
+                isEmailValid(it.first) && isPasswordValid(it.second)
+            }.onEach {
+                setEnableButton(it)
+            }
+            .launchIn(viewModelScope)
+    }
 
-    private val _isValidEmail = MutableStateFlow(false)
-    val isValidEmail: StateFlow<Boolean> get() = _isValidEmail
+    fun setEmail(email: String) {
+        this.email.value = email
+    }
 
-    private val _isValidPassword = MutableStateFlow(false)
-    val isValidPassword: StateFlow<Boolean> get() = _isValidPassword
+    fun setPassword(password: String) {
+        this.password.value = password
+    }
 
-    val loginUiState = MutableStateFlow<LoginUiState>(LoginUiState.Init)
+    fun onDismissLoadingDialog() {
+        uiState = uiState.copy(isErrorLogin = false)
+    }
 
     fun doLogIn(email: String, password: String) {
         if (isEmailValid(email) && isPasswordValid(password)) {
             viewModelScope.launch {
                 try {
                     loginEmailUseCase(email, password).collect {
-                        when (it.status) {
-                            LOADING -> {
-                                loginUiState.value = LoginUiState.Loading
+                        when (it) {
+                            is ResultAuth.Collision -> {}// Not used
+                            is ResultAuth.Failed -> {
+                                uiState = uiState.copy(
+                                    isSuccessLogin = false,
+                                    isErrorLogin = true,
+                                    isLoadingLogin = false,
+                                )
                             }
-                            SUCCESS -> {
-                                loginUiState.value = LoginUiState.Success
+                            ResultAuth.Loading -> {
+                                uiState = uiState.copy(
+                                    isSuccessLogin = false,
+                                    isErrorLogin = false,
+                                    isLoadingLogin = true,
+                                )
                             }
-                            COLLICION -> {
-                                // Not used
-                            }
-                            FAILED -> {
-                                loginUiState.value = LoginUiState.Failed(it.messenger.toString())
-                            }
+                            is ResultAuth.Success ->  uiState = uiState.copy(
+                                isSuccessLogin = true,
+                                isErrorLogin = false,
+                                isLoadingLogin = false,
+                            )
                         }
                     }
                 } catch (e: Throwable) {
@@ -67,48 +93,51 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun isEmailValid(email: String?): Boolean {
-        var valid = true
-        if (TextUtils.isEmpty(email)) {
-            _emailMessageError.value = "Escribe tu correo"
-            valid = false
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailMessageError.value = "Esto no es un correo valido"
-            valid = false
-        } else {
-            _emailMessageError.value = null
-        }
-        _isValidEmail.value = valid
-        return valid
+    private fun setEmailMessageError(msg: String?) {
+        uiState = uiState.copy(emailMessageError = msg)
     }
 
-    private fun isPasswordValid(password: String?): Boolean {
-        var valid = true
-        when {
-            TextUtils.isEmpty(password) -> {
-                _passwordMessageError.value = "Escribe tu contraseña"
-                valid = false
+    private fun setPasswordMessageError(msg: String?) {
+        uiState = uiState.copy(passwordMessageError = msg)
+    }
+
+    private fun setEnableButton(enableButton: Boolean) {
+        uiState = uiState.copy(isEnableButton = enableButton)
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        return when {
+            TextUtils.isEmpty(email) -> {
+                setEmailMessageError("Escribe tu correo")
+                false
             }
-            password!!.length < 8 -> {
-                _passwordMessageError.value = "Debe tener al menos 8 carapteres"
-                valid = false
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                setEmailMessageError("Escribe un correo valido")
+                false
             }
             else -> {
-                _passwordMessageError.value = null
+                setEmailMessageError(null)
+                true
             }
         }
-        _isValidPassword.value = valid
-        return valid
     }
 
-    fun onEmailChange(email: String) {
-        _email.value = email
-        isEmailValid(email)
-    }
+    private fun isPasswordValid(password: String): Boolean {
+        return when {
+            TextUtils.isEmpty(password) -> {
+                setPasswordMessageError("Escribe tu contraseña")
+                false
+            }
+            password.length < 8 -> {
+                setPasswordMessageError("Debe tener al menos 8 carapteres")
+                false
+            }
+            else -> {
+                setPasswordMessageError(null)
+                true
+            }
 
-    fun onPasswordChange(password: String) {
-        _password.value = password
-        isPasswordValid(password)
+        }
     }
 
 }

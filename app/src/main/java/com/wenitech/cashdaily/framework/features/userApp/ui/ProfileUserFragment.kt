@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.wenitech.cashdaily.databinding.FragmentPerfilBinding
+import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.framework.features.userApp.viewModel.ProfileUserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,13 +40,13 @@ class ProfileUserFragment : Fragment() {
     private fun setupDateOfUserOnView() {
         profileUserViewModel.userModelAppLiveData.observe(viewLifecycleOwner, { resources ->
             when (resources){
-                is com.wenitech.cashdaily.domain.common.Resource.Failure -> {
+                is Response.Error -> {
                     Toast.makeText(requireContext(), "Error: ${resources.throwable.message}", Toast.LENGTH_SHORT).show()
                 }
-                is com.wenitech.cashdaily.domain.common.Resource.Loading -> {
+                is com.wenitech.cashdaily.domain.common.Response.Loading -> {
                     Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
                 }
-                is com.wenitech.cashdaily.domain.common.Resource.Success -> {
+                is com.wenitech.cashdaily.domain.common.Response.Success -> {
                     binding.textViewFullName.text = resources.data.fullName
                     binding.textViewEmail.text = resources.data.email
                     binding.textViewTypeUserAccount.text = "Type use account"

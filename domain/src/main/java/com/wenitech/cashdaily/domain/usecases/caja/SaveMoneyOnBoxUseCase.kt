@@ -1,14 +1,16 @@
 package com.wenitech.cashdaily.domain.usecases.caja
 
-import com.wenitech.cashdaily.domain.repositories.DataRepository
+import com.wenitech.cashdaily.domain.common.Response
+import com.wenitech.cashdaily.domain.repositories.BoxRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class SaveMoneyOnBoxUseCase(
-    private val dataRepository: DataRepository
+class SaveMoneyOnBoxUseCase @Inject constructor(
+    private val dataRepository: BoxRepository
 ) {
     suspend operator fun invoke(
         money: Double,
         description: String
-    ): Flow<com.wenitech.cashdaily.domain.common.Resource<String>> =
+    ): Flow<Response<String>> =
         dataRepository.saveMoneyOnBox(money, description)
 }

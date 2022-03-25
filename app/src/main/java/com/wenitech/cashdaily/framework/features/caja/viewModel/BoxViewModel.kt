@@ -3,11 +3,11 @@ package com.wenitech.cashdaily.framework.features.caja.viewModel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wenitech.cashdaily.domain.common.Resource
+import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.Box
 import com.wenitech.cashdaily.domain.entities.CashTransactions
 import com.wenitech.cashdaily.domain.usecases.caja.GetRecentMovementsUseCase
-import com.wenitech.cashdaily.domain.usecases.caja.GetUserBoxUseCase
+import com.wenitech.cashdaily.domain.usecases.caja.GetBoxUseCase
 import com.wenitech.cashdaily.domain.usecases.caja.RemoveMoneyOnBoxUseCase
 import com.wenitech.cashdaily.domain.usecases.caja.SaveMoneyOnBoxUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BoxViewModel @Inject constructor(
-    private val getUserBoxUseCase: GetUserBoxUseCase,
+    private val getBoxUseCase: GetBoxUseCase,
     private val getRecentMovementsUseCaseUseCase: GetRecentMovementsUseCase,
     private val saveMoneyOnBoxUseCase: SaveMoneyOnBoxUseCase,
     private val removeMoneyOnBoxUseCase: RemoveMoneyOnBoxUseCase
@@ -41,15 +41,15 @@ class BoxViewModel @Inject constructor(
      */
     private fun fetchBox() {
         viewModelScope.launch {
-            getUserBoxUseCase().collect {
+            getBoxUseCase().collect {
                 when (it) {
-                    is Resource.Failure -> {
+                    is Response.Error -> {
                         //_boxState.value = BoxContract.BoxState.Error(it.msg.toString().trim())
                     }
-                    is Resource.Loading -> {
+                    is Response.Loading -> {
                         //_boxState.value = BoxContract.BoxState.Loading
                     }
-                    is Resource.Success -> {
+                    is Response.Success -> {
                         _boxState.value = it.data
                     }
                 }
@@ -64,13 +64,13 @@ class BoxViewModel @Inject constructor(
         viewModelScope.launch {
             getRecentMovementsUseCaseUseCase().collect {
                 when (it) {
-                    is Resource.Failure -> {
+                    is Response.Error -> {
 
                     }
-                    is Resource.Loading -> {
+                    is Response.Loading -> {
 
                     }
-                    is Resource.Success -> {
+                    is Response.Success -> {
                         _cashMovement.value = it.data
                         Log.d("FETCHMOVEMENT", "fetchMovement: ${it.data}")
                     }
