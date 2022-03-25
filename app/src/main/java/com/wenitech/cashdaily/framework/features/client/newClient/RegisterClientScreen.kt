@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.framework.component.button.IconButtonCustom
-import com.wenitech.cashdaily.framework.component.button.PrimaryButtonExtended
+import com.wenitech.cashdaily.framework.component.button.PrimaryButton
 import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 
@@ -103,7 +103,7 @@ fun RegisterClientScreen(
             }
         },
         floatingActionButton = {
-            PrimaryButtonExtended(
+            PrimaryButton(
                 text = stringResource(R.string.save_client),
                 onClick = onRegisterClient,
                 iconDrawable = R.drawable.ic_user_plus,

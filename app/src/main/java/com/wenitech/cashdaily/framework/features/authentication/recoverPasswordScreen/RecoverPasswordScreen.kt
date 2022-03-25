@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenitech.cashdaily.R
 import com.wenitech.cashdaily.framework.component.appBar.CustomAppBar
-import com.wenitech.cashdaily.framework.component.button.PrimaryButtonExtended
+import com.wenitech.cashdaily.framework.component.button.PrimaryButton
 import com.wenitech.cashdaily.framework.component.button.TextButtonRegister
 import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
@@ -124,7 +124,7 @@ fun RecoverPasswordScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            PrimaryButtonExtended(
+            PrimaryButton(
                 onClick = { onSendEmailClick(emailValue) },
                 enabled = uiState.isEnableButton,
                 text = stringResource(id = R.string.recover_password_button),
