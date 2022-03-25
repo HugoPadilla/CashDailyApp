@@ -25,7 +25,7 @@ import com.wenitech.cashdaily.framework.DataExample.clientsData
 import com.wenitech.cashdaily.framework.DataExample.creditData
 import com.wenitech.cashdaily.framework.DataExample.quotesListData
 import com.wenitech.cashdaily.framework.component.card.CardViewInfoCredit
-import com.wenitech.cashdaily.framework.component.button.PrimaryButtonExtended
+import com.wenitech.cashdaily.framework.component.button.PrimaryButton
 import com.wenitech.cashdaily.framework.component.edittext.CustomTextField
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
 import com.wenitech.cashdaily.framework.ui.theme.success
@@ -62,7 +62,7 @@ fun CustomerCreditScreen(
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                     )
 
-                    PrimaryButtonExtended(
+                    PrimaryButton(
                         onClick = {
                             onNewQuota(value)
                             onShowDialog(false)

@@ -30,7 +30,7 @@ import com.wenitech.cashdaily.domain.entities.Box
 import com.wenitech.cashdaily.domain.entities.Ruta
 import com.wenitech.cashdaily.framework.DataExample.routesData
 import com.wenitech.cashdaily.framework.component.card.CardViewInfoBox
-import com.wenitech.cashdaily.framework.component.button.PrimaryButtonExtended
+import com.wenitech.cashdaily.framework.component.button.PrimaryButton
 import com.wenitech.cashdaily.framework.features.home.viewModel.HomeViewModel
 import com.wenitech.cashdaily.framework.ui.theme.BackgroundLight
 import com.wenitech.cashdaily.framework.ui.theme.CashDailyTheme
@@ -83,7 +83,7 @@ fun CreditList(boxModel: Box, rutaModels: List<Ruta>, onNewCreditClick: () -> Un
         }
 
         item {
-            PrimaryButtonExtended(
+            PrimaryButton(
                 onClick = onNewCreditClick,
                 modifier = Modifier.padding(bottom = 10.dp),
                 text = "NUEVO CREDITO"
