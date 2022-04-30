@@ -31,13 +31,13 @@ class CreditRepositoryImpl @Inject constructor(
         db.runTransaction { transition ->
 
             // 1- Read document
-            val boxServer = transition.get(refBox).toObject(BoxModel::class.java)
+            val boxServer = transition.get(refBox).toObject(BoxDto::class.java)
             val creditServer = transition.get(refCredit).toObject(CreditModel::class.java)
 
             boxServer?.let {
                 transition.update(
                     refBox,
-                    BoxModel::totalCash.name,
+                    BoxDto::totalCash.name,
                     boxServer.totalCash - (creditServer?.creditValue
                         ?: 0.0)
                 )
@@ -64,7 +64,7 @@ class CreditRepositoryImpl @Inject constructor(
                     )
                 )
                 is Response.Loading -> return@transform emit(Response.Loading)
-                is Response.Success -> return@transform emit(Response.Success(it.data.map { it.toDomain() }))
+                is Response.Success -> return@transform emit(Response.Success(it.data.map { it.toBox() }))
             }
         }
     }
@@ -90,7 +90,7 @@ class CreditRepositoryImpl @Inject constructor(
                     )
                 )
                 is Response.Loading -> return@transform emit(Response.Loading)
-                is Response.Success -> return@transform emit(Response.Success(it.data.toDomain()))
+                is Response.Success -> return@transform emit(Response.Success(it.data.toBox()))
             }
         }
     }
@@ -108,7 +108,7 @@ class CreditRepositoryImpl @Inject constructor(
                     )
                 )
                 is Response.Loading -> return@transform emit(Response.Loading)
-                is Response.Success -> return@transform emit(Response.Success(it.data.map { it.toDomain() }))
+                is Response.Success -> return@transform emit(Response.Success(it.data.map { it.toQuota() }))
             }
         }
     }
@@ -121,7 +121,7 @@ class CreditRepositoryImpl @Inject constructor(
         return remoteDataSourceCustomer.saveNewQuota(
             idClient,
             idCredit,
-            QuotaModel(value = newQuota.value)
+            QuotaDto(value = newQuota.value)
         )
     }
 }

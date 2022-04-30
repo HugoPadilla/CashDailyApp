@@ -28,7 +28,7 @@ abstract class RepositoryModule {
     abstract fun bindCreditRepository(creditRepositoryImpl: CreditRepositoryImpl): CreditRepository
 
     @Binds
-    abstract fun bindDataRepository(dataRepositoryImp: DataRepositoryImp): DataRepository
+    abstract fun bindDataRepository(dataRepositoryImp: ClientRepositoryImp): ClientRepository
 
     @Binds
     abstract fun bindGeneralReportRepository(generalReportRepositoryImpl: GeneralReportRepositoryImpl): GeneralReportRepository

@@ -1,6 +1,7 @@
 package com.wenitech.cashdaily.data.repositories
 
-import com.wenitech.cashdaily.data.entities.toDomain
+import com.wenitech.cashdaily.data.entities.toBox
+import com.wenitech.cashdaily.data.entities.toCashTransactions
 import com.wenitech.cashdaily.data.remoteDataSource.BoxRemoteDataSource
 import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.Box
@@ -18,7 +19,7 @@ class BoxRepositoryImpl @Inject constructor(
             when (it) {
                 is Response.Error -> return@transform emit(Response.Error(it.throwable, it.msg))
                 is Response.Loading -> return@transform emit(Response.Loading)
-                is Response.Success -> return@transform emit(Response.Success(it.data.toDomain()))
+                is Response.Success -> return@transform emit(Response.Success(it.data.toBox()))
             }
         }
     }
@@ -33,7 +34,7 @@ class BoxRepositoryImpl @Inject constructor(
                     )
                 )
                 is Response.Loading -> return@transform emit(Response.Loading)
-                is Response.Success -> return@transform emit(Response.Success(response.data.map { it.toDomain() }))
+                is Response.Success -> return@transform emit(Response.Success(response.data.map { it.toCashTransactions() }))
             }
         }
     }

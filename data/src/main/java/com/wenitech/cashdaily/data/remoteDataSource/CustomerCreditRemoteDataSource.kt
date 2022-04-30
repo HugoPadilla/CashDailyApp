@@ -1,7 +1,7 @@
 package com.wenitech.cashdaily.data.remoteDataSource
 
 import com.wenitech.cashdaily.data.entities.CreditModel
-import com.wenitech.cashdaily.data.entities.QuotaModel
+import com.wenitech.cashdaily.data.entities.QuotaDto
 import com.wenitech.cashdaily.domain.common.Response
 import kotlinx.coroutines.flow.Flow
 
@@ -21,11 +21,11 @@ interface CustomerCreditRemoteDataSource {
     suspend fun getQuotaCredit(
         idClient: String,
         idCredit: String
-    ): Flow<Response<List<QuotaModel>>>
+    ): Flow<Response<List<QuotaDto>>>
 
     suspend fun saveNewQuota(
         idClient: String,
         idCredit: String,
-        newQuotaModel: QuotaModel,
+        newQuotaDto: QuotaDto,
     ): Flow<Response<String>>
 }

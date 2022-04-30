@@ -3,10 +3,10 @@ package com.wenitech.cashdaily.data.remoteDataSource
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.Query
-import com.wenitech.cashdaily.data.entities.BoxModel
-import com.wenitech.cashdaily.data.entities.ClientModel
+import com.wenitech.cashdaily.data.entities.BoxDto
+import com.wenitech.cashdaily.data.entities.ClientDto
 import com.wenitech.cashdaily.data.entities.CreditModel
-import com.wenitech.cashdaily.data.entities.QuotaModel
+import com.wenitech.cashdaily.data.entities.QuotaDto
 import com.wenitech.cashdaily.data.remoteDataSource.routes.Constant
 import com.wenitech.cashdaily.domain.common.Response
 import kotlinx.coroutines.Dispatchers
@@ -101,7 +101,7 @@ class CustomerCreditRemoteDataSourceImpl @Inject constructor(
 
             // Read database box
             val snapshot = transaction.get(refBox)
-            val serverBox = snapshot.toObject(BoxModel::class.java)
+            val serverBox = snapshot.toObject(BoxDto::class.java)
 
             val creditValue = newCreditModel.creditValue
             if (snapshot.exists() && serverBox != null) {
@@ -109,12 +109,12 @@ class CustomerCreditRemoteDataSourceImpl @Inject constructor(
                 if (serverBox.totalCash >= creditValue) {
                     // Write in database
                     val updateClient: MutableMap<String, Any> = HashMap()
-                    updateClient[ClientModel::creditActive.name] = true
-                    updateClient[ClientModel::refCredit.name] = refNewCredit
+                    updateClient[ClientDto::creditActive.name] = true
+                    updateClient[ClientDto::refCredit.name] = refNewCredit
                     transaction.update(refClient, updateClient)
 
                     transaction.update(
-                        refBox, BoxModel::totalCash.name,
+                        refBox, BoxDto::totalCash.name,
                         serverBox.totalCash - newCreditModel.creditValue
                     )
 
@@ -139,19 +139,19 @@ class CustomerCreditRemoteDataSourceImpl @Inject constructor(
     override suspend fun getQuotaCredit(
         idClient: String,
         idCredit: String
-    ): Flow<Response<List<QuotaModel>>> = callbackFlow {
+    ): Flow<Response<List<QuotaDto>>> = callbackFlow {
         offer(Response.Loading)
 
         val query = constant
             .getCollectionQuotas(idClient, idCredit)
-            .orderBy(QuotaModel::timestamp.name, Query.Direction.DESCENDING)
+            .orderBy(QuotaDto::timestamp.name, Query.Direction.DESCENDING)
 
         val listener = query.addSnapshotListener { querySnapshot, error ->
             if (querySnapshot != null && !querySnapshot.isEmpty) {
                 offer(
                     Response.Success(
                         querySnapshot.toObjects(
-                            QuotaModel::class.java
+                            QuotaDto::class.java
                         )
                     )
                 )
@@ -172,7 +172,7 @@ class CustomerCreditRemoteDataSourceImpl @Inject constructor(
     override suspend fun saveNewQuota(
         idClient: String,
         idCredit: String,
-        newQuotaModel: QuotaModel
+        newQuotaDto: QuotaDto
     ): Flow<Response<String>> = flow {
         emit(Response.Loading)
 
@@ -184,36 +184,36 @@ class CustomerCreditRemoteDataSourceImpl @Inject constructor(
         db.runTransaction { transaction ->
             // Read database
             val snapshotBox = transaction.get(refBox)
-            val serverBox = snapshotBox.toObject(BoxModel::class.java)
+            val serverBox = snapshotBox.toObject(BoxDto::class.java)
 
             val snapshotCredit = transaction.get(refCredit)
             val serverCreditModel: CreditModel = snapshotCredit.toObject(CreditModel::class.java)!!
 
             // Calculate value of new post-debt
-            val posCreditDebt = serverCreditModel.creditDebt - newQuotaModel.value
+            val posCreditDebt = serverCreditModel.creditDebt - newQuotaDto.value
 
             // se valida si hay una deuda en el credito actual
             if (serverCreditModel.creditDebt > 0) {
                 if (posCreditDebt == 0.0) {
-                    transaction.update(refClient, ClientModel::creditActive.name, false)
+                    transaction.update(refClient, ClientDto::creditActive.name, false)
                     transaction.update(refCredit, CreditModel::creditDebt.name, posCreditDebt)
                     transaction.update(
-                        refBox, BoxModel::totalCash.name,
-                        serverBox!!.totalCash.plus(newQuotaModel.value)
+                        refBox, BoxDto::totalCash.name,
+                        serverBox!!.totalCash.plus(newQuotaDto.value)
                     )
 
-                    transaction.set(refNewQuote, newQuotaModel)
+                    transaction.set(refNewQuote, newQuotaDto)
                 }
 
                 if (posCreditDebt > 0) {
                     transaction.update(refCredit, CreditModel::creditDebt.name, posCreditDebt)
                     transaction.update(
                         refBox,
-                        BoxModel::totalCash.name,
-                        serverBox!!.totalCash.plus(newQuotaModel.value)
+                        BoxDto::totalCash.name,
+                        serverBox!!.totalCash.plus(newQuotaDto.value)
                     )
 
-                    transaction.set(refNewQuote, newQuotaModel)
+                    transaction.set(refNewQuote, newQuotaDto)
                 }
             } else {
                 throw FirebaseFirestoreException(

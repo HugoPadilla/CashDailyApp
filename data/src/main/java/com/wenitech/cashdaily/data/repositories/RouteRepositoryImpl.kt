@@ -2,7 +2,7 @@ package com.wenitech.cashdaily.data.repositories
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.wenitech.cashdaily.data.entities.RutaModel
+import com.wenitech.cashdaily.data.entities.RutaDto
 import com.wenitech.cashdaily.data.remoteDataSource.routes.Constant
 import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.Ruta
@@ -30,7 +30,7 @@ class RouteRepositoryImpl @Inject constructor(
 
         val queryCollection = constant
             .getCollectionRoutes()
-            .orderBy(RutaModel::name.name, Query.Direction.DESCENDING)
+            .orderBy(RutaDto::name.name, Query.Direction.DESCENDING)
 
         val listener = queryCollection.addSnapshotListener { documentSnapshot, error ->
 

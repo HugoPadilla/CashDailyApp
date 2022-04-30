@@ -2,7 +2,7 @@ package com.wenitech.cashdaily.data.remoteDataSource
 
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.wenitech.cashdaily.data.entities.BoxModel
+import com.wenitech.cashdaily.data.entities.BoxDto
 import com.wenitech.cashdaily.data.entities.UserDto
 import com.wenitech.cashdaily.data.remoteDataSource.routes.Constant
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,7 +27,7 @@ class UserRemoteDataSourceImpl @Inject constructor(
         db.runBatch { batch ->
 
             batch.set(refUserApp, userDto)
-            batch.set(refBox, BoxModel())
+            batch.set(refBox, BoxDto())
 
         }.await()
     }

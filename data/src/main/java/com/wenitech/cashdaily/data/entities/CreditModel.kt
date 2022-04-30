@@ -21,7 +21,7 @@ class CreditModel(
     var isChargedOnSunday: Boolean = false,
 )
 
-fun CreditModel.toDomain() = Credit(
+fun CreditModel.toBox() = Credit(
     id = id,
     dateCreation = timestampCreation?.toDate(),
     dateNextPayment = timestampNextPayment?.toDate(),

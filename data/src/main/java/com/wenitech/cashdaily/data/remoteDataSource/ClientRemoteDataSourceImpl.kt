@@ -4,7 +4,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.wenitech.cashdaily.data.entities.ClientModel
+import com.wenitech.cashdaily.data.entities.ClientDto
 import com.wenitech.cashdaily.data.remoteDataSource.routes.Constant
 import com.wenitech.cashdaily.domain.common.Response
 import kotlinx.coroutines.Dispatchers
@@ -22,13 +22,13 @@ class ClientRemoteDataSourceImpl @Inject constructor(
     private val constant: Constant,
 ) : ClientRemoteDataSource {
 
-    override suspend fun getAllClientsPaging(): Flow<Response<List<ClientModel>>> =
+    override suspend fun getAllClientsPaging(): Flow<Response<List<ClientDto>>> =
         callbackFlow {
             offer(Response.Loading)
             var lastClientReceived: DocumentSnapshot? = null
 
             val queryClients = constant.getCollectionClients()
-                .orderBy(ClientModel::fullName.name, Query.Direction.ASCENDING)
+                .orderBy(ClientDto::fullName.name, Query.Direction.ASCENDING)
                 .limit(10)
 
             val paginatedQuery =
@@ -42,12 +42,12 @@ class ClientRemoteDataSourceImpl @Inject constructor(
                     offer(
                         Response.Success(
                             querySnapshot.toObjects(
-                                ClientModel::class.java
+                                ClientDto::class.java
                             )
                         )
                     )
                 } else {
-                    offer(Response.Success(listOf<ClientModel>()))
+                    offer(Response.Success(listOf<ClientDto>()))
                 }
 
                 error?.let {
@@ -62,13 +62,13 @@ class ClientRemoteDataSourceImpl @Inject constructor(
             }
         }
 
-    override suspend fun getClientsCollectToday(): Flow<Response<List<ClientModel>>> =
+    override suspend fun getClientsCollectToday(): Flow<Response<List<ClientDto>>> =
         callbackFlow {
             offer(Response.Loading)
             val query = constant
                 .getCollectionClients()
-                .whereGreaterThan(ClientModel::paymentDate.name, Timestamp.now())
-                .orderBy(ClientModel::fullName.name, Query.Direction.ASCENDING)
+                .whereGreaterThan(ClientDto::paymentDate.name, Timestamp.now())
+                .orderBy(ClientDto::fullName.name, Query.Direction.ASCENDING)
                 .limit(10)
 
             val listener = query.addSnapshotListener { querySnapshot, error ->
@@ -76,7 +76,7 @@ class ClientRemoteDataSourceImpl @Inject constructor(
                     offer(
                         Response.Success(
                             querySnapshot.toObjects(
-                                ClientModel::class.java
+                                ClientDto::class.java
                             )
                         )
                     )
@@ -95,14 +95,14 @@ class ClientRemoteDataSourceImpl @Inject constructor(
 
         }
 
-    override suspend fun getBackCustomers(): Flow<Response<List<ClientModel>>> =
+    override suspend fun getBackCustomers(): Flow<Response<List<ClientDto>>> =
         callbackFlow {
             offer(Response.Loading)
 
             val query = constant
                 .getCollectionClients()
-                .whereLessThan(ClientModel::paymentDate.name, Timestamp.now())
-                .orderBy(ClientModel::fullName.name, Query.Direction.ASCENDING)
+                .whereLessThan(ClientDto::paymentDate.name, Timestamp.now())
+                .orderBy(ClientDto::fullName.name, Query.Direction.ASCENDING)
                 .limit(10)
 
             val listener = query.addSnapshotListener { value, error ->
@@ -111,7 +111,7 @@ class ClientRemoteDataSourceImpl @Inject constructor(
                     offer(
                         Response.Success(
                             value.toObjects(
-                                ClientModel::class.java
+                                ClientDto::class.java
                             )
                         )
                     )
@@ -129,14 +129,14 @@ class ClientRemoteDataSourceImpl @Inject constructor(
             }
         }
 
-    override suspend fun getOverdueCustomers(): Flow<Response<List<ClientModel>>> =
+    override suspend fun getOverdueCustomers(): Flow<Response<List<ClientDto>>> =
         callbackFlow {
             offer(Response.Loading)
 
             val query = constant
                 .getCollectionClients()
-                .whereLessThan(ClientModel::finishDate.name, Timestamp.now())
-                .orderBy(ClientModel::fullName.name, Query.Direction.ASCENDING)
+                .whereLessThan(ClientDto::finishDate.name, Timestamp.now())
+                .orderBy(ClientDto::fullName.name, Query.Direction.ASCENDING)
                 .limit(10)
 
             val listener = query.addSnapshotListener { value, error ->
@@ -144,7 +144,7 @@ class ClientRemoteDataSourceImpl @Inject constructor(
                     offer(
                         Response.Success(
                             value.toObjects(
-                                ClientModel::class.java
+                                ClientDto::class.java
                             )
                         )
                     )
@@ -162,12 +162,12 @@ class ClientRemoteDataSourceImpl @Inject constructor(
             }
         }
 
-    override suspend fun saveNewClient(clientModel: ClientModel): Flow<Response<String>> = flow {
+    override suspend fun saveNewClient(clientDto: ClientDto): Flow<Response<String>> = flow {
         emit(Response.Loading)
 
         val refNewClient = constant.getCollectionClients().document()
 
-        refNewClient.set(clientModel).await()
+        refNewClient.set(clientDto).await()
 
         emit(Response.Success(refNewClient.id))
 
@@ -177,13 +177,13 @@ class ClientRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun updateClient(
         idClient: String,
-        updateClientModel: ClientModel
+        updateClientDto: ClientDto
     ): Flow<Response<String>> = flow {
         emit(Response.Loading)
 
         val refClient = constant.getCollectionClients().document(idClient)
 
-        refClient.set(updateClientModel).await()
+        refClient.set(updateClientDto).await()
         emit(Response.Success(refClient.id))
 
     }.catch {
@@ -204,7 +204,7 @@ class ClientRemoteDataSourceImpl @Inject constructor(
             emit(Response.Error(it, it.message.toString()))
         }.flowOn(Dispatchers.IO)
 
-    override suspend fun getClientById(idClient: String): Flow<Response<ClientModel>> =
+    override suspend fun getClientById(idClient: String): Flow<Response<ClientDto>> =
         callbackFlow {
             offer(Response.Loading)
 
@@ -213,7 +213,7 @@ class ClientRemoteDataSourceImpl @Inject constructor(
             val listener = query.addSnapshotListener { value, error ->
 
                 if (value != null && value.exists()) {
-                    offer(Response.Success(value.toObject(ClientModel::class.java)))
+                    offer(Response.Success(value.toObject(ClientDto::class.java)))
                 }
 
                 error?.let {
@@ -227,5 +227,5 @@ class ClientRemoteDataSourceImpl @Inject constructor(
                 listener.remove()
                 cancel()
             }
-        } as Flow<Response<ClientModel>>
+        } as Flow<Response<ClientDto>>
 }

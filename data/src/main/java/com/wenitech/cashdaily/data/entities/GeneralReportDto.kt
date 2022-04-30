@@ -3,8 +3,9 @@ package com.wenitech.cashdaily.data.entities
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ServerTimestamp
+import com.wenitech.cashdaily.domain.entities.GeneralReport
 
-data class GeneralReportModel(
+data class GeneralReportDto(
     @DocumentId
     val id: String? = null,
     @ServerTimestamp
@@ -14,7 +15,7 @@ data class GeneralReportModel(
     val totalGastos: Double = 0.0,
 )
 
-fun GeneralReportModel.toDomain() = com.wenitech.cashdaily.domain.entities.GeneralReport(
+fun GeneralReportDto.toGeneralReport() = GeneralReport(
     id = id,
     timestampCreation = timestampCreation?.toDate(),
     totalBalance = totalBalance,

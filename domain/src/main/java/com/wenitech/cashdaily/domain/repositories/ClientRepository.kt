@@ -4,9 +4,7 @@ import com.wenitech.cashdaily.domain.common.Response
 import com.wenitech.cashdaily.domain.entities.Client
 import kotlinx.coroutines.flow.Flow
 
-interface DataRepository {
-
-    // Client
+interface ClientRepository {
     suspend fun getAllClientsPaging(): Flow<Response<List<Client>>>
     suspend fun getClientsCollectToday(): Flow<Response<List<Client>>>
     suspend fun getBackCustomers(): Flow<Response<List<Client>>>
@@ -15,5 +13,4 @@ interface DataRepository {
     suspend fun saveNewClient(client: Client): Flow<Response<String>>
     suspend fun updateClient(idClient: String, client: Client): Flow<Response<String>>
     suspend fun removeClient(idClient: String): Flow<Response<String>>
-
 }

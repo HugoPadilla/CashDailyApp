@@ -4,8 +4,9 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ServerTimestamp
 import com.wenitech.cashdaily.domain.constant.TypeRouteEnum
+import com.wenitech.cashdaily.domain.entities.Ruta
 
-data class RutaModel(
+data class RutaDto(
     @DocumentId
     val id: String? = null,
     @ServerTimestamp
@@ -16,7 +17,7 @@ data class RutaModel(
     val typeRoute: String = TypeRouteEnum.Personal.name
 )
 
-fun RutaModel.toDomain() = com.wenitech.cashdaily.domain.entities.Ruta(
+fun RutaDto.toRuta() = Ruta(
     id = id,
     serverTimestamp = serverTimestamp?.toDate(),
     authorId = authorId,

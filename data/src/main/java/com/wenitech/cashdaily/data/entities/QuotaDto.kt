@@ -5,7 +5,7 @@ import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ServerTimestamp
 import com.wenitech.cashdaily.domain.entities.Quota
 
-data class QuotaModel(
+data class QuotaDto(
     @DocumentId
     val id: String? = null,
     @ServerTimestamp
@@ -14,14 +14,14 @@ data class QuotaModel(
     val value: Double = 0.0,
 )
 
-fun QuotaModel.toDomain() = Quota(
+fun QuotaDto.toQuota() = Quota(
     id,
     timestamp?.toDate(),
     author,
     value
 )
 
-fun QuotaModel.toData(quota: Quota) = QuotaModel(
+fun toQuotaDto(quota: Quota) = QuotaDto(
     id = quota.id,
     timestamp = Timestamp(quota.timestamp!!.time, 0),
     author = quota.author,

@@ -3,8 +3,9 @@ package com.wenitech.cashdaily.data.entities
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ServerTimestamp
+import com.wenitech.cashdaily.domain.entities.CashTransactions
 
-data class CashTransactionsModel(
+data class CashTransactionsDto(
     @DocumentId
     val id: String? = null,
     @ServerTimestamp
@@ -14,8 +15,7 @@ data class CashTransactionsModel(
     val value: Double = 00.00,
 )
 
-fun CashTransactionsModel.toDomain() =
-    com.wenitech.cashdaily.domain.entities.CashTransactions(
+fun CashTransactionsDto.toCashTransactions() = CashTransactions(
         id = id,
         serverTimestamp = serverTimestamp?.toDate(),
         description = description,

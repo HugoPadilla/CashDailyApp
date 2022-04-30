@@ -6,7 +6,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ServerTimestamp
 import com.wenitech.cashdaily.domain.entities.Client
 
-data class ClientModel(
+data class ClientDto(
     @DocumentId
     val id: String? = null,
     @ServerTimestamp
@@ -23,7 +23,7 @@ data class ClientModel(
     val refCredit: DocumentReference? = null,
 )
 
-fun ClientModel.toDomain() = Client(
+fun ClientDto.toClient() = Client(
     id,
     creationDate?.toDate(),
     paymentDate?.toDate(),
@@ -38,7 +38,7 @@ fun ClientModel.toDomain() = Client(
     refCredit?.id,
 )
 
-fun toData(client: Client): ClientModel = ClientModel(
+fun toClientDto(client: Client): ClientDto = ClientDto(
     id = client.id,
     creationDate = client.creationDate?.let { Timestamp(it) },
     paymentDate = client.paymentDate?.let { Timestamp(it) },

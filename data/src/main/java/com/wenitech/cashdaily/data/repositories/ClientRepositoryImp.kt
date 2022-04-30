@@ -1,25 +1,26 @@
 package com.wenitech.cashdaily.data.repositories
 
-import com.wenitech.cashdaily.data.entities.*
+import com.wenitech.cashdaily.data.entities.toClient
+import com.wenitech.cashdaily.data.entities.toClientDto
 import com.wenitech.cashdaily.data.remoteDataSource.ClientRemoteDataSource
 import com.wenitech.cashdaily.domain.common.Response
-import com.wenitech.cashdaily.domain.entities.*
-import com.wenitech.cashdaily.domain.repositories.DataRepository
+import com.wenitech.cashdaily.domain.entities.Client
+import com.wenitech.cashdaily.domain.repositories.ClientRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 
 // TODO: 13/03/2022 Refactor name to ClientRepositoryImp
-class DataRepositoryImp @Inject constructor(
+class ClientRepositoryImp @Inject constructor(
     private val clientRemoteDataSource: ClientRemoteDataSource,
-) : DataRepository {
+) : ClientRepository {
 
     override suspend fun getAllClientsPaging(): Flow<Response<List<Client>>> {
         return clientRemoteDataSource.getAllClientsPaging().transform {
             when (it) {
                 is Response.Error -> return@transform emit(Response.Error(it.throwable, it.msg))
                 is Response.Loading -> return@transform emit(Response.Loading)
-                is Response.Success -> return@transform emit(Response.Success(it.data.map { it.toDomain() }))
+                is Response.Success -> return@transform emit(Response.Success(it.data.map { it.toClient() }))
             }
         }
     }
@@ -33,7 +34,7 @@ class DataRepositoryImp @Inject constructor(
                 is Response.Error -> return@transform emit(Response.Error(it.throwable, it.msg))
                 is Response.Loading -> return@transform emit(Response.Loading)
                 is Response.Success -> return@transform emit(Response.Success(it.data.map {
-                    it.toDomain()
+                    it.toClient()
                 }))
             }
         }
@@ -49,7 +50,7 @@ class DataRepositoryImp @Inject constructor(
                     )
                 )
                 is Response.Loading -> return@transform emit(Response.Loading)
-                is Response.Success -> return@transform emit(Response.Success(it.data.map { it.toDomain() }))
+                is Response.Success -> return@transform emit(Response.Success(it.data.map { it.toClient() }))
             }
         }
     }
@@ -59,7 +60,7 @@ class DataRepositoryImp @Inject constructor(
             when (it) {
                 is Response.Error -> return@transform emit(Response.Error(it.throwable, it.msg))
                 is Response.Loading -> return@transform emit(Response.Loading)
-                is Response.Success -> return@transform emit(Response.Success(it.data.map { it.toDomain() }))
+                is Response.Success -> return@transform emit(Response.Success(it.data.map { it.toClient() }))
             }
         }
     }
@@ -69,20 +70,20 @@ class DataRepositoryImp @Inject constructor(
             when (it) {
                 is Response.Error -> return@transform emit(Response.Error(it.throwable, it.msg))
                 is Response.Loading -> return@transform emit(Response.Loading)
-                is Response.Success -> return@transform emit(Response.Success(it.data.toDomain()))
+                is Response.Success -> return@transform emit(Response.Success(it.data.toClient()))
             }
         }
     }
 
     override suspend fun saveNewClient(client: Client): Flow<Response<String>> {
-        return clientRemoteDataSource.saveNewClient(toData(client))
+        return clientRemoteDataSource.saveNewClient(toClientDto(client))
     }
 
     override suspend fun updateClient(
         idClient: String,
         client: Client
     ): Flow<Response<String>> {
-        return clientRemoteDataSource.updateClient(idClient, toData(client))
+        return clientRemoteDataSource.updateClient(idClient, toClientDto(client))
     }
 
     override suspend fun removeClient(idClient: String): Flow<Response<String>> {

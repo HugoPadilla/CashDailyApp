@@ -3,8 +3,9 @@ package com.wenitech.cashdaily.data.remoteDataSource
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.wenitech.cashdaily.data.entities.BoxModel
-import com.wenitech.cashdaily.data.entities.CashTransactionsModel
+import com.google.firebase.firestore.ktx.toObject
+import com.wenitech.cashdaily.data.entities.BoxDto
+import com.wenitech.cashdaily.data.entities.CashTransactionsDto
 import com.wenitech.cashdaily.data.remoteDataSource.routes.Constant
 import com.wenitech.cashdaily.domain.common.Response
 import kotlinx.coroutines.Dispatchers
@@ -20,18 +21,14 @@ class BoxRemoteDataSourceImpl @Inject constructor(
     private val db: FirebaseFirestore,
     private val constant: Constant
 ) : BoxRemoteDataSource {
-    override suspend fun getUserBox(): Flow<Response<BoxModel>> = callbackFlow {
+    override fun getUserBox(): Flow<Response<BoxDto>> = callbackFlow {
         offer(Response.Loading)
         val query = constant.getDocumentBox()
 
         val listener = query.addSnapshotListener { documentSnapshot, error ->
             if (documentSnapshot != null && documentSnapshot.exists()) {
                 offer(
-                    Response.Success(
-                        documentSnapshot.toObject(
-                            BoxModel::class.java
-                        )
-                    )
+                    Response.Success(documentSnapshot.toObject<BoxDto>()!!)
                 )
             }
 
@@ -41,18 +38,19 @@ class BoxRemoteDataSourceImpl @Inject constructor(
             }
 
         }
+
         awaitClose {
             listener.remove()
             cancel()
         }
-    } as Flow<Response<BoxModel>>
+    }
 
-    override suspend fun getRecentMoves(): Flow<Response<List<CashTransactionsModel>>> =
+    override suspend fun getRecentMoves(): Flow<Response<List<CashTransactionsDto>>> =
         callbackFlow {
             offer(Response.Loading)
             val query = constant
                 .getCollectionMovement()
-                .orderBy(CashTransactionsModel::serverTimestamp.name, Query.Direction.DESCENDING)
+                .orderBy(CashTransactionsDto::serverTimestamp.name, Query.Direction.DESCENDING)
                 .limit(10)
 
             val listener = query.addSnapshotListener { documentSnapshot, error ->
@@ -60,7 +58,7 @@ class BoxRemoteDataSourceImpl @Inject constructor(
                     offer(
                         Response.Success(
                             documentSnapshot.toObjects(
-                                CashTransactionsModel::class.java
+                                CashTransactionsDto::class.java
                             )
                         )
                     )
@@ -103,26 +101,26 @@ class BoxRemoteDataSourceImpl @Inject constructor(
 
             if (boxSnapshot.exists()) {
 
-                val serverBoxModel: BoxModel = boxSnapshot.toObject(BoxModel::class.java)!!
+                val serverBoxDto: BoxDto = boxSnapshot.toObject(BoxDto::class.java)!!
 
                 if (value > 0) {
                     // Database writing
                     val cashTransactions =
-                        CashTransactionsModel(null, null, description, true, value)
+                        CashTransactionsDto(null, null, description, true, value)
                     transaction.update(
                         refBox,
-                        BoxModel::totalCash.name,
-                        serverBoxModel.totalCash.plus(value)
+                        BoxDto::totalCash.name,
+                        serverBoxDto.totalCash.plus(value)
                     )
                     transaction.set(refMovement, cashTransactions)
                 }
                 if (value < 0) {
                     val cashTransactions =
-                        CashTransactionsModel(null, null, description, false, value)
+                        CashTransactionsDto(null, null, description, false, value)
                     transaction.update(
                         refBox,
-                        BoxModel::totalCash.name,
-                        serverBoxModel.totalCash.plus(value)
+                        BoxDto::totalCash.name,
+                        serverBoxDto.totalCash.plus(value)
                     )
                     transaction.set(refMovement, cashTransactions)
                 }
