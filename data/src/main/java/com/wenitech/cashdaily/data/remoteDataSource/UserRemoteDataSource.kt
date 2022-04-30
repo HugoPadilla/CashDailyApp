@@ -1,11 +1,12 @@
 package com.wenitech.cashdaily.data.remoteDataSource
 
-import com.wenitech.cashdaily.data.entities.UserModel
-import com.wenitech.cashdaily.domain.common.Response
-import kotlinx.coroutines.flow.Flow
+import com.google.firebase.firestore.DocumentSnapshot
+import com.wenitech.cashdaily.data.entities.UserDto
 
 interface UserRemoteDataSource {
-    suspend fun createUserProfile(userModel: UserModel): Boolean
 
-    fun readUserProfile(): Flow<Response<UserModel>>
+    suspend fun createUserProfile(userDto: UserDto)
+
+    suspend fun getUserProfile(): DocumentSnapshot?
+
 }

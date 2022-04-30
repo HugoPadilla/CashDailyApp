@@ -1,7 +1,7 @@
 package com.wenitech.cashdaily.data.repositories
 
 import com.google.firebase.auth.*
-import com.wenitech.cashdaily.data.entities.UserModel
+import com.wenitech.cashdaily.data.entities.UserDto
 import com.wenitech.cashdaily.data.remoteDataSource.UserRemoteDataSource
 import com.wenitech.cashdaily.domain.common.ResultAuth
 import com.wenitech.cashdaily.domain.repositories.RegistrationRepository
@@ -24,7 +24,7 @@ class RegistrationRepositoryImpl @Inject constructor(
             val resultAuth = auth.createUserWithEmailAndPassword(email, password).await()
             val firebaseUser = resultAuth.user
             userRemoteDataSource.createUserProfile(
-                UserModel(
+                UserDto(
                     id = firebaseUser?.uid,
                     email = email
                 )
@@ -35,7 +35,9 @@ class RegistrationRepositoryImpl @Inject constructor(
                 is FirebaseAuthInvalidCredentialsException -> emit(ResultAuth.Failed())
                 is FirebaseAuthUserCollisionException -> emit(ResultAuth.Collision("Ya existe un usuario regsitrado con este correo electronico"))
                 is FirebaseAuthWeakPasswordException -> emit(ResultAuth.Failed())
-                else -> {emit(ResultAuth.Failed(e.message, e))}
+                else -> {
+                    emit(ResultAuth.Failed(e.message, e))
+                }
             }
         }
     }.flowOn(Dispatchers.IO)

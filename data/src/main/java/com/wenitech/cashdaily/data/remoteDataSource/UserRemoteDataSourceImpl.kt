@@ -1,15 +1,11 @@
 package com.wenitech.cashdaily.data.remoteDataSource
 
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.wenitech.cashdaily.data.entities.BoxModel
-import com.wenitech.cashdaily.data.entities.UserModel
+import com.wenitech.cashdaily.data.entities.UserDto
 import com.wenitech.cashdaily.data.remoteDataSource.routes.Constant
-import com.wenitech.cashdaily.domain.common.Response
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -18,44 +14,33 @@ class UserRemoteDataSourceImpl @Inject constructor(
     private val db: FirebaseFirestore,
     private val constant: Constant,
 ) : UserRemoteDataSource {
-    override suspend fun createUserProfile(userModel: UserModel): Boolean {
-        return try {
+    /**
+     * Por medio de una escritrua en lote registra el perfil del usuario en la base de datos remota
+     * y crear la rutas por defectos iniciales.
+     *
+     * @param userDto dto con la informacion del perfil del usuario
+     */
+    override suspend fun createUserProfile(userDto: UserDto) {
+        val refUserApp = constant.getDocumentProfileUser()
+        val refBox = constant.getDocumentBox()
 
-            val refUserApp = constant.getDocumentProfileUser()
-            val refBox = constant.getDocumentBox()
+        db.runBatch { batch ->
 
-            db.runBatch { batch ->
+            batch.set(refUserApp, userDto)
+            batch.set(refBox, BoxModel())
 
-                batch.set(refUserApp, userModel)
-                batch.set(refBox, BoxModel())
-
-            }.await()
-            true
-
-        } catch (e: Throwable) {
-            false
-        }
+        }.await()
     }
 
-    // TODO: 15/03/2022 Refactor return: flow single event
-    override fun readUserProfile(): Flow<Response<UserModel>> = callbackFlow {
-        offer(Response.Loading)
+    /**
+     * Leer el perfile de usuario en la base de datos de Firestore
+     *
+     * @return DocumentSnapshot con el resultado de la operacion de lectura
+     */
+    override suspend fun getUserProfile(): DocumentSnapshot? {
+
         val queryDocument = constant.getDocumentProfileUser()
 
-        val listener = queryDocument.addSnapshotListener { documentSnapshot, error ->
-            if (documentSnapshot != null && documentSnapshot.exists()) {
-                offer(Response.Success(documentSnapshot.toObject(UserModel::class.java)))
-            }
-
-            error?.let {
-                offer(Response.Error(it, it.message.toString()))
-                cancel(it.message.toString())
-            }
-        }
-
-        awaitClose {
-            listener.remove()
-            cancel()
-        }
-    } as Flow<Response<UserModel>>
+        return queryDocument.get().await()
+    }
 }
